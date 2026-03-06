@@ -23,8 +23,8 @@ const services = [
         title: "Algorithmic Trading Bots",
         headline: "Execute at machine speed, not human speed.",
         description:
-            "Human traders miss windows. Our bots don't. Built with low-latency execution logic and real-time market feeds, they run 24/7 with configurable risk controls — so you stay in the market even when you're not watching.",
-        proof: "Average latency under 12ms. Zero missed signals from backtested strategies.",
+            "Human traders miss windows. Our bots don't. We've built and deployed multiple live trading systems — MA Supertrend, VWAP, momentum and multi-strategy — with real-time market feeds, configurable risk controls, and 24/7 uptime. You stay in the market even when you're not watching.",
+        proof: "Average latency under 12ms. Multi-strategy systems with live position management deployed.",
     },
     {
         icon: Globe,
@@ -33,7 +33,7 @@ const services = [
         title: "High-Performance Web Portals",
         headline: "Your website should be closing deals, not just looking good.",
         description:
-            "We build web portals engineered for conversion — fast load times, intuitive UX, and integrated lead capture that turns traffic into revenue. From client portals to full SaaS platforms.",
+            "We build web portals engineered for conversion — fast load times, intuitive UX, and integrated lead capture. From client portals and artist sites to contractor platforms and full SaaS applications deployed on Vercel with global CDN.",
         proof: "Average 2.8x increase in qualified lead conversion vs. template-built sites.",
     },
     {
@@ -43,7 +43,7 @@ const services = [
         title: "Payment & Invoicing Systems",
         headline: "Get paid faster. Chase invoices less.",
         description:
-            "Custom payment integrations with Stripe, ACH, and net-30 terms baked right in. Auto-generated invoices, payment reminders, and revenue dashboards — so cash flow is always visible.",
+            "Custom payment integrations with Stripe, ACH, and net-30 terms baked right in. Auto-generated invoices, payment reminders, and revenue dashboards — so cash flow is always visible. We've shipped full invoicing workflows inside live business platforms.",
         proof: "Clients average a 9-day reduction in days-sales-outstanding after launch.",
     },
     {
@@ -53,18 +53,48 @@ const services = [
         title: "Estimating & Proposal Generators",
         headline: "Send winning proposals in minutes, not hours.",
         description:
-            "Stop rebuilding quotes from scratch. Our estimating engines let your team generate accurate, branded proposals from a set of inputs — faster bids, fewer errors, more closes.",
+            "Stop rebuilding quotes from scratch. Our estimating engines let your team generate accurate, branded proposals from a set of inputs — faster bids, fewer errors, more closes. Integrated directly into your existing CRM or portal.",
         proof: "One client cut proposal time from 4 hours to under 20 minutes per job.",
     },
     {
         icon: Shield,
         color: "from-rose-500 to-pink-400",
         glow: "rgba(244,63,94,0.3)",
-        title: "Enterprise Architecture",
+        title: "Enterprise Architecture & Infra",
         headline: "Infrastructure that grows with you — and never goes down.",
         description:
-            "We architect cloud-native systems with auto-scaling, redundancy, and 99.99% uptime built in. Whether you're serving 100 or 100,000 users, your platform stays fast, stable, and secure.",
-        proof: "Bank-grade security standards. Zero unplanned outages across all active deployments.",
+            "We architect cloud-native systems with Docker, Nginx, DigitalOcean, Fly.io, and Vercel — with auto-scaling, redundancy, and 99.99% uptime baked in. From monorepo backend setups with CI/CD to full production deployments monitored via Sentry.",
+        proof: "Zero unplanned outages across all active deployments. Bank-grade security standards.",
+    },
+    {
+        icon: Terminal,
+        color: "from-indigo-500 to-violet-400",
+        glow: "rgba(99,102,241,0.3)",
+        title: "Business Operations Hub",
+        headline: "One dashboard. Every moving part of your business.",
+        description:
+            "We build internal platforms that replace the chaos of disconnected tools — inventory management, work order tracking, employee scheduling, role-based access control, and real-time reporting, all in one system your team actually uses. Built for businesses that can't afford downtime.",
+        proof: "Full-stack business platforms live in production: inventory, work orders, invoicing, and employee management.",
+    },
+    {
+        icon: Shield,
+        color: "from-yellow-500 to-orange-400",
+        glow: "rgba(234,179,8,0.3)",
+        title: "License & Subscription Management",
+        headline: "Sell software. Control access. Protect your IP.",
+        description:
+            "Need to gate your product behind a license key, subscription tier, or hardware fingerprint? We build custom license servers and subscription engines — JWT-based validation, usage tracking, expiry enforcement, and a branded customer portal to manage seats.",
+        proof: "Live license server managing access for multiple packaged software products.",
+    },
+    {
+        icon: Globe,
+        color: "from-teal-500 to-green-400",
+        glow: "rgba(20,184,166,0.3)",
+        title: "Industry-Specific Platforms",
+        headline: "Built for your trade. Not a template dressed up as one.",
+        description:
+            "We don't reskin generic software. We've built from scratch for motorcycle shops, contractors, musicians, and trading firms — with workflows, terminology, and reporting that match how each industry actually operates. If your business has unique processes, we build tools that fit them.",
+        proof: "Deployed platforms across automotive, construction, entertainment, and financial services.",
     },
 ];
 
@@ -77,13 +107,13 @@ export function Services() {
                         What We Build
                     </span>
                     <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-                        Software that moves your business{" "}
+                        Software that saves you time,{" "}
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-quant-blue to-cyan-400">
-                            forward.
+                            money, and headaches.
                         </span>
                     </h2>
                     <p className="text-gray-400 text-lg leading-relaxed">
-                        Every product we ship is built to solve a real problem with measurable results — not to check a box.
+                        Every product we ship is built to solve a real, measurable business problem — not to check a box. From trading bots to full business management platforms, we've shipped it.
                     </p>
                 </AnimatedSection>
 
@@ -91,7 +121,7 @@ export function Services() {
                     {services.map((service, idx) => {
                         const Icon = service.icon;
                         return (
-                            <AnimatedSection key={idx} delay={idx * 0.08}>
+                            <AnimatedSection key={idx} delay={idx * 0.06}>
                                 <motion.div
                                     whileHover={{ y: -4 }}
                                     transition={{ duration: 0.25, ease: "easeOut" }}
