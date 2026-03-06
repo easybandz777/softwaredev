@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuantLab Sales Partner Training</title>
+    <style>
+        :root {
+            --bg-dark: #05080f;
+            --bg-card: #0a0f1d;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-cyan: #22d3ee;
+            --accent-purple: #a78bfa;
+            --border-glow: rgba(34, 211, 238, 0.2);
+            --gradient-primary: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            background-image:
+                radial-gradient(circle at 15% 50%, rgba(167, 139, 250, 0.05) 0%, transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(34, 211, 238, 0.05) 0%, transparent 25%);
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .page {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 60px 40px;
+            page-break-after: always;
+            position: relative;
+        }
+
+        /* --- Cover Page --- */
+        .cover-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: linear-gradient(180deg, rgba(10, 15, 29, 0) 0%, var(--bg-card) 100%);
+            border-radius: 24px;
+            margin: 40px auto;
+            padding: 80px;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .logo-container {
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .logo-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px;
+            height: 120px;
+            background: var(--gradient-primary);
+            filter: blur(50px);
+            opacity: 0.4;
+            z-height: -1;
+        }
+
+        .logo-text {
+            font-size: 2.5rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .cover-title {
+            font-size: 4.5rem;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            text-shadow: 0 0 30px rgba(34, 211, 238, 0.2);
+        }
+
+        .cover-divider {
+            width: 80px;
+            height: 4px;
+            background: var(--gradient-primary);
+            margin: 0 auto 30px;
+            border-radius: 2px;
+        }
+
+        .cover-version {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+        }
+
+        /* --- Global Elements --- */
+        .section-header {
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .section-header::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -1px;
+            width: 100px;
+            height: 2px;
+            background: var(--gradient-primary);
+        }
+
+        .module-number {
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--accent-cyan);
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .module-title {
+            font-size: 2.5rem;
+            color: var(--text-primary);
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gradient-primary);
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .script-box {
+            background: rgba(34, 211, 238, 0.03);
+            border-left: 3px solid var(--accent-cyan);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.05rem;
+            color: #fff;
+            position: relative;
+        }
+
+        .script-box::before {
+            content: 'SCRIPT';
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            background: var(--accent-cyan);
+            color: var(--bg-dark);
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 4px;
+            letter-spacing: 0.1em;
+        }
+
+        .bad-script-box {
+            background: rgba(239, 68, 68, 0.05);
+            border-left: 3px solid #ef4444;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+            color: var(--text-secondary);
+            position: relative;
+        }
+
+        .bad-script-box::before {
+            content: 'AVOID';
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            background: #ef4444;
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 4px;
+            letter-spacing: 0.1em;
+        }
+
+        .tip-box {
+            background: rgba(167, 139, 250, 0.05);
+            border: 1px solid rgba(167, 139, 250, 0.2);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+
+        .tip-box h4 {
+            color: var(--accent-purple);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .question-list {
+            list-style: none;
+        }
+
+        .question-list li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+        }
+
+        .question-list li::before {
+            content: 'Q:';
+            position: absolute;
+            left: 0;
+            color: var(--accent-cyan);
+            font-weight: 700;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .framework-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: var(--text-secondary);
+        }
+
+        strong {
+            color: var(--text-primary);
+        }
+
+        .accent {
+            color: var(--accent-cyan);
+        }
+
+        .accent-alt {
+            color: var(--accent-purple);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Cover Page -->
+    <div class="page cover-page">
+        <div class="logo-container">
+            <div class="logo-glow"></div>
+            <div class="logo-text">QUANTLAB</div>
+        </div>
+        <div class="cover-subtitle">Strategic Growth Division</div>
+        <h1 class="cover-title">Sales<br>Partner<br>Training</h1>
+        <div class="cover-divider"></div>
+        <p class="cover-version">CONFIDENTIAL & PROPRIETARY // THE QUANTLAB METHOD</p>
+    </div>
+
+    <!-- MODULE 1: Mindset & Prep -->
+    <div class="page">
+        <div class="section-header">
+            <span class="module-number">Module 01</span>
+            <h2 class="module-title">Mindset & Prep</h2>
+        </div>
+
+        <div class="card">
+            <h3>The "Consultant, Not Salesman" Frame</h3>
+            <p>At QuantLab, we do not sell widgets; we engineer business solutions. If you approach a prospect trying to
+                "pitch a website," you commoditize yourself immediately. You are a <strong>Digital Growth
+                    Consultant</strong>. Your goal isn't to take their money—it's to diagnose inefficiencies and
+                prescribe software that generates massive ROI.</p>
+
+            <div class="framework-grid">
+                <div>
+                    <h4 class="accent">The Salesman Frame</h4>
+                    <ul style="color: var(--text-secondary); margin-left: 20px;">
+                        <li>"Do you need a new website?"</li>
+                        <li>Talks about features & code</li>
+                        <li>Chases the prospect</li>
+                        <li>Accepts "we're fine"</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="accent-alt">The Consultant Frame</h4>
+                    <ul style="color: var(--text-secondary); margin-left: 20px;">
+                        <li>"Where is your business bleeding money?"</li>
+                        <li>Talks about automation & revenue</li>
+                        <li>Diagnoses the prospect</li>
+                        <li>Challenges "we're fine"</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Knowing Your Weapon (Our Service)</h3>
+            <p>You must have absolute conviction that what QuantLab builds will revolutionize their business. We don't
+                just build nice-looking pages; we build systems that.</p>
+            <ul style="color: var(--text-secondary); margin-left: 20px; line-height: 1.8;">
+                <li><strong>Capture Leads:</strong> Funnels that actually convert traffic.</li>
+                <li><strong>Automate Ops:</strong> Internal dashboards, automated invoicing, CRM syncing.</li>
+                <li><strong>Build Authority:</strong> Premium aesthetics that let them charge premium prices.</li>
+            </ul>
+        </div>
+
+        <div class="tip-box">
+            <h4>💡 Pre-Call Recon</h4>
+            <p>Never enter a conversation blind. Spend 5 minutes on their current site and LinkedIn. Look for the
+                "cracks": Is the site slow? Is it mobile-responsive? Is there a clear path to book an appointment? Bring
+                these cracks up immediately.</p>
+        </div>
+    </div>
+
+    <!-- MODULE 2: Breaking the Ice -->
+    <div class="page">
+        <div class="section-header">
+            <span class="module-number">Module 02</span>
+            <h2 class="module-title">Breaking the Ice</h2>
+        </div>
+
+        <div class="card">
+            <h3>The Cold Opener (In-Person / Phone)</h3>
+            <p>When you interrupt someone's day, you have 5 seconds to prove you aren't wasting their time. Acknowledge
+                the interruption, drop the pitch, and hook them with a hyper-specific observation.</p>
+
+            <div class="bad-script-box">
+                "Hi, I'm from QuantLab. We build custom websites and software. Are you looking to upgrade your digital
+                presence?"
+            </div>
+
+            <div class="script-box">
+                "Hey [Name], I know you weren't expecting my call. I'll be brief—I was just on your site trying to
+                figure out how a new client books a consultation with you, and I realized the process is pretty broken.
+                Have you noticed a drop in lead flow recently?"
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>LinkedIn & Email Outreach</h3>
+            <p>Keep it shockingly short. Business owners ignore paragraphs. Use the "Pattern Interrupt" framework.</p>
+
+            <div class="script-box">
+                <strong>Subject:</strong> Your onboarding flow<br><br>
+                Hey [Name],<br><br>
+                Looked at your current setup. The work you guys do at [Company] is premium, but the customer experience
+                on the site doesn't match that level. <br><br>
+                We build the backend software for firms like yours to automate intake and intake billing. Worth a quick
+                5-min chat this Thursday?
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Building Instant Rapport</h3>
+            <p>Rapport isn't about talking about the weather or sports. Professional rapport is built through
+                <strong>competence and empathy</strong>. Show them you understand the brutal reality of running their
+                specific type of business.</p>
+            <div class="script-box">
+                "Most founders in your space I talk to are completely bogged down in admin work instead of actually
+                closing deals. Is that what you're seeing right now?"
+            </div>
+        </div>
+    </div>
+
+    <!-- MODULE 3: Discovery -->
+    <div class="page">
+        <div class="section-header">
+            <span class="module-number">Module 03</span>
+            <h2 class="module-title">Discovery: Identifying Needs</h2>
+        </div>
+
+        <p>Discovery is where the sale is won or lost. If you do this right, they will sell themselves. We use a
+            modified SPIN (Situation, Problem, Implication, Need-Payoff) framework.</p>
+
+        <div class="card">
+            <h3>1. The Situation (Current State)</h3>
+            <p>Find out exactly how they operate right now. Let them explain their broken processes.</p>
+            <ul class="question-list">
+                <li>Walk me through exactly what happens right now when a new lead hits your website.</li>
+                <li>How are you currently tracking projects and communicating with clients?</li>
+                <li>What software stack are you patching together right now?</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>2. The Problem (Finding the Pain)</h3>
+            <p>Now, poke the bruise. Make them admit that the current way is flawed.</p>
+            <ul class="question-list">
+                <li>It sounds like you have to manually enter data three times. How often are details slipping through
+                    the cracks?</li>
+                <li>Your site looks a bit dated compared to your competitors. Has anyone ever mentioned that?</li>
+                <li>What's the biggest bottleneck stopping you from doubling your volume right now?</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>3. The Implication (Twisting the Knife)</h3>
+            <p>They know they have a problem. Now you must make them realize how much it's costing them.</p>
+            <ul class="question-list">
+                <li>If your team is spending 15 hours a week doing manual data entry... what is that costing you in
+                    payroll every month?</li>
+                <li>When a high-ticket client sees your current site and goes with a competitor, how much revenue did
+                    you just lose?</li>
+                <li>How long can you sustain this manual process before the team burns out?</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- MODULE 4: Current Spending & Problems -->
+    <div class="page">
+        <div class="section-header">
+            <span class="module-number">Module 04</span>
+            <h2 class="module-title">Current Spending & Budgeting</h2>
+        </div>
+
+        <div class="card">
+            <h3>Calculating the Cost of Inaction (COI)</h3>
+            <p>Before you pitch a monthly retainer or a high-ticket build, the prospect must understand that
+                <strong>doing nothing is actively costing them money.</strong></p>
+
+            <div class="script-box">
+                "You mentioned you're losing about 2 deals a month because your lead process is slow. What's your
+                average client worth? $5,000? So this broken process is literally costing you $10,000 every single
+                month. Does that sound right?"
+            </div>
+            <p>Once they agree to those numbers, your $1k/mo or $3k/mo retainer suddenly looks incredibly cheap.</p>
+        </div>
+
+        <div class="card">
+            <h3>Asking About Budget Without Being Awkward</h3>
+            <p>Amateurs get scared of the money talk. Consultants embrace it. Anchor high to gauge their reaction.</p>
+
+            <div class="script-box">
+                "To build out the type of automated dashboard and premium site we're talking about, our typical
+                engagements range from $3,000 to $10,000 depending on scope, plus ongoing support. Is that completely
+                out of the realm of reality for you right now?"
+            </div>
+            <p>If they balk, you down-sell to a smaller monthly plan. If they don't blink, you know you have room to
+                build something incredible.</p>
+        </div>
+
+        <div class="tip-box">
+            <h4>💡 Framing the Monthly Retainer</h4>
+            <p>Never call it a "maintenance fee." Call it a <strong>"Dedicated Engineering Partner Plan."</strong>
+                Reiterate that a junior in-house dev costs $80k/year. We give them an elite team for a fraction of that,
+                fully managed.</p>
+        </div>
+    </div>
+
+    <!-- MODULE 5: Bringing It All Together -->
+    <div class="page">
+        <div class="section-header">
+            <span class="module-number">Module 05</span>
+            <h2 class="module-title">Bringing It All Together</h2>
+        </div>
+
+        <div class="card">
+            <h3>Connecting Pain to Solution (The Pitch)</h3>
+            <p>Don't just list features. Map our features directly to the specific pains they admitted to in Discovery.
+            </p>
+
+            <div class="script-box">
+                "You told me you're losing 10 hours a week on manual intake. The custom portal we build for you is going
+                to completely automate that. A client fills out the form, and the system automatically generates an
+                invoice and creates a project file. We give you those 10 hours back."
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Handling Core Objections</h3>
+
+            <p><strong>Objection: "It's too expensive."</strong></p>
+            <div class="script-box">
+                "I understand it's an investment. But we just agreed your current setup is costing you $5,000 a month in
+                lost deals. This system pays for itself in exactly 45 days. Why delay fixing a leak in your boat?"
+            </div>
+
+            <p><strong>Objection: "We use WordPress/Wix, it's fine."</strong></p>
+            <div class="script-box">
+                "If you want to stay a small business, Wix is fine. If you want to scale to 8 figures, you need custom
+                infrastructure. We build the digital assets that allow you to scale without breaking. Are you ready to
+                scale?"
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>The Trial Close & The Ask</h3>
+            <p>Take their temperature before asking for the credit card.</p>
+
+            <div class="script-box">
+                <strong>The Trial Close:</strong> "Based on everything we've looked at today, do you feel confident that
+                this new architecture will resolve the bottleneck in your sales team?"<br><br>
+                <strong>The Ask:</strong> "Great. The next step is simple. We get the initial deposit processed, and we
+                kick off the strategy boarding session next Tuesday. Does Visa or Mastercard work best for you?"
+            </div>
+            <p><strong>Once you ask for the business, shut up. The first person to speak loses.</strong></p>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -6,7 +6,7 @@ import {
     LogOut, Inbox, CheckCircle, XCircle,
     Trash2, RefreshCw, Mail, Building2, Calendar,
     Phone, DollarSign, Clock, Users, Activity,
-    Globe, Monitor, Smartphone, ChevronDown
+    Globe, Monitor, Smartphone, ChevronDown, BookOpen
 } from "lucide-react";
 import type { Consultation, PageVisit } from "@/lib/db";
 
@@ -352,7 +352,11 @@ export default function DashboardPage() {
                         <span className="text-gray-500 text-xs block">Admin Dashboard</span>
                     </div>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-4">
+                    <button onClick={() => router.push("/admin/training")}
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-cyan-400 font-medium hover:bg-cyan-400/10 text-xs transition-all border border-cyan-400/20">
+                        <BookOpen className="w-3.5 h-3.5" /> Sales Training
+                    </button>
                     <button onClick={logout}
                         className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-gray-400 hover:text-rose-400 hover:bg-rose-400/5 text-xs transition-all">
                         <LogOut className="w-3.5 h-3.5" /> Logout
