@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { AnimatedSection } from "./ui/AnimatedSection";
 
@@ -18,34 +18,68 @@ const stack = [
     "Fly.io", "DigitalOcean", "Sentry", "JWT Auth",
 ];
 
-const proofPoints = [
+// System architecture layers for the animated diagram
+const layers = [
     {
-        tag: "Trading Infrastructure",
-        title: "Multi-strategy algo bots",
-        detail: "MA Supertrend · VWAP · Momentum · High-frequency execution with live risk controls.",
-        color: "from-violet-500 to-blue-500",
+        id: "ui",
+        label: "CLIENT INTERFACE",
+        sublabel: "Next.js · React · TypeScript",
+        color: "#38bdf8",
+        glow: "rgba(56,189,248,0.25)",
     },
     {
-        tag: "Business Platform",
-        title: "Full business ops hub",
-        detail: "Inventory · Work orders · Invoicing · Employee management · Role-based access.",
-        color: "from-cyan-500 to-teal-500",
+        id: "api",
+        label: "API & BUSINESS LOGIC",
+        sublabel: "Node.js · Route Handlers · Middleware",
+        color: "#818cf8",
+        glow: "rgba(129,140,248,0.25)",
     },
     {
-        tag: "SaaS & Licensing",
-        title: "License management server",
-        detail: "JWT validation · Seat tracking · Expiry enforcement · Customer portal.",
-        color: "from-blue-500 to-indigo-500",
+        id: "data",
+        label: "DATA LAYER",
+        sublabel: "Prisma ORM · PostgreSQL · Neon DB",
+        color: "#34d399",
+        glow: "rgba(52,211,153,0.25)",
     },
     {
-        tag: "Client Platforms",
-        title: "Industry-specific builds",
-        detail: "Automotive · Construction · Entertainment · Financial services. All from scratch.",
-        color: "from-emerald-500 to-cyan-500",
+        id: "payments",
+        label: "PAYMENTS & AUTH",
+        sublabel: "Stripe · JWT · Role-Based Access",
+        color: "#f59e0b",
+        glow: "rgba(245,158,11,0.25)",
+    },
+    {
+        id: "infra",
+        label: "DEPLOYMENT & INFRA",
+        sublabel: "Vercel · Docker · Fly.io · Sentry",
+        color: "#f472b6",
+        glow: "rgba(244,114,182,0.25)",
     },
 ];
 
+// Animated pulse dot travelling down a connector line
+function PulseDot({ color, delay }: { color: string; delay: number }) {
+    return (
+        <motion.div
+            className="absolute left-1/2 w-1.5 h-1.5 rounded-full -translate-x-1/2"
+            style={{ backgroundColor: color, boxShadow: `0 0 6px ${color}` }}
+            initial={{ top: 0, opacity: 0 }}
+            animate={{ top: "100%", opacity: [0, 1, 1, 0] }}
+            transition={{
+                duration: 1.4,
+                delay,
+                repeat: Infinity,
+                repeatDelay: 2.2,
+                ease: "easeInOut",
+            }}
+        />
+    );
+}
+
 export function About() {
+    const [mounted, setMounted] = useState(false);
+    useEffect(() => { setMounted(true); }, []);
+
     return (
         <section className="py-28 relative overflow-hidden bg-black/40 border-y border-white/5" id="about">
             {/* Background glows */}
@@ -54,51 +88,129 @@ export function About() {
 
             <div className="container mx-auto px-6 relative z-10">
 
-                {/* Top: headline + stats */}
+                {/* ── Section 1: Headline + System Diagram ── */}
                 <div className="flex flex-col lg:flex-row items-start gap-16 mb-20">
-                    <AnimatedSection className="w-full lg:w-1/2">
+
+                    {/* Left: Option C copy */}
+                    <AnimatedSection className="w-full lg:w-1/2 flex flex-col justify-center">
                         <span className="inline-block text-quant-blue text-sm font-semibold tracking-[0.2em] uppercase mb-5">
-                            Our Story
+                            How We Work
                         </span>
-                        <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-                            Born in the{" "}
+                        <h2 className="text-4xl md:text-5xl font-bold mb-7 leading-tight">
+                            Full-stack means{" "}
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-quant-blue to-cyan-400">
-                                unforgiving margins
-                            </span>{" "}
-                            of algo trading.
+                                the whole thing.
+                            </span>
                         </h2>
-                        <p className="text-gray-400 text-lg leading-relaxed mb-4">
-                            QuantLab was built by engineers who wrote code where a single bug costs real money in real time. When your bot executes thousands of trades per second, "good enough" is not an option.
+                        <p className="text-gray-400 text-lg leading-relaxed mb-5">
+                            Front end to database. Auth to payments. Deployment pipeline to monitoring. We own every layer — because a platform that breaks at any one of them breaks everywhere.
                         </p>
                         <p className="text-gray-400 text-lg leading-relaxed">
-                            That same obsession with precision, latency, and uptime is what we bring to every project — whether it's a CRM, a business ops platform, or a payment system handling your revenue.
+                            We've shipped platforms across trading, automotive, construction, and entertainment — each one custom-built to fit how that business actually works. Not a theme. Not a template.
                         </p>
-                    </AnimatedSection>
 
-                    {/* Stats grid */}
-                    <AnimatedSection delay={0.15} className="w-full lg:w-1/2">
-                        <div className="grid grid-cols-2 gap-4 h-full">
+                        {/* Mini stat row under copy */}
+                        <div className="mt-10 grid grid-cols-2 gap-4">
                             {stats.map((stat, i) => (
                                 <motion.div
                                     key={i}
                                     whileHover={{ scale: 1.02 }}
                                     transition={{ duration: 0.2 }}
-                                    className="relative rounded-2xl border border-white/8 bg-[#0d1526]/70 backdrop-blur-sm p-6 overflow-hidden group"
+                                    className="relative rounded-xl border border-white/8 bg-[#0d1526]/70 backdrop-blur-sm p-5 overflow-hidden group"
                                 >
-                                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"
+                                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl"
                                         style={{ background: "radial-gradient(circle at 30% 0%, rgba(56,189,248,0.08), transparent 70%)" }} />
-                                    <div className="relative z-10">
-                                        <p className="text-4xl md:text-5xl font-black text-white mb-1 tracking-tight">{stat.value}</p>
-                                        <p className="text-sm text-gray-400 font-medium">{stat.label}</p>
-                                    </div>
+                                    <p className="text-3xl md:text-4xl font-black text-white mb-1 tracking-tight relative z-10">{stat.value}</p>
+                                    <p className="text-xs text-gray-400 font-medium relative z-10">{stat.label}</p>
                                 </motion.div>
                             ))}
                         </div>
                     </AnimatedSection>
+
+                    {/* Right: Animated system architecture diagram */}
+                    <AnimatedSection delay={0.2} className="w-full lg:w-1/2">
+                        <div className="relative rounded-2xl border border-white/8 bg-[#080e1c]/80 backdrop-blur-sm p-6 overflow-hidden">
+                            {/* Window chrome */}
+                            <div className="flex items-center gap-2 mb-6 pb-4 border-b border-white/6">
+                                <div className="w-3 h-3 rounded-full bg-red-500/70" />
+                                <div className="w-3 h-3 rounded-full bg-yellow-500/70" />
+                                <div className="w-3 h-3 rounded-full bg-green-500/70" />
+                                <span className="ml-3 text-xs font-mono text-gray-500">system_architecture.diagram</span>
+                            </div>
+
+                            {/* Layers */}
+                            <div className="flex flex-col gap-0">
+                                {layers.map((layer, i) => (
+                                    <div key={layer.id} className="flex flex-col items-stretch">
+                                        {/* Layer box */}
+                                        <motion.div
+                                            initial={{ opacity: 0, x: 20 }}
+                                            whileInView={{ opacity: 1, x: 0 }}
+                                            viewport={{ once: true }}
+                                            transition={{ delay: i * 0.12, duration: 0.4, ease: "easeOut" }}
+                                            whileHover={{ x: 4 }}
+                                            className="relative rounded-xl border px-5 py-3.5 group cursor-default overflow-hidden"
+                                            style={{
+                                                borderColor: `${layer.color}30`,
+                                                backgroundColor: `${layer.color}08`,
+                                            }}
+                                        >
+                                            {/* Left accent bar */}
+                                            <div
+                                                className="absolute left-0 top-0 bottom-0 w-[3px] rounded-l-xl"
+                                                style={{ backgroundColor: layer.color }}
+                                            />
+                                            {/* Hover glow */}
+                                            <div
+                                                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"
+                                                style={{ background: `radial-gradient(ellipse at 0% 50%, ${layer.glow}, transparent 70%)` }}
+                                            />
+                                            <div className="relative z-10 flex items-center justify-between">
+                                                <div>
+                                                    <p className="text-xs font-bold tracking-widest uppercase mb-0.5" style={{ color: layer.color }}>
+                                                        {layer.label}
+                                                    </p>
+                                                    <p className="text-xs text-gray-500">{layer.sublabel}</p>
+                                                </div>
+                                                {/* Pulsing dot indicator */}
+                                                <motion.div
+                                                    className="w-2 h-2 rounded-full flex-shrink-0"
+                                                    style={{ backgroundColor: layer.color }}
+                                                    animate={{ opacity: [0.4, 1, 0.4], scale: [0.9, 1.1, 0.9] }}
+                                                    transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
+                                                />
+                                            </div>
+                                        </motion.div>
+
+                                        {/* Connector line + pulse dot (between layers) */}
+                                        {i < layers.length - 1 && mounted && (
+                                            <div className="relative h-6 flex justify-center">
+                                                {/* Static line */}
+                                                <div
+                                                    className="w-px h-full"
+                                                    style={{
+                                                        background: `linear-gradient(to bottom, ${layer.color}60, ${layers[i + 1].color}60)`,
+                                                    }}
+                                                />
+                                                {/* Animated pulse travelling down */}
+                                                <PulseDot color={layer.color} delay={i * 0.5 + 0.8} />
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* Bottom tag */}
+                            <div className="mt-5 pt-4 border-t border-white/5 flex items-center gap-2">
+                                <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                                <span className="text-xs font-mono text-gray-500">All layers owned. All layers shipped.</span>
+                            </div>
+                        </div>
+                    </AnimatedSection>
                 </div>
 
-                {/* Middle: tech stack */}
-                <AnimatedSection delay={0.1} className="mb-20">
+                {/* ── Section 2: Tech Stack ── */}
+                <AnimatedSection delay={0.1} className="mb-16">
                     <div className="rounded-2xl border border-white/6 bg-[#0a101e]/60 backdrop-blur-sm p-8">
                         <p className="text-xs font-semibold tracking-[0.2em] uppercase text-gray-500 mb-5">
                             Tech Stack — What we build with
@@ -117,33 +229,6 @@ export function About() {
                                 </motion.span>
                             ))}
                         </div>
-                    </div>
-                </AnimatedSection>
-
-                {/* Bottom: proof points grid */}
-                <AnimatedSection delay={0.15}>
-                    <p className="text-xs font-semibold tracking-[0.2em] uppercase text-gray-500 mb-6">
-                        Proof — Real projects, real results
-                    </p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                        {proofPoints.map((item, i) => (
-                            <motion.div
-                                key={i}
-                                whileHover={{ y: -3 }}
-                                transition={{ duration: 0.2 }}
-                                className="relative rounded-2xl border border-white/6 bg-[#0d1526]/70 p-5 overflow-hidden group"
-                            >
-                                {/* top accent line */}
-                                <div className={`absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r ${item.color} opacity-60`} />
-                                <div className="relative z-10">
-                                    <span className={`inline-block text-xs font-semibold tracking-wider uppercase mb-3 text-transparent bg-clip-text bg-gradient-to-r ${item.color}`}>
-                                        {item.tag}
-                                    </span>
-                                    <h4 className="text-white font-bold text-base mb-2 leading-snug">{item.title}</h4>
-                                    <p className="text-gray-500 text-xs leading-relaxed">{item.detail}</p>
-                                </div>
-                            </motion.div>
-                        ))}
                     </div>
                 </AnimatedSection>
 
