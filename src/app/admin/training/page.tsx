@@ -588,6 +588,329 @@ export default function TrainingPage() {
                         </p>
                     </div>
 
+                    {/* ─── BONUS MODULE A: Extended Industry Scenarios ─── */}
+                    <div className="ql-section-header">
+                        <span className="ql-module-number">Bonus Module A</span>
+                        <h2 className="ql-module-title">Extended Industry Scenarios</h2>
+                    </div>
+
+                    <p className="mb-8">Every industry has specific pain points. Speak their language from the first sentence and you establish instant credibility. Master these verticals.</p>
+
+                    <div className="ql-card">
+                        <h3>🏠 Real Estate Agents & Brokerages</h3>
+                        <p><strong>Core Pain:</strong> They pay $500–$2,000/mo for generic CRM software that doesn't connect to their MLS, doesn't automate follow-ups, and makes them look exactly like every other agent.</p>
+                        <div className="ql-script-box">
+                            "Hey [Name], I noticed you're running [CRM brand] for your listings pipeline. I pulled up your IDX feed and the load time on your property pages is over 4 seconds — Google's threshold for mobile drop-off is 3 seconds. You're likely losing 30–40% of your cold web traffic before they ever see a listing. Is that something you've been tracking?"
+                        </div>
+                        <div className="ql-tip-box" style={{ marginTop: '20px' }}>
+                            <h4>💡 What to Sell Them</h4>
+                            <p className="mb-0">Custom IDX-integrated site with instant search, automated text follow-up when a lead views 3+ listings, and a seller's net-sheet calculator that captures seller leads organically from Google.</p>
+                        </div>
+                    </div>
+
+                    <div className="ql-card">
+                        <h3>🍽️ Restaurants & Hospitality</h3>
+                        <p><strong>Core Pain:</strong> They're paying 30% commissions to DoorDash/Uber Eats. They have zero first-party data on their customers, cannot retarget them, and have no loyalty mechanism.</p>
+                        <div className="ql-script-box">
+                            "Hey [Owner], I looked at your ordering setup. Right now you're sending every online order through DoorDash which is cutting $9 from a $30 order. We build direct-order systems so 100% of that revenue stays with you — plus you own the customer data. How much volume are you doing on third-party platforms each month?"
+                        </div>
+                        <div className="ql-tip-box" style={{ marginTop: '20px' }}>
+                            <h4>💡 What to Sell Them</h4>
+                            <p className="mb-0">Custom branded ordering app or web portal with loyalty points, text-message marketing opt-in at checkout, and a reservation system — zero per-order fees.</p>
+                        </div>
+                    </div>
+
+                    <div className="ql-card">
+                        <h3>🏋️ Gyms, Studios & Fitness Coaches</h3>
+                        <p><strong>Core Pain:</strong> They use Mindbody or Glofox and hate it — expensive, ugly, locked ecosystem. Their social media is strong but their website converts almost nobody. Trial sign-ups are a blackhole.</p>
+                        <div className="ql-script-box">
+                            "Hey [Name], your Instagram engagement is incredible — 4,000 followers and great content. But I clicked the link in your bio and it takes me to a generic Linktree with 6 options. How many of those clicks actually turn into trial bookings? I'd bet it's under 5%. We build landing pages for fitness businesses that convert Instagram traffic at 20–30% instead of 5%."
+                        </div>
+                        <div className="ql-tip-box" style={{ marginTop: '20px' }}>
+                            <h4>💡 What to Sell Them</h4>
+                            <p className="mb-0">High-conversion landing page + class booking integration + automated SMS reminder and no-show follow-up sequence. Monthly recurring tech partner plan.</p>
+                        </div>
+                    </div>
+
+                    <div className="ql-card">
+                        <h3>🚗 Auto Dealerships & Detailers</h3>
+                        <p><strong>Core Pain:</strong> Their leads come from Cars.com and AutoTrader and those platforms own the customer relationship. Their own website is a reskin of a generic dealer template. Detailers live and die by Google reviews and DMs.</p>
+                        <div className="ql-script-box">
+                            "Hey [Name], when someone Googles 'car detailer near me' you show up fourth. The three guys above you have 200+ reviews and simple booking forms right in the search result. Your review count is 40 and your booking goes to a Facebook Messenger. We fix all of that — automated review generation after every job, a proper booking portal, and real-time scheduling. How many jobs are you losing each week to guys who are just easier to book?"
+                        </div>
+                    </div>
+
+                    <div className="ql-card">
+                        <h3>📦 E-Commerce & Product Brands</h3>
+                        <p><strong>Core Pain:</strong> They have a Shopify store that's "working okay" but their abandoned cart rate is 70%+. They're running paid ads to a generic store page and wondering why ROAS is dropping.</p>
+                        <div className="ql-script-box">
+                            "Hey [Name], I ran your page through GTMetrix. Your product pages are loading in 6.2 seconds on mobile, and your add-to-cart to checkout conversion is likely sitting around 2–3%. Industry average for optimized stores is 7–9%. That gap is your money going straight to your competitors. We do custom Shopify builds and performance optimization — what's your monthly ad spend right now?"
+                        </div>
+                        <div className="ql-tip-box" style={{ marginTop: '20px' }}>
+                            <h4>💡 What to Sell Them</h4>
+                            <p className="mb-0">Custom headless storefront or advanced Shopify customization + abandoned cart email/SMS flows + subscription product upsell flows. Monthly support retainer.</p>
+                        </div>
+                    </div>
+
+                    <div className="ql-card">
+                        <h3>📐 Architects, Interior Designers & Creative Firms</h3>
+                        <p><strong>Core Pain:</strong> Their portfolio is gorgeous but their website looks like it was built in 2016. They charge $15,000–$100,000 per project but their digital presence doesn't communicate that level of quality, so they keep attracting budget clients.</p>
+                        <div className="ql-script-box">
+                            "Hey [Name], I spent 20 minutes on your portfolio — the work is stunning. But your website doesn't match the caliber of projects you close. The font's generic, projects load slowly, and there's no clear path for a high-budget client to reach you. Your site is pre-filtering your ideal clients away. We build portfolio sites for creative firms that let the work breathe and command the price tag behind it."
+                        </div>
+                    </div>
+
+                    <div className="ql-card">
+                        <h3>🏫 Coaches, Consultants & Course Creators</h3>
+                        <p><strong>Core Pain:</strong> They're selling high-ticket ($3k–$20k) coaching programs but using a generic Kajabi or Teachable template that looks identical to a thousand other coaches. Discovery calls are booked manually via Calendly on a generic background.</p>
+                        <div className="ql-script-box">
+                            "Hey [Name], your content on LinkedIn is elite — clearly you know your stuff. But when someone lands on your sales page, the trust signal doesn't match your authority. Your booking page is a plain Calendly, no social proof, no transformation story, no custom branding. We build authority microsites specifically for coaches that pre-sell prospects before they even get on a call. How long does it currently take you to convert a follower into a paid client?"
+                        </div>
+                    </div>
+
+                    {/* ─── BONUS MODULE B: Objections Masterclass ─── */}
+                    <div className="ql-section-header">
+                        <span className="ql-module-number">Bonus Module B</span>
+                        <h2 className="ql-module-title">Objections Masterclass</h2>
+                    </div>
+
+                    <p className="mb-8">An objection is not a rejection — it is a <strong>request for more information or reassurance.</strong> Never get defensive. Validate, reframe, and advance. Every objection below should be internalized until your response is instant and calm.</p>
+
+                    {[
+                        {
+                            obj: "\"We already have someone who does our website.\"",
+                            reframe: "\"That's great — they probably handle your basic updates. But I'm not talking about updates. I'm talking about a custom intake system, automated quote flows, and a site architecture that actively generates leads for you. Is the person you have now building those things?\"",
+                            note: "Distinction move: separate 'maintenance' from 'growth infrastructure.' Make the DIY solution look like a band-aid, not a solution."
+                        },
+                        {
+                            obj: "\"We don't have budget right now.\"",
+                            reframe: "\"Totally fair. Let me ask — if this system generates 3 new clients in its first month, and your average client is worth $4,000 — that's $12,000. The system costs $1,200/mo. Would budget be a concern then? Or is the real question whether you believe it will actually get you those clients?\"",
+                            note: "Reframe from 'expense' to 'investment with a measurable return.' Then isolate the real objection."
+                        },
+                        {
+                            obj: "\"We tried a web agency before and it was a disaster.\"",
+                            reframe: "\"I'm sorry to hear that — honestly that's more common than it should be. Can I ask what specifically went wrong? Timeline? Communication? The final product? Because I want to show you exactly how our process is different, and if it's not different enough, I'll tell you.\"",
+                            note: "Let them vent. Then reposition yourself as the anti-agency by attacking the exact points they mention. Empathy first, then differentiation."
+                        },
+                        {
+                            obj: "\"I need to think about it.\"",
+                            reframe: "\"Of course — this is a real decision. Can I ask what specific thing you need to think through? Is it the investment, the timing, or something about what we've discussed that isn't sitting right? I'd rather work through it now than have you go away with the wrong impression.\"",
+                            note: "'I need to think about it' almost always means unsolved objection. Diagnose which one."
+                        },
+                        {
+                            obj: "\"Can you just send me some information?\"",
+                            reframe: "\"I can absolutely do that. But honestly, a PDF won't answer your specific questions. What if I take 10 minutes right now and show you a quick build we did for a business very similar to yours? It'll be faster than reading a brochure and way more relevant.\"",
+                            note: "The 'send me info' request is a polite escape. Don't let them pull away — redirect to live demonstration."
+                        },
+                        {
+                            obj: "\"We're not ready. Call us in 6 months.\"",
+                            reframe: "\"Happy to reconnect then. But I'm curious — what changes in 6 months? Is there a specific milestone or is it more of a general sense of timing? I ask because most of the businesses I've helped wanted to wait too, and they later said they wished they'd started 6 months earlier.\"",
+                            note: "Challenge the timeline without being pushy. Ask them to define what 'ready' looks like."
+                        },
+                        {
+                            obj: "\"Our cousin/employee handles our social media and marketing.\"",
+                            reframe: "\"That makes sense for content. What I'm building is different — this is the backend infrastructure that turns that content into leads. Your cousin creates the traffic; we build the machine that captures it. Do they know how to build a custom CRM-integrated intake portal?\"",
+                            note: "Don't compete with what they already have — plug in as the tech layer that makes it work."
+                        },
+                        {
+                            obj: "\"We don't need a new website, ours is fine.\"",
+                            reframe: "\"[Name], can I show you something real quick? I pulled up your site on my phone. It's loading in 7 seconds. 60% of your traffic is mobile. Google penalizes sites over 3 seconds in search rankings. 'Fine' is costing you search visibility you don't even know you're losing.\"",
+                            note: "Use real data pulled from PageSpeed Insights, GTMetrix, or a quick Lighthouse audit. Facts kill 'we're fine.'"
+                        },
+                        {
+                            obj: "\"A friend quoted us a lower price.\"",
+                            reframe: "\"I'd expect them to — and depending on what they're building, that might be totally appropriate. My question is: what happens when it breaks? What happens when you need to add a feature in 4 months? With us you have a full team, a service agreement, and guaranteed response time. What's the cost of your lead system being down for 48 hours?\"",
+                            note: "Never compete on price — compete on risk. Make them calculate the cost of cheap going wrong."
+                        },
+                        {
+                            obj: "\"We're already working with [Big Agency Name].\"",
+                            reframe: "\"They do great brand work. What I've found is that large agencies are incredible at campaigns — but they don't build deep custom ops tooling. Do they give you live data dashboards? Do they manage your client portal? Or is it mainly creative assets and ad management? We live in the space they don't touch.\"",
+                            note: "Find the gap. Big agencies are generalists — QuantLab is a surgical specialist."
+                        },
+                        {
+                            obj: "\"I don't want to be locked into a contract.\"",
+                            reframe: "\"Completely understood. We actually do month-to-month on our ongoing plans — no lock-in. The only commitment is the initial build project. After that you're staying because it's working, not because you're trapped. What would make you feel most comfortable moving forward?\"",
+                            note: "Defuse the fear of commitment immediately. Month-to-month positions us as confident — we only keep clients who love results."
+                        },
+                        {
+                            obj: "\"The economy is slow right now, we're cutting costs.\"",
+                            reframe: "\"That's exactly why your competitors are cutting their marketing. The businesses that invest in infrastructure during slow periods come out the other side with 3x the market share. You can either pause or use this window to build the moat. What are your competitors doing right now?\"",
+                            note: "Recessions create opportunity. Position the investment as offensive, not defensive."
+                        }
+                    ].map((item, i) => (
+                        <div key={i} className="ql-card mb-6">
+                            <p className="text-white font-semibold text-lg mb-4">Objection #{i + 1}: {item.obj}</p>
+                            <div className="ql-script-box">{item.reframe}</div>
+                            <div className="mt-4 p-3 rounded-lg" style={{ background: 'rgba(167,139,250,0.05)', border: '1px solid rgba(167,139,250,0.15)' }}>
+                                <p className="text-xs text-purple-400 uppercase tracking-wider mb-1 font-semibold">Why This Works</p>
+                                <p className="text-sm text-gray-400 mb-0">{item.note}</p>
+                            </div>
+                        </div>
+                    ))}
+
+                    {/* ─── BONUS MODULE C: Power Questions Bank ─── */}
+                    <div className="ql-section-header">
+                        <span className="ql-module-number">Bonus Module C</span>
+                        <h2 className="ql-module-title">Power Questions Bank</h2>
+                    </div>
+
+                    <p className="mb-8">These are high-leverage questions that provoke thought, create urgency, and shift power dynamics. Memorize 3–5 of these and use them in every call. The right question is worth more than any pitch.</p>
+
+                    <div className="ql-card">
+                        <h3>💰 Revenue & Growth Questions</h3>
+                        <ul className="ql-question-list mt-4">
+                            <li>If I could show you a way to double your lead volume without doubling your ad spend, would you have 20 minutes this week?</li>
+                            <li>What would have to be true for you to add another $500k in revenue this year?</li>
+                            <li>If your current digital setup disappeared overnight, how much immediate revenue would you lose?</li>
+                            <li>What's the most expensive bottleneck in your business right now that technology could theoretically solve?</li>
+                            <li>Three years from now, what does your business look like — and what has to change digitally to make that happen?</li>
+                        </ul>
+                    </div>
+
+                    <div className="ql-card">
+                        <h3>⚠️ Pain & Frustration Questions</h3>
+                        <ul className="ql-question-list mt-4">
+                            <li>What's the task you dread most every Monday morning that you wish just happened automatically?</li>
+                            <li>If you could fire one part of your current tech stack tomorrow, what would it be and why?</li>
+                            <li>What's the most embarrassing thing about your current digital presence that you haven't fixed yet?</li>
+                            <li>Honestly — when a high-value prospect checks out your website, do you cringe a little?</li>
+                            <li>How many hours per week does your team spend doing things that a $200/mo software tool should be doing?</li>
+                        </ul>
+                    </div>
+
+                    <div className="ql-card">
+                        <h3>🎯 Closing & Commitment Questions</h3>
+                        <ul className="ql-question-list mt-4">
+                            <li>On a scale of 1–10, how motivated are you to fix this before Q3? What would make it a 10?</li>
+                            <li>If we could start this process next Monday, is there anything on your end that would prevent that?</li>
+                            <li>Assuming we build exactly what we talked about today — in 90 days, what does a win look like for you?</li>
+                            <li>What's your gut telling you right now about moving forward?</li>
+                            <li>Is the hesitation about us specifically, or about making this kind of investment in general?</li>
+                        </ul>
+                    </div>
+
+                    {/* ─── BONUS MODULE D: Full Live Call Roleplay ─── */}
+                    <div className="ql-section-header">
+                        <span className="ql-module-number">Bonus Module D</span>
+                        <h2 className="ql-module-title">Full Discovery Call Roleplay</h2>
+                    </div>
+
+                    <p className="mb-8">Study this call from start to finish. This is what a textbook QuantLab discovery call looks like with a law firm owner. Notice how we never pitch — we pull the solution out of the prospect.</p>
+
+                    <div className="ql-card" style={{ borderColor: 'rgba(34,211,238,0.2)' }}>
+                        <h3 className="text-cyan-400">Prospect: Personal Injury Law Firm, $1.8M revenue, 12 employees</h3>
+                        <p>Scenario: Cold LinkedIn message → call booked → 30-minute discovery call</p>
+
+                        <div className="mt-6 space-y-6">
+                            {[
+                                { speaker: 'REP', color: '#22d3ee', text: "Hey Mark, appreciate you taking the time. I'll keep this tight. Before I say anything about us — I want to understand your world. Can you walk me through what happens right now when someone fills out the contact form on your site?" },
+                                { speaker: 'MARK', color: '#a78bfa', text: "Sure. It sends an email to our receptionist. She reviews it, enters it into our case management system, calls the potential client, and if they're a good fit she schedules a consultation." },
+                                { speaker: 'REP', color: '#22d3ee', text: "Got it. How long does that whole loop take from form submission to first contact?" },
+                                { speaker: 'MARK', color: '#a78bfa', text: "Honestly? Could be 4–6 hours if she's busy. Sometimes next morning." },
+                                { speaker: 'REP', color: '#22d3ee', text: "And in personal injury — what happens to a lead that calls four other firms in that 4–6 hour window?" },
+                                { speaker: 'MARK', color: '#a78bfa', text: "...They're probably gone. We lose a few every week I'm sure." },
+                                { speaker: 'REP', color: '#22d3ee', text: "What's your average case value, roughly?" },
+                                { speaker: 'MARK', color: '#a78bfa', text: "Depends. Anywhere from $8,000 to $40,000 contingency fee. Average maybe $15,000." },
+                                { speaker: 'REP', color: '#22d3ee', text: "So if you're losing two leads a week to slow follow-up — that's conservatively $1.5 million a year slipping through your receptionist's inbox. Does that math sound right?" },
+                                { speaker: 'MARK', color: '#a78bfa', text: "...Yeah that's probably fair. I hadn't looked at it that way." },
+                                { speaker: 'REP', color: '#22d3ee', text: "Here's what we'd build. The moment someone submits your form, they get an automated text within 60 seconds — personal-sounding, from your firm's number. It qualifies them with 2 quick questions and books them into your calendar directly. Your receptionist's inbox is now only for qualified cases. Want me to show you exactly what that looks like?" }
+                            ].map((line, i) => (
+                                <div key={i} className="flex gap-4">
+                                    <div className="flex-shrink-0 w-16 pt-1">
+                                        <span className="text-xs font-bold uppercase tracking-wider" style={{ color: line.color }}>{line.speaker}</span>
+                                    </div>
+                                    <p className="text-gray-300 flex-1 text-sm leading-relaxed mb-0 italic">{line.text}</p>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="mt-8 p-5 rounded-xl" style={{ background: 'rgba(34,211,238,0.05)', border: '1px solid rgba(34,211,238,0.15)' }}>
+                            <p className="text-cyan-400 font-semibold text-sm uppercase tracking-wider mb-3">Debrief: What Happened Here</p>
+                            <ul style={{ color: '#94a3b8', marginLeft: '20px', listStyleType: 'disc', lineHeight: 2, fontSize: '0.95rem' }}>
+                                <li>Rep <strong>never pitched QuantLab</strong> until minute 9.</li>
+                                <li>Used the prospect's own numbers to build the case — rep never invented the $1.5M figure, Mark did.</li>
+                                <li>Every question was engineered to get deeper into pain, not to showcase features.</li>
+                                <li>The demo offer at the end was the softest possible close — low resistance, high momentum.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    {/* ─── BONUS MODULE E: Advanced Closing Techniques ─── */}
+                    <div className="ql-section-header">
+                        <span className="ql-module-number">Bonus Module E</span>
+                        <h2 className="ql-module-title">Advanced Closing Techniques</h2>
+                    </div>
+
+                    <div className="ql-card">
+                        <h3>The Takeaway Close</h3>
+                        <p>When someone is hesitant, create scarcity by gently pulling the offer away. Works best with responsive but indecisive prospects.</p>
+                        <div className="ql-script-box">
+                            "I want to be real with you — we only take on 3 new builds per month so we can give each client our full attention. We have one slot left for this month and two other conversations happening right now. I don't want to pressure you, but I also don't want you to miss the window if this is something you genuinely want to do."
+                        </div>
+                    </div>
+
+                    <div className="ql-card">
+                        <h3>The Assumption Close</h3>
+                        <p>Act as if the decision has already been made and begin discussing next steps. Momentum is everything — a prospect in motion tends to stay in motion.</p>
+                        <div className="ql-script-box">
+                            "Great — so the way we'll start is a 90-minute strategy session where we map out the full build. I typically have openings on Tuesdays and Thursdays. Which works better for your schedule?"
+                        </div>
+                    </div>
+
+                    <div className="ql-card">
+                        <h3>The Sharp Angle Close</h3>
+                        <p>When a prospect makes a conditional request ("If you could start in 2 weeks, we'd be in"), close on the condition immediately.</p>
+                        <div className="ql-script-box">
+                            Prospect: "If you could get us live in 6 weeks, I'd sign today."<br /><br />
+                            Rep: "If I confirmed a 6-week delivery timeline in writing — are we moving forward today?"<br /><br />
+                            [Pause. Let them say yes. Then immediately go to contract.]
+                        </div>
+                    </div>
+
+                    <div className="ql-card">
+                        <h3>The Social Proof Pyramid Close</h3>
+                        <p>Stack three relevant proof points from similar clients right before asking for the business. Hit the same industry, same problem, same size.</p>
+                        <div className="ql-script-box">
+                            "I want to share three quick things. A fitness studio in Denver — we built their booking system, they went from 40% capacity to 90% in 4 months. A law firm in Phoenix — we cut their intake time from 8 hours to 12 minutes, they signed 3 more cases in month one. A contractor here in Dallas — they stopped using HomeAdvisor completely because our system was generating them qualified leads directly. You're all in the same boat they were in. The question is: how fast do you want to get out of it?"
+                        </div>
+                    </div>
+
+                    <div className="ql-card">
+                        <h3>The Ben Franklin Close</h3>
+                        <p>When truly undecided, walk them through the decision analytically. This works exceptionally well with analytical founders (finance, law, engineering backgrounds).</p>
+                        <div className="ql-script-box">
+                            "Let's do this together — take a piece of paper. On one side write every reason this investment makes sense. On the other side, write every reason not to do it. I'll help with both sides. Usually when people do this exercise the answer becomes obvious pretty quickly."
+                        </div>
+                        <div className="ql-tip-box" style={{ marginTop: '20px' }}>
+                            <h4>💡 Pro Tip</h4>
+                            <p className="mb-0">When helping them list reasons NOT to do it, only bring up solvable objections — timing, price concerns — not legitimate deal-breakers. You're building the case for them while appearing balanced.</p>
+                        </div>
+                    </div>
+
+                    <div className="ql-card" style={{ marginBottom: '60px' }}>
+                        <h3 className="text-center text-2xl mb-8">⚡ Daily Mindset Reps</h3>
+                        <p className="text-center mb-8">Say these out loud before every prospecting session. The internal frame controls the external performance.</p>
+                        <div className="grid gap-4">
+                            {[
+                                "I am not selling. I am diagnosing. Sick businesses need prescriptions.",
+                                "Every no is filtering me toward the yes. I am grateful for both.",
+                                "The prospect's objection is data, not rejection. I will get curious, not defensive.",
+                                "I know something they do not: what their business could look like in 90 days.",
+                                "I will ask the uncomfortable question because that's what they're paying a consultant to do.",
+                                "Silence is not awkward — it's productive. I will let it work for me.",
+                                "My confidence is the product. If I don't believe it, neither will they."
+                            ].map((mantra, i) => (
+                                <div key={i} className="flex gap-4 items-start p-4 rounded-xl" style={{ background: 'rgba(34,211,238,0.03)', border: '1px solid rgba(34,211,238,0.08)' }}>
+                                    <span className="text-cyan-400 font-bold text-lg flex-shrink-0">{i + 1}.</span>
+                                    <p className="text-gray-300 mb-0 italic leading-relaxed">"{mantra}"</p>
+                                </div>
+                            ))}
+                        </div>
+                        <p className="text-center text-lg mt-12 text-cyan-400 font-semibold">
+                            The QuantLab rep who masters this document<br />doesn't have a job. They have a license to print money.
+                        </p>
+                    </div>
+
                 </div>
             </main>
         </div>
