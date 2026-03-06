@@ -2,6 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { Button } from "./ui/Button";
 
@@ -34,12 +35,20 @@ export function Navbar() {
                 <a href="#contact" className="hover:text-white transition-colors">Contact</a>
             </nav>
 
-            <div>
+            <div className="flex items-center gap-4">
                 <Button size="sm" variant="glass" className="hidden sm:inline-flex" onClick={() => {
                     document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
                 }}>
                     Initiate Contact
                 </Button>
+                {/* Discreet admin link — low-key, for internal use */}
+                <Link
+                    href="/admin"
+                    className="hidden md:block text-xs text-gray-700 hover:text-gray-400 transition-colors duration-200 select-none"
+                    tabIndex={-1}
+                >
+                    admin
+                </Link>
             </div>
         </motion.header>
     );
