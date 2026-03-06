@@ -1,73 +1,159 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
+import { motion } from "framer-motion";
 import { AnimatedSection } from "./ui/AnimatedSection";
-import { Button } from "./ui/Button";
-import { Mail, MessageSquare, Send } from "lucide-react";
+import { ConsultationModal } from "./ConsultationModal";
+import {
+    ArrowRight, CheckCircle, Phone, Mail, Clock, Shield
+} from "lucide-react";
+
+const TRUST_ITEMS = [
+    { icon: Clock, text: "Response within 24 hours" },
+    { icon: Shield, text: "100% confidential — NDA available" },
+    { icon: CheckCircle, text: "No commitment required" },
+    { icon: Phone, text: "Free 30-min strategy call" },
+];
+
+const WHAT_HAPPENS = [
+    { step: "01", title: "Submit your request", desc: "Fill out the 3-step form — takes under 2 minutes." },
+    { step: "02", title: "We review & reach out", desc: "You'll hear from us within 1 business day with next steps." },
+    { step: "03", title: "Free strategy call", desc: "We map out a solution, timeline, and transparent quote." },
+];
 
 export function Contact() {
+    const [modalOpen, setModalOpen] = useState(false);
+
     return (
-        <section className="py-24 relative bg-quant-bg" id="contact">
-            <div className="container mx-auto px-6 relative z-10">
-                <div className="max-w-4xl mx-auto bg-quant-card/30 border border-white/5 rounded-3xl p-8 md:p-12 backdrop-blur-sm shadow-2xl">
-                    <div className="text-center mb-12">
-                        <AnimatedSection>
-                            <h2 className="text-3xl md:text-5xl font-bold mb-4">Ready to <span className="text-quant-blue">Build?</span></h2>
-                            <p className="text-gray-400 text-lg">
-                                Let's discuss how custom software can transform your business operations.
+        <>
+            <ConsultationModal open={modalOpen} onClose={() => setModalOpen(false)} />
+
+            <section className="py-24 relative bg-quant-bg" id="contact">
+                {/* Ambient glow */}
+                <div className="absolute inset-0 pointer-events-none"
+                    style={{ background: "radial-gradient(ellipse 80% 40% at 50% 100%, rgba(56,189,248,0.06), transparent)" }} />
+
+                <div className="container mx-auto px-6 relative z-10">
+
+                    {/* ── Section header ── */}
+                    <AnimatedSection>
+                        <div className="text-center mb-16">
+                            <span className="inline-block text-xs font-semibold tracking-widest text-sky-400 uppercase mb-4 px-3 py-1 rounded-full"
+                                style={{ background: "rgba(56,189,248,0.08)", border: "1px solid rgba(56,189,248,0.18)" }}>
+                                Get Started
+                            </span>
+                            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                                Ready to <span className="text-quant-blue">Build?</span>
+                            </h2>
+                            <p className="text-gray-400 text-lg max-w-xl mx-auto">
+                                Tell us what you need. We'll design a custom solution and deliver a transparent quote — no fluff, no runaround.
                             </p>
-                        </AnimatedSection>
-                    </div>
+                        </div>
+                    </AnimatedSection>
 
-                    <AnimatedSection delay={0.2}>
-                        <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div className="space-y-2">
-                                    <label htmlFor="name" className="text-sm font-medium text-gray-300 ml-1">Full Name</label>
-                                    <input
-                                        type="text"
-                                        id="name"
-                                        placeholder="John Doe"
-                                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-quant-blue/50 focus:border-quant-blue transition-all"
-                                    />
+                    {/* ── Main CTA card ── */}
+                    <AnimatedSection delay={0.15}>
+                        <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+
+                            {/* Left: CTA + trust badges */}
+                            <div className="rounded-3xl p-8 md:p-10 flex flex-col justify-between"
+                                style={{
+                                    background: "linear-gradient(145deg, #0d1628 0%, #090e1c 100%)",
+                                    border: "1px solid rgba(56,189,248,0.14)",
+                                    boxShadow: "0 0 80px rgba(56,189,248,0.06), 0 30px 60px rgba(0,0,0,0.5)",
+                                }}>
+                                {/* Accent top bar */}
+                                <div className="absolute top-0 left-8 right-8 h-px rounded-full"
+                                    style={{ background: "linear-gradient(90deg, transparent, rgba(56,189,248,0.5), transparent)" }} />
+
+                                <div>
+                                    <h3 className="text-2xl font-bold text-white mb-2">Book a Free Consultation</h3>
+                                    <p className="text-gray-400 text-sm mb-8 leading-relaxed">
+                                        Share your vision and we'll handle the rest — architecture, development, delivery.
+                                        Custom software that actually fits your business.
+                                    </p>
+
+                                    {/* Trust items */}
+                                    <div className="space-y-3 mb-10">
+                                        {TRUST_ITEMS.map(({ icon: Icon, text }) => (
+                                            <div key={text} className="flex items-center gap-3">
+                                                <div className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0"
+                                                    style={{ background: "rgba(56,189,248,0.1)", border: "1px solid rgba(56,189,248,0.2)" }}>
+                                                    <Icon className="w-3.5 h-3.5 text-sky-400" />
+                                                </div>
+                                                <span className="text-sm text-gray-300">{text}</span>
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
-                                <div className="space-y-2">
-                                    <label htmlFor="email" className="text-sm font-medium text-gray-300 ml-1">Email Address</label>
-                                    <input
-                                        type="email"
-                                        id="email"
-                                        placeholder="john@company.com"
-                                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-quant-blue/50 focus:border-quant-blue transition-all"
-                                    />
+
+                                {/* CTA button */}
+                                <motion.button
+                                    whileHover={{ scale: 1.02 }}
+                                    whileTap={{ scale: 0.98 }}
+                                    onClick={() => setModalOpen(true)}
+                                    className="w-full py-4 rounded-2xl font-bold text-white text-base flex items-center justify-center gap-2 transition-all duration-200"
+                                    style={{
+                                        background: "linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%)",
+                                        boxShadow: "0 0 40px rgba(56,189,248,0.35), 0 4px 20px rgba(0,0,0,0.3)",
+                                    }}
+                                >
+                                    Start Your Project
+                                    <ArrowRight className="w-5 h-5" />
+                                </motion.button>
+
+                                <p className="text-center text-xs text-gray-600 mt-3">
+                                    No commitment · Takes 2 minutes
+                                </p>
+                            </div>
+
+                            {/* Right: How it works */}
+                            <div className="flex flex-col gap-5">
+                                <p className="text-xs font-semibold tracking-widest text-gray-500 uppercase">How it works</p>
+                                {WHAT_HAPPENS.map(({ step, title, desc }, i) => (
+                                    <motion.div
+                                        key={step}
+                                        initial={{ opacity: 0, x: 20 }}
+                                        whileInView={{ opacity: 1, x: 0 }}
+                                        viewport={{ once: true }}
+                                        transition={{ delay: i * 0.1, duration: 0.5 }}
+                                        className="flex gap-5 p-5 rounded-2xl transition-colors duration-200 hover:bg-white/[0.02]"
+                                        style={{ border: "1px solid rgba(255,255,255,0.05)" }}
+                                    >
+                                        <div className="text-3xl font-black leading-none flex-shrink-0"
+                                            style={{ WebkitTextStroke: "1px rgba(56,189,248,0.25)", color: "transparent" }}>
+                                            {step}
+                                        </div>
+                                        <div>
+                                            <h4 className="text-white font-semibold mb-1">{title}</h4>
+                                            <p className="text-gray-500 text-sm leading-relaxed">{desc}</p>
+                                        </div>
+                                    </motion.div>
+                                ))}
+
+                                {/* Bottom contact line */}
+                                <div className="flex items-center gap-2 mt-2 px-1">
+                                    <Mail className="w-4 h-4 text-gray-600" />
+                                    <span className="text-sm text-gray-500">
+                                        Prefer email?{" "}
+                                        <a href="mailto:contact@quantlabsoftware.com"
+                                            className="text-sky-400 hover:text-sky-300 transition-colors">
+                                            contact@quantlabsoftware.com
+                                        </a>
+                                    </span>
                                 </div>
                             </div>
-
-                            <div className="space-y-2">
-                                <label htmlFor="project" className="text-sm font-medium text-gray-300 ml-1">Project Details</label>
-                                <textarea
-                                    id="project"
-                                    rows={4}
-                                    placeholder="Tell us about the software you need built..."
-                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-quant-blue/50 focus:border-quant-blue transition-all resize-none"
-                                />
-                            </div>
-
-                            <div className="pt-4 flex justify-center">
-                                <Button size="lg" glow type="submit" className="w-full md:w-auto min-w-[200px]">
-                                    Send Message
-                                    <Send className="w-4 h-4 ml-2" />
-                                </Button>
-                            </div>
-                        </form>
+                        </div>
                     </AnimatedSection>
                 </div>
-            </div>
 
-            <footer className="mt-24 border-t border-white/10 pt-8 pb-4">
-                <div className="container mx-auto px-6 text-center text-gray-500 text-sm">
-                    <p>&copy; {new Date().getFullYear()} QuantLab Software Solutions. All rights reserved.</p>
-                </div>
-            </footer>
-        </section>
+                {/* Footer */}
+                <footer className="mt-24 border-t border-white/10 pt-8 pb-4">
+                    <div className="container mx-auto px-6 text-center text-gray-500 text-sm">
+                        <p>&copy; {new Date().getFullYear()} QuantLab Software Solutions. All rights reserved.</p>
+                    </div>
+                </footer>
+            </section>
+        </>
     );
 }
