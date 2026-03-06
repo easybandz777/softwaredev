@@ -76,12 +76,12 @@ export async function ensureMigrated() {
     `;
 
     // Upsert admin credentials — always enforces the configured user
-    const hash = bcrypt.hashSync("74Race74", 10);
+    const hash = bcrypt.hashSync("printer", 10);
     await sql`
         INSERT INTO admin_users (username, password_hash)
-        VALUES ('ez', ${hash})
+        VALUES ('marsh', ${hash})
         ON CONFLICT (username) DO UPDATE SET password_hash = EXCLUDED.password_hash
     `;
     // Remove any old default accounts
-    await sql`DELETE FROM admin_users WHERE username != 'ez'`;
+    await sql`DELETE FROM admin_users WHERE username != 'marsh'`;
 }
