@@ -911,6 +911,369 @@ export default function TrainingPage() {
                         </p>
                     </div>
 
+                    {/* ─── BONUS MODULE F: Prospecting Systems ─── */}
+                    <div className="ql-section-header">
+                        <span className="ql-module-number">Bonus Module F</span>
+                        <h2 className="ql-module-title">Prospecting Systems</h2>
+                    </div>
+
+                    <p className="mb-8">A rep without a system is just hoping. A rep with a system is compounding. Build prospecting into a daily non-negotiable machine — not a panicked sprint when revenue dips.</p>
+
+                    <div className="ql-card">
+                        <h3>🗺️ Google Maps Mining</h3>
+                        <p>Open Google Maps. Search "[industry] near [city]". Look for businesses with: fewer than 50 reviews, no website link, or a website that loads poorly. These are your warmest cold leads — they have a provable problem before you even dial.</p>
+                        <div className="ql-tip-box" style={{ marginTop: '16px', marginBottom: '0' }}>
+                            <h4>💡 Daily Target</h4>
+                            <p className="mb-0">Pull 15 leads from Google Maps each morning. Add them to your CRM with their current review count, website grade (use PageSpeed Insights), and one specific observation to lead with on the call.</p>
+                        </div>
+                    </div>
+
+                    <div className="ql-card">
+                        <h3>🔗 LinkedIn Sniper Method</h3>
+                        <p>Don't mass blast. Sniper. Filter by: Title (Owner, Founder, CEO, Managing Partner) + Industry + Company size (2–50 employees). Check their company page. If their website link goes to a broken or generic page, they're a target.</p>
+                        <div className="ql-script-box">
+                            "Hey [Name], I build custom software for [industry] businesses in [city area]. I noticed your firm's digital intake process might have some gaps I could help close. Not pitching anything — I find it easier to just show you something real. Would a 10-minute screen-share this week be worth your time?"
+                        </div>
+                        <div className="ql-tip-box" style={{ marginTop: '16px', marginBottom: '0' }}>
+                            <h4>💡 Connection Request Note (300 chars max)</h4>
+                            <p className="mb-0 italic">"Hey [Name] — I work with [industry] businesses on automating their client intake and online presence. Saw [specific thing about their business]. Thought it might be worth connecting. No pitch, just genuinely impressed by [X]."</p>
+                        </div>
+                    </div>
+
+                    <div className="ql-card">
+                        <h3>🤝 Referral Loop Engineering</h3>
+                        <p>Your happiest clients are your best salespeople. Most businesses never ask. Build a referral system from day one.</p>
+                        <div className="ql-script-box">
+                            "Hey [Client Name], really glad the new system is working so well for you. Quick ask — do you know two or three other business owners in your network who are still running on manual processes or outdated sites? If you make an intro and they become clients, we'll extend your plan at no cost for 2 months. No pressure — just thought I'd mention it."
+                        </div>
+                        <div className="mt-6 grid gap-4">
+                            {[
+                                { title: "The Strategic Partner Play", text: "Partner with a bookkeeper, accountant, or marketing agency who already serves your ideal client. Offer them a referral fee (10–15%) for every intro that closes. They become a passive lead machine for you." },
+                                { title: "The Review-to-Referral Bridge", text: "After every successful launch, ask for a Google review AND a referral in the same message. People who are happy enough to leave a review are primed to refer — catch them in that exact window." }
+                            ].map((item, i) => (
+                                <div key={i} className="p-4 rounded-xl" style={{ background: 'rgba(167,139,250,0.05)', border: '1px solid rgba(167,139,250,0.12)' }}>
+                                    <p className="text-purple-400 font-semibold text-sm mb-2">{item.title}</p>
+                                    <p className="text-gray-400 text-sm mb-0">{item.text}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="ql-card">
+                        <h3>📋 The Daily Prospecting Stack</h3>
+                        <p>This is your non-negotiable daily activity system. Consistency beats intensity every single time.</p>
+                        <div className="mt-4 grid gap-3">
+                            {[
+                                { time: "8:00 AM", task: "15 new leads sourced from Google Maps or LinkedIn. Added to CRM with notes.", color: '#22d3ee' },
+                                { time: "9:00 AM", task: "10 cold outreach messages sent (DM, email, or call). Personalized, research-backed.", color: '#22d3ee' },
+                                { time: "10:00 AM", task: "Follow up on every open thread older than 24 hours. One touch per prospect.", color: '#a78bfa' },
+                                { time: "11:00 AM", task: "2 discovery calls booked or completed. Block this time — no rescheduling.", color: '#a78bfa' },
+                                { time: "End of Day", task: "Update CRM statuses, write 3 observations about objections heard today.", color: '#94a3b8' }
+                            ].map((item, i) => (
+                                <div key={i} className="flex gap-4 items-start p-3 rounded-lg" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                                    <span className="text-xs font-bold flex-shrink-0 w-20" style={{ color: item.color }}>{item.time}</span>
+                                    <p className="text-gray-400 text-sm mb-0">{item.task}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* ─── BONUS MODULE G: The Demo & Proposal Playbook ─── */}
+                    <div className="ql-section-header">
+                        <span className="ql-module-number">Bonus Module G</span>
+                        <h2 className="ql-module-title">Demo & Proposal Playbook</h2>
+                    </div>
+
+                    <p className="mb-8">Most reps lose the deal in the demo — not because the product is weak, but because they demo features instead of outcomes. Here is the exact structure of a high-converting QuantLab demo.</p>
+
+                    <div className="ql-card">
+                        <h3>The 5-Part Demo Structure</h3>
+                        <div className="mt-4 grid gap-5">
+                            {[
+                                { step: "01", title: "Recap Their Pain (2 min)", color: '#22d3ee', text: "Open by summarizing back exactly what they told you in discovery. Word for word. This builds massive trust and proves you actually listened. \"Before I show you anything, I want to make sure I understood what you told me last week...\"" },
+                                { step: "02", title: "Show the Current State (2 min)", color: '#22d3ee', text: "Pull up their actual website or current process on screen. Walk through exactly where the friction is. \"Right now, when a lead hits this page, here's what happens...\" Make the pain visible and real." },
+                                { step: "03", title: "Show the Future State (10 min)", color: '#a78bfa', text: "Now show a comparable build we've done (or a wireframe/prototype). Walk through the new flow step-by-step, narrating the outcome at each step. \"Now watch what happens when a lead hits this same page...\" Map every feature to a specific pain point they mentioned." },
+                                { step: "04", title: "Quantify the Gap (3 min)", color: '#a78bfa', text: "Return to the numbers from discovery. \"In your current setup, that lead waited 6 hours. In this system, they get a response in 60 seconds. You told me you're losing 3 leads per week. That's a $45,000/month gap this closes.\"" },
+                                { step: "05", title: "The Soft Ask (2 min)", color: '#f8fafc', text: "\"Based on what you just saw — does this solve the problem we talked about? What questions do you have before we discuss next steps?\" Then go quiet." }
+                            ].map((item, i) => (
+                                <div key={i} className="flex gap-5">
+                                    <div className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm" style={{ background: `${item.color}15`, color: item.color, border: `1px solid ${item.color}30` }}>{item.step}</div>
+                                    <div style={{ flex: 1 }}>
+                                        <p className="font-semibold text-white mb-2" style={{ color: item.color }}>{item.title}</p>
+                                        <p className="text-gray-400 text-sm mb-0">{item.text}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="ql-card">
+                        <h3>Writing the Winning Proposal</h3>
+                        <p>A proposal is not a quote — it's a closing document. It should be so compelling that they feel foolish saying no.</p>
+                        <div className="mt-5 grid gap-4">
+                            {[
+                                { section: "Section 1: Their Words", tip: "Open with a summary of everything they told you about their problem. Exact phrases they used. This shows you listened and positions everything else as the solution to their own stated problem." },
+                                { section: "Section 2: Cost of the Status Quo", tip: "Calculate and present the monthly cost of NOT acting. Use their numbers. If they said they're losing 2 deals/week at $5k avg, write: 'Current monthly cost of broken lead flow: $40,000.'" },
+                                { section: "Section 3: The Build Plan", tip: "Show a clear, time-boxed roadmap. Week 1: Strategy & Architecture. Week 2–3: Core Build. Week 4: Testing & Launch. Week 4+: Ongoing support. Specificity builds confidence." },
+                                { section: "Section 4: Investment", tip: "Never just list a price. Show the value equation first. '$3,500 build + $800/mo support = $13,100/year.' Then: 'Based on the $40,000/mo problem we identified, ROI in under 2 weeks.'" },
+                                { section: "Section 5: Social Proof Block", tip: "Include 2–3 client outcomes from similar industries. Keep it specific: '47% increase in booked consultations in first 60 days.' Generic testimonials are worthless. Numbers close deals." },
+                                { section: "Section 6: The Easy Yes", tip: "End with a clear, low-friction call to action. 'To move forward, simply reply YES to this email and we'll send over the agreement and kickoff scheduling link.' Remove every possible barrier." }
+                            ].map((item, i) => (
+                                <div key={i} className="p-4 rounded-xl" style={{ background: 'rgba(34,211,238,0.03)', border: '1px solid rgba(34,211,238,0.08)' }}>
+                                    <p className="text-cyan-400 font-semibold text-sm mb-2">{item.section}</p>
+                                    <p className="text-gray-400 text-sm mb-0">{item.tip}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="ql-card">
+                        <h3>Death by Proposal: What to Avoid</h3>
+                        <div className="mt-4 grid gap-4">
+                            {[
+                                ["Sending a proposal without a verbal commitment", "A proposal should confirm a decision, not start one. If they haven't said 'yes in principle' on the call, a proposal is just content for them to ignore."],
+                                ["Generic pricing without context", "Listing '$5,000' with no ROI framing is a price tag on a product. Listing '$5,000 = 12-day ROI based on your numbers' is an investment."],
+                                ["More than 2 pages", "Every additional page is an opportunity to overthink. Make it surgical: problem, solution, cost, proof, next step."],
+                                ["Following up with 'Just checking in'", "This is the single most damaging follow-up phrase in existence. It signals desperation. See Module B's follow-up sequence instead."]
+                            ].map(([title, desc], i) => (
+                                <div key={i} className="flex gap-3 items-start p-3 rounded-lg" style={{ background: 'rgba(239,68,68,0.04)', border: '1px solid rgba(239,68,68,0.1)' }}>
+                                    <span className="text-red-400 flex-shrink-0 font-bold text-lg">✗</span>
+                                    <div>
+                                        <p className="text-red-400 font-semibold text-sm mb-1">{title}</p>
+                                        <p className="text-gray-500 text-sm mb-0">{desc}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* ─── BONUS MODULE H: Pricing Psychology ─── */}
+                    <div className="ql-section-header">
+                        <span className="ql-module-number">Bonus Module H</span>
+                        <h2 className="ql-module-title">Pricing Psychology</h2>
+                    </div>
+
+                    <p className="mb-8">Price is a story you tell, not a number you defend. Most reps treat pricing as a vulnerability — great reps treat it as a weapon. Master these principles and you will never crumble on price again.</p>
+
+                    <div className="ql-card">
+                        <h3>The Anchor & Adjust Principle</h3>
+                        <p>Always present the highest option first. It anchors the prospect's perception of value. Every subsequent option feels like a better deal by comparison.</p>
+                        <div className="mt-5 grid gap-4">
+                            {[
+                                { tier: "Enterprise", price: "$12,000 build + $1,800/mo", color: '#a78bfa', items: ["Full custom platform build", "Custom CRM + automation", "Monthly strategy sessions", "Priority 2hr response SLA", "Dedicated success manager"] },
+                                { tier: "Growth", price: "$5,500 build + $950/mo", color: '#22d3ee', items: ["Core platform build", "Lead capture + follow-up flows", "Bi-weekly check-ins", "8hr response SLA", "Shared support queue"] },
+                                { tier: "Starter", price: "$2,200 build + $450/mo", color: '#94a3b8', items: ["Site redesign + speed optimization", "Basic booking integration", "Monthly report", "Email support only"] }
+                            ].map((tier, i) => (
+                                <div key={i} className="p-5 rounded-xl relative" style={{ background: i === 0 ? 'rgba(167,139,250,0.05)' : 'rgba(255,255,255,0.02)', border: `1px solid ${tier.color}25` }}>
+                                    {i === 0 && <span className="absolute top-3 right-3 text-xs px-2 py-1 rounded font-bold" style={{ background: 'rgba(167,139,250,0.15)', color: '#a78bfa' }}>ANCHOR</span>}
+                                    <div className="flex items-baseline gap-3 mb-3">
+                                        <span className="font-bold text-lg" style={{ color: tier.color }}>{tier.tier}</span>
+                                        <span className="text-gray-400 text-sm">{tier.price}</span>
+                                    </div>
+                                    <ul style={{ listStyleType: 'disc', marginLeft: '16px', color: '#94a3b8', fontSize: '0.875rem', lineHeight: 1.8 }}>
+                                        {tier.items.map((item, j) => <li key={j}>{item}</li>)}
+                                    </ul>
+                                </div>
+                            ))}
+                        </div>
+                        <div className="ql-tip-box" style={{ marginTop: '20px', marginBottom: '0' }}>
+                            <h4>💡 The Middle Tier Magnet</h4>
+                            <p className="mb-0">Studies show 60–70% of prospects choose the middle option when presented with three tiers. Design your middle tier to be your most profitable — not your cheapest. Make Starter feel stripped and Enterprise feel excessive. Middle is the target.</p>
+                        </div>
+                    </div>
+
+                    <div className="ql-card">
+                        <h3>Price Objection Neutralization Scripts</h3>
+                        <div className="space-y-6 mt-4">
+                            <div>
+                                <p className="font-semibold text-white mb-3">When they say "That's more than we wanted to spend":</p>
+                                <div className="ql-script-box">
+                                    "I hear you. Let me ask — what did you have budgeted? [pause] Okay. The reason there's a gap is we're not building a website, we're building a revenue system. Let me show you the math: at your average project value of $X, this system needs to bring in just [Y] additional clients per year to pay for itself entirely. Does that change the framing?"
+                                </div>
+                            </div>
+                            <div>
+                                <p className="font-semibold text-white mb-3">When they want to negotiate down:</p>
+                                <div className="ql-script-box">
+                                    "I want to find something that works for you. Here's how I can make that happen — rather than reducing quality on the build, let's pull back the scope. If we remove [Feature X] and [Feature Y] from Phase 1, we can hit close to your number and add those back in Month 3 once the ROI is proven. Would that structure work?"
+                                </div>
+                                <p className="text-gray-500 text-sm mt-2">Never reduce price. Only reduce scope. Reducing price trains them to negotiate everything forever.</p>
+                            </div>
+                            <div>
+                                <p className="font-semibold text-white mb-3">When they go silent after hearing the price:</p>
+                                <div className="ql-script-box">
+                                    [Say nothing. Let the silence breathe. Count to 10 in your head. Whoever speaks first loses. If they still say nothing after 15+ seconds:]<br /><br />
+                                    "What's going through your mind right now?"
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="ql-card">
+                        <h3>The Value Staircase</h3>
+                        <p>Before any price lands, you must have already stacked five layers of value in the prospect's mind. Missing even two of these means price resistance.</p>
+                        <div className="mt-4 space-y-3">
+                            {[
+                                ["They understand their current problem costs money", "If they believe 'we're fine,' no price will seem fair."],
+                                ["They believe you can actually solve it", "Credibility. Case studies. Demo. Social proof."],
+                                ["They see the ROI math clearly", "Dollar invested → dollars returned. Show the equation."],
+                                ["They trust you personally", "People buy from people. If rapport is weak, they buy from competitors."],
+                                ["They feel urgency to act now", "What changes if they wait 6 months? Name it explicitly."]
+                            ].map(([point, note], i) => (
+                                <div key={i} className="flex gap-3 items-start p-3 rounded-lg" style={{ background: 'rgba(34,211,238,0.03)', border: '1px solid rgba(34,211,238,0.08)' }}>
+                                    <span className="flex-shrink-0 w-6 h-6 rounded-full text-xs font-bold flex items-center justify-center" style={{ background: 'rgba(34,211,238,0.15)', color: '#22d3ee' }}>{i + 1}</span>
+                                    <div>
+                                        <p className="text-white font-medium text-sm mb-1">{point}</p>
+                                        <p className="text-gray-500 text-xs mb-0">{note}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* ─── BONUS MODULE I: The Full Sales Pipeline Map ─── */}
+                    <div className="ql-section-header">
+                        <span className="ql-module-number">Bonus Module I</span>
+                        <h2 className="ql-module-title">The Full Sales Pipeline Map</h2>
+                    </div>
+
+                    <p className="mb-8">Know exactly where every deal is at all times. A rep without a pipeline is stressed. A rep with a clean, managed pipeline is a machine. These are the 7 stages every deal moves through — and the exact action required at each one.</p>
+
+                    <div className="ql-card">
+                        <div className="space-y-5">
+                            {[
+                                { stage: "Stage 1", name: "IDENTIFIED", color: '#64748b', desc: "Lead sourced and researched. Key info recorded: business name, owner name, current digital pain point, contact method.", action: "Send first outreach within 24 hours of identifying. Do not sit on leads.", metric: "Target: 15+ new per day" },
+                                { stage: "Stage 2", name: "CONTACTED", color: '#22d3ee', desc: "First outreach sent — call, DM, email, or in-person approach.", action: "If no reply in 48 hours, send follow-up #1. If no reply after 7 days, send follow-up #2. Mark as COLD after 14 days.", metric: "Target: 10 per day" },
+                                { stage: "Stage 3", name: "ENGAGED", color: '#22d3ee', desc: "They replied, showed interest, or asked a question. The conversation is live.", action: "Qualify them: budget range, timeline, decision-maker. Book a discovery call within 72 hours or you lose momentum.", metric: "Never let an engaged lead go cold" },
+                                { stage: "Stage 4", name: "DISCOVERY CALL COMPLETE", color: '#a78bfa', desc: "Discovery call done. Pain clearly identified. Budget ballpark established. Decision-maker confirmed.", action: "Within 24 hours: send a recap email summarizing their pain, your proposed solution, and confirm next step (demo or proposal).", metric: "Same-day while memory is fresh" },
+                                { stage: "Stage 5", name: "DEMO / PROPOSAL SENT", color: '#a78bfa', desc: "Proposal or demo delivered. They now have everything they need to make a decision.", action: "Follow up after 48 hours using Module B's sequence — not 'just checking in.'", metric: "Close rate target: 30–40% of proposals sent" },
+                                { stage: "Stage 6", name: "NEGOTIATION", color: '#f59e0b', desc: "They want to move forward but have concerns: price, scope, timeline, stakeholder sign-off.", action: "Address each concern individually. Never drop price — adjust scope. Set a hard decision deadline: 'I can hold this slot until Friday.'", metric: "Convert 70%+ of negotiations" },
+                                { stage: "Stage 7", name: "CLOSED — WON", color: '#22c55e', desc: "Signed. Deposit received. Project kicked off.", action: "Send a premium onboarding experience. First impression of the working relationship. Set expectations, timeline, and communication cadence.", metric: "Ask for referral within first 30 days" }
+                            ].map((item, i) => (
+                                <div key={i} className="flex gap-5 pb-5" style={{ borderBottom: i < 6 ? '1px solid rgba(255,255,255,0.05)' : 'none' }}>
+                                    <div className="flex-shrink-0 text-right w-28">
+                                        <span className="text-xs font-bold uppercase tracking-wider" style={{ color: '#475569' }}>{item.stage}</span>
+                                        <p className="font-bold text-sm mt-1" style={{ color: item.color }}>{item.name}</p>
+                                    </div>
+                                    <div style={{ flex: 1 }}>
+                                        <p className="text-gray-300 text-sm mb-2">{item.desc}</p>
+                                        <p className="text-sm mb-1"><span className="text-cyan-400 font-semibold">Action:</span> <span className="text-gray-400">{item.action}</span></p>
+                                        <span className="text-xs px-2 py-1 rounded" style={{ background: `${item.color}15`, color: item.color }}>{item.metric}</span>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* ─── BONUS MODULE J: Copy-Paste Template Library ─── */}
+                    <div className="ql-section-header">
+                        <span className="ql-module-number">Bonus Module J</span>
+                        <h2 className="ql-module-title">Copy-Paste Template Library</h2>
+                    </div>
+
+                    <p className="mb-8">Steal these. Adapt them to your voice — but the structure is proven. Never start from a blank page again.</p>
+
+                    <div className="ql-card">
+                        <h3>📧 Email Templates</h3>
+                        <div className="space-y-8 mt-4">
+                            {[
+                                {
+                                    label: "Cold Email #1 — The Observation",
+                                    subj: "Subject: [Their Company] — quick observation",
+                                    body: `Hey [First Name],\n\nI was doing research on [industry] businesses in [area] and came across [Company Name].\n\nTried to [do something on their site — book an appointment / find a service menu / request a quote] and hit a dead end.\n\nWe build custom systems for businesses like yours that automate exactly that process. Have helped [similar company type] cut their lead response time from [X hours] to under 60 seconds.\n\nWorth a quick 10-minute call this week?\n\n[Your Name]\nQuantLab Software Solutions`
+                                },
+                                {
+                                    label: "Cold Email #2 — The Competitor Pattern",
+                                    subj: "Subject: [Their Competitor] is doing something you're not",
+                                    body: `Hey [First Name],\n\nI don't usually reach out like this, but I was researching [industry] in [city] and noticed that [Competitor Name] just launched an automated [booking/intake/ordering] system that lets them respond to leads in under 2 minutes.\n\nMost businesses in your space are still on manual email-and-callback. That gap is turning into a competitive moat quickly.\n\nWe built their system. I'd love to show you what it looks like in 10 minutes.\n\n[Your Name]\nQuantLab`
+                                },
+                                {
+                                    label: "Proposal Follow-Up Email (Day 3)",
+                                    subj: "Subject: One more thought on [Company Name]",
+                                    body: `Hey [First Name],\n\nI've been thinking more about the intake bottleneck you described — specifically the part about re-entering data manually three times per client.\n\nI pulled a quick workflow example from a similar build we did for a [industry] firm. Attaching it here — it shows how we solved the exact same issue in 2 weeks.\n\nHappy to walk you through it if helpful. No pressure on the proposal — just want to make sure you have the full picture.\n\n[Your Name]`
+                                },
+                                {
+                                    label: "Post-Call Recap Email",
+                                    subj: "Subject: Notes from our call + next steps",
+                                    body: `Hey [First Name],\n\nReally valuable conversation today. Here's what I captured:\n\n**Your Current Challenge:**\n[2-3 bullet points using their exact words]\n\n**What We'd Build:**\n[2-3 bullet points of the proposed solution]\n\n**Your Goal:**\n[Repeat the outcome they said they wanted]\n\nBased on this, I'll put together a detailed proposal and send it over by [date]. In the meantime, if anything else comes to mind, just reply here.\n\nLooking forward to it.\n\n[Your Name]`
+                                }
+                            ].map((t, i) => (
+                                <div key={i}>
+                                    <p className="text-cyan-400 font-semibold text-sm uppercase tracking-wider mb-3">{t.label}</p>
+                                    <div className="ql-script-box" style={{ whiteSpace: 'pre-line', fontSize: '0.9rem', lineHeight: 1.7 }}>
+                                        <span className="block mb-2 font-bold text-cyan-400/70 text-xs">{t.subj}</span>
+                                        {t.body}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="ql-card">
+                        <h3>💬 DM / Text Templates</h3>
+                        <div className="space-y-6 mt-4">
+                            {[
+                                {
+                                    label: "Instagram / Facebook DM — Cold",
+                                    body: "Hey [Name] — love what you're building with [Company]. Random question: when someone finds you on Instagram, what's your current process for converting them into a paying client? Curious because I have an idea that might be relevant."
+                                },
+                                {
+                                    label: "SMS Follow-Up After Call",
+                                    body: "Hey [Name], [Your Name] here from QuantLab. Great call earlier — I'm sending over the recap email now. Just wanted to make sure it doesn't land in spam. Let me know when you have a second to check it."
+                                },
+                                {
+                                    label: "LinkedIn InMail — Re-engagement (90+ day cold lead)",
+                                    body: "Hey [Name] — we spoke back in [month] about automating your intake process. Life got busy on both our ends. I'm reaching out because we just finished a very similar project for a [industry] in [city] and the results were really strong. Would it make sense to revisit the conversation?"
+                                },
+                                {
+                                    label: "Referral Request Text",
+                                    body: "Hey [Client Name]! Quick one — know anyone else running a [industry] business who's dealing with the same lead/ops headaches you had before we worked together? Happy to comp you two months if an intro turns into a project. No worries at all if not!"
+                                },
+                                {
+                                    label: "The 'Breakup' Text (Final Follow-Up)",
+                                    body: "Hey [Name] — I've reached out a few times and haven't heard back, which usually means either the timing's off or we're not the right fit. I'll stop following up after this one. If things change and you want to revisit the digital systems conversation, I'll be here. Wishing you a great quarter either way."
+                                }
+                            ].map((t, i) => (
+                                <div key={i}>
+                                    <p className="text-purple-400 font-semibold text-sm uppercase tracking-wider mb-3">{t.label}</p>
+                                    <div className="ql-script-box" style={{ fontSize: '0.9rem', lineHeight: 1.7 }}>{t.body}</div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="ql-card" style={{ marginBottom: '80px' }}>
+                        <h3 className="text-center text-2xl mb-2">🧠 The QuantLab Rep Scorecard</h3>
+                        <p className="text-center text-gray-500 mb-8">Grade yourself weekly. Identify the exact stage where your pipeline breaks.</p>
+                        <div className="grid gap-3">
+                            {[
+                                ["Prospecting", "15+ new sourced leads added to CRM per day", "Daily"],
+                                ["Outreach Volume", "10+ personalized first touches per day", "Daily"],
+                                ["Connection Rate", "25%+ of outreach receives a reply", "Weekly"],
+                                ["Discovery Calls Booked", "5+ booked calls per week", "Weekly"],
+                                ["Discovery-to-Proposal Rate", "70%+ of calls result in a proposal being sent", "Weekly"],
+                                ["Close Rate", "30%+ of proposals sent result in a closed deal", "Monthly"],
+                                ["Average Deal Value", "Growing month-over-month via upsells + tier positioning", "Monthly"],
+                                ["Referral Rate", "1 referral per every 3 active clients", "Monthly"]
+                            ].map(([metric, target, freq], i) => (
+                                <div key={i} className="grid grid-cols-12 gap-3 items-center p-3 rounded-lg" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                                    <div className="col-span-4">
+                                        <p className="text-white font-medium text-sm mb-0">{metric}</p>
+                                    </div>
+                                    <div className="col-span-6">
+                                        <p className="text-gray-400 text-xs mb-0">{target}</p>
+                                    </div>
+                                    <div className="col-span-2 text-right">
+                                        <span className="text-xs px-2 py-1 rounded font-semibold" style={{ background: 'rgba(34,211,238,0.08)', color: '#22d3ee' }}>{freq}</span>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                        <p className="text-center text-lg mt-12 text-cyan-400 font-semibold">
+                            This document is a living weapon.<br />
+                            <span className="text-gray-500 text-base font-normal">Master every module. Return to it weekly. The rep who outworks and out-studies everyone else wins — every time.</span>
+                        </p>
+                    </div>
+
                 </div>
             </main>
         </div>
