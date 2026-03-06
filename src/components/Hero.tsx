@@ -42,7 +42,7 @@ export function Hero() {
                     <img
                         src="/logo.png"
                         alt="QuantLab Software Solutions"
-                        className="h-24 sm:h-32 w-auto max-w-xs sm:max-w-sm object-contain"
+                        className="w-64 sm:w-96 md:w-[480px] h-auto object-contain"
                         style={{
                             filter: "drop-shadow(0 0 18px rgba(56,189,248,0.7)) drop-shadow(0 0 40px rgba(56,189,248,0.35)) brightness(1.15) saturate(1.3)",
                         }}
