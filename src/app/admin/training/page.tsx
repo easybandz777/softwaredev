@@ -1275,6 +1275,364 @@ export default function TrainingPage() {
                     </div>
 
                 </div>
+                {/* ─── BONUS MODULE K: Elite Advanced Tactics ─── */}
+                <div className="ql-section-header">
+                    <span className="ql-module-number">Bonus Module K</span>
+                    <h2 className="ql-module-title">Elite Advanced Tactics</h2>
+                </div>
+
+                <p className="mb-8">These are the moves that separate a $5k/month rep from a $25k/month rep. Not for beginners — internalize Modules A through J first. These tactics require full situational awareness to deploy correctly.</p>
+
+                <div className="ql-card">
+                    <h3>🎭 The Pre-Frame Technique</h3>
+                    <p>Before you ever discuss price, solution, or features — install the frame through which they will evaluate everything. Set it in your first 60 seconds.</p>
+                    <div className="ql-script-box">
+                        "Before I show you anything, I want to be transparent about how I work. I'm not going to pitch you. I'm going to ask you questions, and at the end if I genuinely think we can help you, I'll tell you exactly how. And if I don't think we're the right fit, I'll tell you that too. Sound fair?"
+                    </div>
+                    <p>This pre-frame does three things simultaneously: it removes sales pressure, positions you as a trusted advisor, and makes the prospect lower their defenses completely. Every single thing you say after this lands twice as hard.</p>
+                </div>
+
+                <div className="ql-card">
+                    <h3>🧲 The Porcupine Technique</h3>
+                    <p>When a prospect asks you a question, answer it with a question. Redirect the conversation back to their world instead of your pitch. Named after the old sales adage: "If someone throws you a porcupine, throw it back."</p>
+                    <div className="space-y-4 mt-4">
+                        {[
+                            ["Prospect: 'How long does a build like this take?'", "Rep: 'Great question — it depends on the scope. What's your timeline: when do you need this live to make an impact?'"],
+                            ["Prospect: 'Do you work with small businesses?'", "Rep: 'Absolutely. What's your current revenue range, so I can make sure what we show you is sized correctly?'"],
+                            ["Prospect: 'What does it cost?'", "Rep: 'I can walk you through our investment ranges. First, can I ask what you're currently spending on your website and software tools per month? I want to make sure there's alignment.'"]
+                        ].map(([q, a], i) => (
+                            <div key={i} className="grid gap-2">
+                                <div className="p-3 rounded-lg" style={{ background: 'rgba(239,68,68,0.04)', border: '1px solid rgba(239,68,68,0.1)' }}>
+                                    <p className="text-red-400 text-sm italic mb-0">{q}</p>
+                                </div>
+                                <div className="p-3 rounded-lg" style={{ background: 'rgba(34,211,238,0.04)', border: '1px solid rgba(34,211,238,0.1)' }}>
+                                    <p className="text-cyan-300 text-sm italic mb-0">{a}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="ql-card">
+                    <h3>⚡ The Minimum Viable Commitment Close</h3>
+                    <p>When a prospect is nearly there but freezing on the big commitment, reduce the ask to the smallest possible yes that keeps momentum alive.</p>
+                    <div className="ql-script-box">
+                        "I understand you need to see more before committing to the full build. Here's what I propose: let's do a paid strategy session — $250 for 90 minutes. We'll map out the exact architecture, deliverables, and ROI projection. You walk away with a complete blueprint whether we build it or not. If we move forward to the build, the $250 comes off your invoice. Fair?"
+                    </div>
+                    <div className="ql-tip-box" style={{ marginTop: '16px', marginBottom: '0' }}>
+                        <h4>💡 Why This Works</h4>
+                        <p className="mb-0">The psychology of commitment: once someone pays even $250, they mentally become a client. They show up to the strategy session ready to buy. Conversion from paid strategy sessions to full builds typically runs 70–85%.</p>
+                    </div>
+                </div>
+
+                <div className="ql-card">
+                    <h3>📊 The Live Audit Close</h3>
+                    <p>The most powerful demo you can give is not of something you built — it's a live deconstruction of their existing digital presence, done in real time on the call. Pull up their site, run PageSpeed Insights, check their Google ranking for 3 target keywords, count their review gap vs. competitors. Narrate every finding like a surgeon.</p>
+                    <div className="ql-script-box">
+                        "Give me 2 minutes — I'm going to pull up your site right now and show you exactly what your ideal client experiences when they find you. [Run the audit live.] Okay, so your homepage loaded in 8.3 seconds on mobile. Google's threshold is 2.5 seconds. Your top three competitors load in under 2 seconds. This is the invisible reason you're losing organic rankings — and the fix is not complicated."
+                    </div>
+                    <p>This technique requires zero preparation and creates maximum urgency. The prospect sees their problem in real time — they can't rationalize it away.</p>
+                </div>
+
+                <div className="ql-card">
+                    <h3>🔐 The Exclusivity Positioning</h3>
+                    <p>Never position yourself as available to everyone. Quality clients want to work with quality vendors. Selectivity signals demand.</p>
+                    <div className="ql-script-box">
+                        "We're pretty selective about who we take on — not because we're arrogant, but because we require a certain level of commitment and collaboration from clients to deliver results. Based on our conversation, you check the boxes. But I want to make sure you're genuinely committed to growing the business digitally before we move forward. Are you?"
+                    </div>
+                    <div className="ql-bad-script-box">
+                        "We'd love to work with you! We're very flexible and work with all kinds of businesses!" [This communicates desperation and commoditizes you instantly.]
+                    </div>
+                </div>
+
+                <div className="ql-card">
+                    <h3>🎯 Multi-Threading: Navigating Decision Committees</h3>
+                    <p>In larger businesses ($3M+ revenue), you will rarely close with just one person. You need to identify and build relationships with every stakeholder — the influencer, the decision-maker, and the budget holder. These are often three different people.</p>
+                    <div className="mt-5 grid gap-4">
+                        {[
+                            { role: "The Champion", color: '#22d3ee', desc: "Your first contact. Usually a manager or operations lead. They love your idea but don't control the budget. Your job: arm them with everything they need to sell internally. Send them a one-page ROI summary they can forward to their boss." },
+                            { role: "The Decision-Maker", color: '#a78bfa', desc: "The CEO, COO, or owner. They control the yes. They don't want to hear features — they want to hear risk mitigation and ROI. Speak their language in every email. Get on a call with them directly, never rely on your champion to relay your pitch." },
+                            { role: "The Budget Holder / CFO", color: '#f59e0b', desc: "Sometimes the same as the decision-maker, sometimes not. They think in terms of cost centers. Frame everything as an investment with a measurable return period, not an expense. Have your ROI math locked before you meet them." }
+                        ].map((item, i) => (
+                            <div key={i} className="p-4 rounded-xl" style={{ background: `${item.color}08`, border: `1px solid ${item.color}20` }}>
+                                <p className="font-bold text-sm mb-2" style={{ color: item.color }}>{item.role}</p>
+                                <p className="text-gray-400 text-sm mb-0">{item.desc}</p>
+                            </div>
+                        ))}
+                    </div>
+                    <div className="ql-script-box" style={{ marginTop: '20px' }}>
+                        "Hey [Champion], before we put together the final proposal, I'd love to get 15 minutes with [CEO Name] directly. I find the projects go smoother when I can address their specific concerns upfront rather than through the chain. Could you set that up?"
+                    </div>
+                </div>
+
+                <div className="ql-card">
+                    <h3>🛡️ Advanced Tonality Control</h3>
+                    <p>What you say matters less than how you say it. Master these four tonalities and use them deliberately in every call.</p>
+                    <div className="mt-4 grid gap-4">
+                        {[
+                            { tone: "Curious / Playful", use: "Opening, rapport building, discovery questions", example: "\"Walk me through what happens when someone tries to book with you right now... [lean in, genuine curiosity]\"", color: '#22d3ee' },
+                            { tone: "Assertive / Certain", use: "When presenting solutions and ROI", example: "\"Here's what I know for certain — this kind of system will cut your response time from hours to seconds. That's not a promise, that's what the data shows.\"", color: '#a78bfa' },
+                            { tone: "Empathetic / Measured", use: "When handling objections or uncovering deep pain", example: "\"That sounds genuinely frustrating — having to re-enter data three times for every single client. How long has that been the process?\"", color: '#f59e0b' },
+                            { tone: "Takeaway / Withdrawn", use: "Trial close, negotiation, breakup messages", example: "\"Based on this conversation, I'm not sure we're the right fit for where you're at right now. And that's completely okay.\"", color: '#94a3b8' }
+                        ].map((item, i) => (
+                            <div key={i} className="p-4 rounded-xl" style={{ border: `1px solid ${item.color}25`, background: `${item.color}05` }}>
+                                <div className="flex items-center gap-3 mb-2">
+                                    <span className="font-bold text-sm" style={{ color: item.color }}>{item.tone}</span>
+                                    <span className="text-xs text-gray-600">— Use when: {item.use}</span>
+                                </div>
+                                <p className="text-gray-400 text-sm italic mb-0">{item.example}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="ql-card">
+                    <h3>🔄 The Upsell Ladder</h3>
+                    <p>The easiest person to sell to is someone who already bought from you. Build an intentional upsell path so every client naturally grows their investment over time.</p>
+                    <div className="mt-5 space-y-3">
+                        {[
+                            { month: "Month 1–2", action: "Deliver exceptional core build. Exceed expectations on timeline and communication.", trigger: "Client says 'We love working with you'" },
+                            { month: "Month 3", action: "Introduce Upsell #1: 'Based on how the system is performing, we can add [feature — automated review requests / SMS follow-up / analytics dashboard]. Want me to price it out?'", trigger: "Any positive result they share with you" },
+                            { month: "Month 4–5", action: "Escalate their plan tier. 'You've outgrown the Starter plan — moving you to Growth gets you [X and Y] which I think you actually need at this point.'", trigger: "Usage increase, new team members, or expansion talk" },
+                            { month: "Month 6+", action: "Referral + renewal conversation. Lock in next year's plan with a loyalty discount. 'We're grateful for your business — if you commit to another 12 months, we'll lock your current rate in and add [bonus].'", trigger: "Any account anniversary or check-in call" }
+                        ].map((item, i) => (
+                            <div key={i} className="flex gap-4 items-start p-4 rounded-xl" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                                <span className="flex-shrink-0 text-xs font-bold px-2 py-1 rounded" style={{ background: 'rgba(34,211,238,0.1)', color: '#22d3ee', whiteSpace: 'nowrap' }}>{item.month}</span>
+                                <div>
+                                    <p className="text-gray-300 text-sm mb-1">{item.action}</p>
+                                    <p className="text-xs text-gray-600">Trigger: {item.trigger}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* ─── BONUS MODULE L: 100-Question Q&A ─── */}
+                <div className="ql-section-header">
+                    <span className="ql-module-number">Bonus Module L</span>
+                    <h2 className="ql-module-title">100-Question Training Q&A</h2>
+                </div>
+
+                <p className="mb-4">Test your mastery. Go through every question. If you can answer fluently without reading, you are ready. If you hesitate, return to the relevant module and drill it until the response is automatic.</p>
+
+                <div className="ql-tip-box mb-8">
+                    <h4>💡 How to Use This Section</h4>
+                    <p className="mb-0">Read each question aloud. Answer it verbally without looking at the answer. Then check your response. Practice with a partner, on video, or record yourself. The goal is a <strong>zero-hesitation response</strong> to every question in this bank.</p>
+                </div>
+
+                {[
+                    {
+                        category: "🧠 Mindset & Preparation",
+                        color: '#22d3ee',
+                        qas: [
+                            { q: "What is the core frame difference between a salesman and a consultant?", a: "A salesman pushes products. A consultant diagnoses problems. We operate as Digital Growth Consultants — we don't pitch features, we prescribe solutions to specific, quantifiable business pain." },
+                            { q: "Why is pre-call research non-negotiable at QuantLab?", a: "Because generic outreach is the fastest way to sound like everyone else. 5 minutes of research lets you lead with a specific observation about their business — which instantly separates you from 99% of cold callers." },
+                            { q: "What three things should you identify about a prospect before any outreach?", a: "1) Their current digital pain point (broken booking, slow site, no lead capture). 2) Their approximate business size/revenue. 3) The decision-maker's name and preferred contact channel." },
+                            { q: "What does 'knowing your weapon' mean in the context of QuantLab sales?", a: "Having complete conviction that what we build generates measurable ROI. You must be able to articulate exactly how our systems capture leads, automate operations, and build authority — and connect each one to dollar value." },
+                            { q: "Name three things you should audit on a prospect's site before outreach.", a: "1) Page load speed (use PageSpeed Insights). 2) Mobile responsiveness. 3) Whether they have a clear lead capture or booking path. Bonus: check their Google review count vs. competitors." },
+                            { q: "What is the 'cost of inaction' and why do you calculate it before pitching?", a: "The COI is the monthly/annual dollar amount a prospect loses by doing nothing. Calculating it first reframes our investment as cheap compared to the ongoing bleed. Without it, any price feels expensive." },
+                            { q: "How should you handle internal fear before a cold call?", a: "Use the Daily Mindset Reps. Remind yourself: you are not selling, you are diagnosing. Their objection is data, not rejection. Your confidence is the product. Say these aloud before every prospecting session." },
+                            { q: "What is the 'Consultant Frame' and how do you maintain it under pressure?", a: "The frame that you are there to diagnose and help, not to close a deal. Maintain it by staying genuinely curious, asking more than you tell, and being willing to say 'I don't think we're the right fit' if they aren't." },
+                            { q: "How do you translate tech jargon into business value for a non-technical prospect?", a: "Use the Tech Translation Cheat Sheet. Never say 'Next.js SSR' — say 'your site will load instantly on mobile, reducing bounce rate.' Never say 'API webhook' — say 'your systems will talk to each other automatically with no manual data entry.'" },
+                            { q: "What is your objective on the very first contact with a prospect?", a: "Not to pitch. Not to close. Your sole objective on first contact is to earn the right to a discovery conversation. Generate curiosity, establish credibility, and book a call." }
+                        ]
+                    },
+                    {
+                        category: "🧊 Breaking the Ice & Outreach",
+                        color: '#a78bfa',
+                        qas: [
+                            { q: "What is the 'Pattern Interrupt' in cold email?", a: "A cold email that opens with something hyper-specific to their business rather than a generic intro. Example: leading with a specific observation about their booking process, load speed, or competitor gap instead of 'I hope this email finds you well.'" },
+                            { q: "What are the four cold outreach channels and which is typically highest response?", a: "Phone, LinkedIn DM, email, and in-person. Phone has the highest response rate for local businesses. LinkedIn DM performs well for professional services. Email has the lowest open rate but highest scalability." },
+                            { q: "How long should your cold LinkedIn DM be and why?", a: "Under 3 sentences. Business owners ignore paragraphs. One observation, one value hook, one CTA. More words = less read." },
+                            { q: "What is rapport in a professional sales context?", a: "Not small talk — it's competence and empathy. You build professional rapport by demonstrating you understand the brutal reality of running their specific type of business before you ask them anything." },
+                            { q: "Give an example of a cold opener for a home services contractor.", a: "\"Hey [Name], noticed your competitors all have instant 'Request an Estimate' portals and your site only has a basic email form. How many emergency leads are slipping to the other guys because you can't reply fast enough?\"" },
+                            { q: "What is the biggest mistake reps make in their cold opener?", a: "Talking about themselves or their company instead of the prospect. Every cold opener should be 90% about the prospect's world and 10% or less about QuantLab." },
+                            { q: "What does a high-converting cold email subject line look like?", a: "Short, specific, and curiosity-provoking. Examples: '[Their Company] — quick observation', '[Competitor Name] is doing something you're not', 'Your onboarding flow'. Avoid: 'Partnership opportunity', 'Quick question', 'Re: Our services'" },
+                            { q: "How do you build instant credibility with a brand new prospect?", a: "Reference a specific detail about their business that proves you did your homework. Then make a precise observation about what's broken. Specificity = credibility. Generic praise means nothing." },
+                            { q: "What should your LinkedIn connection request note focus on?", a: "Under 300 characters. One specific observation about their business, a genuine compliment, and zero pitch. You are asking to connect as a peer, not to sell." },
+                            { q: "After sending a cold email, how long do you wait before following up?", a: "48–72 hours for follow-up #1. Then 7 days for follow-up #2. Then Day 14 for the breakup message. Never send a generic 'Just checking in' — every follow-up must add new value or shift the frame." }
+                        ]
+                    },
+                    {
+                        category: "🔍 Discovery & SPIN",
+                        color: '#22d3ee',
+                        qas: [
+                            { q: "What does SPIN stand for and what are the four question types?", a: "Situation (current state), Problem (pain points), Implication (what the pain costs them), Need-Payoff (what solving it is worth). Each layer builds urgency before the next." },
+                            { q: "What is a Situation question and give an example?", a: "A question that maps the prospect's current state. 'Walk me through exactly what happens right now when a new lead hits your website.' You're gathering data, not diagnosing yet." },
+                            { q: "What is a Problem question and why is it critical?", a: "It makes the prospect admit the flaw in their current system. 'How often are details slipping through the cracks with your current manual process?' — they must say it themselves for it to land emotionally." },
+                            { q: "What is an Implication question and how does it create urgency?", a: "It forces the prospect to calculate the financial and operational cost of their problem. 'If your team spends 15 hours a week on manual data entry, what does that cost you in payroll per month?' Urgency created by their own math." },
+                            { q: "What is a Need-Payoff question?", a: "It gets the prospect to articulate the value of solving the problem in their own words. 'If we could completely automate that intake process, how much would that free your team up?' — they sell themselves." },
+                            { q: "How do you know when you've done a successful discovery?", a: "When the prospect has identified their own pain, quantified what it costs them, and expressed what solving it would mean to their business — all in their own words without you pitching." },
+                            { q: "What listening technique separates good reps from great ones?", a: "Reflective listening — repeating key phrases they use back to them verbatim. 'So what I'm hearing is that the re-entry process is eating 4 hours a week.' This validates them and deepens the pain before you advance." },
+                            { q: "When in the discovery call should you introduce QuantLab's solution?", a: "Not until you've fully mapped the pain and confirmed the prospect has acknowledged it verbally. Introducing the solution too early = feature dump. The prospect must be asking 'how can you fix this' before you answer." },
+                            { q: "How do you handle a prospect who says 'everything is going great' on the discovery call?", a: "Challenge gently. 'That's great to hear — most businesses doing [revenue] still have at least one area where they know they're leaving money on the table. If you had to pick one, where would you say that is for you?'" },
+                            { q: "What do you do if you discover a prospect's pain is outside QuantLab's scope?", a: "Tell them honestly. 'Honestly, what you're describing is more of a staffing challenge than a tech challenge — I'd be doing you a disservice pretending otherwise. Let me point you toward who actually can help.' This builds extraordinary referral trust." }
+                        ]
+                    },
+                    {
+                        category: "💰 Budget, Pricing & ROI",
+                        color: '#f59e0b',
+                        qas: [
+                            { q: "What is the anchor pricing strategy and why do you always present it first?", a: "You present the most expensive tier first. Every option shown after it feels like a better deal by comparison. Most prospects land on the middle tier — which you design to be your most profitable." },
+                            { q: "What is the 'Middle Tier Magnet' psychology?", a: "Studies show 60–70% of buyers choose the middle option when given three tiers. Make Starter feel stripped and Enterprise feel excessive so the middle tier becomes the obvious, comfortable choice." },
+                            { q: "How do you bring up budget without creating awkwardness?", a: "Anchor first with a range. 'Engagements like this typically range from $3,000 to $10,000 depending on scope. Is that completely out of the realm of possibility for you?' Their reaction tells you everything. No awkwardness — just data." },
+                            { q: "What is the response to 'That's too expensive'?", a: "Loop back to the COI math you built together. 'We just agreed this broken process is costing you $10,000 a month. Our system costs $1,500/month. It pays for itself in 5 days. The question isn't whether you can afford this — it's whether you can afford not to.'" },
+                            { q: "What does 'never drop price, only scope' mean?", a: "When a prospect wants a lower price, you remove deliverables rather than discounting the same scope. Discounting trains clients to negotiate everything and devalues your work permanently. Scope reduction is a trade, not a concession." },
+                            { q: "What is the 'Value Staircase' and how many steps must be completed before price presentation?", a: "Five steps: 1) Prospect understands their problem costs money. 2) They believe you can solve it. 3) They see the ROI math clearly. 4) They trust you personally. 5) They feel urgency to act now. All five must be present before price lands well." },
+                            { q: "How do you frame the monthly retainer to avoid it sounding like a maintenance fee?", a: "Call it a 'Dedicated Engineering Partner Plan.' Compare it to the cost of a junior in-house developer ($80k/year salary + benefits). Frame it as an entire elite tech team for a fraction of that cost, fully managed." },
+                            { q: "What do you say when they go completely silent after you say the price?", a: "Absolutely nothing. Let the silence breathe. Count to 10. Whoever speaks first loses. If 15+ seconds pass, ask: 'What's going through your mind right now?' — soft, curious, zero defensiveness." },
+                            { q: "What is a paid strategy session and why does it convert at 70–85%?", a: "A $250 paid 90-minute session where you architect their solution before committing to a full build. It converts high because paying $250 creates psychological ownership — they mentally become a client before the big check." },
+                            { q: "How do you calculate the Cost of Inaction (COI) live on a call?", a: "Ask for their average client value, then ask how many leads/deals they lose per month to the broken process. Multiply. 'You said you lose 2 leads a week at $5k average — that's $40,000 a month this system would recapture. Write that down.'" }
+                        ]
+                    },
+                    {
+                        category: "🛡️ Objection Handling",
+                        color: '#ef4444',
+                        qas: [
+                            { q: "What is the fundamental mindset shift needed to handle objections well?", a: "An objection is never a rejection — it's a request for more information or reassurance. Stay curious, not defensive. Welcome objections as signals that the prospect is engaged." },
+                            { q: "What is the 3-step objection response formula?", a: "1) Validate without agreeing. 2) Reframe the objection as a question or assumption to test. 3) Redirect back to their pain and advance. Never skip validation — it disarms resistance before logic can land." },
+                            { q: "How do you handle 'We tried an agency before and it was a disaster'?", a: "Let them vent fully. Then: 'What specifically went wrong — communication, timeline, or the final product?' Then attack exactly those points with your differentiation. Empathy then differentiation, never defensiveness." },
+                            { q: "What is the 'I need to think about it' objection actually hiding?", a: "Almost always a specific unsolved objection: price concern, authority (they need to ask someone else), trust deficit, or timeline friction. Your job is to ask: 'What specifically do you need to think through?' and diagnose the real one." },
+                            { q: "How do you handle 'Can you just send me some information?'", a: "Redirect immediately to live demo. 'A PDF won't answer your specific questions. What if I take 10 minutes right now and show you a comparable build for a business just like yours? Faster than reading a brochure.' Never just send a PDF." },
+                            { q: "How do you respond to 'My nephew handles our website'?", a: "'That's great for getting started. At your revenue level, you need enterprise reliability — SLAs, redundancy, a dedicated team. If something breaks Tuesday at 2 PM, is your nephew dropping everything to fix your lead funnel in 2 hours?'" },
+                            { q: "How do you handle 'We're already using a big agency'?", a: "Find the gap. 'They do great brand work. But do they build deep custom ops tooling — live data dashboards, custom client portals, automated intake? Or is it mainly creative and ad management? We live in the space they don't touch.'" },
+                            { q: "How do you respond to 'Call us in 6 months'?", a: "'Happy to. But I'm curious — what changes in 6 months? What milestone makes this decision easier then? I ask because most businesses who waited told me later they wished they'd started 6 months earlier.'" },
+                            { q: "What is the Sharp Angle Close and when is it deployed?", a: "When a prospect makes a conditional commitment ('If you can start in 2 weeks, we'd sign'). You close immediately on the condition: 'If I confirmed a 2-week start in writing, are we moving forward today?' Then immediately go to contract." },
+                            { q: "How do you neutralize a lower competitor price?", a: "Compete on risk, not price. 'I'd expect them to quote lower. My question is: what happens when it breaks? What happens when you need a feature in 4 months? What's the cost of your lead system being down for 48 hours?' Make them calculate the risk of cheap." }
+                        ]
+                    },
+                    {
+                        category: "🗺️ Prospecting & Lead Generation",
+                        color: '#22d3ee',
+                        qas: [
+                            { q: "What is the Google Maps Mining technique?", a: "Search '[industry] near [city]' in Google Maps. Target businesses with fewer than 50 reviews, no website link, or a slow/outdated site. These are pre-qualified cold leads — they have a provable problem before you even call." },
+                            { q: "What is the LinkedIn Sniper Method?", a: "Use LinkedIn's search filters: Title (Owner/Founder/CEO) + Industry + Company size (2–50 employees). Find prospects whose public website is broken or generic. Message with extreme personalization based on what you find." },
+                            { q: "What is a Strategic Partner and how do you recruit one?", a: "A bookkeeper, accountant, attorney, or marketing agency already serving your ideal clients. You offer them a 10–15% referral fee for every intro that closes. They become a passive lead funnel for you." },
+                            { q: "What is the Review-to-Referral Bridge?", a: "After every successful launch, ask for both a Google review AND a referral in the same message. Clients happy enough to leave a review are primed to refer — catch them in that exact emotional window." },
+                            { q: "What is the Daily Prospecting Stack?", a: "8 AM: source 15 leads. 9 AM: 10 personalized outreach attempts. 10 AM: follow up on all open threads older than 24 hours. 11 AM: 2 discovery calls booked or completed. EOD: update CRM, log 3 objection observations." },
+                            { q: "What are the four data points to record for every new lead in your CRM?", a: "1) Business name and owner name. 2) Current digital pain point (specific observation). 3) Contact method and outreach date. 4) Website/review grade and one hook to lead with on the call." },
+                            { q: "How many cold touches does it typically take before a prospect responds?", a: "Industry research shows 7–12 touches on average. Most reps give up after 2–3. Your follow-up sequence through Day 14 keeps you in the game while your competition quits." },
+                            { q: "What tool do you use to grade a prospect's website before a call?", a: "Google PageSpeed Insights and GTMetrix — both free. Run their URL, capture the score and exact load time. Bring the specific number to the call. 'Your site loaded in 7.3 seconds on mobile' is devastating and unarguable." },
+                            { q: "What is the maximum number of personalized outreach messages to attempt in one day?", a: "10–15 personalized messages (not blasts). Quality beats quantity at this level. Each message should reference something specific about their business. Mass generic outreach actively damages your brand." },
+                            { q: "What does a healthy monthly prospecting funnel look like?", a: "300+ leads identified → 200+ contacted → 50+ engaged → 20+ discovery calls → 6–8 proposals sent → 2–3 closed deals. If your pipeline narrows early (contacted but not engaging), your outreach message is the problem. If proposals don't close, your demo or pricing is the problem." }
+                        ]
+                    },
+                    {
+                        category: "🎬 Demo, Proposal & Closing",
+                        color: '#a78bfa',
+                        qas: [
+                            { q: "What are the five parts of the QuantLab demo structure in order?", a: "1) Recap Their Pain. 2) Show the Current State (their broken process). 3) Show the Future State (the build). 4) Quantify the Gap. 5) The Soft Ask." },
+                            { q: "Why do you always recap their pain before showing anything in the demo?", a: "It proves you listened, builds trust before the sell, and frames everything that follows as a direct solution to their own stated problems. The prospect can't dismiss what they said themselves." },
+                            { q: "What are the six sections of a winning QuantLab proposal?", a: "1) Their Words (problem recap). 2) Cost of the Status Quo. 3) The Build Plan (time-boxed roadmap). 4) Investment (with ROI framing). 5) Social Proof Block (specific metrics). 6) The Easy Yes (frictionless CTA)." },
+                            { q: "What is the maximum length a proposal should be and why?", a: "Two pages. Every additional page creates decision fatigue and more opportunities to overthink. Surgical proposals close faster. Make it: problem → solution → price → proof → next step." },
+                            { q: "What is the Assumption Close and how is it executed?", a: "After a positive conversation, act as if the decision has been made and begin scheduling. 'The way we'll start is a 90-minute strategy session. I have openings Tuesday and Thursday — which works for you?' Momentum in motion stays in motion." },
+                            { q: "What is the Takeaway Close?", a: "Create legitimate scarcity by communicating that your capacity is limited. 'We only take on 3 new builds per month. We have one slot left and two other conversations in progress. I don't want to pressure you — but I also don't want you to miss the window.' Only use this if it's true." },
+                            { q: "What is the Ben Franklin Close and when is it most effective?", a: "Walk them through a pros/cons exercise live. Works best with analytical, logical thinkers (law, finance, engineering). Guide the 'cons' side to only include solvable objections. The exercise almost always makes them sell themselves." },
+                            { q: "What is the Social Proof Pyramid Close?", a: "Stack three specific client outcomes from similar industries immediately before asking for the business. Same industry, same problem, same size. Specificity is critical — never use generic 'our clients love us' language." },
+                            { q: "When should you send a proposal?", a: "Only after getting verbal commitment that the prospect is 'in principle' ready to move forward. A proposal sent without that commitment is marketing collateral, not a closing document." },
+                            { q: "What do you say immediately after asking for the business?", a: "Nothing. Absolute silence. The first person to speak loses. If the prospect feels pressure to fill the silence, they will often answer with a yes or reveal the real objection." }
+                        ]
+                    },
+                    {
+                        category: "🏭 Industry Scenarios",
+                        color: '#22d3ee',
+                        qas: [
+                            { q: "What is the core pain point for a personal injury law firm and how do you quantify it?", a: "Lead response time. They lose cases to competitors who call leads faster. Quantify: 'You said you're losing 2 leads a week. Average case value $15k. That's $1.5M per year slipping through your 6-hour response window.'" },
+                            { q: "What is the restaurant/hospitality pitch hook?", a: "The DoorDash commission math. 'You're giving DoorDash 30% — that's $9 from every $30 order. Our direct ordering system keeps 100% of that revenue with you and gives you first-party customer data to retarget.'" },
+                            { q: "What is the fitness studio/gym pitch hook?", a: "The Linktree-to-conversion gap. 'Your Instagram has 4,000 followers but your bio link goes to a generic Linktree. I'd estimate under 5% convert to trial bookings. We build landing pages that convert that traffic at 20–30%.'" },
+                            { q: "What is the real estate agent/broker pitch hook?", a: "Page load speed destroying their organic traffic. Pull their IDX page load time. 'Your property pages load in 4+ seconds. Google's mobile threshold is 3 seconds. You're losing 30–40% of cold organic traffic before they see a single listing.'" },
+                            { q: "What is the e-commerce/Shopify brand pitch hook?", a: "The ROAS decay caused by site speed and conversion rate. 'Your pages load in 6 seconds on mobile and your conversion is probably 2–3%. Optimized stores run 7–9%. That gap is your ad spend going straight to competitors.'" },
+                            { q: "What is the home services/contractor pitch hook?", a: "The instant estimate gap. 'Your competitors have online estimate portals. You have a basic email form. Emergency leads call whoever responds first. How many jobs are you losing each week to guys who are just easier to book?'" },
+                            { q: "What is the coach/consultant pitch hook?", a: "The authority mismatch. 'Your LinkedIn content is elite-level. But your booking page is a plain Calendly — no social proof, no transformation story. Your digital presence isn't matching your authority and it's filtering out your ideal client.'" },
+                            { q: "What is the auto detailer/dealership pitch hook?", a: "Review count gap and booking friction. 'The three detailers above you on Google have 200+ reviews and online booking in the search result. You have 40 reviews and booking goes to Facebook Messenger. We fix both.'" },
+                            { q: "What is the architect/interior designer pitch hook?", a: "Premium work attracting budget clients. 'Your portfolio work is stunning, but your website looks like 2016 and doesn't reflect your pricing. High-budget clients are pre-qualifying you out before they even reach out.'" },
+                            { q: "How do you adapt your outreach for a medical clinic or healthcare provider?", a: "'I tried to book a new patient appointment on your site and had to download a PDF. Is your front desk constantly chasing patients for paperwork? We build HIPAA-aware intake systems that automate that entirely.'" }
+                        ]
+                    },
+                    {
+                        category: "📊 Pipeline, Metrics & Account Growth",
+                        color: '#a78bfa',
+                        qas: [
+                            { q: "What are the 7 stages of the QuantLab sales pipeline?", a: "1) Identified. 2) Contacted. 3) Engaged. 4) Discovery Call Complete. 5) Demo/Proposal Sent. 6) Negotiation. 7) Closed Won. Every lead should have exactly one stage at any given time." },
+                            { q: "What is the target daily lead identification goal?", a: "15+ new leads sourced and added to CRM with notes. Non-negotiable daily minimum. Without a full top of funnel, everything below it starves." },
+                            { q: "What is the target close rate on proposals sent?", a: "30–40% of proposals sent should result in a closed deal. If you're below 30%, your demo or pricing presentation is the issue. If you're below 15%, your qualification is weak — you're sending proposals to unqualified prospects." },
+                            { q: "At what stage do you ask for referrals from a new client?", a: "Within the first 30 days of the project — when the excitement of getting started is highest. Not six months later. Catch the emotional peak of the client relationship." },
+                            { q: "What is the QuantLab Rep Scorecard and how often do you review it?", a: "An 8-metric tracking system covering: prospecting volume, outreach volume, connection rate, discovery calls booked, discovery-to-proposal rate, close rate, average deal value, and referral rate. Review weekly, not monthly." },
+                            { q: "How do you identify where your pipeline is breaking?", a: "Track conversion rates between every stage. If connections are high but discovery calls low — your opener isn't creating urgency. If proposals are high but closes are low — your demo or pricing is wrong. Every bottleneck has a specific cause." },
+                            { q: "What is the multi-threading strategy for enterprise prospects?", a: "Identify the Champion (your contact), Decision-Maker (CEO/owner), and Budget Holder (CFO). Build separate relationships with each. Never rely on your champion to relay your pitch upward — get in front of every stakeholder directly." },
+                            { q: "What is the Upsell Ladder and when do you introduce it?", a: "A structured 6-month plan to grow client accounts: deliver core build → introduce Upsell #1 at Month 3 → escalate their plan tier at Month 4–5 → lock in a renewal with loyalty discount at Month 6+. Planned from Day 1, executed naturally." },
+                            { q: "How do you handle a client who wants to pause their retainer?", a: "Treat it like a sales conversation. Ask why, quantify the cost of pausing, and offer a scaled-down plan as a bridge. 'Instead of pausing completely, what if we drop to our maintenance tier for 60 days while cash flow stabilizes? I'd hate to lose the infrastructure momentum we've built.'" },
+                            { q: "What is the industry benchmark for referral generation among retainer clients?", a: "Target 1 referral per every 3 active retainer clients per month. If you're below this, you're either not asking, asking too late, or delivering work that doesn't generate organic enthusiasm. Great work + a clear ask = referrals." }
+                        ]
+                    },
+                    {
+                        category: "⚡ Elite Tactics & Advanced Scenarios",
+                        color: '#22d3ee',
+                        qas: [
+                            { q: "What is the Pre-Frame Technique and when is it applied?", a: "In the first 60 seconds of any call, you install the evaluative frame: 'I'm not here to pitch — I'm here to diagnose. If we're the right fit, I'll tell you. If not, I'll tell you that too.' This removes defensiveness and positions you as a trusted advisor before a single question is asked." },
+                            { q: "What is the Porcupine Technique?", a: "Answering a prospect's question with a question. When they ask 'How long does a build take?' — you ask 'Good question — what's your timeline? When do you need this live to make an impact?' Redirects control of the conversation back to you." },
+                            { q: "What is tonality control and why does it matter more than words?", a: "Research shows that 38% of communication is tonality and 55% is body language. The same words said with different tonality produce opposite results. Master the four tones: Curious/Playful, Assertive/Certain, Empathetic/Measured, Takeaway/Withdrawn." },
+                            { q: "What is the Live Audit Close?", a: "Running a real-time digital audit of the prospect's site during the call. Pull up their site, run PageSpeed Insights, check their keyword rankings live. The prospect sees their problem in real time — you can't rationalize away a 7-second load time number." },
+                            { q: "What is the Minimum Viable Commitment Close?", a: "When a prospect is close but frozen, reduce the ask to a paid $250 strategy session. The small payment creates psychological ownership — they become a client mentally. These sessions convert to full builds at 70–85%." },
+                            { q: "What is Exclusivity Positioning and how do you communicate it authentically?", a: "Position yourself as selective about who you work with. 'We take on 3 new builds per month — not because we're arrogant, but because we're committed to results for every client. Based on our conversation, you qualify.' Selectivity signals demand and respect." },
+                            { q: "How do you handle a decision committee where the Champion doesn't have budget authority?", a: "Arm your champion with a one-page ROI summary to carry upward. Then request direct access to the decision-maker: 'I want to make sure your CEO's specific concerns are addressed directly — could you set up a 15-minute intro call?'" },
+                            { q: "How do you re-engage a prospect who went cold 90+ days ago?", a: "LinkedIn InMail referencing a recent, relevant result. 'We spoke in [month] about automating your intake. I'm reaching out because we just finished a nearly identical project for a [same industry] in [city] — results were strong. Would it make sense to revisit?'" },
+                            { q: "What is the difference between 'reducing price' and 'reducing scope' and why does it matter?", a: "Reducing price devalues your work and trains clients to negotiate everything forever. Reducing scope is a trade — they receive less, so you charge less. Never reduce the price for the same deliverable. Always trade value for value." },
+                            { q: "What is the single most important thing a QuantLab rep must do after every single sales call?", a: "Send a same-day post-call recap email summarizing: their pain (in their words), the proposed solution, and the confirmed next step. This demonstrates professionalism, maintains momentum, and removes ambiguity about what was agreed." }
+                        ]
+                    }
+                ].map((section, si) => (
+                    <div key={si} className="mb-10">
+                        <div className="flex items-center gap-3 mb-6 pb-3" style={{ borderBottom: `1px solid ${section.color}20` }}>
+                            <div className="w-3 h-3 rounded-full" style={{ background: section.color }}></div>
+                            <h3 className="text-lg font-bold" style={{ color: section.color, margin: 0 }}>{section.category}</h3>
+                            <span className="text-xs text-gray-600 ml-auto">Q{si * 10 + 1}–Q{si * 10 + 10}</span>
+                        </div>
+                        <div className="space-y-4">
+                            {section.qas.map((qa, qi) => (
+                                <div key={qi} className="rounded-xl overflow-hidden" style={{ border: '1px solid rgba(255,255,255,0.06)', background: '#0a0f1d' }}>
+                                    <div className="flex gap-4 p-4 items-start">
+                                        <span className="flex-shrink-0 text-xs font-bold w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: `${section.color}15`, color: section.color }}>
+                                            {String(si * 10 + qi + 1).padStart(2, '0')}
+                                        </span>
+                                        <div style={{ flex: 1 }}>
+                                            <p className="text-white font-semibold text-sm mb-3">{qa.q}</p>
+                                            <div className="p-3 rounded-lg" style={{ background: 'rgba(255,255,255,0.03)', borderLeft: `3px solid ${section.color}40` }}>
+                                                <p className="text-gray-400 text-sm mb-0 leading-relaxed">{qa.a}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                ))}
+
+                <div className="ql-card" style={{ marginBottom: '80px', background: 'linear-gradient(135deg, rgba(34,211,238,0.05), rgba(167,139,250,0.05))' }}>
+                    <h3 className="text-center text-2xl mb-4">🏆 Certification Standard</h3>
+                    <p className="text-center text-gray-400 mb-8">Answer all 100 questions fluently without referencing the page. That's when you're ready to represent QuantLab at a senior level.</p>
+                    <div className="grid gap-4">
+                        {[
+                            { label: "Novice", score: "0–40 correct without notes", desc: "Return to Core Modules 01–05. Drill the scripts daily.", color: '#64748b' },
+                            { label: "Developing", score: "41–65 correct without notes", desc: "Work through Bonus Modules A–E. Practice objections with a partner.", color: '#f59e0b' },
+                            { label: "Competent", score: "66–80 correct without notes", desc: "You're ready for supervised discovery calls. Focus on Modules F–J.", color: '#22d3ee' },
+                            { label: "Advanced", score: "81–94 correct without notes", desc: "Senior rep ready. Work on tonality, multi-threading, elite tactics.", color: '#a78bfa' },
+                            { label: "Elite", score: "95–100 correct without notes", desc: "You are QuantLab certified. Build a system, teach others, compound.", color: '#22c55e' }
+                        ].map((tier, i) => (
+                            <div key={i} className="flex items-center gap-4 p-4 rounded-xl" style={{ background: `${tier.color}08`, border: `1px solid ${tier.color}25` }}>
+                                <span className="font-bold text-sm flex-shrink-0 w-24" style={{ color: tier.color }}>{tier.label}</span>
+                                <span className="text-gray-500 text-xs flex-shrink-0 w-48">{tier.score}</span>
+                                <span className="text-gray-400 text-xs">{tier.desc}</span>
+                            </div>
+                        ))}
+                    </div>
+                    <p className="text-center text-xl mt-10 font-bold" style={{ background: 'linear-gradient(135deg, #22d3ee, #a78bfa)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+                        The QuantLab Sales Partner Training System<br />
+                        <span className="text-sm font-normal text-gray-500" style={{ WebkitTextFillColor: '#64748b' }}>CONFIDENTIAL & PROPRIETARY // THE QUANTLAB METHOD</span>
+                    </p>
+                </div>
+
+
             </main>
         </div>
     );
