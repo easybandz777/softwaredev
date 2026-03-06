@@ -1,93 +1,152 @@
 "use client";
 
 import React from "react";
+import { motion } from "framer-motion";
 import { AnimatedSection } from "./ui/AnimatedSection";
-import { Cpu, TerminalSquare, Code2 } from "lucide-react";
+
+const stats = [
+    { value: "20+", label: "Projects Shipped" },
+    { value: "5", label: "Live Trading Systems" },
+    { value: "4+", label: "Industries Served" },
+    { value: "0", label: "Unplanned Outages" },
+];
+
+const stack = [
+    "Next.js", "React", "TypeScript", "Node.js",
+    "Prisma", "PostgreSQL", "Stripe", "Docker",
+    "Vercel", "Neon DB", "Tailwind", "Framer Motion",
+    "Fly.io", "DigitalOcean", "Sentry", "JWT Auth",
+];
+
+const proofPoints = [
+    {
+        tag: "Trading Infrastructure",
+        title: "Multi-strategy algo bots",
+        detail: "MA Supertrend · VWAP · Momentum · High-frequency execution with live risk controls.",
+        color: "from-violet-500 to-blue-500",
+    },
+    {
+        tag: "Business Platform",
+        title: "Full business ops hub",
+        detail: "Inventory · Work orders · Invoicing · Employee management · Role-based access.",
+        color: "from-cyan-500 to-teal-500",
+    },
+    {
+        tag: "SaaS & Licensing",
+        title: "License management server",
+        detail: "JWT validation · Seat tracking · Expiry enforcement · Customer portal.",
+        color: "from-blue-500 to-indigo-500",
+    },
+    {
+        tag: "Client Platforms",
+        title: "Industry-specific builds",
+        detail: "Automotive · Construction · Entertainment · Financial services. All from scratch.",
+        color: "from-emerald-500 to-cyan-500",
+    },
+];
 
 export function About() {
     return (
-        <section className="py-24 relative overflow-hidden bg-black/40 border-y border-white/5" id="about">
-            {/* Decorative background glow */}
-            <div className="absolute top-1/2 left-0 w-96 h-96 bg-quant-blue/10 rounded-full blur-[120px] -translate-y-1/2 -translate-x-1/2 pointer-events-none" />
+        <section className="py-28 relative overflow-hidden bg-black/40 border-y border-white/5" id="about">
+            {/* Background glows */}
+            <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-quant-blue/8 rounded-full blur-[140px] pointer-events-none" />
+            <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-violet-500/6 rounded-full blur-[120px] pointer-events-none" />
 
             <div className="container mx-auto px-6 relative z-10">
-                <div className="flex flex-col lg:flex-row items-center gap-16">
-                    <div className="w-full lg:w-1/2">
-                        <AnimatedSection>
-                            <h2 className="text-3xl md:text-5xl font-bold mb-6">
-                                From Trading Algos to <br />
-                                <span className="text-quant-light">Custom Software.</span>
-                            </h2>
-                            <div className="space-y-6 text-gray-400 text-lg leading-relaxed">
-                                <p>
-                                    QuantLab Software Solutions was born out of the high-stakes world of algorithmic trading. When you build bots that execute thousands of trades per second, there is zero margin for error.
-                                </p>
-                                <p>
-                                    We bring that exact same rigorous, latency-obsessed engineering mindset to custom business software. Whether it's a CRM handling sensitive client data, or a payment portal processing millions in revenue, we build it to be unbreakable.
-                                </p>
-                            </div>
 
-                            <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-6">
-                                <div className="flex items-center gap-4">
-                                    <div className="p-3 rounded-xl bg-white/5 border border-white/10">
-                                        <Cpu className="w-6 h-6 text-quant-blue" />
-                                    </div>
-                                    <div>
-                                        <h4 className="font-semibold text-white">Absolute Precision</h4>
-                                        <p className="text-sm text-gray-500">Zero-error tolerance</p>
-                                    </div>
-                                </div>
-                                <div className="flex items-center gap-4">
-                                    <div className="p-3 rounded-xl bg-white/5 border border-white/10">
-                                        <TerminalSquare className="w-6 h-6 text-quant-light" />
-                                    </div>
-                                    <div>
-                                        <h4 className="font-semibold text-white">Modern Tech Stack</h4>
-                                        <p className="text-sm text-gray-500">React, Next.js, Cloud</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </AnimatedSection>
-                    </div>
+                {/* Top: headline + stats */}
+                <div className="flex flex-col lg:flex-row items-start gap-16 mb-20">
+                    <AnimatedSection className="w-full lg:w-1/2">
+                        <span className="inline-block text-quant-blue text-sm font-semibold tracking-[0.2em] uppercase mb-5">
+                            Our Story
+                        </span>
+                        <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+                            Born in the{" "}
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-quant-blue to-cyan-400">
+                                unforgiving margins
+                            </span>{" "}
+                            of algo trading.
+                        </h2>
+                        <p className="text-gray-400 text-lg leading-relaxed mb-4">
+                            QuantLab was built by engineers who wrote code where a single bug costs real money in real time. When your bot executes thousands of trades per second, "good enough" is not an option.
+                        </p>
+                        <p className="text-gray-400 text-lg leading-relaxed">
+                            That same obsession with precision, latency, and uptime is what we bring to every project — whether it's a CRM, a business ops platform, or a payment system handling your revenue.
+                        </p>
+                    </AnimatedSection>
 
-                    <div className="w-full lg:w-1/2">
-                        <AnimatedSection delay={0.2} className="relative">
-                            {/* Abstract code/terminal graphic */}
-                            <div className="relative rounded-2xl border border-white/10 bg-[#0d131f] p-6 shadow-2xl overflow-hidden group">
-                                <div className="absolute top-0 left-0 right-0 h-10 bg-white/5 border-b border-white/10 flex items-center px-4 gap-2">
-                                    <div className="w-3 h-3 rounded-full bg-red-500/80" />
-                                    <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
-                                    <div className="w-3 h-3 rounded-full bg-green-500/80" />
-                                    <div className="ml-4 text-xs font-mono text-gray-500 flex items-center gap-2">
-                                        <Code2 className="w-3 h-3" /> core_engine.ts
+                    {/* Stats grid */}
+                    <AnimatedSection delay={0.15} className="w-full lg:w-1/2">
+                        <div className="grid grid-cols-2 gap-4 h-full">
+                            {stats.map((stat, i) => (
+                                <motion.div
+                                    key={i}
+                                    whileHover={{ scale: 1.02 }}
+                                    transition={{ duration: 0.2 }}
+                                    className="relative rounded-2xl border border-white/8 bg-[#0d1526]/70 backdrop-blur-sm p-6 overflow-hidden group"
+                                >
+                                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"
+                                        style={{ background: "radial-gradient(circle at 30% 0%, rgba(56,189,248,0.08), transparent 70%)" }} />
+                                    <div className="relative z-10">
+                                        <p className="text-4xl md:text-5xl font-black text-white mb-1 tracking-tight">{stat.value}</p>
+                                        <p className="text-sm text-gray-400 font-medium">{stat.label}</p>
                                     </div>
-                                </div>
-
-                                <div className="mt-8 font-mono text-sm leading-loose">
-                                    <div className="text-quant-blue">export class</div> <span className="text-yellow-200">QuantEngine</span> {"{"}
-                                    <br />
-                                    <div className="pl-4">
-                                        <span className="text-quant-blue">private</span> <span className="text-blue-300">latencyMonitor</span>: <span className="text-green-300">LatencyTracker</span>;
-                                        <br />
-                                        <span className="text-quant-blue">private</span> <span className="text-blue-300">dataStream</span>: <span className="text-green-300">WebSocketStream</span>;
-                                        <br /><br />
-                                        <span className="text-gray-500">// Initialize high-frequency core</span><br />
-                                        <span className="text-quant-light">constructor</span>() {"{"}<br />
-                                        <div className="pl-4">
-                                            <span className="text-purple-400">super</span>();<br />
-                                            <span className="text-blue-300">this</span>.<span className="text-yellow-100">initializeSubsystems</span>();
-                                        </div>
-                                        {"}"}
-                                    </div>
-                                    {"}"}
-                                </div>
-
-                                {/* Scanning line animation */}
-                                <div className="absolute top-10 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-quant-blue/10 border-b border-quant-blue/30 -translate-y-full group-hover:animate-[scan_3s_ease-in-out_infinite]" />
-                            </div>
-                        </AnimatedSection>
-                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
+                    </AnimatedSection>
                 </div>
+
+                {/* Middle: tech stack */}
+                <AnimatedSection delay={0.1} className="mb-20">
+                    <div className="rounded-2xl border border-white/6 bg-[#0a101e]/60 backdrop-blur-sm p-8">
+                        <p className="text-xs font-semibold tracking-[0.2em] uppercase text-gray-500 mb-5">
+                            Tech Stack — What we build with
+                        </p>
+                        <div className="flex flex-wrap gap-2.5">
+                            {stack.map((tech, i) => (
+                                <motion.span
+                                    key={i}
+                                    initial={{ opacity: 0, y: 8 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: i * 0.04, duration: 0.3 }}
+                                    className="px-3.5 py-1.5 rounded-full text-sm font-medium border border-white/8 bg-white/4 text-gray-300 hover:border-quant-blue/40 hover:text-white hover:bg-quant-blue/8 transition-all duration-200 cursor-default"
+                                >
+                                    {tech}
+                                </motion.span>
+                            ))}
+                        </div>
+                    </div>
+                </AnimatedSection>
+
+                {/* Bottom: proof points grid */}
+                <AnimatedSection delay={0.15}>
+                    <p className="text-xs font-semibold tracking-[0.2em] uppercase text-gray-500 mb-6">
+                        Proof — Real projects, real results
+                    </p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        {proofPoints.map((item, i) => (
+                            <motion.div
+                                key={i}
+                                whileHover={{ y: -3 }}
+                                transition={{ duration: 0.2 }}
+                                className="relative rounded-2xl border border-white/6 bg-[#0d1526]/70 p-5 overflow-hidden group"
+                            >
+                                {/* top accent line */}
+                                <div className={`absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r ${item.color} opacity-60`} />
+                                <div className="relative z-10">
+                                    <span className={`inline-block text-xs font-semibold tracking-wider uppercase mb-3 text-transparent bg-clip-text bg-gradient-to-r ${item.color}`}>
+                                        {item.tag}
+                                    </span>
+                                    <h4 className="text-white font-bold text-base mb-2 leading-snug">{item.title}</h4>
+                                    <p className="text-gray-500 text-xs leading-relaxed">{item.detail}</p>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                </AnimatedSection>
+
             </div>
         </section>
     );
