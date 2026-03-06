@@ -50,57 +50,57 @@ export default function CertificationResults({ score, onRetake, onBackToCurricul
         >
             <div className="bg-slate-900/80 backdrop-blur-2xl border border-slate-700/50 rounded-3xl p-10 md:p-16 shadow-2xl relative overflow-hidden">
                 {/* Dynamic Background Glow based on Tier */}
-                <div className={\`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 \${bg} blur-3xl rounded-full opacity-50 z-0\`} />
+                <div className={"absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 " + bg + " blur-3xl rounded-full opacity-50 z-0"} />
 
                 <div className="relative z-10 flex flex-col items-center">
                     <motion.div
                         initial={{ scale: 0, rotate: -180 }}
                         animate={{ scale: 1, rotate: 0 }}
                         transition={{ type: "spring", bounce: 0.5, delay: 0.2 }}
-                        className={\`w-24 h-24 rounded-2xl flex items-center justify-center \${bg} border mb-8\`}
-          >
-                    {icon}
-                </motion.div>
+                        className={"w-24 h-24 rounded-2xl flex items-center justify-center " + bg + " border mb-8"}
+                    >
+                        {icon}
+                    </motion.div>
 
-                <h1 className="text-4xl md:text-5xl font-display font-bold text-white mb-4">
-                    Certification Complete
-                </h1>
+                    <h1 className="text-4xl md:text-5xl font-display font-bold text-white mb-4">
+                        Certification Complete
+                    </h1>
 
-                <div className="flex flex-col items-center justify-center my-10">
-                    <span className="text-7xl font-bold text-white tracking-tighter mb-2">
-                        {score}<span className="text-4xl text-slate-500">/{totalQuestions}</span>
-                    </span>
-                    <div className="text-lg text-slate-400 uppercase tracking-widest font-semibold flex items-center gap-2">
-                        Final Score: <span className="text-white">{percentage}%</span>
+                    <div className="flex flex-col items-center justify-center my-10">
+                        <span className="text-7xl font-bold text-white tracking-tighter mb-2">
+                            {score}<span className="text-4xl text-slate-500">/{totalQuestions}</span>
+                        </span>
+                        <div className="text-lg text-slate-400 uppercase tracking-widest font-semibold flex items-center gap-2">
+                            Final Score: <span className="text-white">{percentage}%</span>
+                        </div>
+                    </div>
+
+                    <div className="mb-12">
+                        <h3 className="text-sm uppercase tracking-[0.2em] text-slate-500 font-semibold mb-2">Achieved Rank</h3>
+                        <div className={"text-3xl font-display font-bold uppercase tracking-wider " + color + " mb-4"}>
+                            {tier} Partner
+                        </div>
+                        <p className="text-slate-300 max-w-lg mx-auto text-lg leading-relaxed">
+                            {message}
+                        </p>
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full mt-6 border-t border-slate-800 pt-10">
+                        <button
+                            onClick={onRetake}
+                            className="flex items-center justify-center gap-2 px-8 py-4 bg-slate-800 hover:bg-slate-700 text-white rounded-xl font-semibold transition-all w-full sm:w-auto border border-slate-700 hover:border-slate-500"
+                        >
+                            <RefreshCcw className="w-5 h-5" /> Retake Exam
+                        </button>
+                        <button
+                            onClick={onBackToCurriculum}
+                            className="flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white rounded-xl font-bold transition-all w-full sm:w-auto shadow-[0_0_20px_rgba(34,211,238,0.2)] hover:shadow-[0_0_30px_rgba(34,211,238,0.4)] hover:scale-[1.02]"
+                        >
+                            <ArrowLeft className="w-5 h-5" /> Back to Curriculum
+                        </button>
                     </div>
                 </div>
-
-                <div className="mb-12">
-                    <h3 className="text-sm uppercase tracking-[0.2em] text-slate-500 font-semibold mb-2">Achieved Rank</h3>
-                    <div className={\`text-3xl font-display font-bold uppercase tracking-wider \${color} mb-4\`}>
-                    {tier} Partner
-                </div>
-                <p className="text-slate-300 max-w-lg mx-auto text-lg leading-relaxed">
-                    {message}
-                </p>
-            </div>
-
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full mt-6 border-t border-slate-800 pt-10">
-                <button
-                    onClick={onRetake}
-                    className="flex items-center justify-center gap-2 px-8 py-4 bg-slate-800 hover:bg-slate-700 text-white rounded-xl font-semibold transition-all w-full sm:w-auto border border-slate-700 hover:border-slate-500"
-                >
-                    <RefreshCcw className="w-5 h-5" /> Retake Exam
-                </button>
-                <button
-                    onClick={onBackToCurriculum}
-                    className="flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white rounded-xl font-bold transition-all w-full sm:w-auto shadow-[0_0_20px_rgba(34,211,238,0.2)] hover:shadow-[0_0_30px_rgba(34,211,238,0.4)] hover:scale-[1.02]"
-                >
-                    <ArrowLeft className="w-5 h-5" /> Back to Curriculum
-                </button>
-            </div>
-        </div>
-      </div >
-    </motion.div >
-  );
+            </div >
+        </motion.div >
+    );
 }

@@ -1597,12 +1597,12 @@ export default function CurriculumViewer({ onStartTest }: CurriculumViewerProps)
                             {section.qas.map((qa, qi) => (
                                 <div key={qi} className="rounded-xl overflow-hidden" style={{ border: '1px solid rgba(255,255,255,0.06)', background: '#0a0f1d' }}>
                                     <div className="flex gap-4 p-4 items-start">
-                                        <span className="flex-shrink-0 text-xs font-bold w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: `${section.color}15`, color: section.color }}>
+                                        <span className="flex-shrink-0 text-xs font-bold w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: section.color + "15", color: section.color }}>
                                             {String(si * 10 + qi + 1).padStart(2, '0')}
                                         </span>
                                         <div style={{ flex: 1 }}>
                                             <p className="text-white font-semibold text-sm mb-3">{qa.q}</p>
-                                            <div className="p-3 rounded-lg" style={{ background: 'rgba(255,255,255,0.03)', borderLeft: `3px solid ${section.color}40` }}>
+                                            <div className="p-3 rounded-lg" style={{ background: 'rgba(255,255,255,0.03)', borderLeft: "3px solid " + section.color + "40" }}>
                                                 <p className="text-gray-400 text-sm mb-0 leading-relaxed">{qa.a}</p>
                                             </div>
                                         </div>
@@ -1624,7 +1624,7 @@ export default function CurriculumViewer({ onStartTest }: CurriculumViewerProps)
                             { label: "Advanced", score: "81–94 correct without notes", desc: "Senior rep ready. Work on tonality, multi-threading, elite tactics.", color: '#a78bfa' },
                             { label: "Elite", score: "95–100 correct without notes", desc: "You are QuantLab certified. Build a system, teach others, compound.", color: '#22c55e' }
                         ].map((tier, i) => (
-                            <div key={i} className="flex items-center gap-4 p-4 rounded-xl" style={{ background: `${tier.color}08`, border: `1px solid ${tier.color}25` }}>
+                            <div key={i} className="flex items-center gap-4 p-4 rounded-xl" style={{ background: tier.color + "08", border: "1px solid " + tier.color + "25" }}>
                                 <span className="font-bold text-sm flex-shrink-0 w-24" style={{ color: tier.color }}>{tier.label}</span>
                                 <span className="text-gray-500 text-xs flex-shrink-0 w-48">{tier.score}</span>
                                 <span className="text-gray-400 text-xs">{tier.desc}</span>
@@ -1666,6 +1666,7 @@ export default function CurriculumViewer({ onStartTest }: CurriculumViewerProps)
                             </button>
                         </div>
                     </div>
+                </div>
 
             </main>
         </div>

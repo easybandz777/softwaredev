@@ -72,9 +72,9 @@ export default function FlashcardTest({ onComplete, onCancel }: FlashcardTestPro
                 <motion.div
                     className="h-full bg-gradient-to-r from-cyan-500 to-purple-500"
                     initial={{ width: 0 }}
-                    animate={{ width: \`\${progress}%\` }}
-                transition={{ duration: 0.5 }}
-        />
+                    animate={{ width: progress + "%" }}
+                    transition={{ duration: 0.5 }}
+                />
             </div>
 
             {/* Flashcard Area */}
