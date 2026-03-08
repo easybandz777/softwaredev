@@ -5,10 +5,10 @@ export default function Module3() {
         <div className="ql-training-content">
             <div className="ql-section-header">
                 <span className="ql-module-number">Module 03</span>
-                <h2 className="ql-module-title">Discovery: Identifying Needs</h2>
+                <h2 className="ql-module-title">Discovery & Qualification</h2>
             </div>
 
-            <p className="mb-8">Discovery is where the sale is won or lost. If you do this right, they will sell themselves. We use a modified <strong>SPIN</strong> (Situation, Problem, Implication, Need-Payoff) framework.</p>
+            <p className="mb-8">Discovery is where the sale is won or lost. If you do this right, they will sell themselves. We use a modified <strong>SPIN</strong> (Situation, Problem, Implication, Need-Payoff) framework — then qualify their budget before you ever pitch.</p>
 
             <div className="ql-card">
                 <h3>1. The Situation (Current State)</h3>
@@ -48,6 +48,19 @@ export default function Module3() {
                     <li>What would it mean for your business if leads were responded to in under 60 seconds instead of 6 hours?</li>
                     <li>If that bottleneck was gone tomorrow, where would you focus that freed-up energy?</li>
                 </ul>
+            </div>
+
+            <div className="ql-card">
+                <h3>5. Qualifying Budget (Without Being Awkward)</h3>
+                <p>Before you pitch, establish the Cost of Inaction (COI). Once they agree to those numbers, your investment figure looks incredibly reasonable.</p>
+                <div className="ql-script-box">
+                    &ldquo;You mentioned you&rsquo;re losing about 2 deals a month because your lead process is slow. What&rsquo;s your average client worth? $5,000? So this broken process is literally costing you $10,000 every single month. Does that sound right?&rdquo;
+                </div>
+                <p className="mt-4">Then anchor to your range:</p>
+                <div className="ql-script-box">
+                    &ldquo;To build out the type of automated system we&rsquo;re talking about, our typical engagements range from $3,000 to $10,000 depending on scope, plus ongoing support. Is that completely out of the realm of reality for you right now?&rdquo;
+                </div>
+                <p className="text-gray-500 text-sm mt-3">If they balk, down-sell to a smaller phase. If they don&rsquo;t blink, you know you have room to build something incredible.</p>
             </div>
 
             <div className="ql-tip-box">
