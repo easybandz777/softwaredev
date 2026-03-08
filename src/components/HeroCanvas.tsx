@@ -112,7 +112,7 @@ export function HeroCanvas() {
         if (!ctx) return;
 
         let animId: number;
-        const dpr = window.devicePixelRatio || 1;
+        const dpr = Math.min(window.devicePixelRatio || 1, 1.5); // cap retina blowup
         let w = canvas.offsetWidth;
         let h = canvas.offsetHeight;
 
@@ -157,8 +157,13 @@ export function HeroCanvas() {
         );
 
         let tick = 0;
+        let lastFrame = 0;
+        const FRAME_MS = 1000 / 30; // target 30 fps
 
-        function draw() {
+        function draw(now: number) {
+            animId = requestAnimationFrame(draw);
+            if (now - lastFrame < FRAME_MS) return;
+            lastFrame = now;
             tick++;
             ctx!.clearRect(0, 0, w, h);
 
@@ -307,7 +312,7 @@ export function HeroCanvas() {
                 });
             }
 
-            animId = requestAnimationFrame(draw);
+            // (rAF already requested at top of draw)
         }
 
         // ── Visibility optimization — pause when tab is hidden ─
@@ -315,7 +320,7 @@ export function HeroCanvas() {
             if (document.hidden) {
                 cancelAnimationFrame(animId);
             } else {
-                draw();
+                draw(performance.now());
             }
         };
         document.addEventListener("visibilitychange", handleVisibility);
@@ -329,10 +334,10 @@ export function HeroCanvas() {
                 n.x = RAW_NODES[i].x * w;
                 n.y = RAW_NODES[i].y * h;
             });
-            draw();
+            draw(performance.now());
         };
         window.addEventListener("resize", onResize);
-        draw();
+        draw(performance.now());
 
         return () => {
             cancelAnimationFrame(animId);
