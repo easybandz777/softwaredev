@@ -29,27 +29,27 @@ export function Hero() {
                 }}
             />
 
-
-            {/* Logo — top-left corner, hidden on mobile (navbar handles it there) */}
-            <motion.div
-                initial={{ opacity: 0, scale: 0.85, filter: "blur(12px)" }}
-                animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-                transition={{ duration: 1, ease: "easeOut" }}
-                className="absolute top-4 left-6 z-20 hidden sm:block"
-            >
-                <img
-                    src="/logo.png"
-                    alt="QuantLab Software Solutions"
-                    className="w-28 sm:w-36 h-auto object-contain"
-                    style={{
-                        filter: "drop-shadow(0 0 10px rgba(56,189,248,0.55)) brightness(1.1) saturate(1.2)",
-                    }}
-                />
-            </motion.div>
-
             {/* Content */}
             <div className="container mx-auto px-6 relative z-10 flex flex-col items-center text-center">
-                {/* Headline — word-by-word reveal, weight contrast, no gradient */}
+
+                {/* Logo — centered above headline, visible on all sizes */}
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.85, filter: "blur(12px)" }}
+                    animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                    transition={{ duration: 1, ease: "easeOut" }}
+                    className="mb-8"
+                >
+                    <img
+                        src="/logo.png"
+                        alt="QuantLab Software Solutions"
+                        className="w-44 sm:w-52 md:w-60 h-auto object-contain mx-auto"
+                        style={{
+                            filter: "drop-shadow(0 0 14px rgba(56,189,248,0.6)) brightness(1.1) saturate(1.2)",
+                        }}
+                    />
+                </motion.div>
+
+                {/* Headline — word-by-word reveal, weight contrast */}
                 <h1 className="text-5xl md:text-7xl lg:text-8xl tracking-tight mb-6 max-w-5xl leading-[1.05]">
                     {words.map((word, i) => {
                         const isAccent = word === "Next" || word === "Level.";
@@ -118,7 +118,7 @@ export function Hero() {
                 </motion.div>
             </div>
 
-            {/* Scroll indicator — bottom center, replaces "Explore Services" button */}
+            {/* Scroll indicator */}
             <motion.button
                 onClick={scrollToServices}
                 initial={{ opacity: 0 }}
