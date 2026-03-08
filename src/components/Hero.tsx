@@ -42,9 +42,9 @@ export function Hero() {
                     <img
                         src="/logo.png"
                         alt="QuantLab Software Solutions"
-                        className="w-44 sm:w-52 md:w-60 h-auto object-contain mx-auto"
+                        className="w-56 sm:w-64 md:w-72 h-auto object-contain mx-auto"
                         style={{
-                            filter: "drop-shadow(0 0 14px rgba(56,189,248,0.6)) brightness(1.1) saturate(1.2)",
+                            filter: "drop-shadow(0 0 22px rgba(56,189,248,0.85)) drop-shadow(0 0 48px rgba(99,179,237,0.4)) brightness(1.2) saturate(1.4)",
                         }}
                     />
                 </motion.div>
