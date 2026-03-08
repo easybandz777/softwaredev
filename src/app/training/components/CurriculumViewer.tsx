@@ -85,6 +85,60 @@ const VIEWER_STYLES = `
   .cv-sidebar-inner::-webkit-scrollbar { width: 4px; }
   .cv-sidebar-inner::-webkit-scrollbar-thumb { background: rgba(34,211,238,0.2); border-radius: 2px; }
 
+  /* Exam button footer */
+  .cv-sidebar-footer {
+    padding: 12px 16px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    flex-shrink: 0;
+  }
+  .cv-exam-btn {
+    width: 100%; padding: 11px 16px;
+    border-radius: 10px; border: 1px solid rgba(167,139,250,0.25);
+    background: rgba(167,139,250,0.08);
+    color: #a78bfa; font-size: 0.82rem; font-weight: 700;
+    cursor: pointer; transition: all 0.2s ease;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    letter-spacing: 0.03em;
+  }
+  .cv-exam-btn:hover {
+    background: rgba(167,139,250,0.16);
+    border-color: rgba(167,139,250,0.5);
+    box-shadow: 0 0 18px rgba(167,139,250,0.2);
+    color: #c4b5fd;
+  }
+  .cv-exam-btn.ready {
+    border-color: rgba(16,185,129,0.4);
+    background: rgba(16,185,129,0.09);
+    color: #34d399;
+  }
+  .cv-exam-btn.ready:hover {
+    background: rgba(16,185,129,0.18);
+    border-color: rgba(16,185,129,0.6);
+    box-shadow: 0 0 20px rgba(16,185,129,0.25);
+    color: #6ee7b7;
+  }
+  /* Mobile floating exam pill */
+  .cv-exam-float {
+    display: none;
+    position: fixed; bottom: 20px; right: 16px; z-index: 60;
+    padding: 11px 20px; border-radius: 50px;
+    border: 1px solid rgba(167,139,250,0.35);
+    background: #0e1326;
+    color: #a78bfa; font-size: 0.8rem; font-weight: 700;
+    cursor: pointer; transition: all 0.2s ease;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.5);
+    gap: 7px; align-items: center;
+    letter-spacing: 0.03em;
+  }
+  .cv-exam-float.ready {
+    border-color: rgba(16,185,129,0.45);
+    color: #34d399;
+    box-shadow: 0 4px 28px rgba(16,185,129,0.2);
+  }
+  @media (max-width: 768px) {
+    .cv-exam-float { display: flex; }
+  }
+
   .cv-sidebar-header {
     padding: 20px 20px 16px;
     border-bottom: 1px solid rgba(255,255,255,0.05);
@@ -459,6 +513,15 @@ export default function CurriculumViewer({ onStartTest }: Props) {
                         <CoreNav activeIdx={activeIdx} completed={completed} navigate={navigate} />
                         <VaultNav activeIdx={activeIdx} navigate={navigate} />
                     </div>
+                    <div className="cv-sidebar-footer">
+                        <button
+                            className={`cv-exam-btn${completedCoreCount === CORE_COUNT ? ' ready' : ''}`}
+                            onClick={onStartTest}
+                        >
+                            {completedCoreCount === CORE_COUNT ? '🎓' : '📝'}
+                            {completedCoreCount === CORE_COUNT ? 'Take the Exam — Ready!' : `Take the Exam (${completedCoreCount}/${CORE_COUNT})`}
+                        </button>
+                    </div>
                 </aside>
 
                 {/* ─── Main ─── */}
@@ -526,6 +589,15 @@ export default function CurriculumViewer({ onStartTest }: Props) {
                     <div className={`cv-content${entering ? ' entering' : ''}`}>
                         <ActiveComponent onStartTest={onStartTest} />
                     </div>
+
+                    {/* Mobile floating exam button */}
+                    <button
+                        className={`cv-exam-float${completedCoreCount === CORE_COUNT ? ' ready' : ''}`}
+                        onClick={onStartTest}
+                    >
+                        {completedCoreCount === CORE_COUNT ? '🎓' : '📝'}
+                        {completedCoreCount === CORE_COUNT ? 'Take Exam' : `Exam (${completedCoreCount}/${CORE_COUNT})`}
+                    </button>
 
                     {/* Mark as Complete — only on core modules (not the last one which has its own CTA) */}
                     {isCoreModule && !isLastCore && (
