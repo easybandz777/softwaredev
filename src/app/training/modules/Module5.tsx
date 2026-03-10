@@ -6,7 +6,7 @@ import React, { useState } from 'react';
    DATA
 ───────────────────────────────────────────── */
 
-type Category = 'cold-call' | 'trust' | 'pricing';
+type Category = 'cold-call' | 'trust' | 'pricing' | 'software';
 
 interface Objection {
     id: string;
@@ -38,6 +38,12 @@ const CATEGORIES: { id: Category; label: string; icon: string; description: stri
         label: 'Pricing & Logistics Walls',
         icon: '💰',
         description: `The deal-killers at the 1-yard line. These are almost always symptoms of insufficient value built earlier in the call.`,
+    },
+    {
+        id: 'software',
+        label: 'Software & System Walls',
+        icon: '🖱️',
+        description: `Objections specific to custom software, automation, and system builds. These require a technical frame, not just a value frame.`,
     },
 ];
 
@@ -208,6 +214,68 @@ const OBJECTIONS: Record<Category, Objection[]> = {
             },
             script: `"I've done rev-share in the right situations — but it requires full visibility into your revenue, pipeline, and ops, because we'd effectively be business partners. Can you walk me through your current monthly revenue and growth rate? [Listen.] Based on what you're describing, I think the phased payment approach actually gives you more flexibility with less complexity. Let me show you what that looks like."`,
             notes: `Rev-share is a trap if not structured properly. Use it as a pivot to the phased model, which gives them risk reduction at a lower cost to you.`,
+        },
+    ],
+    software: [
+        {
+            id: 'sw-1',
+            smokescreen: `"We already have software that does that."`,
+            rootCause: `They're anchored to existing tools, even if those tools are fragmented, outdated, or only partially solving the problem. This isn't a no — it's an invitation to expose the gaps.`,
+            rootCauseLabel: 'CONFUSION',
+            reframe: `Don't compete with their existing software — position around what it doesn't do. Most businesses use 5–8 disconnected tools. The gap between those tools is exactly where you live.`,
+            airSteps: {
+                a: `"That's great — what are you using? [Pause and listen.]"`,
+                i: `"Does it handle [the specific thing they mentioned is broken]? Or is that part still done manually or in a spreadsheet?"`,
+                r: `"What we build isn't a replacement — it's the connective layer that makes your existing tools actually talk to each other and automates the parts in between. Think of it as the operating system around your current stack."`,
+            },
+            script: `"That's great — what are you using? [Let them answer.] I know that tool. It's solid for [what it does]. Can I ask — does it handle [their specific pain] automatically, or is that still something someone has to do manually? [They'll usually say manually.] That's the exact gap we build for. We're not replacing what you have — we're connecting the pieces and automating what falls between them."`,
+            notes: `Never trash their current software. Position as complementary, then expose the gap. Once they admit the gap, you're in.`,
+            preemptQuestion: `"Is there anything your current software can't do that you've been meaning to fix?"`,
+        },
+        {
+            id: 'sw-2',
+            smokescreen: `"Our IT team / developer needs to approve this."`,
+            rootCause: `Either genuine gatekeeping, or a polite exit. In either case, your job is to become an asset to the IT conversation — not a threat to it.`,
+            rootCauseLabel: 'LACK OF URGENCY',
+            reframe: `Flip from competitor to collaborator. Internal developers often love custom builds because it reduces their maintenance burden — if you frame it right.`,
+            airSteps: {
+                a: `"Absolutely — involving your technical team is the right call. I'd expect nothing less."`,
+                i: `"What are the main things your IT team typically evaluates? Is it security, hosting infrastructure, API compatibility, or something else?"`,
+                r: `"I can put together a one-page technical overview — stack, security posture, hosting, API docs — that gives them everything they need to evaluate it quickly. Would that make it easier to bring to them?"`,
+            },
+            script: `"That's exactly the right move — your technical team should be involved. Can I ask what they typically evaluate when reviewing a new system? Security, infrastructure, integrations? [Listen.] Perfect. I'll put together a technical spec sheet — stack details, security posture, how we handle data ownership and API access — so they can evaluate it without having to take your word for it. Would it help if I joined a 20-minute call with them to answer their questions directly?"`,
+            notes: `Offering to talk directly to the IT team is a power move. It signals confidence and eliminates the game of telephone.`,
+            preemptQuestion: `"Who on your team would need to sign off on the technical side? Let's get them into the conversation early."`,
+        },
+        {
+            id: 'sw-3',
+            smokescreen: `"Implementation sounds complicated / disruptive."`,
+            rootCause: `Fear of change management. They've seen software rollouts fail — adoption issues, downtime, learning curves, team resistance. This is real and valid.`,
+            rootCauseLabel: 'FEAR',
+            reframe: `Make the implementation feel invisible. Emphasize phased rollout, parallel running, and your team owning the transition — not theirs.`,
+            airSteps: {
+                a: `"That's a completely legitimate concern — bad implementations have killed good software before. I've seen it."`,
+                i: `"What specifically worries you most — is it downtime during the switch, team training, or the risk of data loss?"`,
+                r: `"Our rollout model runs both systems in parallel for the first 30 days. Nothing gets turned off until your team is confident. We also do 1-on-1 walkthroughs. The goal is that your team wakes up one day and the new system is just... already how they work."`,
+            },
+            script: `"That's the right thing to worry about — most system failures aren't technical, they're implementation failures. We handle it differently: we run both systems in parallel for 30 days. Nothing gets switched off until your team is comfortable. We do role-specific onboarding — not one big training session. And we're available for real-time support in the first 90 days. The goal is that the migration feels invisible to your team."`,
+            notes: `The magic phrase is 'parallel running.' It removes the fear of a hard cutover. Use it early.`,
+            preemptQuestion: `"What's your biggest concern about the transition period? Let's design around that from day one."`,
+        },
+        {
+            id: 'sw-4',
+            smokescreen: `"What happens if QuantLab goes out of business or stops supporting this?"`,
+            rootCause: `They've been burned by a vendor disappearing, leaving them with unsupported software. This is specifically a software objection. It doesn't come up for website deals.`,
+            rootCauseLabel: 'FEAR',
+            reframe: `Address ownership and portability directly. They need to know the system is theirs — not ours.`,
+            airSteps: {
+                a: `"That's one of the smartest questions you can ask — and I'm glad you asked it before signing, not after."`,
+                i: `"Is the bigger concern about the ongoing support, or the code itself being accessible if you needed to take it somewhere else?"`,
+                r: `"Everything we build is on your infrastructure. You own the code, the database, the domain — all of it. We can escrow the source code on day one if it gives you peace of mind. We also document the architecture so any developer can pick it up."`,
+            },
+            script: `"Smart question — most people don't ask until it's too late. Here's how we de-risk it: the code is written in standard [React/Next.js/PostgreSQL] — industry-standard tools, not proprietary frameworks nobody else knows. It lives on your infrastructure. You own it outright from day one. We can include a source code escrow clause in the contract if that helps. And we provide full technical documentation so that any qualified developer could maintain or extend it without us. You're never held hostage."`,
+            notes: `'You own it' is the most powerful phrase in this objection. Use it early. Then layer in technical portability.`,
+            preemptQuestion: `"Would it give you more confidence if we included a source code escrow clause in our agreement?"`,
         },
     ],
 };

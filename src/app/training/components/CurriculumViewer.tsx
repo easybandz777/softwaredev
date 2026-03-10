@@ -8,11 +8,15 @@ import Module4 from '../modules/Module4';
 import Module5 from '../modules/Module5';
 import Module6 from '../modules/Module6';
 import Module7 from '../modules/Module7';
+import Module8 from '../modules/Module8';
+import Module9 from '../modules/Module9';
 import BonusA from '../modules/BonusA';
 import BonusC from '../modules/BonusC';
 import BonusD from '../modules/BonusD';
 import BonusE from '../modules/BonusE';
 import { BonusF, BonusH, BonusI, BonusJ, BonusK } from '../modules/BonusFtoK';
+import BonusL from '../modules/BonusL';
+import BonusM from '../modules/BonusM';
 import { trainingStyles } from '../modules/sharedStyles';
 import { ChevronLeft, ChevronRight, BookOpen, Menu, X, CheckCircle2, ChevronDown } from 'lucide-react';
 
@@ -24,10 +28,10 @@ interface NavItem {
     id: string;
     short: string;
     component: React.ComponentType<{ onStartTest?: () => void }> | React.ComponentType;
-    vaultCategory?: 'assets' | 'live' | 'advanced';
+    vaultCategory?: 'assets' | 'live' | 'playbooks' | 'advanced';
 }
 
-const CORE_COUNT = 7;
+const CORE_COUNT = 9;
 const STORAGE_KEY = 'ql_completed_modules';
 
 const CORE_ITEMS: NavItem[] = [
@@ -38,6 +42,8 @@ const CORE_ITEMS: NavItem[] = [
     { id: 'mod5', short: 'Objections Masterclass', component: Module5 as React.ComponentType<{ onStartTest?: () => void }> },
     { id: 'mod6', short: 'Closing & Follow-Up', component: Module6 as React.ComponentType<{ onStartTest?: () => void }> },
     { id: 'mod7', short: 'Post-Close & Retention', component: Module7 as React.ComponentType<{ onStartTest?: () => void }> },
+    { id: 'mod8', short: 'Prospecting & Lead Gen', component: Module8 },
+    { id: 'mod9', short: 'The Follow-Up System', component: Module9 },
 ];
 
 const VAULT_ITEMS: NavItem[] = [
@@ -48,6 +54,9 @@ const VAULT_ITEMS: NavItem[] = [
     // Live Application
     { id: 'ba', short: 'Industry Scenarios', component: BonusA, vaultCategory: 'live' },
     { id: 'bd', short: 'Roleplay Call', component: BonusD, vaultCategory: 'live' },
+    // Vertical Playbooks
+    { id: 'bl', short: 'Vertical Playbooks', component: BonusL, vaultCategory: 'playbooks' },
+    { id: 'bm', short: 'Portfolio & Social Proof', component: BonusM, vaultCategory: 'playbooks' },
     // Advanced Tactics
     { id: 'bc', short: 'Power Questions', component: BonusC, vaultCategory: 'advanced' },
     { id: 'bh', short: 'Pricing Psychology', component: BonusH, vaultCategory: 'advanced' },
@@ -60,6 +69,7 @@ const ALL_ITEMS: NavItem[] = [...CORE_ITEMS, ...VAULT_ITEMS];
 const VAULT_CATEGORIES: { id: NavItem['vaultCategory']; label: string; icon: string }[] = [
     { id: 'assets', label: 'Assets & Systems', icon: '📂' },
     { id: 'live', label: 'Live Application', icon: '🎙️' },
+    { id: 'playbooks', label: 'Vertical Playbooks', icon: '🎯' },
     { id: 'advanced', label: 'Advanced Tactics', icon: '⚔️' },
 ];
 

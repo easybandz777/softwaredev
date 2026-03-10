@@ -90,16 +90,22 @@ function CodeRainCanvas({ active }: { active: boolean }) {
     );
 }
 
+// ── Deterministic seeded pseudo-random (avoids SSR/client mismatch) ──
+function seededRand(seed: number) {
+    const x = Math.sin(seed + 1) * 10000;
+    return x - Math.floor(x);
+}
+
 // ── Neural mesh nodes ─────────────────────────────────────────
 function NeuralMesh({ isAuthorized }: { isAuthorized: boolean }) {
     const nodes = useMemo(() => {
         return Array.from({ length: 28 }).map((_, i) => ({
             id: i,
-            x: 5 + Math.random() * 90,
-            y: 5 + Math.random() * 90,
-            size: Math.random() * 3 + 1.5,
-            pulseDuration: 2 + Math.random() * 4,
-            pulseDelay: Math.random() * 3,
+            x: 5 + seededRand(i * 7) * 90,
+            y: 5 + seededRand(i * 13) * 90,
+            size: seededRand(i * 3) * 3 + 1.5,
+            pulseDuration: 2 + seededRand(i * 5) * 4,
+            pulseDelay: seededRand(i * 11) * 3,
             color: i % 3 === 0 ? "#22d3ee" : i % 3 === 1 ? "#a78bfa" : "#38bdf8",
         }));
     }, []);
@@ -231,15 +237,16 @@ function EnergyRings({ isAuthorized }: { isAuthorized: boolean }) {
 
 // ── Floating data particles ───────────────────────────────────
 function DataParticles({ isAuthorized }: { isAuthorized: boolean }) {
+    const COLORS = ["#22d3ee", "#a78bfa", "#38bdf8", "#34d399", "#f472b6"];
     const particles = useMemo(() =>
         Array.from({ length: 60 }).map((_, i) => ({
             id: i,
-            x: Math.random() * 100,
-            startY: 90 + Math.random() * 20,
-            size: Math.random() * 2.5 + 0.5,
-            duration: Math.random() * 18 + 12,
-            delay: Math.random() * 10,
-            color: ["#22d3ee", "#a78bfa", "#38bdf8", "#34d399", "#f472b6"][Math.floor(Math.random() * 5)],
+            x: seededRand(i * 17) * 100,
+            startY: 90 + seededRand(i * 19) * 20,
+            size: seededRand(i * 23) * 2.5 + 0.5,
+            duration: seededRand(i * 29) * 18 + 12,
+            delay: seededRand(i * 31) * 10,
+            color: COLORS[Math.floor(seededRand(i * 37) * 5)],
         })), []);
 
     return (

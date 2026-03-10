@@ -63,6 +63,23 @@ export default function Module3() {
                 <p className="text-gray-500 text-sm mt-3">If they balk, down-sell to a smaller phase. If they don&rsquo;t blink, you know you have room to build something incredible.</p>
             </div>
 
+            <div className="ql-card" style={{ borderColor: 'rgba(167,139,250,0.25)' }}>
+                <h3 style={{ color: '#a78bfa' }}>🖥️ Bonus Layer: The Ops System Audit</h3>
+                <p>When selling custom software or automation systems (not just websites), layer these questions into your SPIN after the standard four. These uncover operational pain that most prospects haven&rsquo;t even put into words yet.</p>
+                <ul className="ql-question-list mt-4">
+                    <li>Walk me through a typical week in your business — how many of those steps are still done manually or in spreadsheets?</li>
+                    <li>How many different software tools is your team using right now? Do they talk to each other, or does someone move data between them manually?</li>
+                    <li>When a new client signs on, what does your onboarding process look like from your side? Where does it break or slow down?</li>
+                    <li>Do your clients have a place to log in, check their project status, or communicate with you — or does everything go through email?</li>
+                    <li>If you wanted to scale to 3x your current volume tomorrow, what in your operation would break first?</li>
+                    <li>How do you currently track which jobs are profitable and which ones aren&rsquo;t? Is that in a system or in someone&rsquo;s head?</li>
+                </ul>
+                <div className="ql-tip-box" style={{ marginTop: '20px', marginBottom: 0 }}>
+                    <h4>💡 What You&rsquo;re Listening For</h4>
+                    <p className="mb-0">Every time they say <strong>&ldquo;manually&rdquo;</strong>, <strong>&ldquo;spreadsheet&rdquo;</strong>, <strong>&ldquo;I have to remind someone&rdquo;</strong>, or <strong>&ldquo;we just don&rsquo;t have a good system for that&rdquo;</strong> — that&rsquo;s a build opportunity. Write it down. Repeat it back in the pitch verbatim.</p>
+                </div>
+            </div>
+
             <div className="ql-tip-box">
                 <h4>💡 The Golden Rule of Discovery</h4>
                 <p className="mb-0">Do not introduce QuantLab&rsquo;s solution until the prospect has identified their own pain, quantified what it costs them, and expressed what solving it would mean to their business&mdash;all in their own words, without you pitching. The prospect must be asking &ldquo;how can you fix this?&rdquo; before you answer.</p>

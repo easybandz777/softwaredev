@@ -74,13 +74,45 @@ const techTranslations = [
             { tech: `"Role-based access control on the admin panel."`, biz: `"Only the right people see the right data. No accidental leaks, no liability."` },
         ],
     },
+    {
+        category: "Custom Systems",
+        color: "pink",
+        items: [
+            { tech: `"We build headless, API-first architectures."`, biz: `"Your business runs on software built exactly for how you operate — not a template someone else constrained you to."` },
+            { tech: `"Custom role-based client portals."`, biz: `"Your clients log in, see their data, approve work, pay invoices — all in one place. No more email chains."` },
+            { tech: `"Internal ops dashboards with live data."`, biz: `"Your team sees every active job, lead, and task on one screen. Nothing hidden in someone's inbox."` },
+            { tech: `"Workflow automation engines."`, biz: `"When a client signs, 12 things happen automatically — project created, team notified, invoice sent, calendar booked. Zero manual work."` },
+        ],
+    },
+    {
+        category: "Data & Databases",
+        color: "orange",
+        items: [
+            { tech: `"PostgreSQL with row-level security."`, biz: `"Your data is yours — structured, secure, and nobody else's."` },
+            { tech: `"Real-time dashboards and reporting views."`, biz: `"You see what's happening in your business right now, not in a report you export once a month."` },
+            { tech: `"Automated data pipelines and sync."`, biz: `"Your tools stop living in silos. CRM, scheduling, invoicing, and reporting all talk to the same source of truth."` },
+        ],
+    },
+    {
+        category: "Integrations",
+        color: "teal",
+        items: [
+            { tech: `"Zapier-free native API integrations."`, biz: `"We build the connection directly — no middleware, no extra monthly fees, no brittle duct tape."` },
+            { tech: `"Third-party SaaS embedding (Stripe, Twilio, DocuSign)."`, biz: `"Payments, digital contracts, and automated messages all live inside your system — branded as you."` },
+            { tech: `"Webhook event architecture."`, biz: `"Your system reacts in real time. A client pays → their account updates instantly. A lead books → your team knows in seconds."` },
+        ],
+    },
 ];
+
 
 const preCallChecklist = [
     { label: "Check their current website", detail: "Is it slow? Mobile-broken? No clear CTA? Screenshot the cracks — mention them in the first 90 seconds." },
     { label: "Google their business name", detail: "What shows up? Bad reviews? Competitors ranking above them? Zero Google presence? All ammunition." },
     { label: "Run BuiltWith or Wappalyzer", detail: "Know their tech stack before you talk. If they're on Wix, you know their ceiling. If they have no CRM, you know what to sell." },
     { label: "Check their social media recency", detail: "Last post was 6 months ago? Ghost accounts = broken digital presence. That's the problem you solve." },
+    { label: "Identify their current software stack", detail: "Are they juggling 6 disconnected tools? Running on spreadsheets? Using an outdated industry app? That gap is your opening. Check their job listings — they often list the software they use." },
+    { label: "Spot the manual process signals", detail: "Look at their Google or Yelp reviews for clues: 'Slow to respond', 'Hard to schedule', 'Payment was a hassle' — those are ops failures your systems fix." },
+    { label: "Check if they have a client portal", detail: "Do clients communicate by email chains, phone tags, or PDFs? No portal = no centralized ops. Huge opportunity." },
     { label: "LinkedIn — find decision-maker", detail: "Identify the owner or director. Know their background. People trust people who 'get' their world." },
     { label: "Set your physical environment", detail: "Stand up if on the phone. Sit forward. No distractions. Treat it like a boardroom pitch, not a cold call." },
     { label: "Tonality reset", detail: "Slow down 20%. Drop your pitch 15%. Confident people don't rush. Own the silence." },

@@ -84,6 +84,34 @@ export default function Module4() {
                 <h4>💡 Framing the Monthly Retainer</h4>
                 <p className="mb-0">Never call it a &ldquo;maintenance fee.&rdquo; Call it a <strong>&ldquo;Dedicated Engineering Partner Plan.&rdquo;</strong> Reiterate that a junior in-house dev costs $80k/year. We give them an elite team for a fraction of that, fully managed.</p>
             </div>
+
+            <div className="ql-card" style={{ borderTop: '2px solid rgba(167,139,250,0.3)', marginTop: '2rem' }}>
+                <h3 style={{ color: '#a78bfa' }}>🖥️ Selling a System Build: The Software Demo Flow</h3>
+                <p>When the engagement is a custom software build — a portal, dashboard, automation engine, or internal tool — your demo approach is fundamentally different from a website demo. You&rsquo;re not showing a page. You&rsquo;re showing a workflow.</p>
+
+                <div className="mt-4" style={{ display: 'grid', gap: '1rem' }}>
+                    {[
+                        { step: '01', title: 'Start with the current broken flow', color: '#ef4444', text: 'Screen-share their current process if you can. Walk through it out loud: \'Right now, when a client submits a request, it goes into your email inbox, someone manually copies it into a spreadsheet, then someone else books it in the calendar... am I reading that right?\' Make the pain visual.' },
+                        { step: '02', title: 'Show the new flow — not features, steps', color: '#a78bfa', text: 'Walk through the new system step by step as a user would experience it. \'A client fills out this intake form → the system creates a project record → your team gets notified instantly → the client receives a confirmation with their login link.\' Narrate every transition.' },
+                        { step: '03', title: 'Show the admin/operator view', color: '#22d3ee', text: 'Flip to the backend dashboard. Show them what they see: live pipeline, all active jobs, client history, revenue tracking. Ask: \'Right now, to see this information, how many different places would you have to check?\'' },
+                        { step: '04', title: 'Quantify the time recovered', color: '#34d399', text: '\'You mentioned your team spends about 8 hours a week on manual data entry and follow-up. This eliminates that. At $25/hour fully loaded, that\'s $1,000/month in recovered labor — before we even talk about lead conversion lift.\'' },
+                        { step: '05', title: 'The future-state question', color: '#f8fafc', text: '\'If this system had been running for the last 6 months, what would look different in your business?\'  Let them imagine it. When they answer that question, they\'re selling themselves. Stop talking and let them finish.' },
+                    ].map((item, i) => (
+                        <div key={i} style={{ display: 'flex', gap: '1.25rem' }}>
+                            <div style={{ flexShrink: 0, width: '2.5rem', height: '2.5rem', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '0.8rem', background: `${item.color}15`, color: item.color, border: `1px solid ${item.color}30` }}>{item.step}</div>
+                            <div style={{ flex: 1 }}>
+                                <p style={{ fontWeight: 600, color: item.color, marginBottom: '0.4rem', fontSize: '0.95rem' }}>{item.title}</p>
+                                <p style={{ color: '#94a3b8', fontSize: '0.875rem', margin: 0, lineHeight: 1.7 }}>{item.text}</p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                <div className="ql-tip-box" style={{ marginTop: '1.5rem', marginBottom: 0 }}>
+                    <h4>💡 The Critical Mindset Shift for System Builds</h4>
+                    <p className="mb-0">In a website demo, you&rsquo;re showing <em>how it looks</em>. In a system demo, you&rsquo;re showing <em>how the business runs differently</em>. Every click should map to a time saved, an error eliminated, or a revenue outcome unlocked. If a screen you&rsquo;re showing doesn&rsquo;t connect to one of those three things, skip it.</p>
+                </div>
+            </div>
         </div>
     );
 }
