@@ -10,6 +10,8 @@ import Module6 from '../modules/Module6';
 import Module7 from '../modules/Module7';
 import Module8 from '../modules/Module8';
 import Module9 from '../modules/Module9';
+import Module10 from '../modules/Module10';
+import Module11 from '../modules/Module11';
 import BonusA from '../modules/BonusA';
 import BonusB from '../modules/BonusB';
 import BonusC from '../modules/BonusC';
@@ -32,7 +34,7 @@ interface NavItem {
     vaultCategory?: 'assets' | 'live' | 'playbooks' | 'advanced';
 }
 
-const CORE_COUNT = 9;
+const CORE_COUNT = 11;
 const STORAGE_KEY = 'ql_completed_modules';
 
 const CORE_ITEMS: NavItem[] = [
@@ -45,6 +47,8 @@ const CORE_ITEMS: NavItem[] = [
     { id: 'mod7', short: 'Post-Close & Retention', component: Module7 as React.ComponentType<{ onStartTest?: () => void }> },
     { id: 'mod8', short: 'Prospecting & Lead Gen', component: Module8 },
     { id: 'mod9', short: 'The Follow-Up System', component: Module9 },
+    { id: 'mod10', short: 'Pricing & Packaging', component: Module10 },
+    { id: 'mod11', short: 'Retainer Sales & MRR', component: Module11 },
 ];
 
 const VAULT_ITEMS: NavItem[] = [

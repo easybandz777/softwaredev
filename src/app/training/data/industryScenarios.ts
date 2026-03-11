@@ -347,4 +347,124 @@ export const industryScenarios: IndustryScenario[] = [
             },
         ],
     },
+    {
+        id: 'law-firms',
+        icon: '⚖️',
+        title: 'Law Firms & Legal Practices',
+        tagline: "Their intake process loses cases before an attorney ever picks up the phone.",
+        profile: "Managing partner, office administrator, or marketing director at a firm with 3-50 attorneys. Personal injury, family law, criminal defense, estate planning, immigration, and business litigation practices. They spend heavily on Avvo and Google Ads but have no idea what happens between a click and a signed retainer.",
+        corePains: [
+            {
+                label: 'Dead-end intake forms',
+                detail: "Their contact form asks for a name, email, and 'Describe your legal matter' — with no urgency indicator, no case-type qualifier, and no signal that they'll respond quickly. For someone who just got served papers, that form feels like a void.",
+            },
+            {
+                label: 'No pre-qualification before attorney time',
+                detail: "Intake coordinators spend 10+ hours/week on calls that go nowhere — wrong case type, no budget, just shopping around. There's no automated triage to qualify case type and budget range before consuming billable attorney time.",
+            },
+            {
+                label: 'Referral-dependent with no owned pipeline',
+                detail: "Most firms are 70-90% referral-dependent. When referrals slow down, they have no first-party lead generation infrastructure. Their competitors spending $10K+/mo on SEO are eating their market share in organic search.",
+            },
+        ],
+        openerScript: `"Hey [Name], I just tried to figure out how a potential client would reach your firm through your website. The contact form asks for a name, email, and a text box that says 'Describe your legal matter.' No urgency indicator, no intake qualifier, and no signal that you'll respond quickly. For someone who just got served papers or is panicking about a custody situation — that form feels like a void. Is your team currently tracking how many people hit that page and leave without ever submitting?"`,
+        discoveryQuestions: [
+            "When a potential client submits your contact form, how quickly does someone actually respond?",
+            "What percentage of your consultations come from your website versus referrals versus directories like Avvo?",
+            "Do you currently have a way to qualify a lead's case type and budget before your team spends time on a call?",
+            "How many hours per week does your intake coordinator spend on calls that go nowhere — wrong case type, no budget, just shopping around?",
+        ],
+        whatToSell: "Intelligent intake system that pre-qualifies by case type, urgency, and budget range before attorney contact. Automated response within 60 seconds (SMS + email). Branded client portal for document exchange and case status. SEO-optimized practice area pages that rank locally.",
+        retainerAngle: `"Legal marketing is an arms race — your competitors are spending every month to outrank you. We stay on retainer to continuously optimize your intake conversion, build new practice area content, and make sure your digital presence stays ahead. One extra qualified intake per month covers the retainer 10x."`,
+        objections: [
+            {
+                obj: `"We get all our clients through referrals."`,
+                response: `"Referrals are your best source — but the first thing a referred person does is Google your firm. If your site looks like it was built in 2015 and has no clear intake process, you're creating doubt in a lead that was already warm. Your site should close the referral, not reopen the question."`,
+            },
+            {
+                obj: `"We already have a marketing agency."`,
+                response: `"Most legal marketing agencies focus on SEO and PPC — getting eyeballs. We focus on conversion: what happens after someone lands. Your agency drives traffic; we make sure that traffic turns into signed retainers. We're complementary, not competitive."`,
+            },
+        ],
+    },
+    {
+        id: 'construction',
+        icon: '🏗️',
+        title: 'Construction, HVAC & Trades',
+        tagline: "The first company to respond wins the job. They're losing to voicemail.",
+        profile: "Owner or operations manager of a local service business: plumber, electrician, HVAC company, general contractor, roofer, landscaper. Typically doing $500K-$5M/year with 5-30 employees. They built their business on word of mouth but are getting outpaced digitally by competitors with 300+ Google reviews and online booking.",
+        corePains: [
+            {
+                label: 'After-hours lead loss',
+                detail: "When someone calls at 7pm with a broken AC or leaking pipe, they get voicemail. Their top competitor has an instant quote request form with a response time guarantee. For emergency services, the first company that responds wins — and voicemail doesn't win.",
+            },
+            {
+                label: 'Low Google review count',
+                detail: "They have 28 Google reviews. Their competitor has 340. When a referral Googles both companies, the review gap creates doubt. They don't have any automated system to request reviews after every completed job.",
+            },
+            {
+                label: 'Estimate follow-up black hole',
+                detail: "They give 15 estimates per week. They follow up on maybe 3. The other 12 quietly go to competitors because nobody called back. There's no automated estimate follow-up sequence — quotes go out and disappear.",
+            },
+        ],
+        openerScript: `"Hey [Name], I Googled '[your trade] near [city]' and your listing came up, but there's no way for me to get a quote without calling. I tried at 7pm — voicemail. Your top competitor has an instant quote request form with a response time guarantee. For someone whose AC just broke or whose pipe is leaking, the first company that responds wins that job. Are you tracking how many calls you're missing after hours?"`,
+        discoveryQuestions: [
+            "When someone calls after hours, what happens — voicemail? Do you have any after-hours lead capture?",
+            "How many estimates does your team give per week versus how many convert into booked jobs?",
+            "Do you have any automated system that follows up with a customer after you give them an estimate?",
+            "What's your current Google review count versus your top competitor? Do you ask for reviews after every job?",
+        ],
+        whatToSell: "24/7 lead capture with instant SMS notification to the owner. Online booking/estimate request form with automated follow-up sequence (SMS at 1hr, email at 24hr, SMS at 72hr). Automated post-job review request system. Google Business Profile optimization with local SEO.",
+        retainerAngle: `"Every month, Google changes its algorithm, new competitors pop up, and your review count needs to keep growing. We stay on retainer to manage your review generation, optimize your local SEO, follow up on estimates your team is too busy to chase, and make sure you're always the first company to respond."`,
+        objections: [
+            {
+                obj: `"Most of our work comes from word of mouth."`,
+                response: `"That's true for established shops — but what happens when the person they refer you to Googles your company name and sees 28 reviews next to a competitor with 340? Word of mouth gets you the introduction. Your online presence closes it."`,
+            },
+            {
+                obj: `"We're already busy enough, we don't need more leads."`,
+                response: `"That's actually the best time to build your system. When you're busy, you have leverage to be selective. What if every lead that came in was pre-qualified, knew your pricing range, and could book directly? You'd stop wasting time on tire-kickers and fill your schedule with higher-margin jobs."`,
+            },
+        ],
+    },
+    {
+        id: 'insurance',
+        icon: '🛡️',
+        title: 'Insurance Agencies',
+        tagline: "Their carrier owns the brand, the lead, and the relationship. They just process the paperwork.",
+        profile: "Independent agency owner or office manager at a personal lines or commercial lines agency. Typically an Allstate, State Farm, or fully independent agency doing $1M-$10M in written premium. They compete against direct carriers with billion-dollar marketing budgets and other local agencies who've invested in digital presence.",
+        corePains: [
+            {
+                label: 'No online self-service quoting',
+                detail: "Their website says 'Call us for a free quote' and lists a phone number. No online form, no live chat. When a business owner thinks about insurance at 11pm, there's no way to start the process. That lead goes to the competitor whose site captures it at midnight.",
+            },
+            {
+                label: 'Carrier branding over agency branding',
+                detail: "Their website is a carrier-provided template. Every client who quotes through Progressive's or Allstate's site sees the carrier's branding and 4 other agent options. The agency has zero brand differentiation in the digital experience.",
+            },
+            {
+                label: 'Manual data entry and slow response',
+                detail: "Lead info from web forms is manually copied into their Agency Management System. Time from form submission to agent callback is often hours or days. Speed-to-lead in insurance is as critical as any other industry — the first agent to call back wins 60% of the time.",
+            },
+        ],
+        openerScript: `"Hey [Name], I went through your website trying to get a quote for business insurance. The page says 'Call us for a free quote' and lists a phone number. There's no online quote form, no live chat, and no way for me to get started without picking up the phone during your business hours. Your competitors have instant quote request forms that capture the lead at 11pm when the business owner is actually thinking about insurance. Are you seeing leads slip through that gap?"`,
+        discoveryQuestions: [
+            "What percentage of your new policies come from your website versus referrals versus cold outreach?",
+            "When a prospect fills out your contact form, how long does it take for a licensed agent to actually call them back?",
+            "Do you currently have any automated nurture sequence for leads that didn't convert right away — people who quoted but didn't bind?",
+            "How much time does your team spend on manual data entry — copying info from web forms into your agency management system?",
+        ],
+        whatToSell: "Branded online quote request flow (not carrier white-label) that captures all relevant info and feeds directly into their AMS. Automated speed-to-lead: instant SMS to agent + confirmation to prospect within 60 seconds. Drip nurture for unbound quotes (14-day email/SMS sequence). Policy renewal reminder automation.",
+        retainerAngle: `"Insurance is seasonal and competitive. We stay on monthly to optimize your quote flow, manage your nurture sequences, update your site for new products and carriers, and make sure your digital presence outperforms the independent next door. One extra policy a month from better conversion pays for the retainer."`,
+        objections: [
+            {
+                obj: `"We use our carrier's website for quotes."`,
+                response: `"Carrier sites are built for the carrier's brand, not yours. Every client who quotes through Progressive's site sees Progressive's branding and 4 other agent options. We build a quote flow that keeps your agency front and center and feeds directly into your AMS. You own the relationship from first click."`,
+            },
+            {
+                obj: `"Insurance is relationship-based, we don't need a fancy website."`,
+                response: `"I agree — it is relationship-based. And the relationship now starts before the phone rings. When a business owner Googles 'commercial insurance [city]' at 9pm, the agency with the best digital first impression gets the call in the morning. Your digital presence is the first handshake."`,
+            },
+        ],
+    },
 ];
