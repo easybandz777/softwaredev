@@ -30,6 +30,29 @@ export async function GET(req: NextRequest) {
     return NextResponse.json(rows);
 }
 
+// POST /api/sales/leads — create a new lead manually
+export async function POST(req: NextRequest) {
+    const { error, user } = requireAuth(req, ["admin", "sales"]);
+    if (error) return NextResponse.json({ error }, { status: 401 });
+
+    const body = await req.json();
+    const { name, email, phone, company, service, message } = body;
+
+    if (!name || !email || !service) {
+        return NextResponse.json({ error: "name, email, and service are required" }, { status: 400 });
+    }
+
+    await ensureMigrated();
+
+    const { rows } = await sql`
+        INSERT INTO consultations (name, email, phone, company, service, message, status)
+        VALUES (${name}, ${email}, ${phone || null}, ${company || null}, ${service}, ${message || 'Manually created lead'}, 'new')
+        RETURNING *
+    `;
+
+    return NextResponse.json(rows[0], { status: 201 });
+}
+
 // PATCH /api/sales/leads — update a lead (assign, set status, set value, set follow-up)
 export async function PATCH(req: NextRequest) {
     const { error, user } = requireAuth(req, ["admin", "sales"]);

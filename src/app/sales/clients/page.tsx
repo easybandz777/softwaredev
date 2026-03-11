@@ -224,10 +224,12 @@ export default function ClientsPage() {
                             {clients.map(client => {
                                 const isActive = client.status === "active";
                                 return (
-                                    <div key={client.id} className="rounded-xl p-5 transition-all hover:scale-[1.01]" style={{
+                                    <div key={client.id} className="rounded-xl p-5 transition-all hover:scale-[1.01] cursor-pointer" style={{
                                         background: "linear-gradient(145deg, #0d1526, #0a1020)",
                                         border: `1px solid ${isActive ? "rgba(52,211,153,0.1)" : "rgba(255,255,255,0.05)"}`,
-                                    }}>
+                                    }}
+                                        onClick={() => router.push(`/sales/clients/${client.id}`)}
+                                    >
                                         <div className="flex items-start justify-between mb-4">
                                             <div>
                                                 <h3 className="text-sm font-semibold text-white">{client.company_name}</h3>

@@ -6,6 +6,7 @@ import {
     LogOut, BarChart3, Target, Building2, Home,
     Users, Search, Filter, ChevronRight,
     Mail, Phone, Calendar, DollarSign, UserCheck, GraduationCap,
+    Plus, X,
 } from "lucide-react";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -127,6 +128,11 @@ export default function LeadsPage() {
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState("");
     const [filterStatus, setFilterStatus] = useState<string>("all");
+    const [showNew, setShowNew] = useState(false);
+    const [creating, setCreating] = useState(false);
+    const [newLead, setNewLead] = useState({
+        name: "", email: "", phone: "", company: "", service: "Custom Software", message: "",
+    });
 
     const fetchData = useCallback(async () => {
         setLoading(true);
@@ -153,6 +159,22 @@ export default function LeadsPage() {
         fetchData();
     }
 
+    async function createLead(e: React.FormEvent) {
+        e.preventDefault();
+        if (!newLead.name || !newLead.email || !newLead.service) return;
+        setCreating(true);
+        try {
+            await fetch("/api/sales/leads", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(newLead),
+            });
+            setNewLead({ name: "", email: "", phone: "", company: "", service: "Custom Software", message: "" });
+            setShowNew(false);
+            fetchData();
+        } finally { setCreating(false); }
+    }
+
     // Filter + search
     const filtered = leads.filter(l => {
         if (filterStatus !== "all" && l.status !== filterStatus) return false;
@@ -164,6 +186,11 @@ export default function LeadsPage() {
     });
 
     const statuses = ["all", "new", "contacted", "qualified", "proposal", "won", "lost"];
+
+    const SERVICE_OPTIONS = [
+        "Custom Software", "Web Development", "Mobile App", "AI / Machine Learning",
+        "Cloud Infrastructure", "UI/UX Design", "Consulting", "Other",
+    ];
 
     return (
         <div className="min-h-screen" style={{ background: "#080d18" }}>
@@ -182,9 +209,79 @@ export default function LeadsPage() {
                         <h1 className="text-xl font-bold text-white">Leads</h1>
                         <p className="text-gray-500 text-xs mt-0.5">{filtered.length} of {leads.length} leads</p>
                     </div>
+                    <button onClick={() => setShowNew(true)}
+                        className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold transition-all"
+                        style={{
+                            background: "linear-gradient(135deg, #059669, #34d399)",
+                            color: "white",
+                            boxShadow: "0 0 16px rgba(52,211,153,0.2)",
+                        }}>
+                        <Plus className="w-3.5 h-3.5" /> New Lead
+                    </button>
                 </header>
 
                 <div className="max-w-7xl mx-auto px-8 py-8">
+                    {/* New lead form */}
+                    {showNew && (
+                        <div className="rounded-2xl p-6 mb-6" style={{
+                            background: "linear-gradient(145deg, #0d1526, #0a1020)",
+                            border: "1px solid rgba(52,211,153,0.15)",
+                        }}>
+                            <div className="flex items-center justify-between mb-4">
+                                <h2 className="text-sm font-semibold text-white">New Lead</h2>
+                                <button onClick={() => setShowNew(false)} className="text-gray-500 hover:text-white transition-colors">
+                                    <X className="w-4 h-4" />
+                                </button>
+                            </div>
+                            <form onSubmit={createLead} className="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label className="text-[10px] uppercase tracking-wider text-gray-600 block mb-1">Full Name *</label>
+                                    <input value={newLead.name} onChange={e => setNewLead(f => ({ ...f, name: e.target.value }))}
+                                        className="w-full text-sm bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white placeholder-gray-600 focus:outline-none focus:border-emerald-400/40"
+                                        placeholder="Jane Smith" required />
+                                </div>
+                                <div>
+                                    <label className="text-[10px] uppercase tracking-wider text-gray-600 block mb-1">Email *</label>
+                                    <input type="email" value={newLead.email} onChange={e => setNewLead(f => ({ ...f, email: e.target.value }))}
+                                        className="w-full text-sm bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white placeholder-gray-600 focus:outline-none focus:border-emerald-400/40"
+                                        placeholder="jane@company.com" required />
+                                </div>
+                                <div>
+                                    <label className="text-[10px] uppercase tracking-wider text-gray-600 block mb-1">Phone</label>
+                                    <input value={newLead.phone} onChange={e => setNewLead(f => ({ ...f, phone: e.target.value }))}
+                                        className="w-full text-sm bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white placeholder-gray-600 focus:outline-none focus:border-emerald-400/40"
+                                        placeholder="+1 555-0100" />
+                                </div>
+                                <div>
+                                    <label className="text-[10px] uppercase tracking-wider text-gray-600 block mb-1">Company</label>
+                                    <input value={newLead.company} onChange={e => setNewLead(f => ({ ...f, company: e.target.value }))}
+                                        className="w-full text-sm bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white placeholder-gray-600 focus:outline-none focus:border-emerald-400/40"
+                                        placeholder="Acme Inc" />
+                                </div>
+                                <div>
+                                    <label className="text-[10px] uppercase tracking-wider text-gray-600 block mb-1">Service Interest *</label>
+                                    <select value={newLead.service} onChange={e => setNewLead(f => ({ ...f, service: e.target.value }))}
+                                        className="w-full text-sm bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-gray-300 focus:outline-none focus:border-emerald-400/40">
+                                        {SERVICE_OPTIONS.map(s => <option key={s} value={s}>{s}</option>)}
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="text-[10px] uppercase tracking-wider text-gray-600 block mb-1">Message / Notes</label>
+                                    <input value={newLead.message} onChange={e => setNewLead(f => ({ ...f, message: e.target.value }))}
+                                        className="w-full text-sm bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white placeholder-gray-600 focus:outline-none focus:border-emerald-400/40"
+                                        placeholder="Optional details…" />
+                                </div>
+                                <div className="col-span-2">
+                                    <button type="submit" disabled={creating}
+                                        className="px-6 py-2.5 rounded-xl text-xs font-semibold transition-all disabled:opacity-50"
+                                        style={{ background: "linear-gradient(135deg, #059669, #34d399)", color: "white" }}>
+                                        {creating ? "Creating…" : "Create Lead"}
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    )}
+
                     {/* Filters */}
                     <div className="flex items-center gap-4 mb-6">
                         {/* Search */}

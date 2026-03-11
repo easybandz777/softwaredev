@@ -58,6 +58,19 @@ export interface Client {
     assigned_to_name?: string;
 }
 
+export interface ClientRecording {
+    id: number;
+    client_id: number;
+    filename: string;
+    file_type: string;
+    file_size: number;
+    uploaded_by: number | null;
+    notes: string | null;
+    created_at: string;
+    // joined fields
+    uploader_name?: string;
+}
+
 export interface PageVisit {
     id: number;
     ip: string | null;
@@ -158,6 +171,21 @@ export async function ensureMigrated() {
             user_agent  TEXT,
             referrer    TEXT,
             path        TEXT NOT NULL DEFAULT '/',
+            created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
+        )
+    `;
+
+    // ── Client Recordings ─────────────────────────────────────────────────
+    await sql`
+        CREATE TABLE IF NOT EXISTS client_recordings (
+            id          SERIAL PRIMARY KEY,
+            client_id   INTEGER NOT NULL,
+            filename    TEXT NOT NULL,
+            file_data   TEXT NOT NULL,
+            file_type   TEXT NOT NULL DEFAULT 'audio/mpeg',
+            file_size   INTEGER NOT NULL DEFAULT 0,
+            uploaded_by  INTEGER,
+            notes       TEXT,
             created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
         )
     `;
