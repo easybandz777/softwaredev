@@ -71,6 +71,26 @@ export interface ClientRecording {
     uploader_name?: string;
 }
 
+export interface ClientNote {
+    id: number;
+    client_id: number;
+    user_id: number;
+    note_text: string;
+    created_at: string;
+    author_name?: string;
+}
+
+export interface ClientProject {
+    id: number;
+    client_id: number;
+    name: string;
+    description: string | null;
+    status: "planning" | "active" | "completed" | "on-hold";
+    value: number | null;
+    start_date: string | null;
+    created_at: string;
+}
+
 export interface PageVisit {
     id: number;
     ip: string | null;
@@ -186,6 +206,31 @@ export async function ensureMigrated() {
             file_size   INTEGER NOT NULL DEFAULT 0,
             uploaded_by  INTEGER,
             notes       TEXT,
+            created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
+        )
+    `;
+
+    // ── Client Notes ──────────────────────────────────────────────────────
+    await sql`
+        CREATE TABLE IF NOT EXISTS client_notes (
+            id          SERIAL PRIMARY KEY,
+            client_id   INTEGER NOT NULL,
+            user_id     INTEGER NOT NULL,
+            note_text   TEXT NOT NULL,
+            created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
+        )
+    `;
+
+    // ── Client Projects ──────────────────────────────────────────────────
+    await sql`
+        CREATE TABLE IF NOT EXISTS client_projects (
+            id          SERIAL PRIMARY KEY,
+            client_id   INTEGER NOT NULL,
+            name        TEXT NOT NULL,
+            description TEXT,
+            status      TEXT NOT NULL DEFAULT 'planning',
+            value       NUMERIC,
+            start_date  TIMESTAMPTZ,
             created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
         )
     `;

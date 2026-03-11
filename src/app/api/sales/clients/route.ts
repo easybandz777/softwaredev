@@ -43,12 +43,13 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(rows[0], { status: 201 });
 }
 
-// PATCH /api/sales/clients — update a client
+// PATCH /api/sales/clients — update any client fields
 export async function PATCH(req: NextRequest) {
     const { error } = requireAuth(req, ["admin", "sales"]);
     if (error) return NextResponse.json({ error }, { status: 401 });
 
-    const { id, status } = await req.json();
+    const body = await req.json();
+    const { id, status, company_name, primary_contact, email, phone, assigned_to_id } = body;
     if (!id) return NextResponse.json({ error: "Missing client id" }, { status: 400 });
 
     await ensureMigrated();
@@ -58,6 +59,21 @@ export async function PATCH(req: NextRequest) {
             return NextResponse.json({ error: "Invalid status" }, { status: 400 });
         }
         await sql`UPDATE clients SET status = ${status} WHERE id = ${id}`;
+    }
+    if (company_name !== undefined) {
+        await sql`UPDATE clients SET company_name = ${company_name} WHERE id = ${id}`;
+    }
+    if (primary_contact !== undefined) {
+        await sql`UPDATE clients SET primary_contact = ${primary_contact} WHERE id = ${id}`;
+    }
+    if (email !== undefined) {
+        await sql`UPDATE clients SET email = ${email} WHERE id = ${id}`;
+    }
+    if (phone !== undefined) {
+        await sql`UPDATE clients SET phone = ${phone || null} WHERE id = ${id}`;
+    }
+    if (assigned_to_id !== undefined) {
+        await sql`UPDATE clients SET assigned_to_id = ${assigned_to_id || null} WHERE id = ${id}`;
     }
 
     return NextResponse.json({ success: true });
