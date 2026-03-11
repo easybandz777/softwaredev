@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState, useCallback } from "react";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import {
     LogOut, BarChart3, Target, Building2, Home,
     Users, Search, Filter, ChevronRight,
@@ -123,12 +123,13 @@ function fmtCurrency(n: number) {
 
 export default function LeadsPage() {
     const router = useRouter();
+    const searchParams = useSearchParams();
     const [leads, setLeads] = useState<Lead[]>([]);
     const [salesUsers, setSalesUsers] = useState<SalesUser[]>([]);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState("");
     const [filterStatus, setFilterStatus] = useState<string>("all");
-    const [showNew, setShowNew] = useState(false);
+    const [showNew, setShowNew] = useState(searchParams.get("new") === "1");
     const [creating, setCreating] = useState(false);
     const [newLead, setNewLead] = useState({
         name: "", email: "", phone: "", company: "", service: "Custom Software", message: "",

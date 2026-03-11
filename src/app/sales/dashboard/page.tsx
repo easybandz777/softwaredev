@@ -5,7 +5,7 @@ import { useRouter, usePathname } from "next/navigation";
 import {
     LogOut, BarChart3, Users, Target, TrendingUp,
     DollarSign, Clock, AlertCircle, ArrowRight, Building2,
-    Home, FileText, UserCheck, ChevronRight, GraduationCap,
+    Home, FileText, UserCheck, ChevronRight, GraduationCap, Plus,
 } from "lucide-react";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -207,17 +207,41 @@ export default function SalesDashboard() {
                             Welcome back, {user?.full_name || user?.username}
                         </p>
                     </div>
-                    <button
-                        onClick={() => router.push("/sales/leads")}
-                        className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-medium transition-all"
-                        style={{
-                            background: "rgba(52,211,153,0.1)",
-                            color: "#34d399",
-                            border: "1px solid rgba(52,211,153,0.2)",
-                        }}
-                    >
-                        View All Leads <ArrowRight className="w-3.5 h-3.5" />
-                    </button>
+                    <div className="flex items-center gap-2">
+                        <button
+                            onClick={() => router.push("/sales/leads?new=1")}
+                            className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold transition-all"
+                            style={{
+                                background: "linear-gradient(135deg, #059669, #34d399)",
+                                color: "white",
+                                boxShadow: "0 0 16px rgba(52,211,153,0.2)",
+                            }}
+                        >
+                            <Plus className="w-3.5 h-3.5" /> New Lead
+                        </button>
+                        <button
+                            onClick={() => router.push("/sales/clients?new=1")}
+                            className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold transition-all"
+                            style={{
+                                background: "rgba(167,139,250,0.12)",
+                                color: "#a78bfa",
+                                border: "1px solid rgba(167,139,250,0.25)",
+                            }}
+                        >
+                            <UserCheck className="w-3.5 h-3.5" /> New Client
+                        </button>
+                        <button
+                            onClick={() => router.push("/sales/leads")}
+                            className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-medium transition-all"
+                            style={{
+                                background: "rgba(52,211,153,0.1)",
+                                color: "#34d399",
+                                border: "1px solid rgba(52,211,153,0.2)",
+                            }}
+                        >
+                            View All Leads <ArrowRight className="w-3.5 h-3.5" />
+                        </button>
+                    </div>
                 </header>
 
                 <div className="max-w-6xl mx-auto px-8 py-8">

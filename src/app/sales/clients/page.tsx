@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState, useCallback } from "react";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import {
     LogOut, BarChart3, Target, Building2, Home,
     Users, Mail, Phone, Calendar, UserCheck,
@@ -83,9 +83,10 @@ function fmtDate(s: string) {
 
 export default function ClientsPage() {
     const router = useRouter();
+    const searchParams = useSearchParams();
     const [clients, setClients] = useState<Client[]>([]);
     const [loading, setLoading] = useState(true);
-    const [showNew, setShowNew] = useState(false);
+    const [showNew, setShowNew] = useState(searchParams.get("new") === "1");
     const [form, setForm] = useState({ company_name: "", primary_contact: "", email: "", phone: "" });
     const [creating, setCreating] = useState(false);
 
