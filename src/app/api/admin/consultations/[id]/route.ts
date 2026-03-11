@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sql, ensureMigrated } from "@/lib/db";
-
-const SESSION_COOKIE = "ql_admin_session";
-const SESSION_TOKEN = "quantlab_admin_authenticated_v1";
+import { getSessionUser } from "@/lib/auth";
 
 function isAuthed(req: NextRequest) {
-    return req.cookies.get(SESSION_COOKIE)?.value === SESSION_TOKEN;
+    const user = getSessionUser(req);
+    return !!user;
 }
 
 export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
@@ -13,7 +12,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     const { id } = await params;
     const { status } = await req.json();
 
-    const valid = ["new", "reviewed", "closed"];
+    const valid = ["new", "contacted", "qualified", "proposal", "won", "lost", "reviewed", "closed"];
     if (!valid.includes(status)) {
         return NextResponse.json({ error: "Invalid status." }, { status: 400 });
     }

@@ -3,6 +3,18 @@ import bcrypt from "bcryptjs";
 
 export { sql };
 
+// ─── Interfaces ───────────────────────────────────────────────────────────────
+
+export interface User {
+    id: number;
+    username: string;
+    full_name: string;
+    email: string;
+    password_hash: string;
+    role: "admin" | "sales";
+    created_at: string;
+}
+
 export interface Consultation {
     id: number;
     name: string;
@@ -15,8 +27,35 @@ export interface Consultation {
     timeline: string | null;
     message: string;
     referral: string | null;
-    status: "new" | "reviewed" | "closed";
+    status: "new" | "contacted" | "qualified" | "proposal" | "won" | "lost" | "reviewed" | "closed";
+    assigned_to_id: number | null;
+    value_est: number | null;
+    next_follow_up: string | null;
     created_at: string;
+}
+
+export interface LeadNote {
+    id: number;
+    lead_id: number;
+    user_id: number;
+    note_text: string;
+    created_at: string;
+    // joined fields
+    author_name?: string;
+}
+
+export interface Client {
+    id: number;
+    company_name: string;
+    primary_contact: string;
+    email: string;
+    phone: string | null;
+    assigned_to_id: number | null;
+    status: "active" | "inactive";
+    converted_from_lead_id: number | null;
+    created_at: string;
+    // joined fields
+    assigned_to_name?: string;
 }
 
 export interface PageVisit {
@@ -28,13 +67,40 @@ export interface PageVisit {
     created_at: string;
 }
 
+// ─── Migration ────────────────────────────────────────────────────────────────
+
 let migrated = false;
 
 export async function ensureMigrated() {
     if (migrated) return;
     migrated = true;
 
-    // Core tables
+    // ── CRM Users table (namespaced to avoid collision) ────────────────────
+    await sql`
+        CREATE TABLE IF NOT EXISTS crm_users (
+            id            SERIAL PRIMARY KEY,
+            username      TEXT NOT NULL UNIQUE,
+            full_name     TEXT NOT NULL DEFAULT '',
+            email         TEXT NOT NULL DEFAULT '',
+            password_hash TEXT NOT NULL,
+            role          TEXT NOT NULL DEFAULT 'admin',
+            created_at    TIMESTAMPTZ NOT NULL DEFAULT NOW()
+        )
+    `;
+
+    // Migrate old admin_users into crm_users if they exist
+    try {
+        await sql`
+            INSERT INTO crm_users (username, password_hash, role)
+            SELECT username, password_hash, 'admin'
+            FROM admin_users
+            ON CONFLICT (username) DO NOTHING
+        `;
+    } catch {
+        // admin_users table may not exist on fresh installs — that's fine
+    }
+
+    // ── Consultations (leads) ─────────────────────────────────────────────
     await sql`
         CREATE TABLE IF NOT EXISTS consultations (
             id          SERIAL PRIMARY KEY,
@@ -48,22 +114,43 @@ export async function ensureMigrated() {
         )
     `;
 
-    await sql`
-        CREATE TABLE IF NOT EXISTS admin_users (
-            id            SERIAL PRIMARY KEY,
-            username      TEXT NOT NULL UNIQUE,
-            password_hash TEXT NOT NULL
-        )
-    `;
-
-    // Add new consultation columns (safe — IF NOT EXISTS)
+    // Extended lead columns (safe — IF NOT EXISTS)
     await sql`ALTER TABLE consultations ADD COLUMN IF NOT EXISTS phone TEXT`;
     await sql`ALTER TABLE consultations ADD COLUMN IF NOT EXISTS project_type TEXT`;
     await sql`ALTER TABLE consultations ADD COLUMN IF NOT EXISTS budget TEXT`;
     await sql`ALTER TABLE consultations ADD COLUMN IF NOT EXISTS timeline TEXT`;
     await sql`ALTER TABLE consultations ADD COLUMN IF NOT EXISTS referral TEXT`;
+    await sql`ALTER TABLE consultations ADD COLUMN IF NOT EXISTS assigned_to_id INTEGER`;
+    await sql`ALTER TABLE consultations ADD COLUMN IF NOT EXISTS value_est NUMERIC`;
+    await sql`ALTER TABLE consultations ADD COLUMN IF NOT EXISTS next_follow_up TIMESTAMPTZ`;
 
-    // Visitor tracking table
+    // ── Lead Notes ────────────────────────────────────────────────────────
+    await sql`
+        CREATE TABLE IF NOT EXISTS lead_notes (
+            id          SERIAL PRIMARY KEY,
+            lead_id     INTEGER NOT NULL,
+            user_id     INTEGER NOT NULL,
+            note_text   TEXT NOT NULL,
+            created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
+        )
+    `;
+
+    // ── Clients ───────────────────────────────────────────────────────────
+    await sql`
+        CREATE TABLE IF NOT EXISTS clients (
+            id                     SERIAL PRIMARY KEY,
+            company_name           TEXT NOT NULL,
+            primary_contact        TEXT NOT NULL,
+            email                  TEXT NOT NULL,
+            phone                  TEXT,
+            assigned_to_id         INTEGER,
+            status                 TEXT NOT NULL DEFAULT 'active',
+            converted_from_lead_id INTEGER,
+            created_at             TIMESTAMPTZ NOT NULL DEFAULT NOW()
+        )
+    `;
+
+    // ── Page visits ───────────────────────────────────────────────────────
     await sql`
         CREATE TABLE IF NOT EXISTS page_visits (
             id          SERIAL PRIMARY KEY,
@@ -75,13 +162,27 @@ export async function ensureMigrated() {
         )
     `;
 
-    // Upsert admin credentials — always enforces the configured user
-    const hash = bcrypt.hashSync("printer", 10);
+    // ── Seed admin + demo sales user ──────────────────────────────────────
+    const adminHash = bcrypt.hashSync("printer", 10);
     await sql`
-        INSERT INTO admin_users (username, password_hash)
-        VALUES ('marsh', ${hash})
-        ON CONFLICT (username) DO UPDATE SET password_hash = EXCLUDED.password_hash
+        INSERT INTO crm_users (username, full_name, email, password_hash, role)
+        VALUES ('marsh', 'Admin', 'admin@quantlab.dev', ${adminHash}, 'admin')
+        ON CONFLICT (username) DO UPDATE
+            SET password_hash = EXCLUDED.password_hash,
+                role          = EXCLUDED.role
     `;
-    // Remove any old default accounts
-    await sql`DELETE FROM admin_users WHERE username != 'marsh'`;
+
+    const salesHash = bcrypt.hashSync("sales123", 10);
+    await sql`
+        INSERT INTO crm_users (username, full_name, email, password_hash, role)
+        VALUES ('sarah', 'Sarah Chen', 'sarah@quantlab.dev', ${salesHash}, 'sales')
+        ON CONFLICT (username) DO NOTHING
+    `;
+
+    const wilderHash = bcrypt.hashSync("printer", 10);
+    await sql`
+        INSERT INTO crm_users (username, full_name, email, password_hash, role)
+        VALUES ('wilder', 'Wilder', 'wilder@quantlab.dev', ${wilderHash}, 'sales')
+        ON CONFLICT (username) DO NOTHING
+    `;
 }

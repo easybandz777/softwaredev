@@ -1,13 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sql, ensureMigrated } from "@/lib/db";
+import { getSessionUser } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
 
-const SESSION_COOKIE = "ql_admin_session";
-const SESSION_TOKEN = "quantlab_admin_authenticated_v1";
-
 function isAuthed(req: NextRequest) {
-    return req.cookies.get(SESSION_COOKIE)?.value === SESSION_TOKEN;
+    const user = getSessionUser(req);
+    return !!user;
 }
 
 export async function GET(req: NextRequest) {

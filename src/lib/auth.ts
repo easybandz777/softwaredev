@@ -1,0 +1,64 @@
+import { NextRequest } from "next/server";
+import { sql, ensureMigrated } from "@/lib/db";
+import type { User } from "@/lib/db";
+
+export const SESSION_COOKIE = "ql_session";
+export const SESSION_PREFIX = "ql_auth_";
+
+/**
+ * Encode user info into a session token.
+ * Format: ql_auth_<id>_<role>_<username>
+ */
+export function createSessionToken(user: { id: number; role: string; username: string }): string {
+    return `${SESSION_PREFIX}${user.id}_${user.role}_${user.username}`;
+}
+
+/**
+ * Parse session token back into user info.
+ */
+export function parseSessionToken(token: string): { id: number; role: string; username: string } | null {
+    if (!token.startsWith(SESSION_PREFIX)) return null;
+    const parts = token.slice(SESSION_PREFIX.length).split("_");
+    if (parts.length < 3) return null;
+    const id = parseInt(parts[0], 10);
+    const role = parts[1];
+    const username = parts.slice(2).join("_");
+    if (isNaN(id)) return null;
+    return { id, role, username };
+}
+
+/**
+ * Check if user is authenticated and optionally check role.
+ */
+export function getSessionUser(req: NextRequest): { id: number; role: string; username: string } | null {
+    const token = req.cookies.get(SESSION_COOKIE)?.value;
+    if (!token) return null;
+
+    // Support legacy admin token
+    if (token === "quantlab_admin_authenticated_v1") {
+        return { id: 0, role: "admin", username: "marsh" };
+    }
+
+    return parseSessionToken(token);
+}
+
+/**
+ * Quick auth guard — returns null if authed, or an error response if not.
+ */
+export function requireAuth(req: NextRequest, allowedRoles?: string[]) {
+    const user = getSessionUser(req);
+    if (!user) return { error: "Unauthorized", user: null as never };
+    if (allowedRoles && !allowedRoles.includes(user.role)) {
+        return { error: "Forbidden", user: null as never };
+    }
+    return { error: null, user };
+}
+
+/**
+ * Look up full user record from DB by id.
+ */
+export async function getFullUser(id: number): Promise<User | null> {
+    await ensureMigrated();
+    const { rows } = await sql`SELECT * FROM crm_users WHERE id = ${id} LIMIT 1`;
+    return (rows[0] as User) ?? null;
+}
