@@ -3,16 +3,20 @@
 import React, { useState } from 'react';
 
 /* ─────────────────────────────────────────────
-   DATA
+   DATA — All unique content. Core objections are in Module 5.
+   BonusB focuses on SOFTWARE/SYSTEM-SPECIFIC objections reps
+   encounter when selling custom builds, full-stack platforms,
+   and operational systems — NOT the standard cold-call / trust
+   / pricing walls covered in Module 5.
 ───────────────────────────────────────────── */
 
-type Category = 'cold-call' | 'trust' | 'pricing';
+type Category = 'software-build' | 'timeline' | 'stakeholders' | 'migration';
 
 interface Objection {
     id: string;
     smokescreen: string;
     rootCause: string;
-    rootCauseLabel: 'FEAR' | 'CONFUSION' | 'LACK OF URGENCY' | 'DISTRUST' | 'PRICE FIXATION';
+    rootCauseLabel: 'TECH ANXIETY' | 'CONTROL FEAR' | 'STATUS QUO BIAS' | 'INTERNAL POLITICS' | 'SCOPE CONFUSION';
     reframe: string;
     airSteps: { a: string; i: string; r: string };
     script: string;
@@ -22,192 +26,246 @@ interface Objection {
 
 const CATEGORIES: { id: Category; label: string; icon: string; description: string }[] = [
     {
-        id: 'cold-call',
-        label: 'Cold Call Smoke Screens',
-        icon: '📵',
-        description: 'Knee-jerk reactions designed to end the call before it starts. These are reflexes, not real objections.',
+        id: 'software-build',
+        label: 'Build vs. Buy Objections',
+        icon: '🖥️',
+        description: 'Prospects who think off-the-shelf software (Salesforce, HubSpot, Wix, etc.) can replace a custom build. Your job: expose the ceiling those tools hit at scale.',
     },
     {
-        id: 'trust',
-        label: 'Trust & Authority Walls',
-        icon: '🛡️',
-        description: `They don't yet believe you can deliver. Your job is to transfer certainty before you transfer a contract.`,
+        id: 'timeline',
+        label: 'Timeline & Delivery Concerns',
+        icon: '⏱️',
+        description: `They want it yesterday. Or they think 6 weeks is too long. These objections stem from misunderstanding what's being built — or past trauma from vendors who missed deadlines.`,
     },
     {
-        id: 'pricing',
-        label: 'Pricing & Logistics Walls',
-        icon: '💰',
-        description: `The deal-killers at the 1-yard line. These are almost always symptoms of insufficient value built earlier in the call.`,
+        id: 'stakeholders',
+        label: 'Stakeholder & Decision Walls',
+        icon: '👥',
+        description: `Multiple decision-makers, board approvals, or partner sign-offs. These aren't objections — they're a test of whether you can help your champion sell internally.`,
+    },
+    {
+        id: 'migration',
+        label: 'Migration & Risk Objections',
+        icon: '🔄',
+        description: `Fear of switching. Fear of downtime. Fear of losing data. These are the highest-friction objections because the prospect is weighing comfort vs. transformation.`,
     },
 ];
 
 const OBJECTIONS: Record<Category, Objection[]> = {
-    'cold-call': [
+    'software-build': [
         {
-            id: 'cc-1',
-            smokescreen: `"Just send me an email / proposal."`,
-            rootCause: `They want to end the call politely without a confrontation. A proposal sent cold has a <2% conversion rate.`,
-            rootCauseLabel: 'LACK OF URGENCY',
-            reframe: `An email means nothing without context. You need 15 minutes to make the proposal actually useful to them.`,
+            id: 'sb-1',
+            smokescreen: `"We can just use Salesforce / HubSpot for this."`,
+            rootCause: `They're comparing a $150/seat SaaS to a custom-built revenue system. They don't yet understand the difference between a general tool and a tailored architecture.`,
+            rootCauseLabel: 'TECH ANXIETY',
+            reframe: `Salesforce is a toolkit — you still need to build the house. QuantLab builds the house AND hands them the keys.`,
             airSteps: {
-                a: `"Absolutely, I can get that over to you — and I want it to actually be worth your time to open."`,
-                i: `"Before I build it out, can I just ask — what's the one thing you'd most want solved if we did work together?"`,
-                r: `"Perfect. Give me 15 minutes tomorrow. I'll custom-build the proposal around that exact thing and send it the same day."`,
+                a: `"Salesforce is a great platform — there's a reason it's a $200B company."`,
+                i: `"Quick question: who on your team would configure it, build the custom workflows, and maintain it? Do you have a Salesforce admin on payroll?"`,
+                r: `"That's exactly the gap. Salesforce gives you the Legos. We build the finished product — your custom intake, portal, automations, and dashboards — and maintain it so you never need to hire a dev. The total cost of Salesforce + admin + customization is typically 3–5x what we charge."`,
             },
-            script: `"Absolutely — and I want it to be worth your time to actually read it. Before I build it out, can I grab 15 minutes tomorrow to make sure I'm building it around what actually matters for your business? I'll have a first draft back to you the same day."`,
-            notes: `Never send a cold PDF. A generic proposal is a rejection letter in disguise. The meeting IS the product.`,
-            preemptQuestion: `"What would need to be true for you to pull the trigger on something like this within the next 30 days?"`,
+            script: `"Salesforce is a powerful platform. Quick question though: who on your team would set it up, build the custom workflows, connect it to your intake forms, and maintain it long-term? Do you have a Salesforce admin? Because most businesses your size end up spending $80–120K on Salesforce licensing + a consultant to configure it, and they still don't get a client-facing portal or custom dashboard. With us, you get the entire finished system — built, maintained, and optimized — for a fraction of that."`,
+            notes: `Never trash Salesforce. Instead, expose the hidden costs: licensing, admin salary, consultant fees, customization time. Make the math obvious.`,
+            preemptQuestion: `"What tools are you currently using, and how much time does your team spend configuring and maintaining them?"`,
         },
         {
-            id: 'cc-2',
-            smokescreen: `"We don't have budget for this right now."`,
-            rootCause: `"Budget" is almost never the issue — priority is. If they truly believed this would 10x their revenue, they'd find the money in 24 hours.`,
-            rootCauseLabel: 'LACK OF URGENCY',
-            reframe: `Point to the cost of inaction and restructure the investment into a phased approach that removes the upfront barrier.`,
+            id: 'sb-2',
+            smokescreen: `"Can't we just use WordPress / Wix / Squarespace?"`,
+            rootCause: `They see all websites as equal. They don't understand the difference between a brochure site and a revenue-generating system with backend logic, portals, and automation.`,
+            rootCauseLabel: 'SCOPE CONFUSION',
+            reframe: `WordPress is a website. What we're building is an operating system for their business. Completely different category.`,
             airSteps: {
-                a: `"Totally fair — timing is everything and I respect that."`,
-                i: `"I'm curious — is it a cash flow issue right now, or is it more that this isn't the right priority for this quarter?"`,
-                r: `"If I could structure this so Phase 1 is under $1,500 and the rest is tied to results, would that change the conversation?"`,
+                a: `"Absolutely — those platforms have their place, especially for getting started."`,
+                i: `"Can I ask — does WordPress handle your client intake, auto-generate invoices, send automated follow-ups, and give your clients a login portal to track their project?"`,
+                r: `"That's the difference. We're not building a website — we're building the digital infrastructure that runs your business. WordPress can't do what we're talking about without stitching together 15 plugins that break on every update."`,
             },
-            script: `"Totally fair — timing matters. Can I ask though: you mentioned the current system is costing you [X] leads per month. At your average client value, that's roughly $[Y] walking out the door monthly. If I structured this in phases — maybe $1,500 upfront for Phase 1 and the balance in 60 days — would that make sense to at least get started?"`,
-            notes: `Always quantify the cost of NOT acting. "No budget" dissolves when you show them it's costing more to stand still.`,
-            preemptQuestion: `"What does the status quo cost you if nothing changes in the next 6 months?"`,
+            script: `"WordPress is great for getting started — no argument. But here's the honest truth: what we're building isn't a website. It's the operational system that runs your client lifecycle — from the first form submission to the final invoice. Can WordPress auto-assign leads to your team, create project records, send branded client login portals, and sync with your accounting? Not without 15 plugins duct-taped together. And when one updates and breaks the rest — who fixes it at 2 PM on a Tuesday?"`,
+            notes: `The key phrase is 'operational system, not a website.' Frame the conversation at a higher level than they're thinking.`,
+            preemptQuestion: `"If you imagine the perfect digital version of how your business operates — intake to delivery to payment — would a template site cover all of that?"`,
         },
         {
-            id: 'cc-3',
-            smokescreen: `"We already work with someone who handles this."`,
-            rootCause: `They're either loyal, afraid of change, or don't see why you're different. They're not saying no — they're saying "prove it."`,
-            rootCauseLabel: 'DISTRUST',
-            reframe: `You don't need them to fire their current vendor. You're positioning yourself in the gap their vendor doesn't touch.`,
+            id: 'sb-3',
+            smokescreen: `"My nephew / a freelancer can build this for way less."`,
+            rootCause: `They're optimizing for cost, not outcome. They don't yet see the risk profile of an unsupported one-person build.`,
+            rootCauseLabel: 'TECH ANXIETY',
+            reframe: `The build is 20% of the value. The other 80% is architecture decisions, ongoing support, and someone answering the phone when it breaks.`,
             airSteps: {
-                a: `"That's great — who are you working with? [Pause to let them answer.]"`,
-                i: `"Do they handle the full back-end as well? Like custom client portals, automation, internal ops systems? Or is it more the design and marketing layer?"`,
-                r: `"Got it — that's exactly the gap we live in. We're not competing with them, we're the silent engine underneath that most agencies don't touch."`,
+                a: `"That's a great option for simple projects — and I mean that sincerely."`,
+                i: `"Let me ask: if the system goes down on a Monday morning and your freelancer is on another project, who fixes it? And who's making sure the architecture scales as you grow?"`,
+                r: `"Our builds come with dedicated engineering support, security patching, performance monitoring, and architecture that scales. A freelancer builds it and moves on. We build it and stay."`,
             },
-            script: `"That's great — who are you with? [Pause.] I know them — they're strong on the creative side. Quick question: do they handle the deep operational back-end? Like custom automation, client portals, internal systems? Or is it mainly the marketing and brand layer? Because that's the gap we live in — we're not competing with them, we're the infrastructure underneath."`,
-            notes: `Curiosity disarms defensiveness. Ask about the current vendor before you position against them.`,
-            preemptQuestion: `"Is there anything your current vendor can't handle that you've been meaning to solve?"`,
+            script: `"I totally respect that — freelancers can do solid work. The risk isn't the initial build. It's Month 6. When a payment integration breaks. When you want to add a feature and they're booked for 3 months. When a security vulnerability hits and no one's monitoring. We provide the same quality build PLUS ongoing architecture support, uptime monitoring, and a team that answers in 4 hours, not 4 weeks."`,
+            notes: `Position the freelancer as good for v1, but inadequate for a growing business. The question is: are they building for today or for scale?`,
         },
         {
-            id: 'cc-4',
-            smokescreen: `"I'm stepping into a meeting / not a good time."`,
-            rootCause: `Could be genuinely bad timing, or a reflexive deflection. Either way, your job is to secure a hard callback — not to keep talking.`,
-            rootCauseLabel: 'LACK OF URGENCY',
-            reframe: `Respect their time, own the next step, and create a specific appointment — not a vague "call back later."`,
+            id: 'sb-4',
+            smokescreen: `"We tried custom software before and it was a nightmare."`,
+            rootCause: `Genuine past trauma. A vendor overpromised, went over budget, delivered late, or produced something unusable. This is actually your strongest sales opportunity.`,
+            rootCauseLabel: 'TECH ANXIETY',
+            reframe: `Their bad experience tells you exactly what to de-risk. Match your process against every failure point from their last vendor.`,
             airSteps: {
-                a: `"No problem at all — I'll be quick."`,
-                i: `"I have one question and I'll let you go: is [pain point] something that's active on your radar right now, or not a priority?"`,
-                r: `"Perfect. I'll call you at [specific time]. I'll keep it to 10 minutes — is morning or afternoon better for you?"`,
+                a: `"I hear that more often than you'd think — and it's actually why our process looks the way it does."`,
+                i: `"Can I ask what specifically went wrong? Was it scope creep, communication, or the final product just didn't work?"`,
+                r: `"We built our process to prevent exactly that. Milestone-based delivery — you see and approve each phase before the next starts. Weekly video updates. And a fixed-scope contract so there are no surprise invoices."`,
             },
-            script: `"No problem — I'll be quick. One question: is [their core pain point] something that's on your radar right now, or not a priority this quarter? [Let them answer.] Got it. I'll call you back at [specific time] — I'll keep it to 10 minutes flat. Morning or afternoon?"`,
-            notes: `Get a specific time, not a soft "call me next week." Soft callbacks don't happen.`,
-        },
-    ],
-    trust: [
-        {
-            id: 't-1',
-            smokescreen: `"We got burned by a company like yours before."`,
-            rootCause: `Real trauma. A previous vendor overpromised and under-delivered. This is actually your best opportunity — if you can de-risk everything.`,
-            rootCauseLabel: 'DISTRUST',
-            reframe: `Their past bad experience is your competitive advantage. Make the contrast crystal clear by exposing *exactly* what went wrong and proving your model eliminates that risk.`,
-            airSteps: {
-                a: `"I'm really glad you told me that — because that's not uncommon and it's the reason I work the way I do."`,
-                i: `"Can I ask — what exactly went wrong? Was it communication, a bad final product, or they disappeared after the deposit?"`,
-                r: `"That's exactly the problem we built our model to solve. Everything we do is milestone-based — you approve each phase before we build the next. You never pay for work you haven't seen and signed off on."`,
-            },
-            script: `"I'm glad you told me that. Can you share what went wrong — was it the communication, they disappeared after taking money, or the work just wasn't right? [Let them vent fully.] That's exactly why I built our model differently. Every deliverable is milestone-based with payments tied to your approval. You never pay for work you haven't reviewed and signed off on first."`,
-            notes: `Let them talk. Venting externalizes the pain. After they vent, the emotional temperature drops and logic returns. THEN you present your de-risk model.`,
-            preemptQuestion: `"What would need to happen for you to feel completely confident in a vendor relationship?"`,
-        },
-        {
-            id: 't-2',
-            smokescreen: `"Have you worked with [my specific niche] before?"`,
-            rootCause: `They believe their business is unique and fear you won't understand their world. This is a disguised ask for social proof.`,
-            rootCauseLabel: 'DISTRUST',
-            reframe: `Pivot from industry experience to problem experience. The problems you solve (bad leads, slow sites, broken funnels) are universal.`,
-            airSteps: {
-                a: `"Great question — and honestly, the principles that make a business work online are the same across industries."`,
-                i: `"Let me ask: what specifically are you worried about that might be unique to your niche?"`,
-                r: `"The core problems we solve — slow load times bleeding SEO, a form funnel that loses leads, a backend that doesn't connect to revenue — those are exactly what [their niche competitor] was dealing with before we fixed them."`,
-            },
-            script: `"Great question. The core problems we solve — a site that's bleeding leads, a backend that isn't connected to your ops, or conversion issues — those are identical whether you're a law firm, a medical spa, or a restaurant. That said, I've specifically worked with [closest adjacent niche], so the learning curve is minimal. What specifically concerns you?"`,
-            notes: `Always have 2–3 proof points ready from adjacent industries. Similarity beats identity for niche credibility.`,
-            preemptQuestion: `"What's the most niche-specific challenge you'd need us to understand to work effectively together?"`,
-        },
-        {
-            id: 't-3',
-            smokescreen: `"Can you guarantee results / ROI?"`,
-            rootCause: `They're scared of spending money without certainty. This is also a sign they've been sold phantom promises before.`,
-            rootCauseLabel: 'FEAR',
-            reframe: `No one can guarantee results — but you can guarantee the inputs and your accountability if targets aren't met.`,
-            airSteps: {
-                a: `"I appreciate you asking that directly — it's the right question."`,
-                i: `"What specific outcome would you need to see to feel like this was worth the investment?"`,
-                r: `"I can't guarantee a specific revenue number — and honestly, anyone who does is lying to you. What I can guarantee: deliverables on time, performance baselines we agree on upfront, and if those aren't hit after 90 days, we work for free until they are."`,
-            },
-            script: `"That's a fair ask. I won't guarantee a revenue number — that would mean I control your sales team, your market, your pricing — I don't. What I can guarantee: the site will load in under 2 seconds, the lead form will have a <3% drop-off rate, and if the baseline metrics we agree on aren't hit in 90 days, we extend our engagement at no charge until they are."`,
-            notes: `Replace vague ROI guarantees with specific, measurable performance guarantees. Precision builds more trust than promises.`,
+            script: `"I hear you. Can you tell me what went wrong? Was it the communication, the timeline, or did the end product just not do what they promised? [Let them talk fully.] That's exactly the pattern I see with agencies that take a deposit and disappear. Here's how we prevent that: we break every project into 2-week sprints. You review and approve each deliverable before we move forward. Payments are milestone-based — you never pay for work you haven't seen. And every Friday, you get a Loom video showing exactly what was built."`,
+            notes: `Let them vent completely. The more specific their complaints, the more precisely you can position your de-risk model against each one.`,
+            preemptQuestion: `"If you've worked with a tech vendor before, what would need to be different this time for you to feel completely comfortable?"`,
         },
     ],
-    pricing: [
+    timeline: [
         {
-            id: 'p-1',
-            smokescreen: `"Your price is too high / Competitor X quoted less."`,
-            rootCause: `They're trying to commoditize your work. The danger: you allow it by focusing on price instead of reframing the comparison.`,
-            rootCauseLabel: 'PRICE FIXATION',
-            reframe: `The comparison is apples to oranges. Expose what's NOT included in the competitor's quote and anchor cost to the downside of a cheap solution failing.`,
+            id: 'tl-1',
+            smokescreen: `"6 weeks is too long — we need this done in 2."`,
+            rootCause: `They either underestimate the complexity or have an external deadline driving urgency. Either way, rushing a build guarantees a broken product.`,
+            rootCauseLabel: 'SCOPE CONFUSION',
+            reframe: `Speed is a feature we can build for — but only if we scope correctly. A 2-week build and a 6-week build are different products.`,
             airSteps: {
-                a: `"I appreciate you being upfront with me — let's look at this directly."`,
-                i: `"What exactly did they quote you? Because in my experience, the price gap almost always comes from scope differences."`,
-                r: `"Our builds include custom backend logic, proper infrastructure, and a 90-day performance guarantee. Are they including all of that? Because the cost of a system failing 6 months from now — downtime, emergency fixes, lost leads — almost always exceeds the initial savings."`,
+                a: `"I totally understand the urgency — and I want to hit your timeline."`,
+                i: `"Can I ask what's driving the 2-week deadline? Is there an event, a launch, or a season you're trying to hit?"`,
+                r: `"Here's what I can do: we launch a high-impact Phase 1 in 2 weeks — your core intake system and lead capture. Then we build out the full portal, automations, and dashboard over the remaining 4 weeks. You get immediate value AND a complete system."`,
             },
-            script: `"I appreciate you telling me. Can I ask what exactly they were quoting? Because in my experience, the price difference almost always lives in the scope. Our work includes custom backend architecture, proper hosting infrastructure, 90-day performance guarantees, and real support. Are they including all of that? Because when a core system breaks — and cheap builds do break — the downtime cost almost always exceeds the savings."`,
-            notes: `Never defend your price. Instead, make them defend the cheaper option by exposing what it lacks. Let silence do the work after you ask your question.`,
-            preemptQuestion: `"What would it cost your business if the new system was down for a week after launch?"`,
+            script: `"I hear you — speed matters. Let me ask: what's driving the 2-week timeline? An event? A season? [Listen.] Here's my honest take: if I rush the entire build into 2 weeks, I'm cutting corners on testing, security, and architecture. Instead, let me propose this: we launch Phase 1 — your core lead capture and intake system — in exactly 14 days. You start generating value immediately. Then we build out the full system over the next 4 weeks with zero downtime."`,
+            notes: `Always break timeline objections into phased delivery. A 'no' to 6 weeks often becomes a 'yes' to 2 weeks for Phase 1.`,
+            preemptQuestion: `"If we could run this in phases — immediate impact first, full system second — would that work with your timeline?"`,
         },
         {
-            id: 'p-2',
-            smokescreen: `"I need to think about it."`,
-            rootCause: `This is the most common smoke screen of all. It almost never means "I need more time" — it means "I'm not convinced enough yet." The real objection is buried underneath.`,
-            rootCauseLabel: 'CONFUSION',
-            reframe: `Surface the actual objection by making it safe to be honest. "Think about it" is always a symptom.`,
+            id: 'tl-2',
+            smokescreen: `"What happens if you miss the deadline?"`,
+            rootCause: `Previous bad experiences with vendors who promised and didn't deliver. They need contractual accountability, not just verbal reassurance.`,
+            rootCauseLabel: 'CONTROL FEAR',
+            reframe: `Don't just promise — de-risk with specific contractual terms and transparent project tracking.`,
             airSteps: {
-                a: `"That makes total sense — and I want to respect your process."`,
-                i: `"Can I ask: is there a specific part you're unsure about? Because if there's a doubt I haven't addressed, I'd rather deal with it together right now than let it sit."`,
-                r: `"[Once they reveal it] — Great, that's exactly what I want to address. Here's how we handle that..."`,
+                a: `"That's the right question to ask — and honestly, most vendors can't answer it."`,
+                i: `"If we agreed to specific milestone dates with a penalty clause for missed deadlines, would that resolve the concern?"`,
+                r: `"Here's our commitment: every deliverable has a hard date. If we miss a milestone by more than 5 business days without your approval, the next phase is discounted by 15%. Plus, you'll have access to a live project tracker updated every 48 hours so you can see exactly where things stand."`,
             },
-            script: `"That makes total sense — and I want to respect that. Can I ask one thing though: is there a specific part of the solution you're unsure about? Because if there's a doubt I haven't addressed yet, I'd much rather tackle it together right now than have it sit. What's the thing that's giving you pause?"`,
-            notes: `Silence after this question is golden. Don't fill it. The first thing they say after a pause is the real objection. That's what you're actually solving.`,
-            preemptQuestion: `"On a scale of 1–10, how confident do you feel right now that this is the right move? What would make it a 10?"`,
+            script: `"Great question. Here's how we handle that: every milestone has a contractual delivery date. If we miss any milestone by more than 5 business days — without your prior approval — we discount the next phase by 15%. You'll also have access to a live project tracker updated twice a week, so there are zero surprises. Most importantly, in our last 12 builds, we've hit every deadline. I can connect you with references who'll confirm that."`,
+            notes: `Put your money where your mouth is. Concrete penalties and transparency build trust faster than promises.`,
         },
         {
-            id: 'p-3',
-            smokescreen: `"I need to talk to my partner / team / CFO first."`,
-            rootCause: `Either they genuinely need approval, or it's a polite exit. Never assume — always find out which it is and offer to solve the problem directly.`,
-            rootCauseLabel: 'LACK OF URGENCY',
-            reframe: `Make it easy to bring you into the conversation. Become an asset in their internal sale rather than a victim of it.`,
+            id: 'tl-3',
+            smokescreen: `"We want to wait until Q3 / next year / after the busy season."`,
+            rootCause: `Comfort with the status quo. They're not in enough pain to act now. Your discovery didn't build enough urgency.`,
+            rootCauseLabel: 'STATUS QUO BIAS',
+            reframe: `Calculate the cost of waiting. Every month they delay, they're losing the leads and revenue the system would capture.`,
             airSteps: {
-                a: `"Absolutely — that makes sense, this isn't a one-person decision."`,
-                i: `"Is your partner / CFO the main decision-maker, or are there other stakeholders? What are their biggest concerns typically?"`,
-                r: `"I'd love to put together a one-page ROI summary specifically for them — built around their lens, not yours. That way you're going into that conversation armed, not hoping. Can I get that to you by tomorrow?"`,
+                a: `"Timing is important — and I wouldn't want you to start something when you can't give it attention."`,
+                i: `"Can I ask: what changes between now and Q3 that makes it a better time? And in the meantime, how many leads slip through the cracks each month?"`,
+                r: `"You mentioned you're losing about 5 qualified leads per month to your broken intake process. At $3,000 average client value, that's $15,000/month walking away. By Q3, that's $60,000 in lost revenue. If we start now, the system is live before your busy season even hits."`,
             },
-            script: `"Of course — this isn't a one-person decision and I respect that. Can I ask: what are the main concerns they typically raise when evaluating something like this? I want to make sure you're going in armed. I can put together a one-page ROI breakdown specifically framed for their questions. Would that help you close it internally?"`,
-            notes: `Turn the partner into an ally, not a wall. Your job is to help your prospect sell internally. Give them the ammo.`,
-            preemptQuestion: `"Who else in your organization will weigh in on a decision like this? Let's make sure we're building the case for all of them."`,
+            script: `"I hear you — and I don't want to force timing. But let me ask: you mentioned 5 leads per month are dropping off. At your $3K average client value, that's $15K/month. Between now and Q3, that's $60K in lost revenue. If we start the build now, your automated intake system is live in 6 weeks — which means you catch your busy season with a fully operational lead machine instead of the same broken process."`,
+            notes: `"I'll wait" is always the most expensive decision. Help them see the math, then let the numbers apply the pressure.`,
+            preemptQuestion: `"What does the next 6 months look like if nothing changes in your current setup?"`,
+        },
+    ],
+    stakeholders: [
+        {
+            id: 'st-1',
+            smokescreen: `"I need to run this by my partner / co-founder."`,
+            rootCause: `Could be genuine or a polite exit. Your job: find out which one, and arm your champion to sell internally.`,
+            rootCauseLabel: 'INTERNAL POLITICS',
+            reframe: `Become an asset in their internal negotiation. Give them the tools to win approval.`,
+            airSteps: {
+                a: `"Absolutely — this is a big decision and both of you should be aligned."`,
+                i: `"What does your partner typically focus on in decisions like this — is it more about the ROI, the timeline, or the risk?"`,
+                r: `"I'm going to build you a one-page ROI summary specifically framed around their concerns. I can also jump on a quick 15-minute call with both of you if that would make the decision easier."`,
+            },
+            script: `"Of course — I'd want the same thing. Quick question: what does your partner typically care most about — the financials, the timeline, or the risk profile? [Listen.] Perfect. Let me build a one-page executive summary tailored to those exact points. And if it would help, I'm happy to jump on a 15-minute call with both of you. I'll keep it tight and focused on the metrics that matter to them."`,
+            notes: `The worst thing you can do is let your champion walk into the conversation with just a verbal pitch. Arm them with a document.`,
+            preemptQuestion: `"Who else will weigh in on this decision? I want to make sure we build the case for everyone involved."`,
         },
         {
-            id: 'p-4',
-            smokescreen: `"Can we do a revenue-share or performance basis?"`,
-            rootCause: `They want to eliminate all their risk and shift it to you. This often comes from low cash flow or low conviction in their own business.`,
-            rootCauseLabel: 'FEAR',
-            reframe: `Frame a performance arrangement as requiring something in return — access, control, and a strong enough business for it to be worth it for you.`,
+            id: 'st-2',
+            smokescreen: `"Our board / leadership likes to evaluate multiple vendors."`,
+            rootCause: `Due diligence is standard for larger organizations. This isn't an objection — it's a process. Your job: make sure you win the comparison.`,
+            rootCauseLabel: 'INTERNAL POLITICS',
+            reframe: `Welcome the comparison. Give them an evaluation framework that naturally highlights your strengths.`,
             airSteps: {
-                a: `"I hear you — and I've done rev-share arrangements before in the right situation."`,
-                i: `"For that to work, I need to understand your current monthly revenue and what the growth trajectory looks like. Can you share those numbers with me?"`,
-                r: `"Here's the thing: rev-share means we're business partners. I'd need full visibility into your analytics, sales data, and ops. If that's on the table, let's talk. Otherwise, the phased payment model gets you the same risk reduction without us needing to be partners."`,
+                a: `"That makes total sense — I'd encourage the same thing. A decision this important deserves due diligence."`,
+                i: `"What criteria is the board evaluating? If I know their scorecard, I can make sure our proposal directly addresses each point."`,
+                r: `"I'll put together a comparison matrix that shows our deliverables, timeline, support model, and total cost of ownership side by side. When they see the 3-year TCO including the hidden costs of the alternatives, the decision usually becomes very clear."`,
             },
-            script: `"I've done rev-share in the right situations — but it requires full visibility into your revenue, pipeline, and ops, because we'd effectively be business partners. Can you walk me through your current monthly revenue and growth rate? [Listen.] Based on what you're describing, I think the phased payment approach actually gives you more flexibility with less complexity. Let me show you what that looks like."`,
-            notes: `Rev-share is a trap if not structured properly. Use it as a pivot to the phased model, which gives them risk reduction at a lower cost to you.`,
+            script: `"I encourage that — you should vet this thoroughly. Can you share the evaluation criteria the board is using? Better yet, can I build the comparison matrix for you? I'll include our deliverables, timeline, support terms, and — this is key — the total cost of ownership over 3 years. Most competitors quote low upfront but don't include hosting, maintenance, security patches, or support. When your board sees the full picture, the math does the talking."`,
+            notes: `Build the evaluation framework yourself. If you set the criteria, you set the anchors. Include TCO, not just upfront cost.`,
+            preemptQuestion: `"Is there a formal evaluation process for tech investments at your organization? If so, I'd love to tailor our proposal to your exact criteria."`,
+        },
+        {
+            id: 'st-3',
+            smokescreen: `"My IT team has concerns about security / compliance."`,
+            rootCause: `IT teams gatekeep vendor decisions to protect the org — and to protect their own authority. This is a legitimate concern that needs direct, technical answers.`,
+            rootCauseLabel: 'CONTROL FEAR',
+            reframe: `Don't fight the IT team — recruit them. Offer a direct conversation and provide technical documentation proactively.`,
+            airSteps: {
+                a: `"That's exactly the kind of diligence I'd want from an IT team protecting your infrastructure."`,
+                i: `"What specifically are they concerned about? Is it data residency, authentication, access controls, or something else?"`,
+                r: `"I'm going to send over our security documentation — SOC 2 practices, data handling policies, and architecture diagrams. I'm also happy to get on a 20-minute call directly with your IT lead to answer their technical questions head-on."`,
+            },
+            script: `"I respect that — security should be a gatekeeper on every vendor decision. Can you get me a list of their specific concerns? Even better, can I get 20 minutes directly with your technical lead? I'll share our architecture overview, hosting practices, data handling policies, and authentication approach. I'd rather answer their questions directly than play telephone."`,
+            notes: `IT teams respect vendors who speak their language and don't dodge questions. One direct conversation is worth 10 emails.`,
+            preemptQuestion: `"Does your organization have specific security or compliance requirements we should design around from the start?"`,
+        },
+    ],
+    migration: [
+        {
+            id: 'mg-1',
+            smokescreen: `"Switching systems will be too disruptive to our operations."`,
+            rootCause: `Fear of the transition period. They're imagining a hard cutover where everything breaks at once.`,
+            rootCauseLabel: 'STATUS QUO BIAS',
+            reframe: `We don't do hard cutovers. The new system runs parallel to the old one until everyone is comfortable. Zero downtime transition.`,
+            airSteps: {
+                a: `"That's a valid concern — and honestly, most migrations ARE disruptive when done wrong."`,
+                i: `"What part of the transition worries you most — the data move, the team retraining, or potential downtime?"`,
+                r: `"Here's how we handle it: we build the new system alongside the old one. Your team starts using it in parallel — no hard cutover. When everyone's comfortable and the data is verified, we switch the DNS and the old system becomes the backup. Zero downtime, zero lost data."`,
+            },
+            script: `"You're right to be cautious — a bad migration can wreck a business. Here's our approach: we never do a hard cutover. The new system runs in parallel with your existing setup. Your team trains on it with real data while the old system stays live. Once everyone is confident and we've verified every record, we make the switch — and your old system stays as a backup for 30 days. Zero downtime. Zero data loss. We've done this for 20+ businesses and haven't lost a single record."`,
+            notes: `'Parallel migration' is your magic phrase. It eliminates every fear about disruption. Practice saying it with confidence.`,
+            preemptQuestion: `"What would a zero-downtime transition look like for you? What systems would need to keep running during the switch?"`,
+        },
+        {
+            id: 'mg-2',
+            smokescreen: `"What about our historical data? We can't lose 5 years of records."`,
+            rootCause: `Legitimate fear. Data migration is the most anxiety-inducing part of a system change, especially for regulated industries.`,
+            rootCauseLabel: 'CONTROL FEAR',
+            reframe: `Data migration is a standard part of every engagement. Provide a specific, step-by-step process.`,
+            airSteps: {
+                a: `"Your data is sacred — that's non-negotiable and I completely agree."`,
+                i: `"What format is your current data in? Is it in a database, spreadsheets, or scattered across multiple platforms?"`,
+                r: `"Here's our process: we export everything, clean it, map it to the new schema, run a test import on a staging environment you can review, and only go live once you've verified every record. We also keep your raw data backup indefinitely. Nothing is ever deleted."`,
+            },
+            script: `"Your data is the crown jewel — we don't take that lightly. Here's the exact process: Phase 1, we export and audit every record. Phase 2, we clean and normalize it for the new system. Phase 3, we import it into a staging environment and give you access to verify. You check every record. Only when you sign off do we push to production. And we keep a full backup of your original data indefinitely. In 20+ migrations, we've never lost a single record."`,
+            notes: `Specificity kills fear. Walk them through the exact steps, and offer to show a previous migration case study.`,
+            preemptQuestion: `"What does your current data landscape look like? How many systems hold critical records right now?"`,
+        },
+        {
+            id: 'mg-3',
+            smokescreen: `"Our team won't adopt a new system — they'll resist the change."`,
+            rootCause: `Internal change management is the #1 reason system implementations fail. This prospect is smart for raising it.`,
+            rootCauseLabel: 'STATUS QUO BIAS',
+            reframe: `Adoption is an engineering problem, not a training problem. Build the system so intuitive that resistance dies on contact.`,
+            airSteps: {
+                a: `"That's honestly the most important concern you've raised — and most vendors ignore it."`,
+                i: `"Who on your team is the most resistant to change? And what's the biggest source of friction in their current workflow?"`,
+                r: `"We design every interface around the user who hates software. If your least technical team member can use it in 10 minutes without a manual, we've done our job. Plus, we provide hands-on training sessions, recorded walkthroughs, and a 30-day adoption support window where your team can reach us directly with questions."`,
+            },
+            script: `"You're asking the right question — and most vendors skip this entirely. Here's our approach: we design for your LEAST technical team member. If they can complete their core tasks in under 10 minutes with zero training, the system is built right. On top of that, we run hands-on training sessions for your team, record video walkthroughs for every workflow, and provide a 30-day direct-access support window. In our experience, adoption resistance disappears when the system is genuinely easier than what they were doing before."`,
+            notes: `"Designed for the person who hates software" is a powerful phrase. It signals empathy and practical UX thinking.`,
+            preemptQuestion: `"If we build this, who on your team will use it most? What does their current process look like?"`,
+        },
+        {
+            id: 'mg-4',
+            smokescreen: `"What if the new system doesn't work and we're stuck?"`,
+            rootCause: `Catastrophizing. They're imagining the worst case: new system fails, old system is gone, business grinds to a halt.`,
+            rootCauseLabel: 'CONTROL FEAR',
+            reframe: `Build a contractual safety net. If it doesn't perform, they have a clear exit path.`,
+            airSteps: {
+                a: `"If I were investing this much, I'd want to know the worst case too."`,
+                i: `"Would a performance guarantee and a defined exit clause give you the confidence to move forward?"`,
+                r: `"Here's our commitment: if the core metrics we agree on aren't met within 90 days of launch, we continue working at no additional charge until they are. And your old system runs as a backup for 30 days post-launch. If for any reason you want to revert, you can — no questions asked."`,
+            },
+            script: `"I want you to feel completely protected. Here's the deal: we agree on specific performance metrics upfront — load time, uptime, lead capture rate, whatever matters most to you. If those metrics aren't hit within 90 days, we keep working at zero additional cost until they are. Your old system stays live as a backup for 30 days post-launch. And if for any reason you decided to pull the plug in that window, your data is yours and we help you transition cleanly. No lock-in. No hostage situation."`,
+            notes: `The 90-day performance guarantee + 30-day parallel backup eliminates every rational fear. If they still say no after this, the objection isn't risk — it's something else.`,
+            preemptQuestion: `"What would make you feel 100% protected moving into an engagement like this?"`,
         },
     ],
 };
@@ -215,12 +273,13 @@ const OBJECTIONS: Record<Category, Objection[]> = {
 /* ─────────────────────────────────────────────
    STYLES
 ───────────────────────────────────────────── */
+
 const S = `
   .ob-root { max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem 4rem; font-family: 'Inter', sans-serif; color: #94a3b8; }
 
   /* ── Page header ── */
   .ob-page-header { margin-bottom: 2.5rem; }
-  .ob-badge { display: inline-block; padding: 3px 10px; border-radius: 4px; background: rgba(99,102,241,.15); color: #818cf8; font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; margin-bottom: .6rem; }
+  .ob-badge { display: inline-block; padding: 3px 10px; border-radius: 4px; background: rgba(34,211,238,.15); color: #22d3ee; font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; margin-bottom: .6rem; }
   .ob-title { font-size: 2rem; font-weight: 800; color: #f1f5f9; line-height: 1.2; margin: 0 0 .5rem; }
   .ob-subtitle { color: #64748b; font-size: .95rem; line-height: 1.6; max-width: 640px; }
 
@@ -243,13 +302,13 @@ const S = `
   /* ── Category tabs ── */
   .ob-cat-tabs { display: flex; gap: .5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
   .ob-cat-tab { padding: .5rem 1rem; border-radius: 8px; border: 1px solid rgba(255,255,255,.07); background: #080c18; color: #64748b; font-size: .82rem; font-weight: 600; cursor: pointer; transition: all .18s; display: flex; align-items: center; gap: .4rem; }
-  .ob-cat-tab:hover { border-color: rgba(99,102,241,.4); color: #94a3b8; }
-  .ob-cat-tab.active { background: rgba(99,102,241,.15); border-color: #6366f1; color: #a5b4fc; }
+  .ob-cat-tab:hover { border-color: rgba(34,211,238,.4); color: #94a3b8; }
+  .ob-cat-tab.active { background: rgba(34,211,238,.12); border-color: #22d3ee; color: #67e8f9; }
   .ob-cat-desc { padding: .75rem 1rem; border-radius: 8px; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.05); font-size: .85rem; color: #64748b; margin-bottom: 2rem; line-height: 1.55; }
 
   /* ── Objection cards ── */
   .ob-card { background: #080c18; border: 1px solid rgba(255,255,255,.07); border-radius: 14px; margin-bottom: 1.25rem; overflow: hidden; transition: border-color .18s; }
-  .ob-card:hover { border-color: rgba(99,102,241,.3); }
+  .ob-card:hover { border-color: rgba(34,211,238,.25); }
   .ob-card-header { padding: 1.25rem 1.5rem; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 1rem; user-select: none; }
   .ob-card-header-left { display: flex; align-items: center; gap: .75rem; flex: 1; min-width: 0; flex-wrap: wrap; }
   .ob-root-badge { padding: 2px 8px; border-radius: 4px; font-size: .65rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; flex-shrink: 0; }
@@ -265,11 +324,11 @@ const S = `
     .ob-title { font-size: 1.65rem; }
   }
 
-  .badge-FEAR { background: rgba(239,68,68,.15); color: #f87171; border: 1px solid rgba(239,68,68,.25); }
-  .badge-CONFUSION { background: rgba(245,158,11,.15); color: #fbbf24; border: 1px solid rgba(245,158,11,.25); }
-  .badge-DISTRUST { background: rgba(139,92,246,.15); color: #a78bfa; border: 1px solid rgba(139,92,246,.25); }
-  .badge-LACK\\ OF\\ URGENCY { background: rgba(20,184,166,.15); color: #2dd4bf; border: 1px solid rgba(20,184,166,.25); }
-  .badge-PRICE\\ FIXATION { background: rgba(251,146,60,.15); color: #fb923c; border: 1px solid rgba(251,146,60,.25); }
+  .badge-TECH\\ ANXIETY { background: rgba(239,68,68,.15); color: #f87171; border: 1px solid rgba(239,68,68,.25); }
+  .badge-SCOPE\\ CONFUSION { background: rgba(245,158,11,.15); color: #fbbf24; border: 1px solid rgba(245,158,11,.25); }
+  .badge-CONTROL\\ FEAR { background: rgba(139,92,246,.15); color: #a78bfa; border: 1px solid rgba(139,92,246,.25); }
+  .badge-STATUS\\ QUO\\ BIAS { background: rgba(20,184,166,.15); color: #2dd4bf; border: 1px solid rgba(20,184,166,.25); }
+  .badge-INTERNAL\\ POLITICS { background: rgba(251,146,60,.15); color: #fb923c; border: 1px solid rgba(251,146,60,.25); }
   .ob-smokescreen { font-size: .95rem; font-weight: 600; color: #e2e8f0; }
   .ob-chevron { color: #475569; font-size: .85rem; transition: transform .2s; flex-shrink: 0; }
   .ob-chevron.open { transform: rotate(180deg); }
@@ -295,7 +354,7 @@ const S = `
 
   .ob-script { margin-bottom: 1.25rem; }
   .ob-script .ob-section-label { color: #22d3ee; }
-  .ob-script-box { background: rgba(99,102,241,.08); border: 1px solid rgba(99,102,241,.2); border-left: 3px solid #6366f1; border-radius: 0 8px 8px 0; padding: .9rem 1rem; font-size: .875rem; color: #c7d2fe; line-height: 1.65; font-style: italic; }
+  .ob-script-box { background: rgba(34,211,238,.06); border: 1px solid rgba(34,211,238,.18); border-left: 3px solid #22d3ee; border-radius: 0 8px 8px 0; padding: .9rem 1rem; font-size: .875rem; color: #a5f3fc; line-height: 1.65; font-style: italic; }
 
   .ob-notes { margin-bottom: 1.25rem; }
   .ob-notes .ob-section-label { color: #f59e0b; }
@@ -321,34 +380,34 @@ const S = `
 
 const PREEMPTION_GUIDE = [
     {
-        title: 'Kill the Budget Objection',
-        question: `"What does the status quo cost you if nothing changes in the next 6 months?"`,
-        why: `Forces them to quantify inaction. When they name a number, budget becomes a rational — not emotional — conversation.`,
+        title: 'Kill the "We can use Salesforce" Objection',
+        question: `"What tools are you currently using, and how much time does your team spend configuring and maintaining them?"`,
+        why: `Surfaces the hidden cost of SaaS maintenance before they can use it as a cheap alternative.`,
     },
     {
-        title: 'Kill the Think About It Objection',
-        question: `"On a scale of 1–10, how confident do you feel right now? What would make it a 10?"`,
-        why: `Surfaces hidden doubts before the close so you can resolve them in real time.`,
+        title: 'Kill the "Too Long" Objection',
+        question: `"If we could deliver a high-impact Phase 1 in 2 weeks, would that address your urgency?"`,
+        why: `Offers phased delivery before they can object to the timeline. Transforms "too long" into "smart rollout."`,
     },
     {
-        title: 'Kill the Partner Approval Objection',
-        question: `"Who else will weigh in on this decision? Let's make sure we build the case for all of them."`,
-        why: `Identifies stakeholders early so you can prep your champion to sell internally.`,
+        title: 'Kill the "Need Board Approval" Objection',
+        question: `"Who else will weigh in on this decision? I want to tailor the proposal to their evaluation criteria."`,
+        why: `Gets ahead of the stakeholder roadblock by bringing you into the internal conversation.`,
     },
     {
-        title: 'Kill the Price Objection',
-        question: `"What would it cost your business if this system was down for a week after launch?"`,
-        why: `Anchors cost to risk rather than the invoice. Makes price look small by comparison.`,
+        title: 'Kill the "Migration Disruption" Objection',
+        question: `"What would a zero-downtime transition look like for your business?"`,
+        why: `Lets THEM define the migration requirements, which you then design around. Ownership reduces fear.`,
     },
     {
-        title: 'Kill the Already Have Someone Objection',
-        question: `"Is there anything your current vendor can't handle that you've been meaning to fix?"`,
-        why: `Finds the gap before the objection is raised so you can position into it naturally.`,
+        title: 'Kill the "Tried Custom Before" Objection',
+        question: `"If you've worked with a tech vendor before, what would need to be different this time?"`,
+        why: `Surfaces their trauma points early so you can show how your process prevents each one.`,
     },
     {
-        title: `Kill the "Burned Before" Objection`,
-        question: `"What would need to happen for you to feel completely safe in a vendor relationship?"`,
-        why: `Lets them define the de-risk criteria themselves, then you match your model to it exactly.`,
+        title: 'Kill the "Team Won\'t Adopt It" Objection',
+        question: `"Who on your team will use this most? Walk me through their typical day."`,
+        why: `Understanding the end user lets you design for adoption from day one — and show the prospect you're thinking about their team, not just the tech.`,
     },
 ];
 
@@ -461,7 +520,7 @@ function ObjectionCard({ item }: { item: Objection }) {
    MAIN EXPORT
 ───────────────────────────────────────────── */
 export default function BonusB() {
-    const [activeCategory, setActiveCategory] = useState<Category>('cold-call');
+    const [activeCategory, setActiveCategory] = useState<Category>('software-build');
     const catData = CATEGORIES.find(c => c.id === activeCategory)!;
 
     return (
@@ -470,12 +529,12 @@ export default function BonusB() {
             <div className="ob-root">
                 {/* Page Header */}
                 <div className="ob-page-header">
-                    <div className="ob-badge">Bonus Module B</div>
-                    <h2 className="ob-title">Objections Masterclass</h2>
+                    <div className="ob-badge">Bonus Module B — Advanced</div>
+                    <h2 className="ob-title">Advanced Objection Lab — Software &amp; Systems</h2>
                     <p className="ob-subtitle">
-                        Every objection is a request for more information or proof that you haven&apos;t built enough value yet.
-                        Elite reps don&apos;t fight objections at the close — they systematically eliminate them during discovery.
-                        Study the A.I.R. framework, internalize the root causes, and run the scripts until they&apos;re automatic.
+                        Module 5 covers the core objections every rep faces: cold-call smoke screens, trust walls, and pricing pushback.
+                        This advanced lab goes deeper — into objections specific to selling <strong style={{ color: '#e2e8f0' }}>custom software builds, system migrations, and enterprise deployments</strong>.
+                        If you&apos;re pitching anything beyond a website, these are the walls you&apos;ll hit.
                     </p>
                 </div>
 
@@ -511,9 +570,10 @@ export default function BonusB() {
                     <p style={{ fontSize: '.8rem', fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase', color: '#475569', marginBottom: '.4rem' }}>
                         Advanced Technique
                     </p>
-                    <div className="ob-pre-title">🛡️ The Preemption System</div>
+                    <div className="ob-pre-title">🛡️ System-Specific Preemption Playbook</div>
                     <p className="ob-pre-subtitle">
-                        Elite reps don&apos;t handle objections at the close — they kill them in Discovery. Ask these questions in Module 3 and most of the objections above will never surface.
+                        Kill these advanced objections before they surface by asking these questions during Discovery.
+                        If a prospect is evaluating custom software, these questions set the anchors that prevent every category above.
                     </p>
                     <div className="ob-pre-grid">
                         {PREEMPTION_GUIDE.map((p, i) => (

@@ -1,0 +1,360 @@
+/* ===== Tri-Fold Brochure — Print Stylesheet ===== */
+
+/*
+  When the brochure page is present in the DOM, hide all fixed-position
+  elements (Navbar, FuturisticBackground, PageTracker) that come from the
+  root layout. The :has() selector is supported in all modern browsers.
+*/
+body:has(.brochure-wrapper) header,
+body:has(.brochure-wrapper) [class*="fixed"] {
+    display: none !important;
+}
+
+/* But always show the brochure content itself */
+.brochure-wrapper {
+    display: block !important;
+}
+
+
+/* Force landscape US Letter, no margin */
+@media print {
+    @page {
+        size: 11in 8.5in;
+        margin: 0;
+    }
+
+    body {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .fold-guide {
+        display: none !important;
+    }
+
+    .no-print {
+        display: none !important;
+    }
+}
+
+/* ===== Sheet (one printed page) ===== */
+.brochure-sheet {
+    width: 11in;
+    height: 8.5in;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    background: #111827;
+    color: #F3F4F6;
+    font-family: var(--font-geist-sans, "Geist", system-ui, -apple-system, sans-serif);
+    position: relative;
+    overflow: hidden;
+    page-break-after: always;
+    box-sizing: border-box;
+}
+
+/* ===== Panel (one third of a sheet) ===== */
+.brochure-panel {
+    width: calc(11in / 3);
+    height: 8.5in;
+    padding: 0.55in 0.45in;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+/* ===== Fold guide lines (screen only) ===== */
+.fold-guide {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    border-left: 2px dashed rgba(56, 189, 248, 0.25);
+    z-index: 100;
+    pointer-events: none;
+}
+
+.fold-guide-1 {
+    left: calc(100% / 3);
+}
+
+.fold-guide-2 {
+    left: calc(200% / 3);
+}
+
+/* ===== Typography ===== */
+.brochure-headline {
+    font-size: 1.55rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+}
+
+.brochure-subhead {
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: #3B82F6;
+    margin-bottom: 0.55rem;
+}
+
+.brochure-body {
+    font-size: 0.62rem;
+    line-height: 1.65;
+    color: #9CA3AF;
+}
+
+.brochure-body-white {
+    font-size: 0.62rem;
+    line-height: 1.65;
+    color: #D1D5DB;
+}
+
+/* ===== Accent line ===== */
+.accent-line {
+    width: 2.5rem;
+    height: 2px;
+    background: linear-gradient(90deg, #3B82F6, #06B6D4);
+    border-radius: 2px;
+    margin: 0.5rem 0;
+}
+
+/* ===== Service card ===== */
+.service-card {
+    background: #1F2937;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 0.55rem;
+    padding: 0.45rem 0.5rem;
+    margin-bottom: 0.4rem;
+}
+
+.service-card-title {
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.12rem;
+}
+
+.service-card-hook {
+    font-size: 0.52rem;
+    color: #3B82F6;
+    font-weight: 600;
+    font-style: italic;
+    margin-bottom: 0.2rem;
+}
+
+.service-card-proof {
+    font-size: 0.48rem;
+    color: #6B7280;
+}
+
+/* ===== Stat block ===== */
+.stat-block {
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: #ffffff;
+    line-height: 1.1;
+}
+
+.stat-label {
+    font-size: 0.44rem;
+    color: #6B7280;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-top: 0.15rem;
+}
+
+/* ===== Industry pill ===== */
+.industry-pill {
+    display: inline-block;
+    padding: 0.18rem 0.5rem;
+    border-radius: 999px;
+    font-size: 0.48rem;
+    font-weight: 600;
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    background: rgba(56, 189, 248, 0.06);
+    color: #93C5FD;
+    margin: 0.12rem 0.15rem;
+}
+
+/* ===== Trust item ===== */
+.trust-item {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.52rem;
+    color: #D1D5DB;
+    margin-bottom: 0.3rem;
+}
+
+.trust-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #3B82F6;
+    flex-shrink: 0;
+}
+
+/* ===== Pain bullet ===== */
+.pain-bullet {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.4rem;
+    margin-bottom: 0.55rem;
+}
+
+.pain-marker {
+    width: 3px;
+    min-height: 100%;
+    background: linear-gradient(180deg, #3B82F6, #06B6D4);
+    border-radius: 2px;
+    flex-shrink: 0;
+    align-self: stretch;
+}
+
+.pain-text {
+    font-size: 0.62rem;
+    color: #D1D5DB;
+    line-height: 1.55;
+    font-weight: 500;
+}
+
+/* ===== QR placeholder ===== */
+.qr-box {
+    width: 1.1in;
+    height: 1.1in;
+    border: 2px solid rgba(56, 189, 248, 0.3);
+    border-radius: 0.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+/* ===== Tech stack tag ===== */
+.tech-tag {
+    display: inline-block;
+    padding: 0.12rem 0.35rem;
+    border-radius: 4px;
+    font-size: 0.42rem;
+    font-weight: 500;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #9CA3AF;
+    margin: 0.08rem 0.06rem;
+}
+
+/* ===== System layer row ===== */
+.layer-row {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.25rem 0.4rem;
+    border-radius: 0.35rem;
+    margin-bottom: 0.2rem;
+}
+
+.layer-bar {
+    width: 3px;
+    height: 1.4rem;
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+
+.layer-label {
+    font-size: 0.46rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.layer-sub {
+    font-size: 0.38rem;
+    color: #6B7280;
+}
+
+/* ===== Logo glow ===== */
+.logo-glow {
+    filter: drop-shadow(0 0 18px rgba(56, 189, 248, 0.7)) drop-shadow(0 0 40px rgba(59, 130, 246, 0.3));
+}
+
+/* ===== Gradient text ===== */
+.gradient-text {
+    background: linear-gradient(135deg, #3B82F6, #06B6D4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ===== Proof number ===== */
+.proof-number {
+    font-size: 1.6rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #3B82F6, #06B6D4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+}
+
+.proof-label {
+    font-size: 0.44rem;
+    color: #6B7280;
+    margin-top: 0.1rem;
+}
+
+/* ===== CTA block ===== */
+.cta-block {
+    background: linear-gradient(135deg, #1E3A5F 0%, #1F2937 100%);
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    border-radius: 0.6rem;
+    padding: 0.5rem 0.55rem;
+    text-align: center;
+}
+
+.cta-title {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 0.2rem;
+}
+
+.cta-subtitle {
+    font-size: 0.48rem;
+    color: #93C5FD;
+}
+
+/* ===== Screen-only helpers ===== */
+.print-toolbar {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 9999;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.print-toolbar button {
+    padding: 0.5rem 1.2rem;
+    border-radius: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    background: #1F2937;
+    color: #93C5FD;
+    transition: all 0.2s;
+}
+
+.print-toolbar button:hover {
+    background: #3B82F6;
+    color: white;
+}

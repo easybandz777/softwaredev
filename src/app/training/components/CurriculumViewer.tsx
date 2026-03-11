@@ -11,6 +11,7 @@ import Module7 from '../modules/Module7';
 import Module8 from '../modules/Module8';
 import Module9 from '../modules/Module9';
 import BonusA from '../modules/BonusA';
+import BonusB from '../modules/BonusB';
 import BonusC from '../modules/BonusC';
 import BonusD from '../modules/BonusD';
 import BonusE from '../modules/BonusE';
@@ -60,6 +61,7 @@ const VAULT_ITEMS: NavItem[] = [
     // Advanced Tactics
     { id: 'bc', short: 'Power Questions', component: BonusC, vaultCategory: 'advanced' },
     { id: 'bh', short: 'Pricing Psychology', component: BonusH, vaultCategory: 'advanced' },
+    { id: 'bb', short: 'Objection Lab — Systems', component: BonusB, vaultCategory: 'advanced' },
     { id: 'be', short: 'Advanced Closing', component: BonusE, vaultCategory: 'advanced' },
     { id: 'bk', short: 'Elite Tactics', component: BonusK, vaultCategory: 'advanced' },
 ];

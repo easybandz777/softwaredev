@@ -22,12 +22,8 @@ export default function SalesLoginPage() {
             });
             const data = await res.json();
             if (!res.ok) throw new Error(data.error || "Login failed.");
-            // Redirect based on role
-            if (data.user?.role === "admin") {
-                router.push("/admin/dashboard");
-            } else {
-                router.push("/sales/dashboard");
-            }
+            // Always redirect to sales dashboard when logging in via /sales
+            router.push("/sales/dashboard");
         } catch (err: unknown) {
             const msg = err instanceof Error ? err.message : "Login failed.";
             setErrMsg(msg);
