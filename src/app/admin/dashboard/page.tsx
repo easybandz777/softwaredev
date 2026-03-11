@@ -19,6 +19,11 @@ type Tab = "consultations" | "visitors";
 
 const STATUS_CONFIG: Record<Status, { label: string; color: string; bg: string; icon: React.ReactNode }> = {
     new: { label: "New", color: "#38bdf8", bg: "rgba(56,189,248,0.1)", icon: <Inbox className="w-3.5 h-3.5" /> },
+    contacted: { label: "Contacted", color: "#a78bfa", bg: "rgba(167,139,250,0.1)", icon: <Mail className="w-3.5 h-3.5" /> },
+    qualified: { label: "Qualified", color: "#fbbf24", bg: "rgba(251,191,36,0.1)", icon: <CheckCircle className="w-3.5 h-3.5" /> },
+    proposal: { label: "Proposal", color: "#f97316", bg: "rgba(249,115,22,0.1)", icon: <BookOpen className="w-3.5 h-3.5" /> },
+    won: { label: "Won", color: "#34d399", bg: "rgba(52,211,153,0.1)", icon: <CheckCircle className="w-3.5 h-3.5" /> },
+    lost: { label: "Lost", color: "#ef4444", bg: "rgba(239,68,68,0.1)", icon: <XCircle className="w-3.5 h-3.5" /> },
     reviewed: { label: "Reviewed", color: "#a78bfa", bg: "rgba(167,139,250,0.1)", icon: <CheckCircle className="w-3.5 h-3.5" /> },
     closed: { label: "Closed", color: "#6b7280", bg: "rgba(107,114,128,0.1)", icon: <XCircle className="w-3.5 h-3.5" /> },
 };
