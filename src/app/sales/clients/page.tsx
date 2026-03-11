@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, Suspense } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import {
     LogOut, BarChart3, Target, Building2, Home,
@@ -79,9 +79,19 @@ function fmtDate(s: string) {
     return new Date(s).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 }
 
+// ─── Page Wrapper (Suspense for useSearchParams) ─────────────────────────────
+
+export default function ClientsPageWrapper() {
+    return (
+        <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><div className="text-gray-500 text-sm animate-pulse">Loading…</div></div>}>
+            <ClientsPage />
+        </Suspense>
+    );
+}
+
 // ─── Clients Page ────────────────────────────────────────────────────────────
 
-export default function ClientsPage() {
+function ClientsPage() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const [clients, setClients] = useState<Client[]>([]);

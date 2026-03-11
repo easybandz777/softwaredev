@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, Suspense } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import {
     LogOut, BarChart3, Target, Building2, Home,
@@ -119,9 +119,19 @@ function fmtCurrency(n: number) {
     return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(n);
 }
 
+// ─── Page Wrapper (Suspense for useSearchParams) ─────────────────────────────
+
+export default function LeadsPageWrapper() {
+    return (
+        <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><div className="text-gray-500 text-sm animate-pulse">Loading…</div></div>}>
+            <LeadsPage />
+        </Suspense>
+    );
+}
+
 // ─── Leads Page ──────────────────────────────────────────────────────────────
 
-export default function LeadsPage() {
+function LeadsPage() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const [leads, setLeads] = useState<Lead[]>([]);
