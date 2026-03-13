@@ -34,7 +34,7 @@ export async function GET(req: NextRequest) {
             COALESCE(MAX(c.value_est) FILTER (WHERE c.status = 'won'), 0)::numeric AS biggest_deal
         FROM crm_users u
         LEFT JOIN consultations c ON c.assigned_to_id = u.id ${dateFilter}
-        WHERE u.role = 'sales'
+        WHERE u.role IN ('sales', 'admin')
         GROUP BY u.id, u.username, u.full_name, u.role
     `);
 
