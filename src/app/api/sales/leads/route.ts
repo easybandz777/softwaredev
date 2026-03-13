@@ -4,29 +4,52 @@ import { requireAuth } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
 
-// GET /api/sales/leads — list all leads (consultations)
+// GET /api/sales/leads — list leads (admin sees all, sales sees only theirs)
 export async function GET(req: NextRequest) {
     const { error, user } = requireAuth(req, ["admin", "sales"]);
     if (error) return NextResponse.json({ error }, { status: 401 });
 
     await ensureMigrated();
 
-    const { rows } = await sql`
-        SELECT c.*, u.full_name AS assigned_to_name
-        FROM consultations c
-        LEFT JOIN crm_users u ON c.assigned_to_id = u.id
-        ORDER BY
-            CASE c.status
-                WHEN 'new' THEN 0
-                WHEN 'contacted' THEN 1
-                WHEN 'qualified' THEN 2
-                WHEN 'proposal' THEN 3
-                WHEN 'won' THEN 4
-                WHEN 'lost' THEN 5
-                ELSE 6
-            END,
-            c.created_at DESC
-    `;
+    let rows;
+    if (user!.role === "admin") {
+        // Admins see all leads
+        ({ rows } = await sql`
+            SELECT c.*, u.full_name AS assigned_to_name
+            FROM consultations c
+            LEFT JOIN crm_users u ON c.assigned_to_id = u.id
+            ORDER BY
+                CASE c.status
+                    WHEN 'new' THEN 0
+                    WHEN 'contacted' THEN 1
+                    WHEN 'qualified' THEN 2
+                    WHEN 'proposal' THEN 3
+                    WHEN 'won' THEN 4
+                    WHEN 'lost' THEN 5
+                    ELSE 6
+                END,
+                c.created_at DESC
+        `);
+    } else {
+        // Sales users only see leads assigned to them
+        ({ rows } = await sql`
+            SELECT c.*, u.full_name AS assigned_to_name
+            FROM consultations c
+            LEFT JOIN crm_users u ON c.assigned_to_id = u.id
+            WHERE c.assigned_to_id = ${user!.id}
+            ORDER BY
+                CASE c.status
+                    WHEN 'new' THEN 0
+                    WHEN 'contacted' THEN 1
+                    WHEN 'qualified' THEN 2
+                    WHEN 'proposal' THEN 3
+                    WHEN 'won' THEN 4
+                    WHEN 'lost' THEN 5
+                    ELSE 6
+                END,
+                c.created_at DESC
+        `);
+    }
     return NextResponse.json(rows);
 }
 
