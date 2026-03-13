@@ -84,3 +84,21 @@ export async function PATCH(req: NextRequest) {
 
     return NextResponse.json({ success: true });
 }
+
+// DELETE /api/sales/leads — remove a lead (admin only)
+export async function DELETE(req: NextRequest) {
+    const { error, user } = requireAuth(req, ["admin"]);
+    if (error) return NextResponse.json({ error }, { status: 401 });
+
+    const body = await req.json();
+    const { id } = body;
+    if (!id) return NextResponse.json({ error: "Missing lead id" }, { status: 400 });
+
+    await ensureMigrated();
+
+    // Delete notes first (FK), then the lead
+    await sql`DELETE FROM lead_notes WHERE consultation_id = ${id}`;
+    await sql`DELETE FROM consultations WHERE id = ${id}`;
+
+    return NextResponse.json({ success: true });
+}

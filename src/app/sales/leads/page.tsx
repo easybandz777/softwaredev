@@ -7,7 +7,7 @@ import {
     Search, ChevronRight,
     Mail, Phone,
     DollarSign, UserCheck,
-    Plus, X,
+    Plus, X, Trash2,
 } from "lucide-react";
 import { SalesLayout } from "@/components/SalesLayout";
 
@@ -32,6 +32,13 @@ interface SalesUser {
     id: number;
     username: string;
     full_name: string;
+}
+
+interface UserInfo {
+    id: number;
+    username: string;
+    full_name: string;
+    role: string;
 }
 
 // ─── Config ──────────────────────────────────────────────────────────────────
@@ -70,6 +77,7 @@ function LeadsPage() {
     const searchParams = useSearchParams();
     const [leads, setLeads] = useState<Lead[]>([]);
     const [salesUsers, setSalesUsers] = useState<SalesUser[]>([]);
+    const [user, setUser] = useState<UserInfo | null>(null);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState("");
     const [filterStatus, setFilterStatus] = useState<string>("all");
@@ -79,17 +87,21 @@ function LeadsPage() {
         name: "", email: "", phone: "", company: "", service: "Custom Software", message: "",
     });
 
+    const isAdmin = user?.role === "admin";
+
     const fetchData = useCallback(async () => {
         setLoading(true);
         try {
-            const [leadsRes, dashRes] = await Promise.all([
+            const [leadsRes, dashRes, meRes] = await Promise.all([
                 fetch("/api/sales/leads"),
                 fetch("/api/sales/dashboard"),
+                fetch("/api/sales/me"),
             ]);
             if (leadsRes.status === 401) { router.push("/sales"); return; }
             setLeads(await leadsRes.json());
             const d = await dashRes.json();
             setSalesUsers(d.salesUsers || []);
+            if (meRes.ok) setUser(await meRes.json());
         } finally { setLoading(false); }
     }, [router]);
 
@@ -100,6 +112,16 @@ function LeadsPage() {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ id, ...updates }),
+        });
+        fetchData();
+    }
+
+    async function deleteLead(id: number, name: string) {
+        if (!confirm(`Delete lead "${name}"? This cannot be undone.`)) return;
+        await fetch("/api/sales/leads", {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id }),
         });
         fetchData();
     }
@@ -316,7 +338,14 @@ function LeadsPage() {
                                         </select>
                                     </div>
                                     <span className="text-xs font-mono text-gray-400">{lead.value_est ? fmtCurrency(lead.value_est) : "—"}</span>
-                                    <ChevronRight className="w-4 h-4 text-gray-600" />
+                                    {isAdmin ? (
+                                        <button onClick={(e) => { e.stopPropagation(); deleteLead(lead.id, lead.name); }}
+                                            className="p-1 rounded hover:bg-red-500/10 transition-colors group" title="Delete lead">
+                                            <Trash2 className="w-3.5 h-3.5 text-gray-600 group-hover:text-red-400" />
+                                        </button>
+                                    ) : (
+                                        <ChevronRight className="w-4 h-4 text-gray-600" />
+                                    )}
                                 </div>
 
                                 {/* Mobile card row */}
@@ -333,7 +362,15 @@ function LeadsPage() {
                                         {lead.company && <p className="text-xs text-gray-500 truncate">{lead.company}</p>}
                                         <p className="text-xs text-gray-600 mt-1">{lead.service}</p>
                                     </div>
-                                    <ChevronRight className="w-4 h-4 text-gray-600 flex-shrink-0 mt-1 ml-2" />
+                                    <div className="flex items-center gap-1 ml-2 flex-shrink-0">
+                                        {isAdmin && (
+                                            <button onClick={(e) => { e.stopPropagation(); deleteLead(lead.id, lead.name); }}
+                                                className="p-1 rounded hover:bg-red-500/10 transition-colors" title="Delete lead">
+                                                <Trash2 className="w-3.5 h-3.5 text-gray-600 hover:text-red-400" />
+                                            </button>
+                                        )}
+                                        <ChevronRight className="w-4 h-4 text-gray-600 flex-shrink-0 mt-1" />
+                                    </div>
                                 </div>
                             </div>
                         );

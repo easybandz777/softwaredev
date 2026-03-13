@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import {
     BarChart3, Users, Target, TrendingUp,
     DollarSign, Clock, AlertCircle, ArrowRight, Building2,
-    FileText, UserCheck, ChevronRight, Plus,
+    FileText, UserCheck, ChevronRight, Plus, Trash2,
 } from "lucide-react";
 import { SalesLayout } from "@/components/SalesLayout";
 
@@ -91,6 +91,17 @@ export default function SalesDashboard() {
     }
 
     const winRate = data.totalLeads > 0 ? Math.round((data.wonDeals / data.totalLeads) * 100) : 0;
+    const isAdmin = user?.role === "admin";
+
+    async function deleteUser(id: number, name: string) {
+        if (!confirm(`Remove "${name}" from the team? Their leads and clients will be unassigned.`)) return;
+        await fetch("/api/sales/users", {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id }),
+        });
+        fetchAll();
+    }
 
     return (
         <SalesLayout user={user}>
@@ -222,10 +233,18 @@ export default function SalesDashboard() {
                                             <p className="text-sm font-medium text-white truncate">{su.full_name}</p>
                                             <p className="text-xs text-gray-600">@{su.username}</p>
                                         </div>
-                                        <button onClick={() => router.push("/sales/clients")}
-                                            className="ml-auto flex items-center gap-1 text-xs text-gray-600 hover:text-gray-300 transition-colors flex-shrink-0">
-                                            <Building2 className="w-3 h-3" />
-                                        </button>
+                                        <div className="ml-auto flex items-center gap-1 flex-shrink-0">
+                                            <button onClick={() => router.push("/sales/clients")}
+                                                className="flex items-center gap-1 text-xs text-gray-600 hover:text-gray-300 transition-colors">
+                                                <Building2 className="w-3 h-3" />
+                                            </button>
+                                            {isAdmin && su.id !== user?.id && (
+                                                <button onClick={() => deleteUser(su.id, su.full_name)}
+                                                    className="p-1 rounded hover:bg-red-500/10 transition-colors group" title="Remove user">
+                                                    <Trash2 className="w-3 h-3 text-gray-600 group-hover:text-red-400" />
+                                                </button>
+                                            )}
+                                        </div>
                                     </div>
                                 ))}
                             </div>

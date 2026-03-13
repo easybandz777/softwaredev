@@ -28,6 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark sm:scroll-smooth">
       <body
+        suppressHydrationWarning
         className={`${geistSans.variable} ${geistMono.variable} antialiased selection:bg-quant-blue selection:text-white bg-quant-bg text-quant-text`}
       >
         <FuturisticBackground />
