@@ -2,447 +2,362 @@
 
 import React from "react";
 import "./brochure.css";
+import BrochureQR from "../BrochureQR";
 
 /* ═══════════════════════════════════════════════════════════════
-   QuantLab Tri-Fold Brochure
-   Sheet 1 = OUTSIDE (what you see folded)
-   Sheet 2 = INSIDE  (what you see fully opened)
+   QuantLab Tri-Fold Brochure — Tech Edition
+   Blue Gradient Theme · LARGE PRINT FONTS
    ═══════════════════════════════════════════════════════════════ */
 
 export default function BrochurePage() {
     return (
         <div className="brochure-wrapper">
-            {/* ── Screen-only toolbar ── */}
             <div className="print-toolbar no-print">
-                <button onClick={() => window.print()}>🖨️ Print / Save PDF</button>
+                <button onClick={() => window.print()}>Print / Save PDF</button>
             </div>
 
-            {/* ════════════════════════════════════════════
-          SHEET 1 — OUTSIDE
-          Left = Inside Flap | Middle = Back Cover | Right = Front Cover
-          ════════════════════════════════════════════ */}
+            {/* ══════════════ SHEET 1 — OUTSIDE ══════════════ */}
             <div className="brochure-sheet">
-                {/* Fold guides (screen only) */}
                 <div className="fold-guide fold-guide-1" />
                 <div className="fold-guide fold-guide-2" />
 
-                {/* ─── PANEL 3: Inside Flap (Left) ─── */}
+                {/* ─── PANEL 3: Inside Flap — Capabilities ─── */}
                 <div className="brochure-panel" style={{ background: "#0F172A" }}>
-                    {/* Subtle top accent */}
-                    <div style={{
-                        position: "absolute", top: 0, left: "15%", right: "15%", height: "2px",
-                        background: "linear-gradient(90deg, transparent, rgba(56,189,248,0.3), transparent)",
-                    }} />
-
-                    <p className="brochure-subhead" style={{ marginTop: "0.3in" }}>How We Work</p>
-                    <h2 className="brochure-headline" style={{ fontSize: "1.3rem", marginBottom: "0.6rem" }}>
-                        One team.<br />
-                        <span className="gradient-text">Every layer.</span>
+                    <p className="brochure-subhead" style={{ marginTop: "0.15in" }}>Full-Stack Capabilities</p>
+                    <h2 className="brochure-headline" style={{ fontSize: "1.15rem", marginBottom: "0.2rem" }}>
+                        One Team.<br />
+                        <span className="gradient-text">Every Layer.</span>
                     </h2>
+                    <div className="accent-line" style={{ margin: "0.15rem 0" }} />
 
-                    <div className="accent-line" />
-
-                    <p className="brochure-body" style={{ marginBottom: "0.6rem", marginTop: "0.3rem" }}>
-                        Front end to database. Auth to payments. Deployment pipeline to monitoring.
-                        We own every layer — because a platform that breaks at any one of them breaks everywhere.
+                    <p className="brochure-body" style={{ fontSize: "0.48rem", marginBottom: "0.2rem" }}>
+                        Front end to database. Auth to payments. CI/CD to monitoring.
+                        We own every layer — because a platform that breaks at any layer breaks everywhere.
                     </p>
 
-                    {/* Mini architecture diagram */}
-                    <div style={{ marginBottom: "0.6rem" }}>
-                        {[
-                            { label: "CLIENT INTERFACE", sub: "Next.js · React · TypeScript", color: "#38bdf8" },
-                            { label: "API & BUSINESS LOGIC", sub: "Node.js · Route Handlers", color: "#818cf8" },
-                            { label: "DATA LAYER", sub: "Prisma ORM · PostgreSQL", color: "#34d399" },
-                            { label: "PAYMENTS & AUTH", sub: "Stripe · JWT · RBAC", color: "#f59e0b" },
-                            { label: "DEPLOYMENT & INFRA", sub: "Vercel · Docker · Sentry", color: "#f472b6" },
-                        ].map((layer) => (
-                            <div key={layer.label} className="layer-row" style={{ background: `${layer.color}08`, border: `1px solid ${layer.color}20` }}>
-                                <div className="layer-bar" style={{ background: layer.color }} />
-                                <div>
-                                    <p className="layer-label" style={{ color: layer.color }}>{layer.label}</p>
-                                    <p className="layer-sub">{layer.sub}</p>
-                                </div>
-                            </div>
-                        ))}
+                    <div style={{ marginBottom: "0.18rem" }}>
+                        <p style={{ fontSize: "0.48rem", fontWeight: 800, color: "#38bdf8", marginBottom: "0.06rem", letterSpacing: "0.06em" }}>FRONTEND & UI</p>
+                        <p style={{ fontSize: "0.44rem", color: "#CBD5E1", lineHeight: 1.45 }}>
+                            Next.js 15+ · React 19 · TypeScript · Tailwind CSS · Framer Motion ·
+                            SSR &amp; Static Gen · Progressive Web Apps · Responsive design · Lighthouse 95+.
+                        </p>
                     </div>
 
-                    {/* Stats strip */}
-                    <div style={{ display: "flex", justifyContent: "space-between", marginTop: "auto", gap: "0.2rem" }}>
+                    <div style={{ marginBottom: "0.18rem" }}>
+                        <p style={{ fontSize: "0.48rem", fontWeight: 800, color: "#818cf8", marginBottom: "0.06rem", letterSpacing: "0.06em" }}>API & BUSINESS LOGIC</p>
+                        <p style={{ fontSize: "0.44rem", color: "#CBD5E1", lineHeight: 1.45 }}>
+                            Node.js · Express · Route Handlers · REST &amp; GraphQL · WebSocket real-time ·
+                            Rate limiting · Validation · Background jobs · Webhook integrations.
+                        </p>
+                    </div>
+
+                    <div style={{ marginBottom: "0.18rem" }}>
+                        <p style={{ fontSize: "0.48rem", fontWeight: 800, color: "#34d399", marginBottom: "0.06rem", letterSpacing: "0.06em" }}>DATA & STORAGE</p>
+                        <p style={{ fontSize: "0.44rem", color: "#CBD5E1", lineHeight: 1.45 }}>
+                            PostgreSQL · MySQL · MongoDB · Prisma ORM · Redis caching · Migrations ·
+                            Automated backups · Query optimization · Full-text search.
+                        </p>
+                    </div>
+
+                    <div style={{ marginBottom: "0.18rem" }}>
+                        <p style={{ fontSize: "0.48rem", fontWeight: 800, color: "#f59e0b", marginBottom: "0.06rem", letterSpacing: "0.06em" }}>PAYMENTS, AUTH & SECURITY</p>
+                        <p style={{ fontSize: "0.44rem", color: "#CBD5E1", lineHeight: 1.45 }}>
+                            Stripe (cards, ACH, subscriptions) · JWT &amp; session auth · RBAC ·
+                            OAuth/SSO · HTTPS/TLS · OWASP practices · Encryption at rest &amp; transit.
+                        </p>
+                    </div>
+
+                    <div style={{ marginBottom: "0.18rem" }}>
+                        <p style={{ fontSize: "0.48rem", fontWeight: 800, color: "#f472b6", marginBottom: "0.06rem", letterSpacing: "0.06em" }}>DEPLOYMENT & INFRASTRUCTURE</p>
+                        <p style={{ fontSize: "0.44rem", color: "#CBD5E1", lineHeight: 1.45 }}>
+                            Vercel · AWS · Docker · GitHub Actions CI/CD · Sentry monitoring ·
+                            Auto-scaling · Blue-green deploys · SSL · CDN · DNS management.
+                        </p>
+                    </div>
+
+                    <div style={{ display: "flex", justifyContent: "space-between", marginTop: "auto", gap: "0.1rem" }}>
                         {[
                             { val: "20+", label: "Projects" },
                             { val: "5", label: "Live Bots" },
                             { val: "0", label: "Outages" },
+                            { val: "95+", label: "Lighthouse" },
                         ].map((s) => (
-                            <div key={s.label} className="stat-block" style={{ flex: 1 }}>
-                                <p className="stat-value" style={{ fontSize: "1rem" }}>{s.val}</p>
-                                <p className="stat-label">{s.label}</p>
+                            <div key={s.label} className="stat-block" style={{ flex: 1, padding: "0.12rem 0.08rem" }}>
+                                <p className="stat-value" style={{ fontSize: "0.7rem" }}>{s.val}</p>
+                                <p className="stat-label" style={{ fontSize: "0.32rem" }}>{s.label}</p>
                             </div>
                         ))}
                     </div>
-
-                    <p style={{ fontSize: "0.44rem", color: "#6B7280", textAlign: "center", marginTop: "0.5rem", letterSpacing: "0.08em" }}>
-                        Open to see what we build →
-                    </p>
                 </div>
 
-                {/* ─── PANEL 2: Back Cover (Middle) ─── */}
+                {/* ─── PANEL 2: Back Cover — Contact ─── */}
                 <div className="brochure-panel" style={{
                     background: "linear-gradient(180deg, #111827 0%, #0F172A 100%)",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    textAlign: "center",
+                    justifyContent: "center", alignItems: "center", textAlign: "center",
                 }}>
-                    {/* Small logo */}
-                    <img
-                        src="/logo-transparent.png"
-                        alt="QuantLab"
-                        style={{ width: "70px", height: "70px", objectFit: "contain", marginBottom: "0.5rem" }}
-                        className="logo-glow"
-                    />
+                    <img src="/logo-transparent.png" alt="QuantLab" style={{ width: "180px", height: "180px", objectFit: "contain", marginBottom: "0.2rem" }} className="logo-glow" />
 
-                    <p className="brochure-subhead" style={{ marginBottom: "0.5rem" }}>Start Building</p>
+                    <p style={{ fontSize: "0.7rem", fontWeight: 900, color: "#ffffff", marginBottom: "0.04rem" }}>QuantLab Software Solutions</p>
+                    <p style={{ fontSize: "0.48rem", color: "#3B82F6", fontWeight: 600, marginBottom: "0.3rem", letterSpacing: "0.06em" }}>Engineering the Next Level</p>
 
-                    {/* QR Code placeholder */}
-                    <div className="qr-box" style={{ margin: "0 auto 0.5rem auto" }}>
-                        <div style={{ textAlign: "center" }}>
-                            <p style={{ fontSize: "0.65rem", fontWeight: 700, color: "#3B82F6" }}>QR</p>
-                            <p style={{ fontSize: "0.36rem", color: "#6B7280" }}>Scan to book<br />consultation</p>
-                        </div>
+                    <div style={{ margin: "0 auto 0.3rem auto" }}>
+                        <BrochureQR url="https://quantlabusa.dev" size="1in" accentColor="#3B82F6" fgColor="#E2E8F0" label="Scan to Visit" sublabel="quantlabusa.dev" />
                     </div>
 
-                    {/* Contact info */}
-                    <div style={{ marginBottom: "0.6rem" }}>
-                        <p style={{ fontSize: "0.55rem", color: "#D1D5DB", marginBottom: "0.2rem" }}>
-                            ✉ contact@quantlabsoftware.com
-                        </p>
-                        <p style={{ fontSize: "0.55rem", color: "#D1D5DB" }}>
-                            🌐 quantlabsoftware.com
-                        </p>
+                    <div style={{ background: "rgba(56,189,248,0.04)", border: "1px solid rgba(56,189,248,0.12)", borderRadius: "0.35rem", padding: "0.2rem 0.35rem", marginBottom: "0.25rem", textAlign: "left" }}>
+                        <p style={{ fontSize: "0.48rem", color: "#D1D5DB", marginBottom: "0.08rem" }}>Email: contact@quantlabusa.dev</p>
+                        <p style={{ fontSize: "0.48rem", color: "#D1D5DB", marginBottom: "0.08rem" }}>Web: quantlabusa.dev</p>
+                        <p style={{ fontSize: "0.48rem", color: "#D1D5DB" }}>Phone: Available upon request</p>
                     </div>
 
-                    {/* Trust items */}
-                    <div style={{ display: "inline-flex", flexDirection: "column", alignItems: "flex-start", gap: "0.2rem" }}>
+                    <div style={{ textAlign: "left", marginBottom: "0.2rem" }}>
                         {[
-                            "Free 30-min strategy call",
-                            "NDA available",
-                            "Response within 24 hours",
-                            "No commitment required",
+                            "Free 30-minute strategy call — zero obligation",
+                            "Fixed-price quotes — no hourly surprises",
+                            "Senior engineers only — no interns, no offshore",
+                            "You own 100% of the source code",
+                            "NDA available before any conversation",
+                            "90 days post-launch support included",
+                            "Response within 24 hours guaranteed",
+                            "Weekly demos during development",
                         ].map((t) => (
                             <div key={t} className="trust-item">
                                 <div className="trust-dot" />
-                                <span>{t}</span>
+                                <span style={{ fontSize: "0.42rem" }}>{t}</span>
                             </div>
                         ))}
                     </div>
 
-                    {/* Copyright */}
-                    <p style={{
-                        fontSize: "0.38rem", color: "#4B5563", marginTop: "auto",
-                        paddingTop: "0.5rem", borderTop: "1px solid rgba(255,255,255,0.05)",
-                    }}>
-                        © 2026 QuantLab Software Solutions. All rights reserved.
-                    </p>
+                    <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "0.1rem", paddingTop: "0.15rem", borderTop: "1px solid rgba(56,189,248,0.1)" }}>
+                        {["TypeScript", "React", "Next.js", "Node.js", "PostgreSQL", "AWS", "Vercel", "Stripe", "Docker"].map((t) => (
+                            <span key={t} className="tech-tag">{t}</span>
+                        ))}
+                    </div>
+
+                    <p style={{ fontSize: "0.34rem", color: "#4B5563", marginTop: "auto" }}>© 2026 QuantLab Software Solutions LLC</p>
                 </div>
 
-                {/* ─── PANEL 1: Front Cover (Right) ─── */}
+                {/* ─── PANEL 1: Front Cover ─── */}
                 <div className="brochure-panel" style={{
                     background: "radial-gradient(ellipse 80% 70% at 50% 50%, #0F1B2E 0%, #111827 60%, #0B1120 100%)",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    textAlign: "center",
+                    justifyContent: "center", alignItems: "center", textAlign: "center",
                 }}>
-                    {/* Subtle circuit-like decorative lines */}
-                    <div style={{
-                        position: "absolute", inset: 0, opacity: 0.04,
-                        backgroundImage: `
-              linear-gradient(0deg, transparent 45%, #3B82F6 45.5%, #3B82F6 46%, transparent 46.5%),
-              linear-gradient(90deg, transparent 45%, #3B82F6 45.5%, #3B82F6 46%, transparent 46.5%)
-            `,
-                        backgroundSize: "40px 40px",
-                    }} />
+                    <div style={{ position: "absolute", inset: 0, opacity: 0.04, backgroundImage: `linear-gradient(0deg, transparent 45%, #3B82F6 45.5%, #3B82F6 46%, transparent 46.5%), linear-gradient(90deg, transparent 45%, #3B82F6 45.5%, #3B82F6 46%, transparent 46.5%)`, backgroundSize: "40px 40px" }} />
+                    <div style={{ position: "absolute", top: "35%", left: "50%", transform: "translate(-50%, -50%)", width: "350px", height: "350px", background: "radial-gradient(circle, rgba(56,189,248,0.12) 0%, transparent 70%)", pointerEvents: "none" }} />
 
-                    {/* Radial glow behind logo */}
-                    <div style={{
-                        position: "absolute",
-                        top: "30%", left: "50%", transform: "translate(-50%, -50%)",
-                        width: "300px", height: "300px",
-                        background: "radial-gradient(circle, rgba(56,189,248,0.12) 0%, transparent 70%)",
-                        pointerEvents: "none",
-                    }} />
+                    <img src="/logo-transparent.png" alt="QuantLab" style={{ width: "200px", height: "200px", objectFit: "contain", marginBottom: "0.25rem", position: "relative", zIndex: 2 }} className="logo-glow" />
 
-                    {/* Logo */}
-                    <img
-                        src="/logo-transparent.png"
-                        alt="QuantLab Software Solutions"
-                        style={{
-                            width: "160px", height: "160px",
-                            objectFit: "contain",
-                            marginBottom: "0.6rem",
-                            position: "relative", zIndex: 2,
-                        }}
-                        className="logo-glow"
-                    />
-
-                    {/* Tagline */}
-                    <h1 style={{
-                        fontSize: "1.75rem", fontWeight: 900,
-                        color: "#ffffff",
-                        letterSpacing: "-0.02em",
-                        lineHeight: 1.1,
-                        position: "relative", zIndex: 2,
-                        marginBottom: "0.4rem",
-                    }}>
+                    <h1 style={{ fontSize: "1.6rem", fontWeight: 900, color: "#ffffff", letterSpacing: "-0.02em", lineHeight: 1.15, position: "relative", zIndex: 2, marginBottom: "0.25rem" }}>
                         Engineering<br />
                         <span style={{ fontWeight: 300, color: "#9CA3AF" }}>the </span>
                         Next Level.
                     </h1>
 
-                    <div className="accent-line" style={{ margin: "0.4rem auto" }} />
+                    <div className="accent-line" style={{ margin: "0.2rem auto" }} />
 
-                    <p style={{
-                        fontSize: "0.6rem", color: "#9CA3AF",
-                        maxWidth: "2.6in", lineHeight: 1.6,
-                        position: "relative", zIndex: 2,
-                    }}>
-                        Custom software &amp; trading systems for businesses
-                        that can't afford to guess.
+                    <p style={{ fontSize: "0.56rem", color: "#9CA3AF", maxWidth: "2.8in", lineHeight: 1.5, position: "relative", zIndex: 2, marginBottom: "0.3rem" }}>
+                        Custom software platforms, algorithmic trading systems,
+                        and enterprise-grade solutions — built by senior engineers
+                        who own every layer of the stack.
                     </p>
 
-                    {/* Bottom accent line */}
-                    <div style={{
-                        position: "absolute", bottom: "0.5in", left: "20%", right: "20%",
-                        height: "1px",
-                        background: "linear-gradient(90deg, transparent, #3B82F6, #06B6D4, transparent)",
-                    }} />
+                    <div style={{ display: "flex", flexDirection: "column", gap: "0.14rem", position: "relative", zIndex: 2, textAlign: "left", maxWidth: "2.8in" }}>
+                        {[
+                            "Full-Stack Custom Platforms (React, Node, PostgreSQL)",
+                            "Algorithmic Trading Bots (<12ms latency, 24/7)",
+                            "Enterprise CRM, ECM & Operations Dashboards",
+                            "Payment Systems (Stripe, ACH, subscriptions)",
+                            "Client Portals, Admin Panels & Reporting",
+                            "API Integrations with Any Third-Party Service",
+                        ].map((item) => (
+                            <p key={item} style={{ fontSize: "0.48rem", color: "#93C5FD", fontWeight: 600, display: "flex", alignItems: "flex-start", gap: "0.15rem", lineHeight: 1.35 }}>
+                                <span style={{ color: "#3B82F6", flexShrink: 0 }}>&#10003;</span> {item}
+                            </p>
+                        ))}
+                    </div>
+
+                    <div style={{ position: "absolute", bottom: "0.35in", left: "15%", right: "15%", height: "1px", background: "linear-gradient(90deg, transparent, #3B82F6, transparent)" }} />
                 </div>
             </div>
 
-            {/* ════════════════════════════════════════════
-          SHEET 2 — INSIDE (fully unfolded)
-          Left = Pain Points | Middle = Services | Right = Proof + CTA
-          ════════════════════════════════════════════ */}
+            {/* ══════════════ SHEET 2 — INSIDE ══════════════ */}
             <div className="brochure-sheet">
                 <div className="fold-guide fold-guide-1" />
                 <div className="fold-guide fold-guide-2" />
 
-                {/* ─── PANEL 4: Inside Left — The Real Cost of Doing Nothing ─── */}
+                {/* ─── PANEL 4: Pain Points ─── */}
                 <div className="brochure-panel" style={{ background: "#111827" }}>
-                    <p className="brochure-subhead" style={{ marginTop: "0.3in" }}>The Real Cost</p>
-                    <h2 className="brochure-headline" style={{ fontSize: "1.15rem", marginBottom: "0.35rem" }}>
+                    <p className="brochure-subhead" style={{ marginTop: "0.15in" }}>The Real Cost</p>
+                    <h2 className="brochure-headline" style={{ fontSize: "1.05rem", marginBottom: "0.2rem" }}>
                         What <span className="gradient-text">inaction</span> is<br />costing you right now.
                     </h2>
+                    <div className="accent-line" style={{ margin: "0.15rem 0" }} />
 
-                    <div className="accent-line" style={{ marginBottom: "0.45rem" }} />
-
-                    <p className="brochure-body" style={{ marginBottom: "0.5rem" }}>
-                        Every month without the right systems, you&apos;re bleeding revenue you can&apos;t see on a balance sheet:
+                    <p className="brochure-body" style={{ fontSize: "0.48rem", marginBottom: "0.15rem" }}>
+                        Conservative estimates based on real businesses that tried spreadsheets, freelancers, or off-the-shelf tools:
                     </p>
 
-                    {/* Cost-of-inaction scenarios with dollar impact */}
                     {[
                         {
                             cost: "$4,200/mo",
-                            problem: "Lost leads",
-                            detail: "A sales team of 5 drops ~30% of leads without automated follow-up. At $280/lead, that's $4,200 walking out the door monthly.",
+                            problem: "Dropped Leads",
+                            detail: "Without automated CRM, teams drop ~30% of leads. At $280/lead, that's $4,200/month. Every lead your competitor auto-responds to in 5 min — gone.",
                         },
                         {
                             cost: "$2,800/mo",
-                            problem: "Manual proposals",
-                            detail: "If your team builds 3 proposals/week at 4 hrs each vs. 20 min, you're burning 46 hours/month on copy-paste work.",
+                            problem: "Manual Processes",
+                            detail: "Proposals, reports, invoicing, data entry — 46+ hrs/month of work software handles in seconds. That's a full salary going to busywork.",
                         },
                         {
                             cost: "$1,500/mo",
-                            problem: "Tool fragmentation",
-                            detail: "5 disconnected SaaS subscriptions × $300/mo avg = $1,500 in redundant tools that don't share data.",
+                            problem: "Tool Fragmentation",
+                            detail: "CRM here, invoicing there, PM somewhere else. $1,500/mo in tools that don't share data + 8 hrs/week re-entering info between systems.",
                         },
                         {
                             cost: "$6,000/mo",
-                            problem: "Slow invoicing",
-                            detail: "Late invoices compound. A 9-day delay on $200K in receivables costs thousands in cash flow gaps and missed early-pay discounts.",
+                            problem: "Slow Invoicing",
+                            detail: "9-day delay on $200K in receivables costs thousands. Manual invoicing = late invoicing. Late invoicing = 3x higher non-payment rates.",
+                        },
+                        {
+                            cost: "$3,500/mo",
+                            problem: "No Real-Time Data",
+                            detail: "No true CAC, LTV, or profit per service line. Every hire/pricing/marketing decision is a guess. One wrong guess costs $20K+.",
                         },
                     ].map((item) => (
-                        <div key={item.problem} style={{
-                            background: "#1F2937", borderRadius: "0.45rem",
-                            border: "1px solid rgba(255,255,255,0.05)",
-                            padding: "0.35rem 0.4rem", marginBottom: "0.3rem",
-                            display: "flex", gap: "0.35rem", alignItems: "flex-start",
-                        }}>
-                            <div style={{ minWidth: "0.85in" }}>
-                                <p style={{ fontSize: "0.7rem", fontWeight: 900, color: "#EF4444", lineHeight: 1 }}>{item.cost}</p>
-                                <p style={{ fontSize: "0.38rem", color: "#9CA3AF", marginTop: "0.08rem" }}>{item.problem}</p>
+                        <div key={item.problem} style={{ background: "#1F2937", borderRadius: "0.35rem", border: "1px solid rgba(255,255,255,0.05)", padding: "0.2rem 0.25rem", marginBottom: "0.12rem", display: "flex", gap: "0.2rem", alignItems: "flex-start" }}>
+                            <div style={{ minWidth: "0.8in" }}>
+                                <p style={{ fontSize: "0.65rem", fontWeight: 900, color: "#EF4444", lineHeight: 1 }}>{item.cost}</p>
+                                <p style={{ fontSize: "0.36rem", color: "#9CA3AF", marginTop: "0.04rem" }}>{item.problem}</p>
                             </div>
-                            <p style={{ fontSize: "0.46rem", color: "#9CA3AF", lineHeight: 1.45 }}>{item.detail}</p>
+                            <p style={{ fontSize: "0.42rem", color: "#9CA3AF", lineHeight: 1.4 }}>{item.detail}</p>
                         </div>
                     ))}
 
-                    {/* Bottom total */}
-                    <div style={{ marginTop: "auto", borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: "0.35rem" }}>
+                    <div style={{ marginTop: "auto", borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: "0.15rem" }}>
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                            <p style={{ fontSize: "0.48rem", color: "#6B7280", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.08em" }}>Conservative annual waste</p>
-                            <p style={{ fontSize: "0.95rem", fontWeight: 900, color: "#EF4444" }}>$170K+</p>
+                            <div>
+                                <p style={{ fontSize: "0.48rem", color: "#6B7280", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em" }}>Conservative Annual Waste</p>
+                                <p style={{ fontSize: "0.42rem", color: "#6B7280" }}>One platform pays for itself in 60-90 days.</p>
+                            </div>
+                            <p style={{ fontSize: "1rem", fontWeight: 900, color: "#EF4444" }}>$216K+</p>
                         </div>
-                        <p style={{ fontSize: "0.44rem", color: "#6B7280", marginTop: "0.15rem" }}>
-                            One custom platform pays for itself in 60–90 days.
-                        </p>
                     </div>
                 </div>
 
-                {/* ─── PANEL 5: Inside Center — Services ─── */}
+                {/* ─── PANEL 5: Services ─── */}
                 <div className="brochure-panel" style={{ background: "#0F172A" }}>
-                    <p className="brochure-subhead" style={{ marginTop: "0.3in" }}>What We Build</p>
-                    <h2 style={{
-                        fontSize: "0.9rem", fontWeight: 800, color: "#ffffff",
-                        lineHeight: 1.25, marginBottom: "0.5rem",
-                    }}>
-                        Software that saves you time,{" "}
-                        <span className="gradient-text">money, and headaches.</span>
+                    <p className="brochure-subhead" style={{ marginTop: "0.15in" }}>What We Build</p>
+                    <h2 style={{ fontSize: "0.9rem", fontWeight: 800, color: "#ffffff", lineHeight: 1.25, marginBottom: "0.18rem" }}>
+                        Production-Grade Software{" "}
+                        <span className="gradient-text">That Saves</span><br />
+                        Time, Money, and Headaches.
                     </h2>
+                    <div className="accent-line" style={{ margin: "0.12rem 0" }} />
 
-                    <div className="accent-line" style={{ marginBottom: "0.45rem" }} />
-
-                    {/* Service cards */}
                     {[
                         {
-                            icon: "⚡",
-                            title: "Custom CRM & ECM Systems",
-                            hook: "Stop losing deals in spreadsheets.",
-                            proof: "40% fewer dropped leads in 60 days",
+                            title: "Custom CRM & Client Management",
+                            detail: "Full pipeline. Automated follow-up. Lead scoring. Source attribution. Close rate analytics. Communication history. Custom fields.",
+                            result: "40% fewer dropped leads in 60 days",
                         },
                         {
-                            icon: "🤖",
-                            title: "Algorithmic Trading Bots",
-                            hook: "Execute at machine speed, not human speed.",
-                            proof: "<12ms latency · 24/7 uptime · Multi-strategy",
+                            title: "Algorithmic Trading Systems",
+                            detail: "Multi-strategy execution at <12ms. Backtesting engine. Risk controls. Real-time P&L dashboards. Multi-exchange. 24/7 automated.",
+                            result: "<12ms latency · 24/7 uptime · Multi-strategy",
                         },
                         {
-                            icon: "📊",
-                            title: "Business Operations Hub",
-                            hook: "One dashboard. Every moving part.",
-                            proof: "Full-stack platforms live in production",
+                            title: "Business Operations Platforms",
+                            detail: "Unified dashboard for sales, ops, finance, and team. Project tracking. Resource allocation. Approval workflows. KPI monitoring.",
+                            result: "Replace 5+ disconnected tools with one system",
                         },
                         {
-                            icon: "📄",
                             title: "Estimating & Proposal Generators",
-                            hook: "Winning proposals in minutes, not hours.",
-                            proof: "4 hours → 20 minutes per job",
+                            detail: "Template-based with your pricing and branding. Assembly/line-item detail. E-signature integration. Win/loss tracking.",
+                            result: "4 hours → 20 minutes per proposal",
                         },
                         {
-                            icon: "🌐",
-                            title: "High-Performance Web Portals",
-                            hook: "Your website should be closing deals.",
-                            proof: "2.8x increase in qualified lead conversion",
-                        },
-                        {
-                            icon: "💳",
                             title: "Payment & Invoicing Systems",
-                            hook: "Get paid faster. Chase invoices less.",
-                            proof: "9-day reduction in days-sales-outstanding",
+                            detail: "Stripe integration (cards, ACH, subscriptions). Auto-invoicing. Recurring billing. Aging reports. Payment reminders. QuickBooks sync.",
+                            result: "Paid 9 days faster on average",
+                        },
+                        {
+                            title: "High-Performance Web Portals",
+                            detail: "Client-facing portals with branded login. Project status, doc sharing, payments, messaging. Admin panels with RBAC. Analytics built in.",
+                            result: "2.8x increase in qualified lead conversion",
                         },
                     ].map((svc) => (
                         <div key={svc.title} className="service-card">
-                            <div style={{ display: "flex", alignItems: "center", gap: "0.3rem", marginBottom: "0.08rem" }}>
-                                <span style={{ fontSize: "0.6rem" }}>{svc.icon}</span>
-                                <p className="service-card-title">{svc.title}</p>
-                            </div>
-                            <p className="service-card-hook">{svc.hook}</p>
-                            <p className="service-card-proof">✓ {svc.proof}</p>
+                            <p className="service-card-title">{svc.title}</p>
+                            <p className="service-card-hook">{svc.detail}</p>
+                            <p className="service-card-proof">&#10003; {svc.result}</p>
                         </div>
                     ))}
 
-                    {/* Additional services note */}
-                    <p style={{
-                        fontSize: "0.42rem", color: "#6B7280", marginTop: "auto",
-                        lineHeight: 1.5, paddingTop: "0.3rem",
-                        borderTop: "1px solid rgba(255,255,255,0.05)",
-                    }}>
-                        + License Management · Enterprise Infra · Industry-Specific Platforms
+                    <p style={{ fontSize: "0.42rem", color: "#6B7280", marginTop: "auto", lineHeight: 1.45, paddingTop: "0.1rem", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+                        + License Management · Enterprise Infra · API Integrations · Data Migration · Mobile · Custom Workflows · Training · 90 Days Support
                     </p>
                 </div>
 
-                {/* ─── PANEL 6: Inside Right — Competitive Positioning + CTA ─── */}
+                {/* ─── PANEL 6: Why Us + CTA ─── */}
                 <div className="brochure-panel" style={{ background: "#111827" }}>
-                    <p className="brochure-subhead" style={{ marginTop: "0.3in" }}>Why Us Over</p>
-                    <h2 className="brochure-headline" style={{ fontSize: "1.05rem", marginBottom: "0.35rem" }}>
+                    <p className="brochure-subhead" style={{ marginTop: "0.15in" }}>Why QuantLab</p>
+                    <h2 className="brochure-headline" style={{ fontSize: "0.95rem", marginBottom: "0.18rem" }}>
                         The freelancer. The agency.<br />
-                        <span className="gradient-text">The off-the-shelf SaaS.</span>
+                        <span className="gradient-text">The off-the-shelf SaaS.</span><br />
+                        We&apos;re none of those.
                     </h2>
+                    <div className="accent-line" style={{ margin: "0.12rem 0" }} />
 
-                    <div className="accent-line" style={{ marginBottom: "0.35rem" }} />
-
-                    {/* Competitive comparison */}
                     {[
                         {
-                            vs: "vs. Freelancers",
-                            problem: "Disappear mid-project, no ops knowledge, single point of failure.",
-                            us: "Full-stack team. Architecture to deployment. We don't ghost.",
-                            color: "#F59E0B",
+                            vs: "vs. Freelancers & Overseas Devs",
+                            them: "Disappear mid-project. No business ops knowledge. Single point of failure. No deployment expertise. Minimal testing.",
+                            us: "Full team. Architecture → deployment → monitoring. 90 days support. Production-grade systems, not prototypes.",
                         },
                         {
-                            vs: "vs. Agencies",
-                            problem: "$150K+ budgets, 6-month timelines, junior devs doing senior work.",
-                            us: "Senior-only engineering. Faster delivery. Transparent, fixed quotes.",
-                            color: "#8B5CF6",
+                            vs: "vs. Agencies ($150K+)",
+                            them: "Account managers who don't code. Junior devs. 6-month timelines. Hourly billing that always runs over.",
+                            us: "Senior-only. Fixed-price. 2-4 week delivery. You talk directly to the builders. No middlemen.",
                         },
                         {
-                            vs: "vs. Off-the-shelf SaaS",
-                            problem: "You adapt your business to fit the tool. Never the other way around.",
-                            us: "We build the tool around your exact workflows. Zero compromise.",
-                            color: "#06B6D4",
+                            vs: "vs. Salesforce, HubSpot & SaaS",
+                            them: "Reshape your biz to fit the tool. $500+/mo that climbs. Data locked in their ecosystem.",
+                            us: "Built around your workflow. You own the code and data. No monthly fees. Zero compromise.",
                         },
                     ].map((item) => (
-                        <div key={item.vs} style={{
-                            background: "#1F2937", borderRadius: "0.4rem",
-                            border: `1px solid ${item.color}25`,
-                            padding: "0.3rem 0.35rem", marginBottom: "0.25rem",
-                            borderLeft: `3px solid ${item.color}`,
-                        }}>
-                            <p style={{ fontSize: "0.48rem", fontWeight: 800, color: item.color, marginBottom: "0.08rem" }}>{item.vs}</p>
-                            <p style={{ fontSize: "0.42rem", color: "#6B7280", lineHeight: 1.4, marginBottom: "0.1rem" }}>✗ {item.problem}</p>
-                            <p style={{ fontSize: "0.42rem", color: "#D1D5DB", lineHeight: 1.4 }}>✓ {item.us}</p>
+                        <div key={item.vs} style={{ background: "#1F2937", borderRadius: "0.35rem", border: "1px solid rgba(56,189,248,0.1)", borderLeft: "3px solid #3B82F6", padding: "0.2rem 0.25rem", marginBottom: "0.12rem" }}>
+                            <p style={{ fontSize: "0.48rem", fontWeight: 800, color: "#3B82F6", marginBottom: "0.04rem" }}>{item.vs}</p>
+                            <p style={{ fontSize: "0.42rem", color: "#6B7280", lineHeight: 1.4, marginBottom: "0.04rem" }}>They: {item.them}</p>
+                            <p style={{ fontSize: "0.42rem", color: "#D1D5DB", lineHeight: 1.4 }}>Us: {item.us}</p>
                         </div>
                     ))}
 
-                    {/* Engagement timeline */}
-                    <p style={{ fontSize: "0.4rem", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700, margin: "0.35rem 0 0.2rem" }}>
-                        What Working With Us Looks Like
-                    </p>
-                    <div style={{ display: "flex", gap: "0.15rem" }}>
+                    <p style={{ fontSize: "0.42rem", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 700, margin: "0.12rem 0 0.08rem" }}>From Call to Production</p>
+                    <div style={{ display: "flex", gap: "0.1rem", marginBottom: "0.12rem" }}>
                         {[
-                            { week: "Week 1", action: "Strategy call → scope & quote" },
-                            { week: "Week 2-4", action: "Build → iterate → your feedback" },
-                            { week: "Week 5+", action: "Launch → monitor → ongoing support" },
+                            { week: "Week 1", action: "Free call. Learn your stack. Fixed-price quote in 48hrs." },
+                            { week: "Week 2-4", action: "Build in sprints. Demo every Friday. Your feedback drives it." },
+                            { week: "Week 5+", action: "Deploy. Train your team. 90 days support." },
                         ].map((step) => (
-                            <div key={step.week} style={{
-                                flex: 1, background: "rgba(56,189,248,0.05)",
-                                border: "1px solid rgba(56,189,248,0.12)",
-                                borderRadius: "0.3rem", padding: "0.2rem 0.25rem",
-                                textAlign: "center",
-                            }}>
-                                <p style={{ fontSize: "0.44rem", fontWeight: 800, color: "#3B82F6" }}>{step.week}</p>
-                                <p style={{ fontSize: "0.36rem", color: "#9CA3AF", lineHeight: 1.35 }}>{step.action}</p>
+                            <div key={step.week} style={{ flex: 1, background: "rgba(56,189,248,0.05)", border: "1px solid rgba(56,189,248,0.12)", borderRadius: "0.25rem", padding: "0.12rem 0.15rem", textAlign: "center" }}>
+                                <p style={{ fontSize: "0.42rem", fontWeight: 800, color: "#3B82F6" }}>{step.week}</p>
+                                <p style={{ fontSize: "0.34rem", color: "#9CA3AF", lineHeight: 1.35 }}>{step.action}</p>
                             </div>
                         ))}
                     </div>
 
-                    {/* Final CTA */}
                     <div className="cta-block" style={{ marginTop: "auto" }}>
-                        <p className="cta-title" style={{ fontSize: "0.75rem" }}>
-                            Your competitors won&apos;t <span className="gradient-text">wait.</span>
+                        <p className="cta-title">Your competitors are already building.</p>
+                        <p className="cta-subtitle" style={{ marginBottom: "0.12rem" }}>
+                            Free 30-min strategy call. We&apos;ll scope your project and give you a fixed-price quote.
                         </p>
-                        <p className="cta-subtitle" style={{ marginBottom: "0.25rem", fontSize: "0.44rem" }}>
-                            We take on 3 new clients per month. Book your free strategy call today.
-                        </p>
-                        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.4rem" }}>
-                            <div className="qr-box" style={{ width: "0.65in", height: "0.65in" }}>
-                                <div style={{ textAlign: "center" }}>
-                                    <p style={{ fontSize: "0.45rem", fontWeight: 700, color: "#3B82F6" }}>QR</p>
-                                    <p style={{ fontSize: "0.28rem", color: "#6B7280" }}>Scan me</p>
-                                </div>
-                            </div>
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.3rem" }}>
+                            <BrochureQR url="https://quantlabusa.dev" size="0.65in" accentColor="#3B82F6" label="Scan" sublabel="" />
                             <div style={{ textAlign: "left" }}>
-                                <p style={{ fontSize: "0.44rem", color: "#D1D5DB" }}>✉ contact@quantlabsoftware.com</p>
-                                <p style={{ fontSize: "0.44rem", color: "#D1D5DB" }}>🌐 quantlabsoftware.com</p>
-                                <p style={{ fontSize: "0.38rem", color: "#6B7280", marginTop: "0.1rem" }}>Free 30-min call · NDA available · Response in 24hrs</p>
+                                <p style={{ fontSize: "0.46rem", color: "#3B82F6", fontWeight: 700, marginBottom: "0.04rem" }}>Book Your Free Call</p>
+                                <p style={{ fontSize: "0.42rem", color: "#D1D5DB" }}>contact@quantlabusa.dev</p>
+                                <p style={{ fontSize: "0.42rem", color: "#D1D5DB" }}>quantlabusa.dev</p>
+                                <p style={{ fontSize: "0.36rem", color: "#6B7280", marginTop: "0.04rem" }}>Fixed-price · NDA available · 24hr response</p>
                             </div>
                         </div>
                     </div>

@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import {
     LogOut, BarChart3, Target, Building2, Home,
-    GraduationCap, Menu, X,
+    GraduationCap, Menu, X, Trophy,
 } from "lucide-react";
 
 interface UserInfo {
@@ -23,6 +23,7 @@ const NAV_LINKS = [
     { href: "/sales/dashboard", label: "Dashboard", icon: <Home className="w-4 h-4" /> },
     { href: "/sales/leads", label: "Leads", icon: <Target className="w-4 h-4" /> },
     { href: "/sales/clients", label: "Clients", icon: <Building2 className="w-4 h-4" /> },
+    { href: "/sales/leaderboard", label: "Leaderboard", icon: <Trophy className="w-4 h-4" /> },
     { href: "/sales/training", label: "Training", icon: <GraduationCap className="w-4 h-4" /> },
 ];
 

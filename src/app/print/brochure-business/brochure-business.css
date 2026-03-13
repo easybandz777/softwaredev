@@ -1,0 +1,335 @@
+/* ===== Executive Trust Brochure — Print Stylesheet ===== */
+/* Color Palette: Navy (#0F172A) + Gold (#D4A843) + White (#F8FAFC) */
+
+/*
+  When the brochure page is present in the DOM, hide all fixed-position
+  elements (Navbar, FuturisticBackground, PageTracker) that come from the
+  root layout.
+*/
+body:has(.brochure-biz-wrapper) header,
+body:has(.brochure-biz-wrapper) [class*="fixed"] {
+    display: none !important;
+}
+
+.brochure-biz-wrapper {
+    display: block !important;
+}
+
+/* Force landscape US Letter, no margin */
+@media print {
+    @page {
+        size: 11in 8.5in;
+        margin: 0;
+    }
+
+    body {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .fold-guide {
+        display: none !important;
+    }
+
+    .no-print {
+        display: none !important;
+    }
+}
+
+/* ===== Sheet (one printed page) ===== */
+.biz-sheet {
+    width: 11in;
+    height: 8.5in;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    background: #0F172A;
+    color: #F8FAFC;
+    font-family: var(--font-geist-sans, "Geist", system-ui, -apple-system, sans-serif);
+    position: relative;
+    overflow: hidden;
+    page-break-after: always;
+    box-sizing: border-box;
+}
+
+/* ===== Panel (one third of a sheet) ===== */
+.biz-panel {
+    width: calc(11in / 3);
+    height: 8.5in;
+    padding: 0.35in 0.3in;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+/* ===== Fold guide lines (screen only) ===== */
+.fold-guide {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    border-left: 2px dashed rgba(212, 168, 67, 0.25);
+    z-index: 100;
+    pointer-events: none;
+}
+
+.fold-guide-1 {
+    left: calc(100% / 3);
+}
+
+.fold-guide-2 {
+    left: calc(200% / 3);
+}
+
+/* ===== Typography ===== */
+.biz-headline {
+    font-size: 1.55rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+    margin-bottom: 0.4rem;
+}
+
+.biz-subhead {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: #D4A843;
+    margin-bottom: 0.4rem;
+}
+
+.biz-body {
+    font-size: 0.55rem;
+    line-height: 1.55;
+    color: #94A3B8;
+}
+
+.biz-body-light {
+    font-size: 0.55rem;
+    line-height: 1.55;
+    color: #D1D5DB;
+}
+
+/* ===== Gold accent line ===== */
+.gold-line {
+    width: 2.5rem;
+    height: 2px;
+    background: linear-gradient(90deg, #D4A843, #F5D98A);
+    border-radius: 2px;
+    margin: 0.35rem 0;
+}
+
+/* ===== Gold gradient text ===== */
+.gold-text {
+    background: linear-gradient(135deg, #D4A843, #F5D98A);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ===== Service card ===== */
+.biz-service-card {
+    background: #1E293B;
+    border: 1px solid rgba(212, 168, 67, 0.1);
+    border-left: 3px solid #D4A843;
+    border-radius: 0.35rem;
+    padding: 0.3rem 0.35rem;
+    margin-bottom: 0.2rem;
+}
+
+.biz-service-title {
+    font-size: 0.55rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.06rem;
+}
+
+.biz-service-hook {
+    font-size: 0.44rem;
+    color: #94A3B8;
+    line-height: 1.45;
+    margin-bottom: 0.06rem;
+}
+
+.biz-service-proof {
+    font-size: 0.4rem;
+    color: #059669;
+    font-weight: 600;
+}
+
+/* ===== Cost card (pain point) ===== */
+.cost-card {
+    background: #1E293B;
+    border-radius: 0.35rem;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 0.22rem 0.28rem;
+    margin-bottom: 0.15rem;
+    display: flex;
+    gap: 0.25rem;
+    align-items: flex-start;
+}
+
+.cost-amount {
+    font-size: 0.65rem;
+    font-weight: 900;
+    color: #DC2626;
+    line-height: 1;
+}
+
+.cost-label {
+    font-size: 0.36rem;
+    color: #94A3B8;
+    margin-top: 0.06rem;
+}
+
+.cost-detail {
+    font-size: 0.42rem;
+    color: #94A3B8;
+    line-height: 1.4;
+}
+
+/* ===== Stat block ===== */
+.biz-stat-block {
+    text-align: center;
+}
+
+.biz-stat-value {
+    font-size: 1.3rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #D4A843, #F5D98A);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+}
+
+.biz-stat-label {
+    font-size: 0.42rem;
+    color: #64748B;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-top: 0.12rem;
+}
+
+/* ===== Comparison row ===== */
+.compare-row {
+    background: #1E293B;
+    border-radius: 0.35rem;
+    padding: 0.22rem 0.28rem;
+    margin-bottom: 0.15rem;
+}
+
+.compare-header {
+    font-size: 0.48rem;
+    font-weight: 800;
+    margin-bottom: 0.06rem;
+}
+
+.compare-problem {
+    font-size: 0.42rem;
+    color: #64748B;
+    line-height: 1.4;
+    margin-bottom: 0.06rem;
+}
+
+.compare-us {
+    font-size: 0.42rem;
+    color: #D1D5DB;
+    line-height: 1.4;
+}
+
+/* ===== Trust item ===== */
+.biz-trust-item {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.46rem;
+    color: #D1D5DB;
+    margin-bottom: 0.18rem;
+}
+
+.biz-trust-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #D4A843;
+    flex-shrink: 0;
+}
+
+/* ===== CTA block ===== */
+.biz-cta-block {
+    background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+    border: 1px solid rgba(212, 168, 67, 0.3);
+    border-radius: 0.5rem;
+    padding: 0.35rem 0.4rem;
+    text-align: center;
+}
+
+.biz-cta-title {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 0.12rem;
+}
+
+.biz-cta-subtitle {
+    font-size: 0.44rem;
+    color: #D4A843;
+}
+
+/* ===== Timeline step ===== */
+.timeline-step {
+    flex: 1;
+    background: rgba(212, 168, 67, 0.05);
+    border: 1px solid rgba(212, 168, 67, 0.15);
+    border-radius: 0.25rem;
+    padding: 0.15rem 0.2rem;
+    text-align: center;
+}
+
+.timeline-week {
+    font-size: 0.42rem;
+    font-weight: 800;
+    color: #D4A843;
+}
+
+.timeline-action {
+    font-size: 0.34rem;
+    color: #94A3B8;
+    line-height: 1.35;
+}
+
+/* ===== Logo glow (gold) ===== */
+.logo-glow-gold {
+    filter: drop-shadow(0 0 18px rgba(212, 168, 67, 0.5)) drop-shadow(0 0 40px rgba(212, 168, 67, 0.2));
+}
+
+/* ===== Screen-only helpers ===== */
+.print-toolbar {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 9999;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.print-toolbar button {
+    padding: 0.5rem 1.2rem;
+    border-radius: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid rgba(212, 168, 67, 0.4);
+    background: #1E293B;
+    color: #D4A843;
+    transition: all 0.2s;
+}
+
+.print-toolbar button:hover {
+    background: #D4A843;
+    color: #0F172A;
+}

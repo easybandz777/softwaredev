@@ -235,13 +235,26 @@ export async function ensureMigrated() {
         )
     `;
 
-    // ── Seed admin + demo sales user ──────────────────────────────────────
-    const adminHash = bcrypt.hashSync("printer", 10);
+    // ── Seed superadmin ────────────────────────────────────────────────────
+    const superAdminHash = bcrypt.hashSync("gold", 10);
     await sql`
         INSERT INTO crm_users (username, full_name, email, password_hash, role)
-        VALUES ('marsh', 'Admin', 'admin@quantlab.dev', ${adminHash}, 'admin')
+        VALUES ('beltz', 'Beltz', 'beltz@quantlabusa.dev', ${superAdminHash}, 'admin')
         ON CONFLICT (username) DO UPDATE
             SET password_hash = EXCLUDED.password_hash,
+                full_name     = EXCLUDED.full_name,
+                email         = EXCLUDED.email,
+                role          = EXCLUDED.role
+    `;
+
+    // ── Seed sales team ───────────────────────────────────────────────────
+    const marshHash = bcrypt.hashSync("printer", 10);
+    await sql`
+        INSERT INTO crm_users (username, full_name, email, password_hash, role)
+        VALUES ('marsh', 'Marsh', 'marsh@quantlab.dev', ${marshHash}, 'sales')
+        ON CONFLICT (username) DO UPDATE
+            SET password_hash = EXCLUDED.password_hash,
+                full_name     = EXCLUDED.full_name,
                 role          = EXCLUDED.role
     `;
 

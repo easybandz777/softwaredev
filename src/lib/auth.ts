@@ -36,7 +36,7 @@ export function getSessionUser(req: NextRequest): { id: number; role: string; us
 
     // Support legacy admin token
     if (token === "quantlab_admin_authenticated_v1") {
-        return { id: 0, role: "admin", username: "marsh" };
+        return { id: 0, role: "admin", username: "beltz" };
     }
 
     return parseSessionToken(token);
