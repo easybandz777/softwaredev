@@ -7,8 +7,9 @@ import {
     Upload, Play, Pause, Download, Trash2, FileAudio,
     Music, Edit3, Check, X, Plus,
     Briefcase, MessageSquare, Link2, DollarSign, Clock, Building2,
+    Paperclip, Image as ImageIcon, FileText, File, Film,
 } from "lucide-react";
-import type { Client, ClientRecording, ClientNote, ClientProject } from "@/lib/db";
+import type { Client, ClientRecording, ClientNote, ClientProject, ClientFile } from "@/lib/db";
 import { SalesLayout } from "@/components/SalesLayout";
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -142,7 +143,23 @@ interface SalesUser { id: number; username: string; full_name: string; }
 
 // ─── Client Detail Page ──────────────────────────────────────────────────────
 
-type Tab = "overview" | "projects" | "notes" | "recordings";
+type Tab = "overview" | "projects" | "notes" | "files" | "recordings";
+
+// File type helpers
+function getFileIcon(type: string) {
+    if (type.startsWith("image/")) return <ImageIcon className="w-4 h-4" />;
+    if (type === "application/pdf") return <FileText className="w-4 h-4" />;
+    if (type.startsWith("audio/")) return <FileAudio className="w-4 h-4" />;
+    if (type.startsWith("video/")) return <Film className="w-4 h-4" />;
+    return <File className="w-4 h-4" />;
+}
+function getFileColor(type: string) {
+    if (type.startsWith("image/")) return { color: "#38bdf8", bg: "rgba(56,189,248,0.1)", border: "rgba(56,189,248,0.2)" };
+    if (type === "application/pdf") return { color: "#f87171", bg: "rgba(248,113,113,0.1)", border: "rgba(248,113,113,0.2)" };
+    if (type.startsWith("audio/")) return { color: "#34d399", bg: "rgba(52,211,153,0.1)", border: "rgba(52,211,153,0.2)" };
+    if (type.startsWith("video/")) return { color: "#a78bfa", bg: "rgba(167,139,250,0.1)", border: "rgba(167,139,250,0.2)" };
+    return { color: "#94a3b8", bg: "rgba(148,163,184,0.1)", border: "rgba(148,163,184,0.2)" };
+}
 
 export default function ClientDetailPage() {
     const router = useRouter();
@@ -153,15 +170,24 @@ export default function ClientDetailPage() {
     const [recordings, setRecordings] = useState<ClientRecording[]>([]);
     const [notes, setNotes] = useState<ClientNote[]>([]);
     const [projects, setProjects] = useState<ClientProject[]>([]);
+    const [files, setFiles] = useState<ClientFile[]>([]);
     const [salesUsers, setSalesUsers] = useState<SalesUser[]>([]);
     const [loading, setLoading] = useState(true);
     const [tab, setTab] = useState<Tab>("overview");
 
-    // Upload state
+    // Upload state (recordings)
     const [uploading, setUploading] = useState(false);
     const [uploadNotes, setUploadNotes] = useState("");
     const [dragOver, setDragOver] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
+
+    // File upload state
+    const [fileUploading, setFileUploading] = useState(false);
+    const [fileDragOver, setFileDragOver] = useState(false);
+    const [fileNotes, setFileNotes] = useState("");
+    const [fileProjectId, setFileProjectId] = useState("");
+    const [fileFilter, setFileFilter] = useState("");
+    const fileInputRef2 = useRef<HTMLInputElement>(null);
 
     // Note state
     const [noteText, setNoteText] = useState("");
@@ -175,11 +201,12 @@ export default function ClientDetailPage() {
     const fetchData = useCallback(async () => {
         setLoading(true);
         try {
-            const [clientsRes, recordingsRes, notesRes, projectsRes, dashRes] = await Promise.all([
+            const [clientsRes, recordingsRes, notesRes, projectsRes, filesRes, dashRes] = await Promise.all([
                 fetch("/api/sales/clients"),
                 fetch(`/api/sales/clients/${clientId}/recordings`),
                 fetch(`/api/sales/clients/${clientId}/notes`),
                 fetch(`/api/sales/clients/${clientId}/projects`),
+                fetch(`/api/sales/clients/${clientId}/files`),
                 fetch("/api/sales/dashboard"),
             ]);
             if (clientsRes.status === 401) { router.push("/sales"); return; }
@@ -189,6 +216,7 @@ export default function ClientDetailPage() {
             setRecordings(await recordingsRes.json());
             setNotes(await notesRes.json());
             setProjects(await projectsRes.json());
+            setFiles(await filesRes.json());
             const d = await dashRes.json();
             setSalesUsers(d.salesUsers || []);
         } finally { setLoading(false); }
@@ -259,7 +287,7 @@ export default function ClientDetailPage() {
     }
 
     // ─── Recordings ──────────────────────────────────────────────────────
-    async function uploadFile(file: File) {
+    async function uploadRecording(file: File) {
         setUploading(true);
         try {
             const formData = new FormData();
@@ -270,13 +298,46 @@ export default function ClientDetailPage() {
             fetchData();
         } finally { setUploading(false); }
     }
-    function handleFileSelect(e: React.ChangeEvent<HTMLInputElement>) { const file = e.target.files?.[0]; if (file) uploadFile(file); e.target.value = ""; }
-    function handleDrop(e: React.DragEvent) { e.preventDefault(); setDragOver(false); const file = e.dataTransfer.files?.[0]; if (file) uploadFile(file); }
+    function handleRecSelect(e: React.ChangeEvent<HTMLInputElement>) { const file = e.target.files?.[0]; if (file) uploadRecording(file); e.target.value = ""; }
+    function handleRecDrop(e: React.DragEvent) { e.preventDefault(); setDragOver(false); const file = e.dataTransfer.files?.[0]; if (file) uploadRecording(file); }
     async function deleteRecording(recordingId: number) {
         if (!confirm("Delete this recording?")) return;
         await fetch(`/api/sales/clients/${clientId}/recordings?recordingId=${recordingId}`, { method: "DELETE" });
         fetchData();
     }
+
+    // ─── Files ────────────────────────────────────────────────────────────
+    async function uploadClientFile(fileObj: File) {
+        setFileUploading(true);
+        try {
+            const formData = new FormData();
+            formData.append("file", fileObj);
+            if (fileNotes.trim()) formData.append("notes", fileNotes.trim());
+            if (fileProjectId) formData.append("project_id", fileProjectId);
+            await fetch(`/api/sales/clients/${clientId}/files`, { method: "POST", body: formData });
+            setFileNotes("");
+            fetchData();
+        } finally { setFileUploading(false); }
+    }
+    function handleFileSelect2(e: React.ChangeEvent<HTMLInputElement>) {
+        const fl = e.target.files;
+        if (fl) { Array.from(fl).forEach(f => uploadClientFile(f)); }
+        e.target.value = "";
+    }
+    function handleFileDrop2(e: React.DragEvent) {
+        e.preventDefault(); setFileDragOver(false);
+        const fl = e.dataTransfer.files;
+        if (fl) { Array.from(fl).forEach(f => uploadClientFile(f)); }
+    }
+    async function deleteClientFile(fileId: number) {
+        if (!confirm("Delete this file?")) return;
+        await fetch(`/api/sales/clients/${clientId}/files?file_id=${fileId}`, { method: "DELETE" });
+        fetchData();
+    }
+
+    const filteredFiles = fileFilter
+        ? files.filter(f => f.project_id === parseInt(fileFilter))
+        : files;
 
     // ─── Loading / Not found ─────────────────────────────────────────────
     if (loading) {
@@ -301,6 +362,7 @@ export default function ClientDetailPage() {
     const tabs: { key: Tab; label: string; icon: React.ReactNode; count?: number }[] = [
         { key: "overview", label: "Overview", icon: <Building2 className="w-3.5 h-3.5" /> },
         { key: "projects", label: "Projects", icon: <Briefcase className="w-3.5 h-3.5" />, count: projects.length },
+        { key: "files", label: "Files", icon: <Paperclip className="w-3.5 h-3.5" />, count: files.length },
         { key: "notes", label: "Notes", icon: <MessageSquare className="w-3.5 h-3.5" />, count: notes.length },
         { key: "recordings", label: "Recordings", icon: <Music className="w-3.5 h-3.5" />, count: recordings.length },
     ];
@@ -644,20 +706,191 @@ export default function ClientDetailPage() {
                     </div>
                 )}
 
+                {/* ═══════════════════ FILES TAB ═══════════════════ */}
+                {tab === "files" && (
+                    <div className="space-y-4">
+                        {/* Upload area */}
+                        <div className="rounded-2xl overflow-hidden" style={{
+                            background: "linear-gradient(145deg, #0d1526, #0a1020)",
+                            border: "1px solid rgba(255,255,255,0.05)",
+                        }}>
+                            <div className="px-4 md:px-6 py-4 border-b flex items-center gap-2" style={{ borderColor: "rgba(255,255,255,0.05)" }}>
+                                <Paperclip className="w-4 h-4 text-emerald-400" />
+                                <h2 className="text-sm font-semibold text-white">Upload Files</h2>
+                            </div>
+                            <div className="px-4 md:px-6 py-5">
+                                <div className="rounded-xl p-6 md:p-8 text-center transition-all cursor-pointer"
+                                    style={{
+                                        background: fileDragOver ? "rgba(56,189,248,0.06)" : "rgba(255,255,255,0.02)",
+                                        border: fileDragOver ? "2px dashed rgba(56,189,248,0.4)" : "2px dashed rgba(255,255,255,0.08)",
+                                    }}
+                                    onDragOver={e => { e.preventDefault(); setFileDragOver(true); }}
+                                    onDragLeave={() => setFileDragOver(false)}
+                                    onDrop={handleFileDrop2}
+                                    onClick={() => fileInputRef2.current?.click()}>
+                                    <input ref={fileInputRef2} type="file" multiple
+                                        accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.txt,.csv,audio/*,video/*"
+                                        className="hidden" onChange={handleFileSelect2} />
+                                    <Upload className="w-8 h-8 text-gray-600 mx-auto mb-3" />
+                                    {fileUploading ? (
+                                        <p className="text-sm text-sky-400 animate-pulse">Uploading…</p>
+                                    ) : (
+                                        <>
+                                            <p className="text-sm text-gray-400">Drop files here or <span className="text-sky-400">click to browse</span></p>
+                                            <p className="text-[10px] text-gray-600 mt-1">Photos, PDFs, Documents, Spreadsheets, Audio, Video · Max 10MB</p>
+                                        </>
+                                    )}
+                                </div>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
+                                    <input value={fileNotes} onChange={e => setFileNotes(e.target.value)}
+                                        placeholder="Optional notes…"
+                                        className="w-full text-xs bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white placeholder-gray-600 focus:outline-none focus:border-sky-400/40 transition-all" />
+                                    <select value={fileProjectId} onChange={e => setFileProjectId(e.target.value)}
+                                        className="text-xs bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-gray-300 focus:outline-none focus:border-sky-400/40"
+                                        title="Link to project">
+                                        <option value="">No project (general)</option>
+                                        {projects.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Filter bar */}
+                        {files.length > 0 && (
+                            <div className="flex items-center gap-3">
+                                <span className="text-xs text-gray-600">{filteredFiles.length} file{filteredFiles.length !== 1 ? "s" : ""}</span>
+                                <select value={fileFilter} onChange={e => setFileFilter(e.target.value)}
+                                    className="text-xs bg-white/5 border border-white/10 rounded-lg px-3 py-1.5 text-gray-300 focus:outline-none focus:border-sky-400/40 ml-auto"
+                                    title="Filter by project">
+                                    <option value="">All Files</option>
+                                    {projects.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
+                                </select>
+                            </div>
+                        )}
+
+                        {/* Image grid for image files */}
+                        {filteredFiles.some(f => f.file_type.startsWith("image/")) && (
+                            <div>
+                                <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 flex items-center gap-2">
+                                    <ImageIcon className="w-3.5 h-3.5" /> Photos
+                                </h3>
+                                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                                    {filteredFiles.filter(f => f.file_type.startsWith("image/")).map(f => (
+                                        <div key={f.id} className="group relative rounded-xl overflow-hidden" style={{
+                                            background: "linear-gradient(145deg, #0d1526, #0a1020)",
+                                            border: "1px solid rgba(56,189,248,0.1)",
+                                        }}>
+                                            <div className="aspect-square overflow-hidden">
+                                                <img
+                                                    src={`/api/sales/clients/${clientId}/files/${f.id}`}
+                                                    alt={f.filename}
+                                                    className="w-full h-full object-cover transition-transform group-hover:scale-105"
+                                                    loading="lazy" />
+                                            </div>
+                                            <div className="p-2.5">
+                                                <p className="text-[11px] text-white truncate font-medium">{f.filename}</p>
+                                                <div className="flex items-center gap-2 mt-1">
+                                                    <span className="text-[9px] text-gray-600">{fmtFileSize(f.file_size)}</span>
+                                                    {f.project_name && (
+                                                        <span className="text-[9px] px-1.5 py-0.5 rounded-full" style={{ background: "rgba(167,139,250,0.1)", color: "#a78bfa" }}>
+                                                            {f.project_name}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </div>
+                                            {/* Hover actions */}
+                                            <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                <a href={`/api/sales/clients/${clientId}/files/${f.id}`} download={f.filename}
+                                                    className="p-1.5 rounded-lg transition-all" style={{ background: "rgba(0,0,0,0.7)" }} title="Download">
+                                                    <Download className="w-3 h-3 text-white" />
+                                                </a>
+                                                <button onClick={(e) => { e.stopPropagation(); deleteClientFile(f.id); }}
+                                                    className="p-1.5 rounded-lg transition-all" style={{ background: "rgba(0,0,0,0.7)" }} title="Delete">
+                                                    <Trash2 className="w-3 h-3 text-rose-400" />
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Non-image files list */}
+                        {filteredFiles.some(f => !f.file_type.startsWith("image/")) && (
+                            <div>
+                                <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 flex items-center gap-2">
+                                    <FileText className="w-3.5 h-3.5" /> Documents & Other
+                                </h3>
+                                <div className="space-y-2">
+                                    {filteredFiles.filter(f => !f.file_type.startsWith("image/")).map(f => {
+                                        const fc = getFileColor(f.file_type);
+                                        return (
+                                            <div key={f.id} className="rounded-xl p-3 md:p-4 flex items-center gap-3" style={{
+                                                background: "linear-gradient(145deg, #0d1526, #0a1020)",
+                                                border: `1px solid ${fc.border}`,
+                                            }}>
+                                                <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                                                    style={{ background: fc.bg, border: `1px solid ${fc.border}`, color: fc.color }}>
+                                                    {getFileIcon(f.file_type)}
+                                                </div>
+                                                <div className="flex-1 min-w-0">
+                                                    <p className="text-sm font-medium text-white truncate">{f.filename}</p>
+                                                    <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5 mt-0.5">
+                                                        <span className="text-[10px] text-gray-600">{fmtFileSize(f.file_size)}</span>
+                                                        <span className="text-[10px] text-gray-600">{timeAgo(f.created_at)}</span>
+                                                        {f.uploader_name && <span className="text-[10px] text-gray-500">{f.uploader_name}</span>}
+                                                        {f.project_name && (
+                                                            <span className="text-[9px] px-1.5 py-0.5 rounded-full" style={{ background: "rgba(167,139,250,0.1)", color: "#a78bfa" }}>
+                                                                {f.project_name}
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                    {f.notes && <p className="text-[11px] text-gray-500 mt-1 italic truncate">{f.notes}</p>}
+                                                </div>
+                                                <div className="flex items-center gap-1 flex-shrink-0">
+                                                    <a href={`/api/sales/clients/${clientId}/files/${f.id}`} download={f.filename}
+                                                        className="p-2 rounded-lg text-gray-600 hover:text-sky-400 hover:bg-sky-400/5 transition-all" title="Download">
+                                                        <Download className="w-3.5 h-3.5" />
+                                                    </a>
+                                                    <button onClick={() => deleteClientFile(f.id)}
+                                                        className="p-2 rounded-lg text-gray-600 hover:text-rose-400 hover:bg-rose-400/5 transition-all" title="Delete">
+                                                        <Trash2 className="w-3.5 h-3.5" />
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        )}
+
+                        {files.length === 0 && (
+                            <div className="py-16 text-center rounded-xl" style={{
+                                background: "linear-gradient(145deg, #0d1526, #0a1020)",
+                                border: "1px solid rgba(255,255,255,0.05)",
+                            }}>
+                                <Paperclip className="w-8 h-8 text-gray-700 mx-auto mb-2" />
+                                <p className="text-gray-600 text-sm">No files yet.</p>
+                                <p className="text-gray-700 text-xs mt-1">Upload photos, PDFs, documents, and more.</p>
+                            </div>
+                        )}
+                    </div>
+                )}
+
                 {/* ═══════════════════ RECORDINGS TAB ═══════════════════ */}
                 {tab === "recordings" && (
                     <div className="rounded-2xl overflow-hidden" style={{
                         background: "linear-gradient(145deg, #0d1526, #0a1020)",
                         border: "1px solid rgba(255,255,255,0.05)",
                     }}>
-                        <div className="px-6 py-4 border-b flex items-center gap-2" style={{ borderColor: "rgba(255,255,255,0.05)" }}>
+                        <div className="px-4 md:px-6 py-4 border-b flex items-center gap-2" style={{ borderColor: "rgba(255,255,255,0.05)" }}>
                             <Music className="w-4 h-4 text-emerald-400" />
                             <h2 className="text-sm font-semibold text-white">Recordings</h2>
                             <span className="text-xs text-gray-600 ml-auto">{recordings.length} recording{recordings.length !== 1 ? "s" : ""}</span>
                         </div>
 
                         {/* Upload area */}
-                        <div className="px-6 py-5 border-b" style={{ borderColor: "rgba(255,255,255,0.05)" }}>
+                        <div className="px-4 md:px-6 py-5 border-b" style={{ borderColor: "rgba(255,255,255,0.05)" }}>
                             <div className="rounded-xl p-6 text-center transition-all cursor-pointer"
                                 style={{
                                     background: dragOver ? "rgba(52,211,153,0.06)" : "rgba(255,255,255,0.02)",
@@ -665,10 +898,10 @@ export default function ClientDetailPage() {
                                 }}
                                 onDragOver={e => { e.preventDefault(); setDragOver(true); }}
                                 onDragLeave={() => setDragOver(false)}
-                                onDrop={handleDrop}
+                                onDrop={handleRecDrop}
                                 onClick={() => fileInputRef.current?.click()}>
                                 <input ref={fileInputRef} type="file" accept="audio/*,video/*,.mp3,.wav,.m4a,.ogg,.webm,.mp4"
-                                    className="hidden" onChange={handleFileSelect} />
+                                    className="hidden" onChange={handleRecSelect} />
                                 <Upload className="w-6 h-6 text-gray-600 mx-auto mb-2" />
                                 {uploading ? (
                                     <p className="text-sm text-emerald-400 animate-pulse">Uploading…</p>
@@ -695,7 +928,7 @@ export default function ClientDetailPage() {
                         ) : (
                             <div>
                                 {recordings.map((rec, idx) => (
-                                    <div key={rec.id} className="px-6 py-4" style={{
+                                    <div key={rec.id} className="px-4 md:px-6 py-4" style={{
                                         borderBottom: idx < recordings.length - 1 ? "1px solid rgba(255,255,255,0.04)" : "none",
                                     }}>
                                         <div className="flex items-start justify-between">

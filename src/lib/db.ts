@@ -71,6 +71,20 @@ export interface ClientRecording {
     uploader_name?: string;
 }
 
+export interface ClientFile {
+    id: number;
+    client_id: number;
+    project_id: number | null;
+    filename: string;
+    file_type: string;
+    file_size: number;
+    uploaded_by: number | null;
+    notes: string | null;
+    created_at: string;
+    uploader_name?: string;
+    project_name?: string;
+}
+
 export interface ClientNote {
     id: number;
     client_id: number;
@@ -231,6 +245,22 @@ export async function ensureMigrated() {
             status      TEXT NOT NULL DEFAULT 'planning',
             value       NUMERIC,
             start_date  TIMESTAMPTZ,
+            created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
+        )
+    `;
+
+    // ── Client Files (general attachments) ───────────────────────────────
+    await sql`
+        CREATE TABLE IF NOT EXISTS client_files (
+            id          SERIAL PRIMARY KEY,
+            client_id   INTEGER NOT NULL,
+            project_id  INTEGER,
+            filename    TEXT NOT NULL,
+            file_data   TEXT NOT NULL,
+            file_type   TEXT NOT NULL DEFAULT 'application/octet-stream',
+            file_size   INTEGER NOT NULL DEFAULT 0,
+            uploaded_by  INTEGER,
+            notes       TEXT,
             created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
         )
     `;
