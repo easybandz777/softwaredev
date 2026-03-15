@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
             httpOnly: true,
             path: "/",
             maxAge: 60 * 60 * 8, // 8 hours
-            sameSite: "strict",
+            sameSite: "lax",
         });
         return res;
     } catch (err) {
