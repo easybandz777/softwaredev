@@ -358,4 +358,15 @@ export async function ensureMigrated() {
                 role          = EXCLUDED.role,
                 referral_code = EXCLUDED.referral_code
     `;
+
+    const lucasHash = bcrypt.hashSync("money", 10);
+    await sql`
+        INSERT INTO crm_users (username, full_name, email, password_hash, role, referral_code)
+        VALUES ('lucas', 'Lucas', 'lucas@quantlab.dev', ${lucasHash}, 'sales', 'QL4L9K')
+        ON CONFLICT (username) DO UPDATE
+            SET password_hash = EXCLUDED.password_hash,
+                full_name     = EXCLUDED.full_name,
+                role          = EXCLUDED.role,
+                referral_code = EXCLUDED.referral_code
+    `;
 }
