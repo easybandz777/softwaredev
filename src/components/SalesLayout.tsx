@@ -23,7 +23,7 @@ const NAV_LINKS = [
     { href: "/sales/dashboard", label: "Dashboard", icon: <Home className="w-4 h-4" /> },
     { href: "/sales/leads", label: "Leads", icon: <Target className="w-4 h-4" /> },
     { href: "/sales/clients", label: "Clients", icon: <Building2 className="w-4 h-4" /> },
-    { href: "/sales/questionnaire", label: "Questionnaire Link", icon: <ClipboardList className="w-4 h-4" /> },
+    { href: "/sales/dashboard#questionnaire-link", label: "Questionnaire Link", icon: <ClipboardList className="w-4 h-4" /> },
     { href: "/sales/leaderboard", label: "Leaderboard", icon: <Trophy className="w-4 h-4" /> },
     { href: "/sales/training", label: "Training", icon: <GraduationCap className="w-4 h-4" /> },
 ];

@@ -254,7 +254,7 @@ export default function SalesDashboard() {
                 </div>
 
                 {/* Shareable Link Card */}
-                <div className="mt-5 rounded-2xl overflow-hidden p-6 relative group" style={{
+                <div id="questionnaire-link" className="mt-5 rounded-2xl overflow-hidden p-6 relative group" style={{
                     background: "linear-gradient(145deg, #0d1526, #0a1020)",
                     border: "1px solid rgba(14,165,233,0.15)",
                     boxShadow: "0 0 30px rgba(14,165,233,0.05)"

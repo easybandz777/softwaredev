@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { FuturisticBackground } from "@/components/FuturisticBackground";
 import { PageTracker } from "@/components/PageTracker";
+import { AgentationWrapper } from "@/components/AgentationWrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,7 +36,9 @@ export default function RootLayout({
         <Navbar />
         <PageTracker />
         {children}
+        <AgentationWrapper />
       </body>
     </html>
   );
 }
+
