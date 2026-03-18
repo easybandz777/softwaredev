@@ -11,7 +11,7 @@ export function Navbar() {
     const pathname = usePathname();
 
     // Hide the main site navbar on portal routes (they have their own nav)
-    if (pathname?.startsWith("/sales") || pathname?.startsWith("/admin") || pathname?.startsWith("/training")) {
+    if (pathname?.startsWith("/sales") || pathname?.startsWith("/admin") || pathname?.startsWith("/training") || pathname?.startsWith("/questionnaire")) {
         return null;
     }
 

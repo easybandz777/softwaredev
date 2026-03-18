@@ -2,8 +2,14 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import { usePathname } from "next/navigation";
 
 export function FuturisticBackground() {
+    const pathname = usePathname();
+
+    // Hide on questionnaire routes (public client-facing pages with light theme)
+    if (pathname?.startsWith("/questionnaire")) return null;
+
     return (
         <div className="fixed inset-0 z-[-1] overflow-hidden bg-quant-bg pointer-events-none">
 

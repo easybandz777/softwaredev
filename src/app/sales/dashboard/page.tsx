@@ -275,11 +275,11 @@ export default function SalesDashboard() {
                         <div className="w-full md:w-auto">
                             <div className="flex items-center overflow-hidden rounded-xl border border-sky-500/20 bg-black/20 focus-within:border-sky-500/50 transition-colors">
                                 <div className="px-4 py-3 text-sm text-gray-300 font-mono truncate max-w-[200px] sm:max-w-xs select-all">
-                                    https://quantlabusa.com/questionnaire/{user?.referral_code || user?.username}
+                                    https://quantlabusa.dev/questionnaire/{user?.referral_code || user?.username}
                                 </div>
                                 <button 
                                     onClick={() => {
-                                        navigator.clipboard.writeText(`https://quantlabusa.com/questionnaire/${user?.referral_code || user?.username}`);
+                                        navigator.clipboard.writeText(`https://quantlabusa.dev/questionnaire/${user?.referral_code || user?.username}`);
                                         alert("Link copied to clipboard!");
                                     }}
                                     className="px-4 py-3 bg-sky-500/10 text-sky-400 hover:bg-sky-500/20 hover:text-sky-300 font-medium text-sm transition-colors border-l border-sky-500/20 flex items-center gap-2"
