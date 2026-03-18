@@ -352,12 +352,8 @@ export default function QuestionnairePage() {
         <div className="min-h-screen bg-slate-50 font-sans selection:bg-sky-500/20 selection:text-sky-900">
             {/* Header */}
             <header className="bg-white/80 backdrop-blur-xl border-b border-slate-200/60 px-6 py-4 sticky top-0 z-10 flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div className="flex items-center gap-3">
-                    <img src="/logo-transparent.png" alt="QuantLab" className="w-10 h-10 rounded-xl object-contain" />
-                    <div>
-                        <span className="text-slate-900 font-bold block leading-tight">QuantLab Solutions</span>
-                        <span className="text-emerald-600 text-[10px] font-bold uppercase tracking-widest">Business Needs Assessment</span>
-                    </div>
+                <div className="flex items-center">
+                    <img src="/logo-transparent.png" alt="QuantLab" className="h-12 object-contain" />
                 </div>
                 {step < 6 && (
                     <div className="text-xs text-slate-400 flex items-center gap-1.5">
