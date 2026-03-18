@@ -353,7 +353,7 @@ export default function QuestionnairePage() {
             {/* Header */}
             <header className="bg-white/80 backdrop-blur-xl border-b border-slate-200/60 px-6 py-4 sticky top-0 z-10 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div className="flex items-center">
-                    <img src="/logo-transparent.png" alt="QuantLab" className="h-12 object-contain" />
+                    <img src="/logo-transparent.png" alt="QuantLab" className="h-36 object-contain" />
                 </div>
                 {step < 6 && (
                     <div className="text-xs text-slate-400 flex items-center gap-1.5">
