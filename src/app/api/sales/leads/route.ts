@@ -67,9 +67,10 @@ export async function POST(req: NextRequest) {
 
     await ensureMigrated();
 
+    // Auto-assign to the creating user
     const { rows } = await sql`
-        INSERT INTO consultations (name, email, phone, company, service, message, status)
-        VALUES (${name}, ${email}, ${phone || null}, ${company || null}, ${service}, ${message || 'Manually created lead'}, 'new')
+        INSERT INTO consultations (name, email, phone, company, service, message, status, assigned_to_id)
+        VALUES (${name}, ${email}, ${phone || null}, ${company || null}, ${service}, ${message || 'Manually created lead'}, 'new', ${user!.id})
         RETURNING *
     `;
 
@@ -88,6 +89,14 @@ export async function PATCH(req: NextRequest) {
 
     await ensureMigrated();
 
+    // Sales users can only update leads assigned to them
+    if (user!.role !== "admin") {
+        const { rows: ownerCheck } = await sql`SELECT assigned_to_id FROM consultations WHERE id = ${id}`;
+        if (!ownerCheck[0] || ownerCheck[0].assigned_to_id !== user!.id) {
+            return NextResponse.json({ error: "Access denied" }, { status: 403 });
+        }
+    }
+
     if (status !== undefined) {
         const valid = ["new", "contacted", "qualified", "proposal", "won", "lost"];
         if (!valid.includes(status)) {
@@ -96,6 +105,10 @@ export async function PATCH(req: NextRequest) {
         await sql`UPDATE consultations SET status = ${status} WHERE id = ${id}`;
     }
     if (assigned_to_id !== undefined) {
+        // Only admins can reassign leads
+        if (user!.role !== "admin") {
+            return NextResponse.json({ error: "Only admins can reassign leads" }, { status: 403 });
+        }
         await sql`UPDATE consultations SET assigned_to_id = ${assigned_to_id} WHERE id = ${id}`;
     }
     if (value_est !== undefined) {
