@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import {
     BarChart3, Users, Target, TrendingUp,
     DollarSign, Clock, AlertCircle, ArrowRight, Building2,
-    FileText, UserCheck, ChevronRight, Plus, Trash2,
+    FileText, UserCheck, ChevronRight, Plus, Trash2, Link as LinkIcon, Copy
 } from "lucide-react";
 import { SalesLayout } from "@/components/SalesLayout";
 
@@ -25,6 +25,7 @@ interface UserInfo {
     username: string;
     full_name: string;
     role: string;
+    referral_code?: string;
 }
 
 function fmtCurrency(n: number) {
@@ -249,6 +250,44 @@ export default function SalesDashboard() {
                                 ))}
                             </div>
                         )}
+                    </div>
+                </div>
+
+                {/* Shareable Link Card */}
+                <div className="mt-5 rounded-2xl overflow-hidden p-6 relative group" style={{
+                    background: "linear-gradient(145deg, #0d1526, #0a1020)",
+                    border: "1px solid rgba(14,165,233,0.15)",
+                    boxShadow: "0 0 30px rgba(14,165,233,0.05)"
+                }}>
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-sky-500/5 rounded-full blur-3xl -z-10 group-hover:bg-sky-500/10 transition-colors" />
+                    
+                    <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                        <div>
+                            <div className="flex items-center gap-2 mb-2">
+                                <LinkIcon className="w-5 h-5 text-sky-400" />
+                                <h3 className="text-lg font-bold text-white">Your Public Questionnaire Link</h3>
+                            </div>
+                            <p className="text-sm text-gray-400 max-w-xl">
+                                Share this link with prospective clients. When they fill out the multi-step needs assessment, a new lead will automatically be created and assigned to you in the CRM.
+                            </p>
+                        </div>
+
+                        <div className="w-full md:w-auto">
+                            <div className="flex items-center overflow-hidden rounded-xl border border-sky-500/20 bg-black/20 focus-within:border-sky-500/50 transition-colors">
+                                <div className="px-4 py-3 text-sm text-gray-300 font-mono truncate max-w-[200px] sm:max-w-xs select-all">
+                                    https://quantlabusa.com/questionnaire/{user?.referral_code || user?.username}
+                                </div>
+                                <button 
+                                    onClick={() => {
+                                        navigator.clipboard.writeText(`https://quantlabusa.com/questionnaire/${user?.referral_code || user?.username}`);
+                                        alert("Link copied to clipboard!");
+                                    }}
+                                    className="px-4 py-3 bg-sky-500/10 text-sky-400 hover:bg-sky-500/20 hover:text-sky-300 font-medium text-sm transition-colors border-l border-sky-500/20 flex items-center gap-2"
+                                >
+                                    <Copy className="w-4 h-4" /> Copy
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

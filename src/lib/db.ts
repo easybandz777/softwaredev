@@ -114,6 +114,23 @@ export interface PageVisit {
     created_at: string;
 }
 
+export interface QuestionnaireResponse {
+    id: number;
+    lead_id: number;
+    salesman_code: string;
+    company_size: string | null;
+    industry: string | null;
+    current_tools: string | null;
+    satisfaction: number | null;
+    pain_points: string | null;
+    goals: string | null;
+    budget_range: string | null;
+    timeline: string | null;
+    decision_maker: string | null;
+    additional_notes: string | null;
+    created_at: string;
+}
+
 // ─── Migration ────────────────────────────────────────────────────────────────
 
 let migrated = false;
@@ -262,6 +279,31 @@ export async function ensureMigrated() {
             uploaded_by  INTEGER,
             notes       TEXT,
             created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
+        )
+    `;
+
+    // ── Referral code on users ─────────────────────────────────────────────
+    await sql`ALTER TABLE crm_users ADD COLUMN IF NOT EXISTS referral_code TEXT`;
+    // Default referral_code to username for any user that doesn't have one
+    await sql`UPDATE crm_users SET referral_code = username WHERE referral_code IS NULL`;
+
+    // ── Questionnaire Responses ───────────────────────────────────────────
+    await sql`
+        CREATE TABLE IF NOT EXISTS questionnaire_responses (
+            id               SERIAL PRIMARY KEY,
+            lead_id          INTEGER NOT NULL,
+            salesman_code    TEXT NOT NULL,
+            company_size     TEXT,
+            industry         TEXT,
+            current_tools    TEXT,
+            satisfaction     INTEGER,
+            pain_points      TEXT,
+            goals            TEXT,
+            budget_range     TEXT,
+            timeline         TEXT,
+            decision_maker   TEXT,
+            additional_notes TEXT,
+            created_at       TIMESTAMPTZ NOT NULL DEFAULT NOW()
         )
     `;
 

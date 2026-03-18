@@ -136,9 +136,9 @@ export function Contact() {
                                     <Mail className="w-4 h-4 text-gray-600" />
                                     <span className="text-sm text-gray-500">
                                         Prefer email?{" "}
-                                        <a href="mailto:contact@quantlabsoftware.com"
+                                        <a href="mailto:beltz@quantlabusa.com"
                                             className="text-sky-400 hover:text-sky-300 transition-colors">
-                                            contact@quantlabsoftware.com
+                                            beltz@quantlabusa.com
                                         </a>
                                     </span>
                                 </div>

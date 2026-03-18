@@ -54,11 +54,11 @@ export default function BrochureQR({
             }}>
                 <QRCode
                     value={url}
-                    size={70}
+                    size={512}
                     bgColor="#ffffff"
                     fgColor="#0F172A"
                     level="M"
-                    style={{ width: "100%", height: "auto", maxWidth: "0.85in" }}
+                    style={{ width: "100%", height: "auto" }}
                 />
             </div>
             {label && (
