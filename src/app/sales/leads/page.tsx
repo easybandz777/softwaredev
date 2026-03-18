@@ -326,8 +326,17 @@ function LeadsPage() {
                                         {lead.phone && <p className="text-xs text-gray-500 flex items-center gap-1"><Phone className="w-3 h-3 text-gray-600 flex-shrink-0" />{lead.phone}</p>}
                                     </div>
                                     <span className="text-xs text-gray-400 truncate">{lead.service}</span>
-                                    <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold w-fit"
-                                        style={{ color: cfg.color, background: cfg.bg }}>{cfg.label}</span>
+                                    <div onClick={e => e.stopPropagation()}>
+                                        <select value={lead.status}
+                                            onChange={e => updateLead(lead.id, { status: e.target.value })}
+                                            className="w-full text-xs font-semibold rounded-full px-2.5 py-1 focus:outline-none focus:ring-1 focus:ring-emerald-400/40 cursor-pointer"
+                                            style={{ color: cfg.color, background: cfg.bg, border: `1px solid ${cfg.color}30` }}
+                                            title="Change status">
+                                            {statuses.filter(s => s !== "all").map(s => (
+                                                <option key={s} value={s}>{STATUS_CONFIG[s]?.label || s}</option>
+                                            ))}
+                                        </select>
+                                    </div>
                                     <div onClick={e => e.stopPropagation()}>
                                         <select value={lead.assigned_to_id ?? ""}
                                             onChange={e => updateLead(lead.id, { assigned_to_id: e.target.value ? parseInt(e.target.value) : null })}

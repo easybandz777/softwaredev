@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { sql, ensureMigrated } from "@/lib/db";
 
-const NOTIFICATION_EMAIL = "beltz@quantlabusa.com";
+const NOTIFICATION_EMAIL = "beltz@quantlabusa.dev";
 
 export async function POST(req: NextRequest) {
     try {

@@ -173,16 +173,26 @@ export default function QuestionnairePage() {
 
     const handleSubmit = async () => {
         setIsSubmitting(true);
-        // MOCK SUBMISSION: Currently just logging to console. Client will integrate with CRM later.
-        console.log("Submitting questionnaire to CRM for rep", salesmanCode, "Data:", data);
-
-        // Simulate network delay
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        
-        // Clear local storage on success
-        localStorage.removeItem(`quantlab_questionnaire_${salesmanCode}`);
-        nextStep(); // Go to step 6 (Success)
-        setIsSubmitting(false);
+        try {
+            const res = await fetch("/api/questionnaire", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ ...data, salesman_code: salesmanCode }),
+            });
+            if (!res.ok) {
+                const err = await res.json();
+                alert(err.error || "Something went wrong. Please try again.");
+                setIsSubmitting(false);
+                return;
+            }
+            // Clear local storage on success
+            localStorage.removeItem(`quantlab_questionnaire_${salesmanCode}`);
+            nextStep(); // Go to step 6 (Success)
+        } catch {
+            alert("Network error. Please check your connection and try again.");
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     // --- Steps rendering ---
