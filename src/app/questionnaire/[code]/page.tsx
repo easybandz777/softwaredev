@@ -38,14 +38,14 @@ const INITIAL_DATA: FormData = {
     timeline: "", budget_range: "", additional_notes: ""
 };
 
-const INDUSTRIES = ["Technology", "Healthcare", "Finance", "Retail", "Manufacturing", "Real Estate", "Professional Services", "Other"];
+const INDUSTRIES = ["Technology", "Healthcare", "Finance", "Retail", "Manufacturing", "Real Estate", "Professional Services", "Logistics & Shipping", "E-commerce", "Construction", "Food & Beverage", "Education", "Automotive", "Other"];
 const SIZES = ["1-10", "11-50", "51-200", "201-500", "500+"];
 const TIMELINES = ["Immediately", "1-3 months", "3-6 months", "6+ months", "Just researching"];
 const BUDGETS = ["Under $5k", "$5k - $15k", "$15k - $50k", "$50k - $100k", "$100k+"];
 
-const COMMON_TOOLS = ["CRM (HubSpot, Salesforce, etc.)", "ERP System", "Custom In-House Software", "Excel / Spreadsheets", "Marketing Automation", "Accounting Software"];
-const COMMON_PAINS = ["Manual data entry", "Systems don't talk to each other", "Reporting is too slow/difficult", "Scaling bottlenecks", "High error rates", "Poor customer experience"];
-const COMMON_GOALS = ["Automate repetitive tasks", "Improve data visibility", "Increase sales conversion", "Reduce operational costs", "Modernize legacy tech", "Launch a new product/service"];
+const COMMON_TOOLS = ["CRM (HubSpot, Salesforce, etc.)", "ERP System", "Custom In-House Software", "Excel / Spreadsheets", "Marketing Automation", "Accounting Software", "Shipping / Fulfillment (ShipStation, etc.)", "Inventory Management", "E-commerce Platform (Shopify, WooCommerce)", "Payment / POS System", "Project Management (Asana, Monday)", "Communication Tools (Slack, Teams)"];
+const COMMON_PAINS = ["Manual data entry", "Systems don't talk to each other", "Reporting is too slow/difficult", "Scaling bottlenecks", "High error rates", "Poor customer experience", "Shipping & fulfillment errors", "Inventory tracking issues", "No real-time visibility into operations", "Compliance / regulatory overhead", "Customer onboarding friction", "Outdated website or online presence"];
+const COMMON_GOALS = ["Automate repetitive tasks", "Improve data visibility", "Increase sales conversion", "Reduce operational costs", "Modernize legacy tech", "Launch a new product/service", "Automate shipping & logistics", "Build custom client/customer portal", "Integrate payment processing", "Improve inventory management", "Scale e-commerce operations", "Enhance security & compliance"];
 
 // --- Components ---
 
@@ -105,9 +105,12 @@ const CardSelect = ({ options, value, onChange }: { options: string[], value: st
                 <button
                     key={opt}
                     onClick={() => onChange(opt)}
-                    className={`px-4 py-3 rounded-xl border text-sm font-medium transition-all duration-200 text-left ${isSelected ? 'border-sky-500 bg-sky-50 text-sky-700 shadow-[0_0_15px_rgba(14,165,233,0.1)]' : 'border-slate-200 bg-white text-slate-600 hover:border-sky-200 hover:bg-slate-50'}`}
+                    className={`group relative px-4 py-3.5 rounded-xl border text-sm font-medium transition-all duration-200 text-left hover:-translate-y-0.5 hover:shadow-md ${isSelected ? 'border-emerald-500 bg-gradient-to-br from-emerald-50 to-teal-50 text-emerald-700 shadow-lg shadow-emerald-500/10 ring-1 ring-emerald-500/20' : 'border-slate-200 bg-white text-slate-600 hover:border-emerald-300 hover:bg-emerald-50/30'}`}
                 >
-                    {opt}
+                    <span className="flex items-center gap-2">
+                        {isSelected && <Check className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" />}
+                        {opt}
+                    </span>
                 </button>
             )
         })}
@@ -128,9 +131,9 @@ const MultiSelect = ({ options, value, onChange }: { options: string[], value: s
                     <button
                         key={opt}
                         onClick={() => toggle(opt)}
-                        className={`flex items-start gap-3 px-4 py-3 rounded-xl border text-sm font-medium transition-all duration-200 text-left ${isSelected ? 'border-sky-500 bg-sky-50 text-sky-700 shadow-[0_0_15px_rgba(14,165,233,0.1)]' : 'border-slate-200 bg-white text-slate-600 hover:border-sky-200 hover:bg-slate-50'}`}
+                        className={`flex items-start gap-3 px-4 py-3.5 rounded-xl border text-sm font-medium transition-all duration-200 text-left hover:-translate-y-0.5 hover:shadow-md ${isSelected ? 'border-emerald-500 bg-gradient-to-br from-emerald-50 to-teal-50 text-emerald-700 shadow-lg shadow-emerald-500/10 ring-1 ring-emerald-500/20' : 'border-slate-200 bg-white text-slate-600 hover:border-emerald-300 hover:bg-emerald-50/30'}`}
                     >
-                        <div className={`mt-0.5 w-4 h-4 rounded flex items-center justify-center flex-shrink-0 transition-colors ${isSelected ? 'bg-sky-500 text-white' : 'border border-slate-300 bg-white'}`}>
+                        <div className={`mt-0.5 w-4 h-4 rounded flex items-center justify-center flex-shrink-0 transition-all ${isSelected ? 'bg-gradient-to-br from-emerald-500 to-teal-500 text-white shadow-sm' : 'border border-slate-300 bg-white'}`}>
                             {isSelected && <Check className="w-3 h-3" />}
                         </div>
                         {opt}
@@ -312,19 +315,27 @@ export default function QuestionnairePage() {
                 );
             case 6: // Success screen
                 return (
-                    <motion.div key="step6" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-10">
-                        <div className="w-20 h-20 rounded-full bg-emerald-100 flex items-center justify-center mx-auto mb-6">
-                            <CheckCircle2 className="w-10 h-10 text-emerald-500" />
+                    <motion.div key="step6" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ type: "spring", stiffness: 300, damping: 25 }} className="text-center py-10">
+                        <div className="w-20 h-20 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center mx-auto mb-6 shadow-xl shadow-emerald-500/25">
+                            <CheckCircle2 className="w-10 h-10 text-white" />
                         </div>
-                        <h2 className="text-2xl font-bold text-slate-900 mb-3">Profile Submitted Successfully!</h2>
-                        <p className="text-slate-600 max-w-md mx-auto mb-8">
-                            Thank you for sharing your operational needs with us. Your dedicated representative will review your profile and reach out within 24 hours to discuss potential solutions tailored for you.
+                        <h2 className="text-3xl font-bold text-slate-900 mb-3">You&apos;re All Set! 🎉</h2>
+                        <p className="text-slate-600 max-w-lg mx-auto mb-4 text-lg">
+                            Thank you for taking the time to share your business needs.
                         </p>
+                        <p className="text-slate-500 max-w-md mx-auto mb-8">
+                            Your dedicated QuantLab representative will review your profile and reach out within <strong className="text-emerald-600">24 hours</strong> with tailored solutions designed specifically for your business.
+                        </p>
+                        <div className="flex flex-wrap justify-center gap-4 mb-10 text-xs text-slate-500 font-medium">
+                            <span className="flex items-center gap-1.5 bg-slate-100 px-3 py-1.5 rounded-full"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> 100% Confidential</span>
+                            <span className="flex items-center gap-1.5 bg-slate-100 px-3 py-1.5 rounded-full"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> No Obligation</span>
+                            <span className="flex items-center gap-1.5 bg-slate-100 px-3 py-1.5 rounded-full"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> Custom Solutions</span>
+                        </div>
                         <button
                             onClick={() => window.location.href = '/'}
-                            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-slate-900 text-white font-medium hover:bg-slate-800 transition-colors shadow-lg shadow-slate-900/20"
+                            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-500 text-white font-semibold hover:shadow-xl hover:shadow-emerald-500/20 hover:-translate-y-0.5 transition-all"
                         >
-                            Return Home <ChevronRight className="w-4 h-4" />
+                            Visit QuantLab <ChevronRight className="w-4 h-4" />
                         </button>
                     </motion.div>
                 );
@@ -340,19 +351,20 @@ export default function QuestionnairePage() {
     return (
         <div className="min-h-screen bg-slate-50 font-sans selection:bg-sky-500/20 selection:text-sky-900">
             {/* Header */}
-            <header className="bg-white border-b border-slate-200 px-6 py-4 sticky top-0 z-10 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <header className="bg-white/80 backdrop-blur-xl border-b border-slate-200/60 px-6 py-4 sticky top-0 z-10 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: "linear-gradient(135deg, #0284c7, #38bdf8)", boxShadow: "0 4px 14px rgba(14,165,233,0.3)" }}>
+                    <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-br from-emerald-600 to-teal-500 shadow-lg shadow-emerald-500/25">
                         <Building2 className="w-5 h-5 text-white" />
                     </div>
                     <div>
                         <span className="text-slate-900 font-bold block leading-tight">QuantLab Solutions</span>
-                        <span className="text-slate-500 text-[10px] font-bold uppercase tracking-widest">Needs Assessment</span>
+                        <span className="text-emerald-600 text-[10px] font-bold uppercase tracking-widest">Business Needs Assessment</span>
                     </div>
                 </div>
                 {step < 6 && (
-                    <div className="text-sm font-medium text-slate-500">
-                        Rep Code: <span className="text-sky-600 font-bold uppercase tracking-wider bg-sky-50 px-2 py-0.5 rounded-md border border-sky-100">{salesmanCode}</span>
+                    <div className="text-xs text-slate-400 flex items-center gap-1.5">
+                        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                        Secure & Confidential
                     </div>
                 )}
             </header>
@@ -381,7 +393,7 @@ export default function QuestionnairePage() {
                         <button
                             onClick={step === 5 ? handleSubmit : nextStep}
                             disabled={!isStepValid() || isSubmitting}
-                            className={`flex items-center gap-2 px-8 py-3 rounded-xl text-white font-medium transition-all shadow-lg w-full sm:w-auto justify-center ${!isStepValid() || isSubmitting ? 'bg-slate-300 shadow-none cursor-not-allowed' : 'bg-slate-900 hover:bg-slate-800 shadow-slate-900/20 hover:scale-105 active:scale-95'}`}
+                            className={`flex items-center gap-2 px-8 py-3.5 rounded-xl text-white font-semibold transition-all shadow-lg w-full sm:w-auto justify-center ${!isStepValid() || isSubmitting ? 'bg-slate-300 shadow-none cursor-not-allowed' : 'bg-gradient-to-r from-emerald-600 to-teal-500 hover:shadow-xl hover:shadow-emerald-500/20 hover:-translate-y-0.5 active:scale-95'}`}
                         >
                             {isSubmitting ? (
                                 <>Processing...</>
