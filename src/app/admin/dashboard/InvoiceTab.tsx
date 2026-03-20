@@ -82,6 +82,109 @@ function ConfirmDialog({ message, actionText, isDestructive, onConfirm, onCancel
     );
 }
 
+// ─── Job Type Presets ────────────────────────────────────────────────────────
+const JOB_PRESETS: Record<string, { label: string; notes: string; items: { description: string; quantity: string; rate: string }[] }> = {
+    custom: { label: "— Custom (blank) —", notes: "", items: [{ description: "", quantity: "1", rate: "" }] },
+    website: {
+        label: "Website / Web Portal",
+        notes: "Includes responsive design, SEO optimization, SSL, and Vercel deployment.",
+        items: [
+            { description: "UI/UX Design & Wireframing", quantity: "1", rate: "1500" },
+            { description: "Frontend Development (Next.js)", quantity: "1", rate: "3000" },
+            { description: "Backend API & Database Setup", quantity: "1", rate: "2000" },
+            { description: "Domain & Hosting Configuration", quantity: "1", rate: "500" },
+            { description: "QA Testing & Launch", quantity: "1", rate: "750" },
+        ],
+    },
+    crm: {
+        label: "Custom CRM / ECM System",
+        notes: "Custom CRM with sales pipeline, lead management, dashboards, and role-based access.",
+        items: [
+            { description: "Requirements & Architecture Planning", quantity: "1", rate: "1500" },
+            { description: "Database Schema & API Development", quantity: "1", rate: "3500" },
+            { description: "Dashboard & Reporting UI", quantity: "1", rate: "2500" },
+            { description: "Pipeline & Lead Management Module", quantity: "1", rate: "2000" },
+            { description: "User Auth & Role-Based Access", quantity: "1", rate: "1000" },
+            { description: "Deployment & Training", quantity: "1", rate: "1000" },
+        ],
+    },
+    trading_bot: {
+        label: "Algorithmic Trading Bot",
+        notes: "Includes strategy development, backtesting, live deployment, and monitoring dashboard.",
+        items: [
+            { description: "Strategy Design & Backtesting", quantity: "1", rate: "3000" },
+            { description: "Bot Core Engine Development", quantity: "1", rate: "5000" },
+            { description: "Exchange API Integration", quantity: "1", rate: "2000" },
+            { description: "Risk Management & Controls", quantity: "1", rate: "1500" },
+            { description: "Monitoring Dashboard", quantity: "1", rate: "2000" },
+            { description: "Deployment & Live Testing", quantity: "1", rate: "1500" },
+        ],
+    },
+    payment_system: {
+        label: "Payment & Invoicing System",
+        notes: "Stripe integration, auto-invoicing, payment tracking, and revenue dashboards.",
+        items: [
+            { description: "Payment Gateway Integration (Stripe)", quantity: "1", rate: "2000" },
+            { description: "Invoice Generation System", quantity: "1", rate: "2500" },
+            { description: "Payment Tracking & Notifications", quantity: "1", rate: "1500" },
+            { description: "Revenue Dashboard & Reporting", quantity: "1", rate: "1500" },
+            { description: "Testing & Deployment", quantity: "1", rate: "750" },
+        ],
+    },
+    estimating: {
+        label: "Estimating & Proposal Generator",
+        notes: "Custom proposal builder with branded templates, pricing engine, and PDF export.",
+        items: [
+            { description: "Proposal Template Design", quantity: "1", rate: "1500" },
+            { description: "Pricing Engine & Calculator", quantity: "1", rate: "2500" },
+            { description: "PDF Generation & Branding", quantity: "1", rate: "1500" },
+            { description: "CRM Integration", quantity: "1", rate: "1000" },
+            { description: "QA & Deployment", quantity: "1", rate: "500" },
+        ],
+    },
+    business_hub: {
+        label: "Business Operations Hub",
+        notes: "Unified platform: inventory, work orders, scheduling, and real-time reporting.",
+        items: [
+            { description: "Architecture & Requirements", quantity: "1", rate: "2000" },
+            { description: "Core Platform Development", quantity: "1", rate: "5000" },
+            { description: "Inventory Management Module", quantity: "1", rate: "2500" },
+            { description: "Work Order & Scheduling System", quantity: "1", rate: "2500" },
+            { description: "Reporting & Analytics Dashboard", quantity: "1", rate: "2000" },
+            { description: "Deployment, Training & Support", quantity: "1", rate: "1500" },
+        ],
+    },
+    licensing: {
+        label: "License & Subscription Management",
+        notes: "License server, subscription tiers, usage tracking, and customer portal.",
+        items: [
+            { description: "License Server Development", quantity: "1", rate: "3000" },
+            { description: "Subscription Tier Management", quantity: "1", rate: "2000" },
+            { description: "Customer Portal & Dashboard", quantity: "1", rate: "2500" },
+            { description: "Usage Analytics & Enforcement", quantity: "1", rate: "1500" },
+            { description: "Testing & Deployment", quantity: "1", rate: "1000" },
+        ],
+    },
+    enterprise_infra: {
+        label: "Enterprise Architecture & Infra",
+        notes: "Cloud infrastructure setup with CI/CD, monitoring, auto-scaling, and security hardening.",
+        items: [
+            { description: "Infrastructure Audit & Planning", quantity: "1", rate: "2000" },
+            { description: "Cloud Environment Setup (Docker/Vercel)", quantity: "1", rate: "3000" },
+            { description: "CI/CD Pipeline Configuration", quantity: "1", rate: "1500" },
+            { description: "Monitoring & Alerting (Sentry)", quantity: "1", rate: "1000" },
+            { description: "Security Hardening & SSL", quantity: "1", rate: "1500" },
+        ],
+    },
+    monthly_retainer: {
+        label: "Monthly Retainer / Maintenance",
+        notes: "Ongoing support: bug fixes, feature updates, server monitoring, and priority support.",
+        items: [
+            { description: "Monthly Maintenance & Support", quantity: "1", rate: "2500" },
+        ],
+    },
+};
+
 export function InvoiceTab({ prefill }: { prefill?: { clientName?: string; clientEmail?: string } }) {
     const [invoices, setInvoices] = useState<Invoice[]>([]);
     const [loading, setLoading] = useState(true);
@@ -98,11 +201,21 @@ export function InvoiceTab({ prefill }: { prefill?: { clientName?: string; clien
     const [dueDate, setDueDate] = useState("");
     const [taxRate, setTaxRate] = useState("");
     const [paymentType, setPaymentType] = useState<"one_time" | "recurring">("one_time");
+    const [jobType, setJobType] = useState("custom");
 
     // Line items state
     const [lineItems, setLineItems] = useState<{ description: string, quantity: string, rate: string }[]>([
-        { description: "Website Build & Setup", quantity: "1", rate: "5000" }
+        { description: "", quantity: "1", rate: "" }
     ]);
+
+    function applyJobPreset(key: string) {
+        setJobType(key);
+        const preset = JOB_PRESETS[key];
+        if (!preset) return;
+        setLineItems(preset.items.map(i => ({ ...i })));
+        if (preset.notes) setNotes(preset.notes);
+        if (key === "monthly_retainer") setPaymentType("recurring");
+    }
 
     let toastCounter = React.useRef(0);
 
@@ -162,7 +275,7 @@ export function InvoiceTab({ prefill }: { prefill?: { clientName?: string; clien
             });
 
             if (res.ok) {
-                setClientName(""); setClientEmail(""); setClientAddress(""); setNotes(""); setDueDate(""); setTaxRate(""); setPaymentType("one_time");
+                setClientName(""); setClientEmail(""); setClientAddress(""); setNotes(""); setDueDate(""); setTaxRate(""); setPaymentType("one_time"); setJobType("custom");
                 setLineItems([{ description: "", quantity: "1", rate: "" }]);
                 addToast("Invoice generated successfully!", "success");
                 fetchInvoices();
@@ -238,6 +351,18 @@ export function InvoiceTab({ prefill }: { prefill?: { clientName?: string; clien
                 </div>
 
                 <form onSubmit={handleGenerate} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {/* Job Type Selector — full width */}
+                    <div className="lg:col-span-3">
+                        <h3 className="text-xs uppercase tracking-wider text-sky-400 font-bold mb-2">Job Type — Auto-Fill Scope</h3>
+                        <select value={jobType} onChange={e => applyJobPreset(e.target.value)} title="Job Type"
+                            className="w-full text-sm bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-sky-400/40 appearance-none cursor-pointer"
+                            style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")`, backgroundRepeat: "no-repeat", backgroundPosition: "right 12px center" }}>
+                            {Object.entries(JOB_PRESETS).map(([key, preset]) => (
+                                <option key={key} value={key} style={{ background: "#0d1526" }}>{preset.label}</option>
+                            ))}
+                        </select>
+                    </div>
+
                     {/* Column 1: Client Info */}
                     <div className="space-y-4">
                         <h3 className="text-xs uppercase tracking-wider text-sky-400 font-bold mb-2">Client Details</h3>
