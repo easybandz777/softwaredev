@@ -13,10 +13,10 @@ const fmtDate = (s: string | null) => {
 };
 
 export default function InvoiceClient({ invoice, lineItems }: { invoice: Invoice; lineItems: InvoiceLineItem[] }) {
-    const statusClass = `status-${invoice.status}`;
     const isPaid = invoice.status === "paid";
     const isCancelled = invoice.status === "cancelled";
     const showPayButton = !isPaid && !isCancelled;
+    const isRecurring = invoice.payment_type === "recurring";
 
     return (
         <div className="invoice-page">
@@ -43,11 +43,14 @@ export default function InvoiceClient({ invoice, lineItems }: { invoice: Invoice
                 </div>
                 <div className="invoice-meta">
                     <p className="invoice-number">{invoice.invoice_number}</p>
-                    <p className="invoice-meta-row">Date:<span>{fmtDate(invoice.created_at)}</span></p>
-                    <p className="invoice-meta-row">Due:<span>{fmtDate(invoice.due_date)}</span></p>
-                    <div className={`invoice-status ${statusClass}`}>
-                        {invoice.status.toUpperCase()}
+                    <p className="invoice-meta-row">Issued<span>{fmtDate(invoice.created_at)}</span></p>
+                    <p className="invoice-meta-row">Due<span>{fmtDate(invoice.due_date)}</span></p>
+                    <div className={`invoice-status status-${invoice.status}`}>
+                        {invoice.status === "paid" && "✓ "}{invoice.status.toUpperCase()}
                     </div>
+                    {isRecurring && (
+                        <div className="payment-type-badge recurring">🔄 Monthly Subscription</div>
+                    )}
                 </div>
             </div>
 
@@ -55,41 +58,44 @@ export default function InvoiceClient({ invoice, lineItems }: { invoice: Invoice
             <div className="invoice-parties">
                 <div className="party-block">
                     <h3>From</h3>
-                    <p style={{ fontWeight: 600, color: "#ffffff" }}>QuantLab Software Solutions</p>
+                    <p className="party-name">QuantLab Software Solutions</p>
                     <p>contact@quantlabusa.dev</p>
                     <p>quantlabusa.dev</p>
                 </div>
                 <div className="party-block">
                     <h3>Bill To</h3>
-                    <p style={{ fontWeight: 600, color: "#ffffff" }}>{invoice.client_name}</p>
+                    <p className="party-name">{invoice.client_name}</p>
                     {invoice.client_email && <p className="email">{invoice.client_email}</p>}
-                    {invoice.client_address && (
-                        <p style={{ whiteSpace: "pre-wrap" }}>{invoice.client_address}</p>
-                    )}
+                    {invoice.client_address && <p style={{ whiteSpace: "pre-wrap" }}>{invoice.client_address}</p>}
                 </div>
             </div>
 
             {/* Line Items */}
-            <table className="invoice-table">
-                <thead>
-                    <tr>
-                        <th>Description</th>
-                        <th>Qty</th>
-                        <th>Rate</th>
-                        <th>Amount</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {lineItems.map((item, idx) => (
-                        <tr key={idx}>
-                            <td>{item.description}</td>
-                            <td>{item.quantity}</td>
-                            <td>{fmtCurrency(item.rate_cents)}</td>
-                            <td>{fmtCurrency(item.amount_cents)}</td>
+            <div className="invoice-table-wrapper">
+                <table className="invoice-table">
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Qty</th>
+                            <th>Rate</th>
+                            <th>Amount</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {lineItems.map((item, idx) => (
+                            <tr key={idx}>
+                                <td>
+                                    <span className="row-num">{idx + 1}</span>
+                                    {item.description}
+                                </td>
+                                <td>{item.quantity}</td>
+                                <td>{fmtCurrency(item.rate_cents)}</td>
+                                <td>{fmtCurrency(item.amount_cents)}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
 
             {/* Totals */}
             <div className="invoice-totals">
@@ -98,15 +104,15 @@ export default function InvoiceClient({ invoice, lineItems }: { invoice: Invoice
                         <span>Subtotal</span>
                         <span>{fmtCurrency(invoice.subtotal_cents)}</span>
                     </div>
-                    {invoice.tax_rate > 0 && (
+                    {Number(invoice.tax_rate) > 0 && (
                         <div className="totals-row">
                             <span>Tax ({Number(invoice.tax_rate).toFixed(1)}%)</span>
                             <span>{fmtCurrency(invoice.tax_cents)}</span>
                         </div>
                     )}
                     <div className="totals-row total">
-                        <span>Total Due</span>
-                        <span>{fmtCurrency(invoice.total_cents)}</span>
+                        <span>{isRecurring ? "Monthly Total" : "Total Due"}</span>
+                        <span>{fmtCurrency(invoice.total_cents)}{isRecurring ? "/mo" : ""}</span>
                     </div>
                 </div>
             </div>
@@ -114,7 +120,7 @@ export default function InvoiceClient({ invoice, lineItems }: { invoice: Invoice
             {/* Notes */}
             {invoice.notes && (
                 <div className="invoice-notes">
-                    <h4>Notes</h4>
+                    <h4>Terms & Notes</h4>
                     <p>{invoice.notes}</p>
                 </div>
             )}
@@ -122,13 +128,9 @@ export default function InvoiceClient({ invoice, lineItems }: { invoice: Invoice
             {/* Pay CTA */}
             {showPayButton && (
                 <div className="invoice-pay-cta">
-                    <div>
-                        <p style={{ fontSize: "1rem", fontWeight: 700, color: "#ffffff", margin: "0 0 0.25rem 0" }}>
-                            Ready to pay?
-                        </p>
-                        <p style={{ fontSize: "0.85rem", color: "#9ca3af", margin: 0 }}>
-                            Secure payment powered by Stripe
-                        </p>
+                    <div className="pay-cta-text">
+                        <h3>Ready to pay?</h3>
+                        <p>Secure payment powered by Stripe</p>
                     </div>
                     <a href={invoice.stripe_url} target="_blank" rel="noopener noreferrer" className="pay-button">
                         💳 Pay {fmtCurrency(invoice.total_cents)}
@@ -137,16 +139,14 @@ export default function InvoiceClient({ invoice, lineItems }: { invoice: Invoice
             )}
 
             {isPaid && (
-                <div className="invoice-pay-cta" style={{ borderColor: "rgba(52,211,153,0.3)", background: "rgba(52,211,153,0.05)" }}>
-                    <p style={{ fontSize: "1.1rem", fontWeight: 700, color: "#34d399", margin: 0 }}>
-                        ✓ This invoice has been paid. Thank you!
-                    </p>
+                <div className="invoice-paid-banner">
+                    <p>✓ This invoice has been paid — thank you!</p>
                 </div>
             )}
 
             {/* Footer */}
             <div className="invoice-footer">
-                <p>QuantLab Software Solutions LLC</p>
+                <p className="footer-brand">QuantLab Software Solutions LLC</p>
                 <p>contact@quantlabusa.dev · quantlabusa.dev</p>
             </div>
         </div>
