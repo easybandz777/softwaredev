@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
     const { error } = requireAuth(req, ["admin"]);
     if (error) return NextResponse.json({ error }, { status: 401 });
 
-    const { client_name, client_email, client_address, line_items, tax_rate, notes, due_date } = await req.json();
+    const { client_name, client_email, client_address, line_items, tax_rate, notes, due_date, payment_type } = await req.json();
 
     if (!client_name?.trim()) return NextResponse.json({ error: "Client name is required" }, { status: 400 });
     if (!Array.isArray(line_items) || line_items.length === 0) {
@@ -76,12 +76,17 @@ export async function POST(req: NextRequest) {
             },
         });
 
-        // 2. Create Stripe Price
-        const price = await getStripe().prices.create({
+        // 2. Create Stripe Price (recurring if subscription)
+        const isRecurring = payment_type === "recurring";
+        const priceParams: Stripe.PriceCreateParams = {
             product: product.id,
             unit_amount: totalCents,
             currency: "usd",
-        });
+        };
+        if (isRecurring) {
+            priceParams.recurring = { interval: "month" };
+        }
+        const price = await getStripe().prices.create(priceParams);
 
         // 3. Create Stripe Payment Link
         const paymentLink = await getStripe().paymentLinks.create({
@@ -104,12 +109,13 @@ export async function POST(req: NextRequest) {
             INSERT INTO invoices
                 (invoice_number, client_name, client_email, client_address, line_items,
                  subtotal_cents, tax_rate, tax_cents, total_cents, notes, due_date,
-                 stripe_url, stripe_payment_link_id, stripe_price_id, stripe_product_id)
+                 payment_type, stripe_url, stripe_payment_link_id, stripe_price_id, stripe_product_id)
             VALUES
                 (${invoiceNumber}, ${client_name.trim()}, ${client_email?.trim() || null},
                  ${client_address?.trim() || null}, ${lineItemsJson},
                  ${subtotalCents}, ${taxRateNum}, ${taxCents}, ${totalCents},
                  ${notes?.trim() || null}, ${due_date || null},
+                 ${isRecurring ? "recurring" : "one_time"},
                  ${paymentLink.url}, ${paymentLink.id}, ${price.id}, ${product.id})
             RETURNING *
         `;

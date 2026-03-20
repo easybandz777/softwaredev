@@ -166,6 +166,7 @@ export interface Invoice {
     total_cents: number;
     notes: string | null;
     due_date: string | null;
+    payment_type: "one_time" | "recurring";
     status: "draft" | "sent" | "paid" | "cancelled";
     stripe_url: string;
     stripe_payment_link_id: string;
@@ -382,6 +383,7 @@ export async function ensureMigrated() {
             total_cents            INTEGER NOT NULL DEFAULT 0,
             notes                  TEXT,
             due_date               TIMESTAMPTZ,
+            payment_type           TEXT NOT NULL DEFAULT 'one_time',
             status                 TEXT NOT NULL DEFAULT 'sent',
             stripe_url             TEXT NOT NULL,
             stripe_payment_link_id TEXT NOT NULL,
@@ -390,6 +392,7 @@ export async function ensureMigrated() {
             created_at             TIMESTAMPTZ NOT NULL DEFAULT NOW()
         )
     `;
+    await sql`ALTER TABLE invoices ADD COLUMN IF NOT EXISTS payment_type TEXT NOT NULL DEFAULT 'one_time'`;
 
     // ── Seed superadmin ────────────────────────────────────────────────────
     const superAdminHash = bcrypt.hashSync("gold", 10);

@@ -24,6 +24,7 @@ type Invoice = {
     notes: string | null;
     due_date: string | null;
     status: "draft" | "sent" | "paid" | "cancelled";
+    payment_type: "one_time" | "recurring";
     stripe_url: string;
     created_at: string;
 };
@@ -96,6 +97,7 @@ export function InvoiceTab({ prefill }: { prefill?: { clientName?: string; clien
     const [notes, setNotes] = useState("");
     const [dueDate, setDueDate] = useState("");
     const [taxRate, setTaxRate] = useState("");
+    const [paymentType, setPaymentType] = useState<"one_time" | "recurring">("one_time");
 
     // Line items state
     const [lineItems, setLineItems] = useState<{ description: string, quantity: string, rate: string }[]>([
@@ -154,12 +156,13 @@ export function InvoiceTab({ prefill }: { prefill?: { clientName?: string; clien
                     notes: notes || undefined,
                     due_date: dueDate || undefined,
                     tax_rate: parseFloat(taxRate) || 0,
-                    line_items: formattedItems
+                    line_items: formattedItems,
+                    payment_type: paymentType,
                 }),
             });
 
             if (res.ok) {
-                setClientName(""); setClientEmail(""); setClientAddress(""); setNotes(""); setDueDate(""); setTaxRate("");
+                setClientName(""); setClientEmail(""); setClientAddress(""); setNotes(""); setDueDate(""); setTaxRate(""); setPaymentType("one_time");
                 setLineItems([{ description: "", quantity: "1", rate: "" }]);
                 addToast("Invoice generated successfully!", "success");
                 fetchInvoices();
@@ -271,6 +274,34 @@ export function InvoiceTab({ prefill }: { prefill?: { clientName?: string; clien
                         </div>
                     </div>
 
+                    {/* Column 3: Payment Type */}
+                    <div className="lg:col-span-3">
+                        <h3 className="text-xs uppercase tracking-wider text-sky-400 font-bold mb-2">Payment Type</h3>
+                        <div className="flex gap-3">
+                            <button type="button" onClick={() => setPaymentType("one_time")}
+                                className="flex-1 py-2.5 rounded-xl text-sm font-medium transition-all border"
+                                style={{
+                                    background: paymentType === "one_time" ? "rgba(52,211,153,0.1)" : "rgba(255,255,255,0.03)",
+                                    borderColor: paymentType === "one_time" ? "rgba(52,211,153,0.3)" : "rgba(255,255,255,0.08)",
+                                    color: paymentType === "one_time" ? "#34d399" : "#6b7280",
+                                }}>
+                                💵 One-Time Payment
+                            </button>
+                            <button type="button" onClick={() => setPaymentType("recurring")}
+                                className="flex-1 py-2.5 rounded-xl text-sm font-medium transition-all border"
+                                style={{
+                                    background: paymentType === "recurring" ? "rgba(167,139,250,0.1)" : "rgba(255,255,255,0.03)",
+                                    borderColor: paymentType === "recurring" ? "rgba(167,139,250,0.3)" : "rgba(255,255,255,0.08)",
+                                    color: paymentType === "recurring" ? "#a78bfa" : "#6b7280",
+                                }}>
+                                🔄 Monthly Subscription
+                            </button>
+                        </div>
+                        {paymentType === "recurring" && (
+                            <p className="text-[10px] text-violet-400/60 mt-1.5">Client will be billed automatically every month via Stripe.</p>
+                        )}
+                    </div>
+
                     {/* Column 3: Line Items */}
                     <div className="lg:col-span-3 space-y-3 pt-2">
                         <h3 className="text-xs uppercase tracking-wider text-sky-400 font-bold mb-2 flex justify-between items-center">
@@ -323,8 +354,8 @@ export function InvoiceTab({ prefill }: { prefill?: { clientName?: string; clien
                 </div>
                 
                 <div className="grid text-xs font-semibold text-gray-500 uppercase tracking-wider px-6 py-3 border-b"
-                    style={{ gridTemplateColumns: "1fr 2fr 1fr 1fr 100px 140px", borderColor: "rgba(255,255,255,0.05)" }}>
-                    <span>Inv #</span><span>Client</span><span>Amount</span><span>Date</span><span>Status</span><span className="text-right">Actions</span>
+                    style={{ gridTemplateColumns: "1fr 1.5fr 1fr 80px 1fr 80px 140px", borderColor: "rgba(255,255,255,0.05)" }}>
+                    <span>Inv #</span><span>Client</span><span>Amount</span><span>Type</span><span>Date</span><span>Status</span><span className="text-right">Actions</span>
                 </div>
 
                 {loading ? (
@@ -338,7 +369,7 @@ export function InvoiceTab({ prefill }: { prefill?: { clientName?: string; clien
                     invoices.map((inv, idx) => (
                         <div key={inv.id} className="grid items-center px-6 py-4 transition-colors duration-100 hover:bg-white/[0.02]"
                             style={{
-                                gridTemplateColumns: "1fr 2fr 1fr 1fr 100px 140px",
+                                gridTemplateColumns: "1fr 1.5fr 1fr 80px 1fr 80px 140px",
                                 borderBottom: idx < invoices.length - 1 ? "1px solid rgba(255,255,255,0.04)" : "none",
                                 opacity: inv.status === "cancelled" ? 0.5 : 1
                             }}>
@@ -347,7 +378,13 @@ export function InvoiceTab({ prefill }: { prefill?: { clientName?: string; clien
                                 <p className="text-sm font-medium text-white truncate">{inv.client_name}</p>
                                 {inv.client_email && <p className="text-[10px] text-gray-500 truncate">{inv.client_email}</p>}
                             </div>
-                            <span className="text-sm font-mono text-white">{fmtCurrency(inv.total_cents)}</span>
+                            <span className="text-sm font-mono text-white">
+                                {fmtCurrency(inv.total_cents)}
+                                {inv.payment_type === "recurring" && <span className="text-[9px] text-violet-400">/mo</span>}
+                            </span>
+                            <span className={`text-[10px] font-bold uppercase ${inv.payment_type === "recurring" ? "text-violet-400" : "text-gray-500"}`}>
+                                {inv.payment_type === "recurring" ? "Sub" : "Once"}
+                            </span>
                             <span className="text-xs text-gray-400">{new Date(inv.created_at).toLocaleDateString()}</span>
                             
                             <div>
