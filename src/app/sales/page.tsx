@@ -23,7 +23,8 @@ export default function SalesLoginPage() {
             const data = await res.json();
             if (!res.ok) throw new Error(data.error || "Login failed.");
             // Always redirect to sales dashboard when logging in via /sales
-            router.push("/sales/dashboard");
+            // Use full navigation to ensure mobile browsers pick up the new session cookie
+            window.location.href = "/sales/dashboard";
         } catch (err: unknown) {
             const msg = err instanceof Error ? err.message : "Login failed.";
             setErrMsg(msg);

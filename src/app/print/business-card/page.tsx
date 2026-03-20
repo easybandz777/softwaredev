@@ -21,11 +21,11 @@ const GRAY     = "#7A90A8";
 const GRAY_DIM = "#3D5066";
 
 /* ── Contact info ── */
-const NAME    = "William Beltz";
-const TITLE   = "Software Engineer";
-const EMAIL   = "beltz@quantlabusa.dev";
+const NAME    = "Jordan Stakins";
+const TITLE   = "Sales Executive";
+const EMAIL   = "jordan@quantlab.dev";
 const WEBSITE = "quantlabusa.dev";
-const PHONE   = "770-652-1282";
+const PHONE   = "770-555-0199";
 const TAGLINE = "Web Platforms · Business Automation · Custom Software · Data Systems · API Development";
 
 const cardBase: React.CSSProperties = {
@@ -78,9 +78,7 @@ export default function BusinessCardPage() {
           <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1.3rem", fontWeight: 700, color: WHITE, margin: 0 }}>
             Quant<span style={{ color: CYAN }}>Lab</span> <span style={{ color: GRAY, fontWeight: 400 }}>· Business Card</span>
           </h1>
-          <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.65rem", color: GRAY_DIM, marginTop: "0.4rem" }}>
-            William Beltz · Software Engineer
-          </p>
+            Jordan Stakins · Sales Executive
         </div>
 
         <div className="card-pair">
@@ -186,7 +184,7 @@ export default function BusinessCardPage() {
                   <div style={{ textAlign: "right", paddingTop: "0.05in", position: "relative", zIndex: 2 }}>
                     <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.052in", fontWeight: 400,
                       color: CYAN, margin: 0, marginBottom: "0.05in", letterSpacing: "0.2em", textTransform: "uppercase", opacity: 0.9 }}>
-                      [ SYSTEM · ARCHITECT ]
+                      [ SOLUTION · EXPERT ]
                     </p>
                     <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.22in", fontWeight: 800,
                       color: WHITE, margin: 0, lineHeight: 1.05, letterSpacing: "-0.02em",
@@ -388,7 +386,7 @@ export default function BusinessCardPage() {
                       borderBottom: `2px solid ${CYAN}`, borderLeft: `2px solid ${CYAN}`, borderRadius: "0 0 0 1px" }} />
                     <div style={{ position: "absolute", bottom: "-1px", right: "-1px", width: "7px", height: "7px",
                       borderBottom: `2px solid ${CYAN}`, borderRight: `2px solid ${CYAN}`, borderRadius: "0 0 1px 0" }} />
-                    <BrochureQR url="https://quantlabusa.dev" size="0.42in"
+                    <BrochureQR url="https://quantlabusa.dev/questionnaire/QL8J6D" size="0.42in"
                       accentColor={CYAN} fgColor="#E2E8F0" label="" sublabel="" />
                   </div>
                   <div style={{ textAlign: "left" }}>

@@ -25,11 +25,13 @@ export async function POST(req: NextRequest) {
             success: true,
             user: { id: user.id, username: user.username, role: user.role, full_name: user.full_name },
         });
+        const isProduction = process.env.NODE_ENV === "production";
         res.cookies.set(SESSION_COOKIE, token, {
             httpOnly: true,
             path: "/",
             maxAge: 60 * 60 * 8, // 8 hours
             sameSite: "lax",
+            secure: isProduction,
         });
         return res;
     } catch (err) {

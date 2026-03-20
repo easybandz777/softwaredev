@@ -17,7 +17,7 @@ async function generateCard(outputFile) {
     await page.setViewport({ width: 500, height: 900, deviceScaleFactor: 3 });
 
     console.log('Loading page...');
-    await page.goto('http://localhost:3001/print/business-card', {
+    await page.goto('http://localhost:3003/print/business-card', {
         waitUntil: 'networkidle0',
         timeout: 60000,
     });

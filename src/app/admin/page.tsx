@@ -24,7 +24,9 @@ export default function AdminLoginPage() {
                 const d = await res.json();
                 throw new Error(d.error || "Login failed.");
             }
-            router.push("/admin/dashboard");
+            // Use full navigation instead of client-side router.push
+            // to ensure mobile browsers pick up the new session cookie
+            window.location.href = "/admin/dashboard";
         } catch (err: unknown) {
             const msg = err instanceof Error ? err.message : "Login failed.";
             setErrMsg(msg);
