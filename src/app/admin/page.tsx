@@ -18,12 +18,15 @@ export default function AdminLoginPage() {
             const res = await fetch("/api/admin/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
+                credentials: "include",
                 body: JSON.stringify(creds),
             });
+            const d = await res.json();
             if (!res.ok) {
-                const d = await res.json();
                 throw new Error(d.error || "Login failed.");
             }
+            // Small delay to let the cookie settle on mobile browsers
+            await new Promise(r => setTimeout(r, 300));
             // Use full navigation instead of client-side router.push
             // to ensure mobile browsers pick up the new session cookie
             window.location.href = "/admin/dashboard";

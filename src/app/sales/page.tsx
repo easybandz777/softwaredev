@@ -18,10 +18,13 @@ export default function SalesLoginPage() {
             const res = await fetch("/api/admin/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
+                credentials: "include",
                 body: JSON.stringify(creds),
             });
             const data = await res.json();
             if (!res.ok) throw new Error(data.error || "Login failed.");
+            // Small delay to let the cookie settle on mobile browsers
+            await new Promise(r => setTimeout(r, 300));
             // Always redirect to sales dashboard when logging in via /sales
             // Use full navigation to ensure mobile browsers pick up the new session cookie
             window.location.href = "/sales/dashboard";
