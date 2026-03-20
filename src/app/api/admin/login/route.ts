@@ -5,17 +5,31 @@ import bcrypt from "bcryptjs";
 
 export async function POST(req: NextRequest) {
     try {
-        const { username, password } = await req.json();
+        const body = await req.json();
+        const { username, password } = body;
+        console.log("[LOGIN DEBUG] Received body keys:", Object.keys(body));
+        console.log("[LOGIN DEBUG] username:", JSON.stringify(username), "length:", username?.length);
+        console.log("[LOGIN DEBUG] password:", JSON.stringify(password), "length:", password?.length);
+        
         if (!username || !password) {
             return NextResponse.json({ error: "Missing credentials." }, { status: 400 });
         }
 
         await ensureMigrated();
 
-        const { rows } = await sql`SELECT * FROM crm_users WHERE username = ${username} LIMIT 1`;
+        const { rows } = await sql`SELECT * FROM crm_users WHERE username = ${username.trim()} LIMIT 1`;
         const user = rows[0] as { id: number; username: string; password_hash: string; role: string; full_name: string } | undefined;
 
-        if (!user || !bcrypt.compareSync(password, user.password_hash)) {
+        console.log("[LOGIN DEBUG] User found:", !!user, "username queried:", JSON.stringify(username.trim()));
+        
+        if (!user) {
+            return NextResponse.json({ error: "Invalid username or password." }, { status: 401 });
+        }
+        
+        const passwordMatch = bcrypt.compareSync(password.trim(), user.password_hash);
+        console.log("[LOGIN DEBUG] Password match:", passwordMatch);
+        
+        if (!passwordMatch) {
             return NextResponse.json({ error: "Invalid username or password." }, { status: 401 });
         }
 
