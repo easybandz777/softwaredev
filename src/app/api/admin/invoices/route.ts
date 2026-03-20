@@ -5,7 +5,11 @@ import Stripe from "stripe";
 
 export const dynamic = "force-dynamic";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+let _stripe: Stripe;
+function getStripe() {
+    if (!_stripe) _stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+    return _stripe;
+}
 
 // Generate invoice number: QL-2026-0001
 async function nextInvoiceNumber(): Promise<string> {
@@ -63,7 +67,7 @@ export async function POST(req: NextRequest) {
 
     try {
         // 1. Create Stripe Product
-        const product = await stripe.products.create({
+        const product = await getStripe().products.create({
             name: `Invoice ${invoiceNumber} — ${client_name.trim()}`,
             metadata: {
                 invoice_number: invoiceNumber,
@@ -73,14 +77,14 @@ export async function POST(req: NextRequest) {
         });
 
         // 2. Create Stripe Price
-        const price = await stripe.prices.create({
+        const price = await getStripe().prices.create({
             product: product.id,
             unit_amount: totalCents,
             currency: "usd",
         });
 
         // 3. Create Stripe Payment Link
-        const paymentLink = await stripe.paymentLinks.create({
+        const paymentLink = await getStripe().paymentLinks.create({
             line_items: [{ price: price.id, quantity: 1 }],
             metadata: {
                 invoice_number: invoiceNumber,
@@ -138,7 +142,7 @@ export async function PATCH(req: NextRequest) {
         `;
         if (existing.length > 0) {
             try {
-                await stripe.paymentLinks.update(existing[0].stripe_payment_link_id, { active: false });
+                await getStripe().paymentLinks.update(existing[0].stripe_payment_link_id, { active: false });
             } catch (err) {
                 console.error("Failed to deactivate Stripe link:", err);
             }

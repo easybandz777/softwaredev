@@ -5,7 +5,11 @@ import Stripe from "stripe";
 
 export const dynamic = "force-dynamic";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+let _stripe: Stripe;
+function getStripe() {
+    if (!_stripe) _stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+    return _stripe;
+}
 
 // GET /api/admin/payment-links — list all payment links
 export async function GET(req: NextRequest) {
@@ -40,7 +44,7 @@ export async function POST(req: NextRequest) {
 
     try {
         // 1. Create a Stripe Product
-        const product = await stripe.products.create({
+        const product = await getStripe().products.create({
             name: description.trim(),
             metadata: {
                 client_name: client_name.trim(),
@@ -60,10 +64,10 @@ export async function POST(req: NextRequest) {
             priceParams.recurring = { interval: "month" };
         }
 
-        const price = await stripe.prices.create(priceParams);
+        const price = await getStripe().prices.create(priceParams);
 
         // 3. Create a Stripe Payment Link
-        const paymentLink = await stripe.paymentLinks.create({
+        const paymentLink = await getStripe().paymentLinks.create({
             line_items: [{ price: price.id, quantity: 1 }],
             metadata: {
                 client_name: client_name.trim(),
@@ -110,7 +114,7 @@ export async function DELETE(req: NextRequest) {
     if (existing.length > 0) {
         try {
             // Deactivate on Stripe
-            await stripe.paymentLinks.update(existing[0].stripe_payment_link_id, {
+            await getStripe().paymentLinks.update(existing[0].stripe_payment_link_id, {
                 active: false,
             });
         } catch (err) {
