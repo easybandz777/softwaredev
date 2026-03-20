@@ -1,14 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
-
-const SESSION_COOKIE = "ql_admin_session";
-const SESSION_TOKEN = "quantlab_admin_authenticated_v1";
+import { SESSION_COOKIE, parseSessionToken } from "@/lib/auth";
 
 export function proxy(req: NextRequest) {
     const { pathname } = req.nextUrl;
 
     if (pathname.startsWith("/admin/dashboard")) {
         const token = req.cookies.get(SESSION_COOKIE)?.value;
-        if (token !== SESSION_TOKEN) {
+
+        // Support both legacy and new session tokens
+        const isLegacy = token === "quantlab_admin_authenticated_v1";
+        const parsed = token ? parseSessionToken(token) : null;
+
+        if (!isLegacy && !parsed) {
             return NextResponse.redirect(new URL("/admin", req.url));
         }
     }
