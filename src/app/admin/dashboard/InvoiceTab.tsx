@@ -178,9 +178,15 @@ const JOB_PRESETS: Record<string, { label: string; notes: string; items: { descr
     },
     monthly_retainer: {
         label: "Monthly Retainer / Maintenance",
-        notes: "Ongoing support: bug fixes, feature updates, server monitoring, and priority support.",
+        notes: "Recurring monthly services: hosting, database, SEO, security, bug fixes, monitoring, and priority support.",
         items: [
-            { description: "Monthly Maintenance & Support", quantity: "1", rate: "2500" },
+            { description: "Cloud Hosting & CDN (Vercel/AWS)", quantity: "1", rate: "350" },
+            { description: "Database Management & Backups (Neon/Postgres)", quantity: "1", rate: "250" },
+            { description: "SEO Optimization & Monthly Reporting", quantity: "1", rate: "500" },
+            { description: "SSL, Security Patches & Vulnerability Scanning", quantity: "1", rate: "300" },
+            { description: "Bug Fixes & Feature Updates (up to 10 hrs)", quantity: "1", rate: "750" },
+            { description: "Uptime Monitoring & Performance Optimization", quantity: "1", rate: "200" },
+            { description: "Priority Support & Strategy Consultation", quantity: "1", rate: "400" },
         ],
     },
 };
