@@ -81,7 +81,7 @@ function ConfirmDialog({ message, actionText, isDestructive, onConfirm, onCancel
     );
 }
 
-export function InvoiceTab() {
+export function InvoiceTab({ prefill }: { prefill?: { clientName?: string; clientEmail?: string } }) {
     const [invoices, setInvoices] = useState<Invoice[]>([]);
     const [loading, setLoading] = useState(true);
     const [generating, setGenerating] = useState(false);
@@ -90,8 +90,8 @@ export function InvoiceTab() {
     const [confirmAction, setConfirmAction] = useState<{ id: number, action: "paid" | "cancelled" } | null>(null);
 
     // Form state
-    const [clientName, setClientName] = useState("");
-    const [clientEmail, setClientEmail] = useState("");
+    const [clientName, setClientName] = useState(prefill?.clientName || "");
+    const [clientEmail, setClientEmail] = useState(prefill?.clientEmail || "");
     const [clientAddress, setClientAddress] = useState("");
     const [notes, setNotes] = useState("");
     const [dueDate, setDueDate] = useState("");

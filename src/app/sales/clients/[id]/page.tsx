@@ -383,6 +383,11 @@ export default function ClientDetailPage() {
                     </div>
                 </div>
                 <div className="flex items-center gap-3">
+                    <button onClick={() => router.push(`/sales/invoices?client=${encodeURIComponent(client.company_name)}&email=${encodeURIComponent(client.email || "")}`)}
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                        style={{ background: "rgba(56,189,248,0.1)", color: "#38bdf8", border: "1px solid rgba(56,189,248,0.2)" }}>
+                        <FileText className="w-3.5 h-3.5" /> Generate Invoice
+                    </button>
                     <button onClick={() => updateClient({ status: client.status === "active" ? "inactive" : "active" })}
                         className="px-3 py-1.5 rounded-full text-[10px] font-semibold transition-all"
                         style={{

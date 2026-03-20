@@ -8,7 +8,6 @@ import {
     FileText, UserCheck, ChevronRight, Plus, Trash2, Link as LinkIcon, Copy
 } from "lucide-react";
 import { SalesLayout } from "@/components/SalesLayout";
-import { InvoiceTab } from "@/app/admin/dashboard/InvoiceTab";
 
 interface DashboardData {
     totalLeads: number;
@@ -291,13 +290,6 @@ export default function SalesDashboard() {
                         </div>
                     </div>
                 </div>
-
-                {/* Invoices Section — admin only */}
-                {isAdmin && (
-                    <div className="mt-5">
-                        <InvoiceTab />
-                    </div>
-                )}
             </div>
         </SalesLayout>
     );
