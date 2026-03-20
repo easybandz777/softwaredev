@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { SalesLayout } from "@/components/SalesLayout";
 import { InvoiceTab } from "@/app/admin/dashboard/InvoiceTab";
@@ -12,15 +12,9 @@ interface UserInfo {
     role: string;
 }
 
-export default function InvoicesPage() {
+function InvoicesContent({ user }: { user: UserInfo | null }) {
     const searchParams = useSearchParams();
-    const [user, setUser] = useState<UserInfo | null>(null);
 
-    useEffect(() => {
-        fetch("/api/sales/me").then(r => r.ok ? r.json() : null).then(setUser);
-    }, []);
-
-    // Pre-fill from query params (e.g. from client profile)
     const prefill = {
         clientName: searchParams.get("client") || "",
         clientEmail: searchParams.get("email") || "",
@@ -46,5 +40,25 @@ export default function InvoicesPage() {
                 <InvoiceTab prefill={prefill} />
             </div>
         </SalesLayout>
+    );
+}
+
+export default function InvoicesPage() {
+    const [user, setUser] = useState<UserInfo | null>(null);
+
+    useEffect(() => {
+        fetch("/api/sales/me").then(r => r.ok ? r.json() : null).then(setUser);
+    }, []);
+
+    return (
+        <Suspense fallback={
+            <SalesLayout user={user}>
+                <div className="flex items-center justify-center min-h-[60vh]">
+                    <div className="text-gray-500 text-sm animate-pulse">Loading invoices…</div>
+                </div>
+            </SalesLayout>
+        }>
+            <InvoicesContent user={user} />
+        </Suspense>
     );
 }
