@@ -6,7 +6,8 @@ import {
     LogOut, Inbox, CheckCircle, XCircle,
     Trash2, RefreshCw, Mail, Building2, Calendar,
     Phone, DollarSign, Clock, Users, Activity,
-    Globe, Monitor, Smartphone, ChevronDown, BookOpen
+    Globe, Monitor, Smartphone, ChevronDown, BookOpen,
+    FileText, Trophy, ClipboardList
 } from "lucide-react";
 import type { Consultation, PageVisit } from "@/lib/db";
 
@@ -357,10 +358,27 @@ export default function DashboardPage() {
                         <span className="text-gray-500 text-xs block">Admin Dashboard</span>
                     </div>
                 </div>
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2">
+                    <button onClick={() => router.push("/sales/leads")}
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-emerald-400 font-medium hover:bg-emerald-400/10 text-xs transition-all border border-emerald-400/20">
+                        <FileText className="w-3.5 h-3.5" /> Leads
+                    </button>
+                    <button onClick={() => router.push("/sales/clients")}
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-violet-400 font-medium hover:bg-violet-400/10 text-xs transition-all border border-violet-400/20">
+                        <Building2 className="w-3.5 h-3.5" /> Clients
+                    </button>
+                    <button onClick={() => router.push("/sales/leaderboard")}
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-amber-400 font-medium hover:bg-amber-400/10 text-xs transition-all border border-amber-400/20">
+                        <Trophy className="w-3.5 h-3.5" /> Leaderboard
+                    </button>
+                    <button onClick={() => router.push("/sales/dashboard#questionnaire-link")}
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-pink-400 font-medium hover:bg-pink-400/10 text-xs transition-all border border-pink-400/20">
+                        <ClipboardList className="w-3.5 h-3.5" /> Questionnaire
+                    </button>
+                    <div className="w-px h-5 bg-white/10 mx-1" />
                     <button onClick={() => router.push("/admin/training")}
                         className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-cyan-400 font-medium hover:bg-cyan-400/10 text-xs transition-all border border-cyan-400/20">
-                        <BookOpen className="w-3.5 h-3.5" /> Sales Training
+                        <BookOpen className="w-3.5 h-3.5" /> Training
                     </button>
                     <button onClick={logout}
                         className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-gray-400 hover:text-rose-400 hover:bg-rose-400/5 text-xs transition-all">
