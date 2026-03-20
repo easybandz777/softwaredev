@@ -131,6 +131,49 @@ export interface QuestionnaireResponse {
     created_at: string;
 }
 
+export interface PaymentLink {
+    id: number;
+    client_name: string;
+    client_email: string | null;
+    description: string;
+    amount_cents: number;
+    link_type: "one_time" | "recurring";
+    stripe_url: string;
+    stripe_payment_link_id: string;
+    stripe_price_id: string;
+    stripe_product_id: string;
+    status: "active" | "deactivated";
+    created_at: string;
+}
+
+export interface InvoiceLineItem {
+    description: string;
+    quantity: number;
+    rate_cents: number;
+    amount_cents: number;
+}
+
+export interface Invoice {
+    id: number;
+    invoice_number: string;
+    client_name: string;
+    client_email: string | null;
+    client_address: string | null;
+    line_items: string; // JSON string of InvoiceLineItem[]
+    subtotal_cents: number;
+    tax_rate: number;
+    tax_cents: number;
+    total_cents: number;
+    notes: string | null;
+    due_date: string | null;
+    status: "draft" | "sent" | "paid" | "cancelled";
+    stripe_url: string;
+    stripe_payment_link_id: string;
+    stripe_price_id: string;
+    stripe_product_id: string;
+    created_at: string;
+}
+
 // ─── Migration ────────────────────────────────────────────────────────────────
 
 let migrated = false;
@@ -304,6 +347,47 @@ export async function ensureMigrated() {
             decision_maker   TEXT,
             additional_notes TEXT,
             created_at       TIMESTAMPTZ NOT NULL DEFAULT NOW()
+        )
+    `;
+    // ── Payment Links ──────────────────────────────────────────────────────
+    await sql`
+        CREATE TABLE IF NOT EXISTS payment_links (
+            id                     SERIAL PRIMARY KEY,
+            client_name            TEXT NOT NULL,
+            client_email           TEXT,
+            description            TEXT NOT NULL,
+            amount_cents           INTEGER NOT NULL,
+            link_type              TEXT NOT NULL DEFAULT 'one_time',
+            stripe_url             TEXT NOT NULL,
+            stripe_payment_link_id TEXT NOT NULL,
+            stripe_price_id        TEXT NOT NULL,
+            stripe_product_id      TEXT NOT NULL,
+            status                 TEXT NOT NULL DEFAULT 'active',
+            created_at             TIMESTAMPTZ NOT NULL DEFAULT NOW()
+        )
+    `;
+
+    // ── Invoices ─────────────────────────────────────────────────────────
+    await sql`
+        CREATE TABLE IF NOT EXISTS invoices (
+            id                     SERIAL PRIMARY KEY,
+            invoice_number         TEXT NOT NULL UNIQUE,
+            client_name            TEXT NOT NULL,
+            client_email           TEXT,
+            client_address         TEXT,
+            line_items             TEXT NOT NULL DEFAULT '[]',
+            subtotal_cents         INTEGER NOT NULL DEFAULT 0,
+            tax_rate               NUMERIC NOT NULL DEFAULT 0,
+            tax_cents              INTEGER NOT NULL DEFAULT 0,
+            total_cents            INTEGER NOT NULL DEFAULT 0,
+            notes                  TEXT,
+            due_date               TIMESTAMPTZ,
+            status                 TEXT NOT NULL DEFAULT 'sent',
+            stripe_url             TEXT NOT NULL,
+            stripe_payment_link_id TEXT NOT NULL,
+            stripe_price_id        TEXT NOT NULL,
+            stripe_product_id      TEXT NOT NULL,
+            created_at             TIMESTAMPTZ NOT NULL DEFAULT NOW()
         )
     `;
 

@@ -10,11 +10,13 @@ import {
     FileText, Trophy, ClipboardList
 } from "lucide-react";
 import type { Consultation, PageVisit } from "@/lib/db";
+import { PaymentsTab } from "./PaymentsTab";
+import { InvoiceTab } from "./InvoiceTab";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
 type Status = Consultation["status"];
-type Tab = "consultations" | "visitors";
+type Tab = "consultations" | "visitors" | "payments" | "invoices";
 
 // ─── Config ──────────────────────────────────────────────────────────────────
 
@@ -395,9 +397,9 @@ export default function DashboardPage() {
                 </div>
 
                 {/* Tab switcher */}
-                <div className="flex items-center gap-1 mb-8 p-1 rounded-xl w-fit"
+                <div className="flex items-center gap-1 mb-8 p-1 rounded-xl w-fit flex-wrap"
                     style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
-                    {(["consultations", "visitors"] as Tab[]).map(t => (
+                    {(["consultations", "visitors", "payments", "invoices"] as Tab[]).map(t => (
                         <button key={t} onClick={() => setTab(t)}
                             className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200"
                             style={{
@@ -405,15 +407,18 @@ export default function DashboardPage() {
                                 color: tab === t ? "#38bdf8" : "#6b7280",
                                 border: tab === t ? "1px solid rgba(56,189,248,0.25)" : "1px solid transparent",
                             }}>
-                            {t === "consultations"
-                                ? <><Inbox className="w-3.5 h-3.5" /> Consultations</>
-                                : <><Activity className="w-3.5 h-3.5" /> Visitors</>
-                            }
+                            {t === "consultations" && <><Inbox className="w-3.5 h-3.5" /> Consultations</>}
+                            {t === "visitors" && <><Activity className="w-3.5 h-3.5" /> Visitors</>}
+                            {t === "payments" && <><DollarSign className="w-3.5 h-3.5" /> Payments</>}
+                            {t === "invoices" && <><FileText className="w-3.5 h-3.5" /> Invoices</>}
                         </button>
                     ))}
                 </div>
 
-                {tab === "consultations" ? <ConsultationsTab /> : <VisitorsTab />}
+                {tab === "consultations" && <ConsultationsTab />}
+                {tab === "visitors" && <VisitorsTab />}
+                {tab === "payments" && <PaymentsTab />}
+                {tab === "invoices" && <InvoiceTab />}
             </main>
         </div>
     );
