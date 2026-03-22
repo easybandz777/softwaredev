@@ -1,14 +1,14 @@
 "use client";
 
 import React, { useEffect, useState, useCallback } from "react";
-import { useRouter, usePathname, useParams } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import {
-    LogOut, BarChart3, Target, Building2, Home,
     ArrowLeft, Mail, Phone, Calendar, DollarSign,
     Clock, Send, MessageSquare, UserCheck, Briefcase,
-    CheckCircle, TrendingUp, GraduationCap,
+    CheckCircle, TrendingUp,
 } from "lucide-react";
 import type { LeadNote } from "@/lib/db";
+import { SalesLayout } from "@/components/SalesLayout";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -49,70 +49,6 @@ const PIPELINE_STAGES = [
     { key: "lost", label: "Lost", color: "#6b7280" },
 ];
 
-// ─── Sidebar ─────────────────────────────────────────────────────────────────
-
-function Sidebar() {
-    const router = useRouter();
-    const pathname = usePathname();
-
-    const links = [
-        { href: "/sales/dashboard", label: "Dashboard", icon: <Home className="w-4 h-4" /> },
-        { href: "/sales/leads", label: "Leads", icon: <Target className="w-4 h-4" /> },
-        { href: "/sales/clients", label: "Clients", icon: <Building2 className="w-4 h-4" /> },
-        { href: "/sales/training", label: "Training", icon: <GraduationCap className="w-4 h-4" /> },
-    ];
-
-    async function logout() {
-        await fetch("/api/admin/login", { method: "DELETE" });
-        router.push("/sales");
-    }
-
-    return (
-        <aside className="fixed left-0 top-0 bottom-0 w-56 flex flex-col z-20" style={{
-            background: "linear-gradient(180deg, #0a1020 0%, #080d18 100%)",
-            borderRight: "1px solid rgba(255,255,255,0.06)",
-        }}>
-            <div className="px-5 py-5 flex items-center gap-3 border-b" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{
-                    background: "linear-gradient(135deg, #059669, #34d399)",
-                    boxShadow: "0 0 12px rgba(52,211,153,0.3)",
-                }}>
-                    <BarChart3 className="w-4 h-4 text-white" />
-                </div>
-                <div>
-                    <span className="text-white font-bold text-sm block leading-tight">QuantLab</span>
-                    <span className="text-emerald-400/70 text-[10px] font-medium uppercase tracking-wider">Sales CRM</span>
-                </div>
-            </div>
-
-            <nav className="flex-1 px-3 py-4 space-y-1">
-                {links.map(link => {
-                    const active = pathname?.startsWith(link.href);
-                    return (
-                        <button key={link.href} onClick={() => router.push(link.href)}
-                            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150"
-                            style={{
-                                color: active ? "#34d399" : "#9ca3af",
-                                background: active ? "rgba(52,211,153,0.08)" : "transparent",
-                                border: active ? "1px solid rgba(52,211,153,0.15)" : "1px solid transparent",
-                            }}>
-                            {link.icon}
-                            {link.label}
-                        </button>
-                    );
-                })}
-            </nav>
-
-            <div className="px-3 py-4 border-t" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
-                <button onClick={logout}
-                    className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs text-gray-500 hover:text-rose-400 hover:bg-rose-400/5 transition-all">
-                    <LogOut className="w-3.5 h-3.5" /> Sign out
-                </button>
-            </div>
-        </aside>
-    );
-}
-
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
 function fmtDate(s: string) {
@@ -148,11 +84,11 @@ export default function LeadDetailPage() {
         setLoading(true);
         try {
             const [leadsRes, notesRes, dashRes] = await Promise.all([
-                fetch("/api/sales/leads"),
-                fetch(`/api/sales/leads/${leadId}/notes`),
-                fetch("/api/sales/dashboard"),
+                fetch("/api/sales/leads", { credentials: "include" }),
+                fetch(`/api/sales/leads/${leadId}/notes`, { credentials: "include" }),
+                fetch("/api/sales/dashboard", { credentials: "include" }),
             ]);
-            if (leadsRes.status === 401) { router.push("/sales"); return; }
+            if (leadsRes.status === 401) { window.location.href = "/sales"; return; }
 
             const allLeads: Lead[] = await leadsRes.json();
             const thisLead = allLeads.find(l => l.id === parseInt(leadId));
@@ -175,6 +111,7 @@ export default function LeadDetailPage() {
         await fetch("/api/sales/leads", {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
+            credentials: "include",
             body: JSON.stringify({ id: parseInt(leadId), ...updates }),
         });
         fetchData();
@@ -187,10 +124,11 @@ export default function LeadDetailPage() {
             await fetch(`/api/sales/leads/${leadId}/notes`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
+                credentials: "include",
                 body: JSON.stringify({ note_text: newNote }),
             });
             setNewNote("");
-            const notesRes = await fetch(`/api/sales/leads/${leadId}/notes`);
+            const notesRes = await fetch(`/api/sales/leads/${leadId}/notes`, { credentials: "include" });
             setNotes(await notesRes.json());
         } finally { setSending(false); }
     }
@@ -203,6 +141,7 @@ export default function LeadDetailPage() {
         await fetch("/api/sales/clients", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
+            credentials: "include",
             body: JSON.stringify({
                 company_name: lead.company || lead.name,
                 primary_contact: lead.name,
@@ -240,15 +179,8 @@ export default function LeadDetailPage() {
     }
 
     return (
-        <div className="min-h-screen" style={{ background: "#080d18" }}>
-            <div className="fixed inset-0 pointer-events-none" style={{
-                backgroundImage: "linear-gradient(rgba(52,211,153,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(52,211,153,0.02) 1px, transparent 1px)",
-                backgroundSize: "50px 50px",
-            }} />
-
-            <Sidebar />
-
-            <main className="ml-56">
+        <SalesLayout>
+            <div>
                 {/* Top bar */}
                 <header className="sticky top-0 z-10 flex items-center justify-between px-8 py-4" style={{
                     background: "rgba(8,13,24,0.9)", backdropFilter: "blur(16px)", borderBottom: "1px solid rgba(255,255,255,0.05)",
@@ -532,7 +464,7 @@ export default function LeadDetailPage() {
                         </div>
                     </div>
                 </div>
-            </main>
-        </div>
+            </div>
+        </SalesLayout>
     );
 }

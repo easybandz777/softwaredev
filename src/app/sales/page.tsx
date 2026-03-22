@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2, Lock } from "lucide-react";
 
@@ -9,6 +9,20 @@ export default function SalesLoginPage() {
     const [creds, setCreds] = useState({ username: "", password: "" });
     const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
     const [errMsg, setErrMsg] = useState("");
+    const [checking, setChecking] = useState(true);
+
+    // Redirect already-authenticated users to dashboard
+    useEffect(() => {
+        fetch("/api/sales/me", { credentials: "include" })
+            .then(res => {
+                if (res.ok) {
+                    window.location.href = "/sales/dashboard";
+                } else {
+                    setChecking(false);
+                }
+            })
+            .catch(() => setChecking(false));
+    }, []);
 
     async function handleLogin(e: React.FormEvent) {
         e.preventDefault();
@@ -38,6 +52,15 @@ export default function SalesLoginPage() {
     const inp = `w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white 
         placeholder-gray-600 focus:outline-none focus:border-emerald-400/50 focus:ring-1 focus:ring-emerald-400/20 
         transition-all duration-200 mt-1.5`;
+
+    if (checking) {
+        return (
+            <div className="min-h-screen flex items-center justify-center"
+                style={{ background: "#080d18" }}>
+                <Loader2 className="w-6 h-6 text-emerald-400 animate-spin" />
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen flex items-center justify-center p-6"

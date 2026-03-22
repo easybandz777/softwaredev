@@ -202,14 +202,14 @@ export default function ClientDetailPage() {
         setLoading(true);
         try {
             const [clientsRes, recordingsRes, notesRes, projectsRes, filesRes, dashRes] = await Promise.all([
-                fetch("/api/sales/clients"),
-                fetch(`/api/sales/clients/${clientId}/recordings`),
-                fetch(`/api/sales/clients/${clientId}/notes`),
-                fetch(`/api/sales/clients/${clientId}/projects`),
-                fetch(`/api/sales/clients/${clientId}/files`),
-                fetch("/api/sales/dashboard"),
+                fetch("/api/sales/clients", { credentials: "include" }),
+                fetch(`/api/sales/clients/${clientId}/recordings`, { credentials: "include" }),
+                fetch(`/api/sales/clients/${clientId}/notes`, { credentials: "include" }),
+                fetch(`/api/sales/clients/${clientId}/projects`, { credentials: "include" }),
+                fetch(`/api/sales/clients/${clientId}/files`, { credentials: "include" }),
+                fetch("/api/sales/dashboard", { credentials: "include" }),
             ]);
-            if (clientsRes.status === 401) { router.push("/sales"); return; }
+            if (clientsRes.status === 401) { window.location.href = "/sales"; return; }
 
             const allClients: Client[] = await clientsRes.json();
             setClient(allClients.find(c => c.id === parseInt(clientId)) || null);
@@ -229,6 +229,7 @@ export default function ClientDetailPage() {
         await fetch("/api/sales/clients", {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
+            credentials: "include",
             body: JSON.stringify({ id: parseInt(clientId), ...updates }),
         });
         fetchData();
@@ -243,6 +244,7 @@ export default function ClientDetailPage() {
             await fetch(`/api/sales/clients/${clientId}/notes`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
+                credentials: "include",
                 body: JSON.stringify({ note_text: noteText }),
             });
             setNoteText("");
@@ -259,6 +261,7 @@ export default function ClientDetailPage() {
             await fetch(`/api/sales/clients/${clientId}/projects`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
+                credentials: "include",
                 body: JSON.stringify({
                     name: newProject.name,
                     description: newProject.description || null,
@@ -275,6 +278,7 @@ export default function ClientDetailPage() {
         await fetch(`/api/sales/clients/${clientId}/projects`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
+            credentials: "include",
             body: JSON.stringify({ project_id: projectId, status }),
         });
         fetchData();
@@ -282,7 +286,7 @@ export default function ClientDetailPage() {
 
     async function deleteProject(projectId: number) {
         if (!confirm("Delete this project?")) return;
-        await fetch(`/api/sales/clients/${clientId}/projects?project_id=${projectId}`, { method: "DELETE" });
+        await fetch(`/api/sales/clients/${clientId}/projects?project_id=${projectId}`, { method: "DELETE", credentials: "include" });
         fetchData();
     }
 
@@ -293,7 +297,7 @@ export default function ClientDetailPage() {
             const formData = new FormData();
             formData.append("file", file);
             if (uploadNotes.trim()) formData.append("notes", uploadNotes.trim());
-            await fetch(`/api/sales/clients/${clientId}/recordings`, { method: "POST", body: formData });
+            await fetch(`/api/sales/clients/${clientId}/recordings`, { method: "POST", body: formData, credentials: "include" });
             setUploadNotes("");
             fetchData();
         } finally { setUploading(false); }
@@ -302,7 +306,7 @@ export default function ClientDetailPage() {
     function handleRecDrop(e: React.DragEvent) { e.preventDefault(); setDragOver(false); const file = e.dataTransfer.files?.[0]; if (file) uploadRecording(file); }
     async function deleteRecording(recordingId: number) {
         if (!confirm("Delete this recording?")) return;
-        await fetch(`/api/sales/clients/${clientId}/recordings?recordingId=${recordingId}`, { method: "DELETE" });
+        await fetch(`/api/sales/clients/${clientId}/recordings?recordingId=${recordingId}`, { method: "DELETE", credentials: "include" });
         fetchData();
     }
 
@@ -314,7 +318,7 @@ export default function ClientDetailPage() {
             formData.append("file", fileObj);
             if (fileNotes.trim()) formData.append("notes", fileNotes.trim());
             if (fileProjectId) formData.append("project_id", fileProjectId);
-            await fetch(`/api/sales/clients/${clientId}/files`, { method: "POST", body: formData });
+            await fetch(`/api/sales/clients/${clientId}/files`, { method: "POST", body: formData, credentials: "include" });
             setFileNotes("");
             fetchData();
         } finally { setFileUploading(false); }
@@ -331,7 +335,7 @@ export default function ClientDetailPage() {
     }
     async function deleteClientFile(fileId: number) {
         if (!confirm("Delete this file?")) return;
-        await fetch(`/api/sales/clients/${clientId}/files?file_id=${fileId}`, { method: "DELETE" });
+        await fetch(`/api/sales/clients/${clientId}/files?file_id=${fileId}`, { method: "DELETE", credentials: "include" });
         fetchData();
     }
 

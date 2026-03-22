@@ -1,0 +1,238 @@
+/* J5 Sales OS design tokens — scoped to .j5-portal */
+
+.j5-portal {
+    --bg-base: #0a0a0b;
+    --bg-surface: #121214;
+    --bg-elevated: #1a1a1d;
+    --bg-hover: #232326;
+    --text-primary: #f3f4f6;
+    --text-secondary: #a1a1aa;
+    --text-muted: #71717a;
+    --accent-primary: #3b82f6;
+    --accent-primary-hover: #2563eb;
+    --accent-primary-alpha: rgba(59, 130, 246, 0.15);
+    --accent-success: #10b981;
+    --accent-success-alpha: rgba(16, 185, 129, 0.15);
+    --accent-warning: #f59e0b;
+    --accent-warning-alpha: rgba(245, 158, 11, 0.15);
+    --accent-danger: #ef4444;
+    --accent-danger-alpha: rgba(239, 68, 68, 0.15);
+    --accent-indigo: #6366f1;
+    --accent-indigo-alpha: rgba(99, 102, 241, 0.15);
+    --accent-cyan: #06b6d4;
+    --accent-cyan-alpha: rgba(6, 182, 212, 0.15);
+    --accent-purple: #8b5cf6;
+    --accent-purple-alpha: rgba(139, 92, 246, 0.15);
+    --border-subtle: #27272a;
+    --border-strong: #3f3f46;
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 8px;
+    --radius-full: 9999px;
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+    --space-8: 32px;
+    --space-10: 40px;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: var(--text-primary);
+}
+
+.j5-portal .j5-panel {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.j5-portal .j5-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-6);
+}
+
+.j5-portal .j5-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.15s ease;
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-family: inherit;
+}
+
+.j5-portal .j5-btn-primary {
+    background-color: var(--accent-primary);
+    color: white;
+}
+.j5-portal .j5-btn-primary:hover { background-color: var(--accent-primary-hover); }
+.j5-portal .j5-btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.j5-portal .j5-btn-secondary {
+    background-color: var(--bg-hover);
+    color: var(--text-primary);
+    border: 1px solid var(--border-subtle);
+}
+.j5-portal .j5-btn-secondary:hover { border-color: var(--border-strong); }
+
+.j5-portal .j5-btn-ghost {
+    color: var(--text-secondary);
+    background: none;
+    border: none;
+}
+.j5-portal .j5-btn-ghost:hover {
+    background-color: var(--bg-hover);
+    color: var(--text-primary);
+}
+
+.j5-portal .j5-text-muted {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}
+
+.j5-portal input,
+.j5-portal textarea,
+.j5-portal select {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-primary);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    transition: border-color 0.15s ease;
+    font-family: inherit;
+}
+.j5-portal input:focus,
+.j5-portal textarea:focus,
+.j5-portal select:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+}
+
+.j5-portal .j5-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: j5FadeIn 0.15s ease;
+}
+.j5-portal .j5-modal-content {
+    max-height: 85vh;
+    overflow-y: auto;
+    animation: j5SlideUp 0.2s ease;
+}
+
+@keyframes j5FadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes j5SlideUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes j5Pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 0.7; } }
+@keyframes j5Spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+.j5-portal .j5-spin { animation: j5Spin 1s linear infinite; }
+
+/* Pipeline board */
+.j5-portal .pipeline-board {
+    display: flex;
+    gap: var(--space-4);
+    height: 100%;
+    overflow-x: auto;
+    padding-bottom: var(--space-4);
+}
+.j5-portal .pipeline-column {
+    min-width: 260px;
+    max-width: 260px;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.2s ease;
+}
+.j5-portal .pipeline-column.drag-over {
+    border-color: var(--accent-primary);
+    background-color: var(--bg-hover);
+}
+.j5-portal .column-header {
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 2px solid var(--bg-base);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.j5-portal .stage-name {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+}
+.j5-portal .lead-count {
+    font-size: 0.75rem;
+    background-color: var(--bg-hover);
+    color: var(--text-muted);
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+}
+.j5-portal .column-content {
+    padding: var(--space-3);
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    min-height: 100px;
+}
+.j5-portal .lead-card {
+    background-color: var(--bg-elevated);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-md);
+    padding: var(--space-3);
+    cursor: grab;
+    user-select: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.j5-portal .lead-card:hover {
+    border-color: var(--text-muted);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+.j5-portal .lead-card.dragging { opacity: 0.5; }
+.j5-portal .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: var(--space-2);
+    margin-top: var(--space-2);
+}
+.j5-portal .niche-tag {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+.j5-portal .days-in-stage {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+.j5-portal .days-in-stage.stale-warning { color: var(--accent-danger); }

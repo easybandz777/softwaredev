@@ -133,7 +133,7 @@ export async function DELETE(req: NextRequest) {
     await ensureMigrated();
 
     // Delete notes first (FK), then the lead
-    await sql`DELETE FROM lead_notes WHERE consultation_id = ${id}`;
+    await sql`DELETE FROM lead_notes WHERE lead_id = ${id}`;
     await sql`DELETE FROM consultations WHERE id = ${id}`;
 
     return NextResponse.json({ success: true });

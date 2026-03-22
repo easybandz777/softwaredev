@@ -47,7 +47,7 @@ export default function InvoicesPage() {
     const [user, setUser] = useState<UserInfo | null>(null);
 
     useEffect(() => {
-        fetch("/api/sales/me").then(r => r.ok ? r.json() : null).then(setUser);
+        fetch("/api/sales/me", { credentials: "include" }).then(r => r.ok ? r.json() : null).then(setUser);
     }, []);
 
     return (

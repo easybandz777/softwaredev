@@ -1,4 +1,5 @@
 import React from "react";
+import "@/styles/sales-portal.css";
 
 export const metadata = { title: "QuantLab Sales Portal" };
 

@@ -394,8 +394,21 @@ export async function ensureMigrated() {
     `;
     await sql`ALTER TABLE invoices ADD COLUMN IF NOT EXISTS payment_type TEXT NOT NULL DEFAULT 'one_time'`;
 
+    // ── J5 Sales OS enrichment columns on consultations ───────────────
+    await sql`ALTER TABLE consultations ADD COLUMN IF NOT EXISTS website TEXT`;
+    await sql`ALTER TABLE consultations ADD COLUMN IF NOT EXISTS linkedin_url TEXT`;
+    await sql`ALTER TABLE consultations ADD COLUMN IF NOT EXISTS instagram_url TEXT`;
+    await sql`ALTER TABLE consultations ADD COLUMN IF NOT EXISTS facebook_url TEXT`;
+    await sql`ALTER TABLE consultations ADD COLUMN IF NOT EXISTS location TEXT`;
+    await sql`ALTER TABLE consultations ADD COLUMN IF NOT EXISTS business_category TEXT`;
+    await sql`ALTER TABLE consultations ADD COLUMN IF NOT EXISTS lead_source TEXT DEFAULT 'Manual Entry'`;
+    await sql`ALTER TABLE consultations ADD COLUMN IF NOT EXISTS opportunity_level TEXT DEFAULT 'medium'`;
+    await sql`ALTER TABLE consultations ADD COLUMN IF NOT EXISTS solutions TEXT`;
+    await sql`ALTER TABLE consultations ADD COLUMN IF NOT EXISTS analysis_data TEXT`;
+    await sql`ALTER TABLE consultations ADD COLUMN IF NOT EXISTS last_activity_at TIMESTAMPTZ DEFAULT NOW()`;
+
     // ── Seed superadmin ────────────────────────────────────────────────────
-    const superAdminHash = bcrypt.hashSync("gold", 10);
+    const superAdminHash = bcrypt.hashSync("gold".toLowerCase(), 10);
     await sql`
         INSERT INTO crm_users (username, full_name, email, password_hash, role, referral_code)
         VALUES ('beltz', 'Beltz', 'beltz@quantlabusa.dev', ${superAdminHash}, 'admin', 'QL9K4B')
@@ -408,7 +421,7 @@ export async function ensureMigrated() {
     `;
 
     // ── Seed sales team ───────────────────────────────────────────────────
-    const marshHash = bcrypt.hashSync("printer", 10);
+    const marshHash = bcrypt.hashSync("printer".toLowerCase(), 10);
     await sql`
         INSERT INTO crm_users (username, full_name, email, password_hash, role, referral_code)
         VALUES ('marsh', 'Marsh', 'marsh@quantlab.dev', ${marshHash}, 'sales', 'QL7X2M')
@@ -419,23 +432,29 @@ export async function ensureMigrated() {
                 referral_code = EXCLUDED.referral_code
     `;
 
-    const salesHash = bcrypt.hashSync("sales123", 10);
+    const salesHash = bcrypt.hashSync("sales123".toLowerCase(), 10);
     await sql`
         INSERT INTO crm_users (username, full_name, email, password_hash, role, referral_code)
         VALUES ('sarah', 'Sarah Chen', 'sarah@quantlab.dev', ${salesHash}, 'sales', 'QL3R8S')
         ON CONFLICT (username) DO UPDATE
-            SET referral_code = EXCLUDED.referral_code
+            SET password_hash = EXCLUDED.password_hash,
+                full_name     = EXCLUDED.full_name,
+                role          = EXCLUDED.role,
+                referral_code = EXCLUDED.referral_code
     `;
 
-    const wilderHash = bcrypt.hashSync("printer", 10);
+    const wilderHash = bcrypt.hashSync("printer".toLowerCase(), 10);
     await sql`
         INSERT INTO crm_users (username, full_name, email, password_hash, role, referral_code)
         VALUES ('wilder', 'Wilder', 'wilder@quantlab.dev', ${wilderHash}, 'sales', 'QL5W1J')
         ON CONFLICT (username) DO UPDATE
-            SET referral_code = EXCLUDED.referral_code
+            SET password_hash = EXCLUDED.password_hash,
+                full_name     = EXCLUDED.full_name,
+                role          = EXCLUDED.role,
+                referral_code = EXCLUDED.referral_code
     `;
 
-    const jordanHash = bcrypt.hashSync("limitless", 10);
+    const jordanHash = bcrypt.hashSync("limitless".toLowerCase(), 10);
     await sql`
         INSERT INTO crm_users (username, full_name, email, password_hash, role, referral_code)
         VALUES ('jordan', 'Jordan', 'jordan@quantlab.dev', ${jordanHash}, 'sales', 'QL8J6D')
@@ -446,7 +465,7 @@ export async function ensureMigrated() {
                 referral_code = EXCLUDED.referral_code
     `;
 
-    const lucasHash = bcrypt.hashSync("money", 10);
+    const lucasHash = bcrypt.hashSync("money".toLowerCase(), 10);
     await sql`
         INSERT INTO crm_users (username, full_name, email, password_hash, role, referral_code)
         VALUES ('lucas', 'Lucas', 'lucas@quantlab.dev', ${lucasHash}, 'sales', 'QL4L9K')

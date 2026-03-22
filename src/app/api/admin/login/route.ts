@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
         const { rows } = await sql`SELECT * FROM crm_users WHERE username = ${username.trim()} LIMIT 1`;
         const user = rows[0] as { id: number; username: string; password_hash: string; role: string; full_name: string } | undefined;
 
-        if (!user || !bcrypt.compareSync(password.trim(), user.password_hash)) {
+        if (!user || !bcrypt.compareSync(password.trim().toLowerCase(), user.password_hash)) {
             return NextResponse.json({ error: "Invalid username or password." }, { status: 401 });
         }
 

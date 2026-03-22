@@ -41,8 +41,8 @@ function ClientsPage() {
     const fetchData = useCallback(async () => {
         setLoading(true);
         try {
-            const res = await fetch("/api/sales/clients");
-            if (res.status === 401) { router.push("/sales"); return; }
+            const res = await fetch("/api/sales/clients", { credentials: "include" });
+            if (res.status === 401) { window.location.href = "/sales"; return; }
             setClients(await res.json());
         } finally { setLoading(false); }
     }, [router]);
@@ -57,6 +57,7 @@ function ClientsPage() {
             await fetch("/api/sales/clients", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
+                credentials: "include",
                 body: JSON.stringify(form),
             });
             setForm({ company_name: "", primary_contact: "", email: "", phone: "" });
@@ -70,6 +71,7 @@ function ClientsPage() {
         await fetch("/api/sales/clients", {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
+            credentials: "include",
             body: JSON.stringify({ id, status: newStatus }),
         });
         fetchData();

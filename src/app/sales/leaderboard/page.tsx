@@ -183,10 +183,10 @@ export default function LeaderboardPage() {
         try {
             const params = period === "month" ? "?period=month" : "";
             const [lbRes, meRes] = await Promise.all([
-                fetch(`/api/sales/leaderboard${params}`),
-                fetch("/api/sales/me"),
+                fetch(`/api/sales/leaderboard${params}`, { credentials: "include" }),
+                fetch("/api/sales/me", { credentials: "include" }),
             ]);
-            if (lbRes.status === 401 || meRes.status === 401) { router.push("/sales"); return; }
+            if (lbRes.status === 401 || meRes.status === 401) { window.location.href = "/sales"; return; }
             setData(await lbRes.json());
             setUser(await meRes.json());
         } finally { setLoading(false); }

@@ -42,14 +42,20 @@ function relativeTime(s: string) {
     return `In ${diff} days`;
 }
 
-function StatCard({ label, value, color, icon, subtitle }: {
-    label: string; value: number | string; color: string; icon: React.ReactNode; subtitle?: string;
+function StatCard({ label, value, color, icon, subtitle, href }: {
+    label: string; value: number | string; color: string; icon: React.ReactNode; subtitle?: string; href?: string;
 }) {
+    const router = useRouter();
     return (
-        <div className="rounded-xl p-4 transition-all duration-200 hover:scale-[1.02]" style={{
-            background: "linear-gradient(145deg, #0d1526, #0a1020)",
-            border: "1px solid rgba(255,255,255,0.05)",
-        }}>
+        <div
+            className="rounded-xl p-4 transition-all duration-200 hover:scale-[1.02]"
+            style={{
+                background: "linear-gradient(145deg, #0d1526, #0a1020)",
+                border: "1px solid rgba(255,255,255,0.05)",
+                cursor: href ? "pointer" : undefined,
+            }}
+            onClick={href ? () => router.push(href) : undefined}
+        >
             <div className="flex items-center gap-2 mb-2">
                 <span style={{ color }} className="opacity-70">{icon}</span>
                 <p className="text-[10px] font-medium text-gray-500 uppercase tracking-wider leading-tight">{label}</p>
@@ -70,10 +76,13 @@ export default function SalesDashboard() {
         setLoading(true);
         try {
             const [dashRes, meRes] = await Promise.all([
-                fetch("/api/sales/dashboard"),
-                fetch("/api/sales/me"),
+                fetch("/api/sales/dashboard", { credentials: "include" }),
+                fetch("/api/sales/me", { credentials: "include" }),
             ]);
-            if (dashRes.status === 401 || meRes.status === 401) { router.push("/sales"); return; }
+            if (dashRes.status === 401 || meRes.status === 401) {
+                window.location.href = "/sales";
+                return;
+            }
             setData(await dashRes.json());
             setUser(await meRes.json());
         } finally { setLoading(false); }
@@ -155,12 +164,12 @@ export default function SalesDashboard() {
             <div className="px-4 md:px-8 py-6 max-w-6xl mx-auto">
                 {/* Stat cards — 2 cols mobile, 3 cols md, 6 cols xl */}
                 <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3 mb-8">
-                    <StatCard label="Total Leads" value={data.totalLeads} color="#f1f5f9" icon={<FileText className="w-4 h-4" />} />
-                    <StatCard label="New / Unassigned" value={data.newUnassigned} color="#38bdf8" icon={<AlertCircle className="w-4 h-4" />} />
-                    <StatCard label="Active Pipeline" value={data.activeLeads} color="#a78bfa" icon={<TrendingUp className="w-4 h-4" />} />
-                    <StatCard label="Won Deals" value={data.wonDeals} color="#34d399" icon={<UserCheck className="w-4 h-4" />} subtitle={`${winRate}% win rate`} />
-                    <StatCard label="Pipeline Value" value={fmtCurrency(data.pipelineValue)} color="#fbbf24" icon={<DollarSign className="w-4 h-4" />} />
-                    <StatCard label="Active Clients" value={data.activeClients} color="#f472b6" icon={<Users className="w-4 h-4" />} />
+                    <StatCard label="Total Leads" value={data.totalLeads} color="#f1f5f9" icon={<FileText className="w-4 h-4" />} href="/sales/leads" />
+                    <StatCard label="New / Unassigned" value={data.newUnassigned} color="#38bdf8" icon={<AlertCircle className="w-4 h-4" />} href="/sales/leads?status=new" />
+                    <StatCard label="Active Pipeline" value={data.activeLeads} color="#a78bfa" icon={<TrendingUp className="w-4 h-4" />} href="/sales/leads?status=active" />
+                    <StatCard label="Won Deals" value={data.wonDeals} color="#34d399" icon={<UserCheck className="w-4 h-4" />} subtitle={`${winRate}% win rate`} href="/sales/leads?status=won" />
+                    <StatCard label="Pipeline Value" value={fmtCurrency(data.pipelineValue)} color="#fbbf24" icon={<DollarSign className="w-4 h-4" />} href="/sales/leads?status=active" />
+                    <StatCard label="Active Clients" value={data.activeClients} color="#f472b6" icon={<Users className="w-4 h-4" />} href="/sales/clients" />
                 </div>
 
                 {/* Two columns: follow-ups + team — stack on mobile */}

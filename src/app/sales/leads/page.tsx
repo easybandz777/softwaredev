@@ -80,7 +80,7 @@ function LeadsPage() {
     const [user, setUser] = useState<UserInfo | null>(null);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState("");
-    const [filterStatus, setFilterStatus] = useState<string>("all");
+    const [filterStatus, setFilterStatus] = useState<string>(searchParams.get("status") || "all");
     const [showNew, setShowNew] = useState(searchParams.get("new") === "1");
     const [creating, setCreating] = useState(false);
     const [newLead, setNewLead] = useState({
@@ -93,11 +93,11 @@ function LeadsPage() {
         setLoading(true);
         try {
             const [leadsRes, dashRes, meRes] = await Promise.all([
-                fetch("/api/sales/leads"),
-                fetch("/api/sales/dashboard"),
-                fetch("/api/sales/me"),
+                fetch("/api/sales/leads", { credentials: "include" }),
+                fetch("/api/sales/dashboard", { credentials: "include" }),
+                fetch("/api/sales/me", { credentials: "include" }),
             ]);
-            if (leadsRes.status === 401) { router.push("/sales"); return; }
+            if (leadsRes.status === 401) { window.location.href = "/sales"; return; }
             setLeads(await leadsRes.json());
             const d = await dashRes.json();
             setSalesUsers(d.salesUsers || []);
@@ -111,6 +111,7 @@ function LeadsPage() {
         await fetch("/api/sales/leads", {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
+            credentials: "include",
             body: JSON.stringify({ id, ...updates }),
         });
         fetchData();
@@ -121,6 +122,7 @@ function LeadsPage() {
         await fetch("/api/sales/leads", {
             method: "DELETE",
             headers: { "Content-Type": "application/json" },
+            credentials: "include",
             body: JSON.stringify({ id }),
         });
         fetchData();
@@ -134,6 +136,7 @@ function LeadsPage() {
             await fetch("/api/sales/leads", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
+                credentials: "include",
                 body: JSON.stringify(newLead),
             });
             setNewLead({ name: "", email: "", phone: "", company: "", service: "Custom Software", message: "" });
@@ -142,9 +145,15 @@ function LeadsPage() {
         } finally { setCreating(false); }
     }
 
+    const ACTIVE_STATUSES = ["contacted", "qualified", "proposal"];
+
     // Filter + search
     const filtered = leads.filter(l => {
-        if (filterStatus !== "all" && l.status !== filterStatus) return false;
+        if (filterStatus === "active") {
+            if (!ACTIVE_STATUSES.includes(l.status)) return false;
+        } else if (filterStatus !== "all" && l.status !== filterStatus) {
+            return false;
+        }
         if (search) {
             const s = search.toLowerCase();
             return l.name.toLowerCase().includes(s) || l.email.toLowerCase().includes(s) || (l.company?.toLowerCase().includes(s) ?? false);
@@ -152,7 +161,7 @@ function LeadsPage() {
         return true;
     });
 
-    const statuses = ["all", "new", "contacted", "qualified", "proposal", "won", "lost"];
+    const statuses = ["all", "new", "contacted", "qualified", "proposal", "won", "lost", "active"];
 
     const SERVICE_OPTIONS = [
         "Custom Software", "Web Development", "Mobile App", "AI / Machine Learning",
@@ -332,7 +341,7 @@ function LeadsPage() {
                                             className="w-full text-xs font-semibold rounded-full px-2.5 py-1 focus:outline-none focus:ring-1 focus:ring-emerald-400/40 cursor-pointer"
                                             style={{ color: cfg.color, background: cfg.bg, border: `1px solid ${cfg.color}30` }}
                                             title="Change status">
-                                            {statuses.filter(s => s !== "all").map(s => (
+                                            {statuses.filter(s => s !== "all" && s !== "active").map(s => (
                                                 <option key={s} value={s}>{STATUS_CONFIG[s]?.label || s}</option>
                                             ))}
                                         </select>

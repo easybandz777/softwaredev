@@ -375,8 +375,8 @@ export default function SalesTrainingPage() {
 
     const checkAuth = useCallback(async () => {
         try {
-            const res = await fetch("/api/sales/me");
-            if (res.status === 401) { router.push("/sales"); return; }
+            const res = await fetch("/api/sales/me", { credentials: "include" });
+            if (res.status === 401) { window.location.href = "/sales"; return; }
             setAuthenticated(true);
         } finally { setLoading(false); }
     }, [router]);
