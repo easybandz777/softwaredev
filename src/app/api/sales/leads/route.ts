@@ -5,56 +5,50 @@ import { requireAuth } from "@/lib/auth";
 export const dynamic = "force-dynamic";
 
 // GET /api/sales/leads — list leads (admin sees all, sales sees only theirs)
-// Pass ?show_disqualified=1 to include leads this user has disqualified.
 export async function GET(req: NextRequest) {
     const { error, user } = requireAuth(req, ["admin", "sales"]);
     if (error) return NextResponse.json({ error }, { status: 401 });
 
     await ensureMigrated();
 
-    const showDQ = req.nextUrl.searchParams.get("show_disqualified") === "1";
-
     let rows;
     if (user!.role === "admin") {
-        if (showDQ) {
-            ({ rows } = await sql`
-                SELECT c.*, u.full_name AS assigned_to_name,
-                       (dq.id IS NOT NULL) AS disqualified
-                FROM consultations c
-                LEFT JOIN crm_users u ON c.assigned_to_id = u.id
-                LEFT JOIN lead_disqualifications dq ON dq.lead_id = c.id AND dq.user_id = ${user!.id}
-                ORDER BY CASE c.status WHEN 'new' THEN 0 WHEN 'contacted' THEN 1 WHEN 'qualified' THEN 2 WHEN 'proposal' THEN 3 WHEN 'won' THEN 4 WHEN 'lost' THEN 5 ELSE 6 END, c.created_at DESC
-            `);
-        } else {
-            ({ rows } = await sql`
-                SELECT c.*, u.full_name AS assigned_to_name, FALSE AS disqualified
-                FROM consultations c
-                LEFT JOIN crm_users u ON c.assigned_to_id = u.id
-                WHERE NOT EXISTS (SELECT 1 FROM lead_disqualifications dq WHERE dq.lead_id = c.id AND dq.user_id = ${user!.id})
-                ORDER BY CASE c.status WHEN 'new' THEN 0 WHEN 'contacted' THEN 1 WHEN 'qualified' THEN 2 WHEN 'proposal' THEN 3 WHEN 'won' THEN 4 WHEN 'lost' THEN 5 ELSE 6 END, c.created_at DESC
-            `);
-        }
+        // Admins see all leads
+        ({ rows } = await sql`
+            SELECT c.*, u.full_name AS assigned_to_name
+            FROM consultations c
+            LEFT JOIN crm_users u ON c.assigned_to_id = u.id
+            ORDER BY
+                CASE c.status
+                    WHEN 'new' THEN 0
+                    WHEN 'contacted' THEN 1
+                    WHEN 'qualified' THEN 2
+                    WHEN 'proposal' THEN 3
+                    WHEN 'won' THEN 4
+                    WHEN 'lost' THEN 5
+                    ELSE 6
+                END,
+                c.created_at DESC
+        `);
     } else {
-        if (showDQ) {
-            ({ rows } = await sql`
-                SELECT c.*, u.full_name AS assigned_to_name,
-                       (dq.id IS NOT NULL) AS disqualified
-                FROM consultations c
-                LEFT JOIN crm_users u ON c.assigned_to_id = u.id
-                LEFT JOIN lead_disqualifications dq ON dq.lead_id = c.id AND dq.user_id = ${user!.id}
-                WHERE c.assigned_to_id = ${user!.id}
-                ORDER BY CASE c.status WHEN 'new' THEN 0 WHEN 'contacted' THEN 1 WHEN 'qualified' THEN 2 WHEN 'proposal' THEN 3 WHEN 'won' THEN 4 WHEN 'lost' THEN 5 ELSE 6 END, c.created_at DESC
-            `);
-        } else {
-            ({ rows } = await sql`
-                SELECT c.*, u.full_name AS assigned_to_name, FALSE AS disqualified
-                FROM consultations c
-                LEFT JOIN crm_users u ON c.assigned_to_id = u.id
-                WHERE c.assigned_to_id = ${user!.id}
-                  AND NOT EXISTS (SELECT 1 FROM lead_disqualifications dq WHERE dq.lead_id = c.id AND dq.user_id = ${user!.id})
-                ORDER BY CASE c.status WHEN 'new' THEN 0 WHEN 'contacted' THEN 1 WHEN 'qualified' THEN 2 WHEN 'proposal' THEN 3 WHEN 'won' THEN 4 WHEN 'lost' THEN 5 ELSE 6 END, c.created_at DESC
-            `);
-        }
+        // Sales users only see leads assigned to them
+        ({ rows } = await sql`
+            SELECT c.*, u.full_name AS assigned_to_name
+            FROM consultations c
+            LEFT JOIN crm_users u ON c.assigned_to_id = u.id
+            WHERE c.assigned_to_id = ${user!.id}
+            ORDER BY
+                CASE c.status
+                    WHEN 'new' THEN 0
+                    WHEN 'contacted' THEN 1
+                    WHEN 'qualified' THEN 2
+                    WHEN 'proposal' THEN 3
+                    WHEN 'won' THEN 4
+                    WHEN 'lost' THEN 5
+                    ELSE 6
+                END,
+                c.created_at DESC
+        `);
     }
     return NextResponse.json(rows);
 }

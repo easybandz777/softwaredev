@@ -7,7 +7,7 @@ import {
     Search, ChevronRight,
     Mail, Phone,
     DollarSign, UserCheck,
-    Plus, X, Trash2, Ban, RotateCcw, EyeOff, Eye,
+    Plus, X, Trash2,
 } from "lucide-react";
 import { SalesLayout } from "@/components/SalesLayout";
 
@@ -26,7 +26,6 @@ interface Lead {
     value_est: number | null;
     next_follow_up: string | null;
     created_at: string;
-    disqualified?: boolean;
 }
 
 interface SalesUser {
@@ -83,7 +82,6 @@ function LeadsPage() {
     const [search, setSearch] = useState("");
     const [filterStatus, setFilterStatus] = useState<string>(searchParams.get("status") || "all");
     const [showNew, setShowNew] = useState(searchParams.get("new") === "1");
-    const [showDisqualified, setShowDisqualified] = useState(false);
     const [creating, setCreating] = useState(false);
     const [newLead, setNewLead] = useState({
         name: "", email: "", phone: "", company: "", service: "Custom Software", message: "",
@@ -94,9 +92,8 @@ function LeadsPage() {
     const fetchData = useCallback(async () => {
         setLoading(true);
         try {
-            const leadsUrl = showDisqualified ? "/api/sales/leads?show_disqualified=1" : "/api/sales/leads";
             const [leadsRes, dashRes, meRes] = await Promise.all([
-                fetch(leadsUrl, { credentials: "include" }),
+                fetch("/api/sales/leads", { credentials: "include" }),
                 fetch("/api/sales/dashboard", { credentials: "include" }),
                 fetch("/api/sales/me", { credentials: "include" }),
             ]);
@@ -106,7 +103,7 @@ function LeadsPage() {
             setSalesUsers(d.salesUsers || []);
             if (meRes.ok) setUser(await meRes.json());
         } finally { setLoading(false); }
-    }, [showDisqualified]);
+    }, [router]);
 
     useEffect(() => { fetchData(); }, [fetchData]);
 
@@ -128,16 +125,6 @@ function LeadsPage() {
             credentials: "include",
             body: JSON.stringify({ id }),
         });
-        fetchData();
-    }
-
-    async function disqualifyLead(id: number) {
-        await fetch(`/api/sales/leads/${id}/disqualify`, { method: "POST", credentials: "include" });
-        setLeads(prev => prev.filter(l => l.id !== id));
-    }
-
-    async function undisqualifyLead(id: number) {
-        await fetch(`/api/sales/leads/${id}/disqualify`, { method: "DELETE", credentials: "include" });
         fetchData();
     }
 
@@ -299,18 +286,6 @@ function LeadsPage() {
                             </button>
                         ))}
                     </div>
-
-                    <button onClick={() => setShowDisqualified(v => !v)}
-                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all flex-shrink-0"
-                        style={{
-                            background: showDisqualified ? "rgba(239,68,68,0.1)" : "transparent",
-                            color: showDisqualified ? "#f87171" : "#6b7280",
-                            border: showDisqualified ? "1px solid rgba(239,68,68,0.2)" : "1px solid rgba(255,255,255,0.06)",
-                        }}
-                        title={showDisqualified ? "Hide disqualified leads" : "Show disqualified leads"}>
-                        {showDisqualified ? <Eye className="w-3 h-3" /> : <EyeOff className="w-3 h-3" />}
-                        {showDisqualified ? "Showing DQ'd" : "Show DQ'd"}
-                    </button>
                 </div>
 
                 {/* Table — horizontal scroll on mobile */}
@@ -320,7 +295,7 @@ function LeadsPage() {
                 }}>
                     {/* Desktop header row — hidden on mobile */}
                     <div className="hidden md:grid text-xs font-semibold text-gray-500 uppercase tracking-wider px-6 py-3 border-b"
-                        style={{ gridTemplateColumns: "2fr 1.5fr 1.5fr 1fr 1fr 1fr 70px", borderColor: "rgba(255,255,255,0.05)" }}>
+                        style={{ gridTemplateColumns: "2fr 1.5fr 1.5fr 1fr 1fr 1fr 40px", borderColor: "rgba(255,255,255,0.05)" }}>
                         <span>Name / Company</span>
                         <span>Contact</span>
                         <span>Service</span>
@@ -344,9 +319,9 @@ function LeadsPage() {
                         return (
                             <div key={lead.id}>
                                 {/* Desktop row */}
-                                <div className={`hidden md:grid items-center px-6 py-4 cursor-pointer transition-colors hover:bg-white/[0.02]${lead.disqualified ? " opacity-50" : ""}`}
+                                <div className="hidden md:grid items-center px-6 py-4 cursor-pointer transition-colors hover:bg-white/[0.02]"
                                     style={{
-                                        gridTemplateColumns: "2fr 1.5fr 1.5fr 1fr 1fr 1fr 70px",
+                                        gridTemplateColumns: "2fr 1.5fr 1.5fr 1fr 1fr 1fr 40px",
                                         borderBottom: idx < filtered.length - 1 ? "1px solid rgba(255,255,255,0.04)" : "none",
                                     }}
                                     onClick={() => router.push(`/sales/leads/${lead.id}`)}
@@ -381,31 +356,18 @@ function LeadsPage() {
                                         </select>
                                     </div>
                                     <span className="text-xs font-mono text-gray-400">{lead.value_est ? fmtCurrency(lead.value_est) : "—"}</span>
-                                    <div className="flex items-center gap-1" onClick={e => e.stopPropagation()}>
-                                        {lead.disqualified ? (
-                                            <button onClick={() => undisqualifyLead(lead.id)}
-                                                className="p-1 rounded hover:bg-emerald-500/10 transition-colors group" title="Restore lead">
-                                                <RotateCcw className="w-3.5 h-3.5 text-gray-600 group-hover:text-emerald-400" />
-                                            </button>
-                                        ) : (
-                                            <button onClick={() => disqualifyLead(lead.id)}
-                                                className="p-1 rounded hover:bg-amber-500/10 transition-colors group" title="Disqualify lead">
-                                                <Ban className="w-3.5 h-3.5 text-gray-600 group-hover:text-amber-400" />
-                                            </button>
-                                        )}
-                                        {isAdmin ? (
-                                            <button onClick={() => deleteLead(lead.id, lead.name)}
-                                                className="p-1 rounded hover:bg-red-500/10 transition-colors group" title="Delete lead">
-                                                <Trash2 className="w-3.5 h-3.5 text-gray-600 group-hover:text-red-400" />
-                                            </button>
-                                        ) : (
-                                            <ChevronRight className="w-4 h-4 text-gray-600" />
-                                        )}
-                                    </div>
+                                    {isAdmin ? (
+                                        <button onClick={(e) => { e.stopPropagation(); deleteLead(lead.id, lead.name); }}
+                                            className="p-1 rounded hover:bg-red-500/10 transition-colors group" title="Delete lead">
+                                            <Trash2 className="w-3.5 h-3.5 text-gray-600 group-hover:text-red-400" />
+                                        </button>
+                                    ) : (
+                                        <ChevronRight className="w-4 h-4 text-gray-600" />
+                                    )}
                                 </div>
 
                                 {/* Mobile card row */}
-                                <div className={`md:hidden flex items-start justify-between px-4 py-4 cursor-pointer hover:bg-white/[0.02] transition-colors${lead.disqualified ? " opacity-50" : ""}`}
+                                <div className="md:hidden flex items-start justify-between px-4 py-4 cursor-pointer hover:bg-white/[0.02] transition-colors"
                                     style={{ borderBottom: idx < filtered.length - 1 ? "1px solid rgba(255,255,255,0.04)" : "none" }}
                                     onClick={() => router.push(`/sales/leads/${lead.id}`)}
                                 >
@@ -419,17 +381,6 @@ function LeadsPage() {
                                         <p className="text-xs text-gray-600 mt-1">{lead.service}</p>
                                     </div>
                                     <div className="flex items-center gap-1 ml-2 flex-shrink-0">
-                                        {lead.disqualified ? (
-                                            <button onClick={(e) => { e.stopPropagation(); undisqualifyLead(lead.id); }}
-                                                className="p-1 rounded hover:bg-emerald-500/10 transition-colors" title="Restore lead">
-                                                <RotateCcw className="w-3.5 h-3.5 text-gray-600 hover:text-emerald-400" />
-                                            </button>
-                                        ) : (
-                                            <button onClick={(e) => { e.stopPropagation(); disqualifyLead(lead.id); }}
-                                                className="p-1 rounded hover:bg-amber-500/10 transition-colors" title="Disqualify lead">
-                                                <Ban className="w-3.5 h-3.5 text-gray-600 hover:text-amber-400" />
-                                            </button>
-                                        )}
                                         {isAdmin && (
                                             <button onClick={(e) => { e.stopPropagation(); deleteLead(lead.id, lead.name); }}
                                                 className="p-1 rounded hover:bg-red-500/10 transition-colors" title="Delete lead">

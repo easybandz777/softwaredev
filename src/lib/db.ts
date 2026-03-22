@@ -459,14 +459,18 @@ export async function ensureMigrated() {
         )
     `;
 
-    // ── Per-user lead disqualifications (hides a lead for one salesman) ─
+    // ── Per-user prospect disqualifications (hides AI search results) ───
     await sql`
-        CREATE TABLE IF NOT EXISTS lead_disqualifications (
+        CREATE TABLE IF NOT EXISTS prospect_disqualifications (
             id          SERIAL PRIMARY KEY,
-            lead_id     INTEGER NOT NULL,
             user_id     INTEGER NOT NULL,
+            mode        TEXT NOT NULL DEFAULT 'organization',
+            name        TEXT NOT NULL,
+            location    TEXT,
+            email       TEXT,
+            website     TEXT,
             created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-            UNIQUE (lead_id, user_id)
+            UNIQUE (user_id, mode, name)
         )
     `;
 

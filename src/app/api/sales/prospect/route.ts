@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireAuth, getSessionUser } from "@/lib/auth";
 import { sql, ensureMigrated } from "@/lib/db";
-import type { SearchMode, RawCandidate, SearchCriteria } from "@/lib/search/types";
+import type { SearchMode, RawCandidate, SearchCriteria, FilterBreakdownItem, SearchEntity } from "@/lib/search/types";
 import { OrganizationSearchProvider, OrganizationEnrichmentProvider } from "@/lib/search/providers/organization";
 import { PersonSearchProvider, PersonEnrichmentProvider } from "@/lib/search/providers/person";
 import { normalizeBatch } from "@/lib/search/normalize";
@@ -16,42 +16,59 @@ const orgEnrich = new OrganizationEnrichmentProvider();
 const personSearch = new PersonSearchProvider();
 const personEnrich = new PersonEnrichmentProvider();
 
-function filterOrganizations(candidates: RawCandidate[], filters: SearchCriteria): RawCandidate[] {
-    return candidates.filter((c) => {
-        if (filters.requireWebsite && !c.website) return false;
-        if (filters.includeNoWebsite === false && !c.website) return false;
-        if (filters.requireEmail && c.emails.length === 0) return false;
-        if (filters.requirePhone && c.phones.length === 0) return false;
-        const rating = (c.raw.rating as number) ?? 0;
-        const reviewCount = (c.raw.reviewCount as number) ?? 0;
-        if ((filters.minRating ?? 0) > 0 && rating < (filters.minRating ?? 0)) return false;
-        if ((filters.minReviews ?? 0) > 0 && reviewCount < (filters.minReviews ?? 0)) return false;
-        if (filters.locationKeywords.length > 0) {
-            const loc = (c.location || "").toLowerCase();
-            if (!filters.locationKeywords.some((kw) => loc.includes(kw.toLowerCase()))) return false;
-        }
-        return true;
-    });
+type FilterRule<T> = { key: string; label: string; active: boolean; test: (c: T) => boolean };
+
+function buildOrgPreAiRules(filters: SearchCriteria): FilterRule<RawCandidate>[] {
+    return [
+        { key: "requireWebsite", label: "Missing website", active: !!filters.requireWebsite, test: (c) => !!c.website },
+        { key: "excludeNoWebsite", label: "Excluded (no website)", active: filters.includeNoWebsite === false, test: (c) => !!c.website },
+        { key: "requireEmail", label: "Missing email", active: !!filters.requireEmail, test: (c) => c.emails.length > 0 },
+        { key: "requirePhone", label: "Missing phone", active: !!filters.requirePhone, test: (c) => c.phones.length > 0 },
+        { key: "minRating", label: `Below minimum rating (${filters.minRating ?? 0})`, active: (filters.minRating ?? 0) > 0, test: (c) => ((c.raw.rating as number) ?? 0) >= (filters.minRating ?? 0) },
+        { key: "minReviews", label: `Below minimum reviews (${filters.minReviews ?? 0})`, active: (filters.minReviews ?? 0) > 0, test: (c) => ((c.raw.reviewCount as number) ?? 0) >= (filters.minReviews ?? 0) },
+        { key: "locationKeywords", label: "Location did not match", active: filters.locationKeywords.length > 0, test: (c) => { const loc = (c.location || "").toLowerCase(); return filters.locationKeywords.some((kw) => loc.includes(kw.toLowerCase())); } },
+    ];
 }
 
-function filterPersons(candidates: RawCandidate[], filters: SearchCriteria): RawCandidate[] {
-    return candidates.filter((c) => {
-        if (filters.requireEmail && c.emails.length === 0) return false;
-        if (filters.requirePhone && c.phones.length === 0) return false;
-        if (filters.locationKeywords.length > 0) {
-            const loc = (c.location || "").toLowerCase();
-            if (!filters.locationKeywords.some((kw) => loc.includes(kw.toLowerCase()))) return false;
+function buildPersonPreAiRules(filters: SearchCriteria): FilterRule<RawCandidate>[] {
+    return [
+        { key: "requireEmail", label: "Missing email", active: !!filters.requireEmail, test: (c) => c.emails.length > 0 },
+        { key: "requirePhone", label: "Missing phone", active: !!filters.requirePhone, test: (c) => c.phones.length > 0 },
+        { key: "locationKeywords", label: "Location did not match", active: filters.locationKeywords.length > 0, test: (c) => { const loc = (c.location || "").toLowerCase(); return filters.locationKeywords.some((kw) => loc.includes(kw.toLowerCase())); } },
+        { key: "titleKeywords", label: "Title did not match", active: (filters.titleKeywords?.length ?? 0) > 0, test: (c) => { const title = (c.jobTitle || "").toLowerCase(); return filters.titleKeywords!.some((kw) => title.includes(kw.toLowerCase())); } },
+        { key: "employerKeywords", label: "Employer did not match", active: (filters.employerKeywords?.length ?? 0) > 0, test: (c) => { const org = (c.organization || "").toLowerCase(); return filters.employerKeywords!.some((kw) => org.includes(kw.toLowerCase())); } },
+    ];
+}
+
+function filterWithDiagnostics<T>(items: T[], rules: FilterRule<T>[], stage: "pre-ai" | "post-ai"): { passed: T[]; breakdown: FilterBreakdownItem[] } {
+    const activeRules = rules.filter((r) => r.active);
+    const counts: Record<string, number> = {};
+    const passed: T[] = [];
+
+    for (const item of items) {
+        let blocked = false;
+        for (const rule of activeRules) {
+            if (!rule.test(item)) {
+                counts[rule.key] = (counts[rule.key] || 0) + 1;
+                blocked = true;
+                break; // first-blocking semantics
+            }
         }
-        if (filters.titleKeywords && filters.titleKeywords.length > 0) {
-            const title = (c.jobTitle || "").toLowerCase();
-            if (!filters.titleKeywords.some((kw) => title.includes(kw.toLowerCase()))) return false;
-        }
-        if (filters.employerKeywords && filters.employerKeywords.length > 0) {
-            const org = (c.organization || "").toLowerCase();
-            if (!filters.employerKeywords.some((kw) => org.includes(kw.toLowerCase()))) return false;
-        }
-        return true;
-    });
+        if (!blocked) passed.push(item);
+    }
+
+    const breakdown: FilterBreakdownItem[] = activeRules
+        .filter((r) => (counts[r.key] || 0) > 0)
+        .map((r) => ({ key: r.key, label: r.label, count: counts[r.key], stage }));
+
+    return { passed, breakdown };
+}
+
+function buildPostAiRules(filters: SearchCriteria, mode: SearchMode): FilterRule<SearchEntity>[] {
+    return [
+        { key: "minQualityScore", label: `Below quality score (${filters.minQualityScore})`, active: filters.minQualityScore > 0, test: (e) => e.confidence >= filters.minQualityScore },
+        { key: "nicheKeywords", label: "Niche did not match keywords", active: mode === "organization" && (filters.nicheKeywords?.length ?? 0) > 0, test: (e) => { const niche = (e.orgData?.niche || "").toLowerCase(); return filters.nicheKeywords!.some((kw) => niche.includes(kw.toLowerCase())); } },
+    ];
 }
 
 function sortOrganizations(candidates: RawCandidate[]): RawCandidate[] {
@@ -162,7 +179,7 @@ export async function POST(req: NextRequest) {
         if (candidates.length === 0) {
             return NextResponse.json({
                 leads: [],
-                meta: { query: query.trim(), mode, discovered: 0, enriched: 0, filtered: 0, returned: 0, elapsedMs: Date.now() - startTime },
+                meta: { query: query.trim(), mode, discovered: 0, enriched: 0, filtered: 0, filterBreakdown: [], deduped: 0, returned: 0, elapsedMs: Date.now() - startTime },
                 message: mode === "organization"
                     ? "No businesses found. Try a broader location or different industry."
                     : "No contacts found. Try a different search or check your configuration.",
@@ -183,10 +200,30 @@ export async function POST(req: NextRequest) {
             enriched = pool;
         }
 
-        // ── Filtering ─────────────────────────────────────────────────────────
-        let filtered = mode === "organization" ? filterOrganizations(enriched, filters) : filterPersons(enriched, filters);
-        filtered = mode === "organization" ? sortOrganizations(filtered) : sortPersons(filtered);
-        const finalCandidates = filtered.slice(0, limit);
+        // ── Filtering (with per-filter diagnostics) ─────────────────────────
+        const preAiRules = mode === "organization" ? buildOrgPreAiRules(filters) : buildPersonPreAiRules(filters);
+        const { passed: preAiPassed, breakdown: preAiBreakdown } = filterWithDiagnostics(enriched, preAiRules, "pre-ai");
+
+        // ── Remove previously disqualified prospects (saves AI tokens) ────
+        let afterDQ = preAiPassed;
+        let dqCount = 0;
+        const sessionUserForDQ = getSessionUser(req);
+        if (sessionUserForDQ) {
+            await ensureMigrated();
+            const { rows: dqRows } = await sql`
+                SELECT name FROM prospect_disqualifications
+                WHERE user_id = ${sessionUserForDQ.id} AND mode = ${mode}
+            `;
+            if (dqRows.length > 0) {
+                const dqNames = new Set(dqRows.map(r => (r.name as string).toLowerCase()));
+                const before = afterDQ.length;
+                afterDQ = afterDQ.filter(c => !dqNames.has(c.primaryLabel.trim().toLowerCase()));
+                dqCount = before - afterDQ.length;
+            }
+        }
+
+        const sorted = mode === "organization" ? sortOrganizations(afterDQ) : sortPersons(afterDQ);
+        const finalCandidates = sorted.slice(0, limit);
 
         // ── AI Qualification (provider-agnostic) ──────────────────────────────
         type AiResult = { index: number; niche?: string; contactName?: string; summary?: string; why?: string; confidence?: number };
@@ -235,18 +272,11 @@ export async function POST(req: NextRequest) {
             })),
         );
 
-        // ── Post-filters on scored entities ───────────────────────────────────
-        let results = entities.sort((a, b) => b.confidence - a.confidence);
-
-        if (filters.minQualityScore > 0) {
-            results = results.filter((e) => e.confidence >= filters.minQualityScore);
-        }
-        if (mode === "organization" && (filters.nicheKeywords?.length ?? 0) > 0) {
-            results = results.filter((e) => {
-                const niche = (e.orgData?.niche || "").toLowerCase();
-                return filters.nicheKeywords!.some((kw) => niche.includes(kw.toLowerCase()));
-            });
-        }
+        // ── Post-filters on scored entities (with diagnostics) ────────────────
+        const sortedEntities = entities.sort((a, b) => b.confidence - a.confidence);
+        const postAiRules = buildPostAiRules(filters, mode);
+        const { passed: postAiPassed, breakdown: postAiBreakdown } = filterWithDiagnostics(sortedEntities, postAiRules, "post-ai");
+        const results = postAiPassed;
 
         // ── Backward-compatible response ──────────────────────────────────────
         const leads = results.map((e) => ({
@@ -290,6 +320,14 @@ export async function POST(req: NextRequest) {
             }
         }
 
+        const filterBreakdown: FilterBreakdownItem[] = [
+            ...preAiBreakdown,
+            ...postAiBreakdown,
+            ...(dqCount > 0 ? [{ key: "disqualified", label: "Disqualified by you", count: dqCount, stage: "system" as const }] : []),
+            ...(dedupedCount > 0 ? [{ key: "deduped", label: "Already saved in pipeline", count: dedupedCount, stage: "system" as const }] : []),
+        ];
+        const totalFiltered = preAiBreakdown.reduce((s, b) => s + b.count, 0) + postAiBreakdown.reduce((s, b) => s + b.count, 0);
+
         return NextResponse.json({
             leads: finalLeads,
             meta: {
@@ -297,7 +335,8 @@ export async function POST(req: NextRequest) {
                 mode,
                 discovered: candidates.length,
                 enriched: enriched.filter((c) => c.emails.length > 0).length,
-                filtered: enriched.length - filtered.length,
+                filtered: totalFiltered,
+                filterBreakdown,
                 deduped: dedupedCount,
                 returned: finalLeads.length,
                 elapsedMs: Date.now() - startTime,
