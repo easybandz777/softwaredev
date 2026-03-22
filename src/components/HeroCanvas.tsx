@@ -292,25 +292,22 @@ export function HeroCanvas() {
                 }
             });
 
-            // ── Metric overlays — drawn only every 2nd frame ────
-            // (static UI cards, no need for 60fps)
-            if (tick % 2 === 0) {
-                METRICS.forEach(m => {
-                    const mx = m.x * w, my = m.y * h;
-                    const cardW = 90, cardH = 36;
-                    ctx!.fillStyle = "rgba(13,21,38,0.75)";
-                    ctx!.strokeStyle = m.color + "55";
-                    ctx!.lineWidth = 0.8;
-                    roundRect(ctx!, mx - cardW / 2, my, cardW, cardH, 6);
-                    ctx!.font = "600 8px 'Inter', sans-serif";
-                    ctx!.fillStyle = m.color + "bb";
-                    ctx!.textAlign = "center";
-                    ctx!.fillText(m.label, mx, my + 12);
-                    ctx!.font = "700 13px 'Inter', sans-serif";
-                    ctx!.fillStyle = m.color;
-                    ctx!.fillText(m.value, mx, my + 27);
-                });
-            }
+            // ── Metric overlays
+            METRICS.forEach(m => {
+                const mx = m.x * w, my = m.y * h;
+                const cardW = 90, cardH = 36;
+                ctx!.fillStyle = "rgba(13,21,38,0.75)";
+                ctx!.strokeStyle = m.color + "55";
+                ctx!.lineWidth = 0.8;
+                roundRect(ctx!, mx - cardW / 2, my, cardW, cardH, 6);
+                ctx!.font = "600 8px 'Inter', sans-serif";
+                ctx!.fillStyle = m.color + "bb";
+                ctx!.textAlign = "center";
+                ctx!.fillText(m.label, mx, my + 12);
+                ctx!.font = "700 13px 'Inter', sans-serif";
+                ctx!.fillStyle = m.color;
+                ctx!.fillText(m.value, mx, my + 27);
+            });
 
             // (rAF already requested at top of draw)
         }
