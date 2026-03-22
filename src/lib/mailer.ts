@@ -1,35 +1,47 @@
 import nodemailer from "nodemailer";
 
-let transporter: nodemailer.Transporter | null = null;
+const transporterCache = new Map<string, nodemailer.Transporter>();
 
-function getTransporter() {
-    if (transporter) return transporter;
-    const host = process.env.SMTP_HOST;
-    const port = Number(process.env.SMTP_PORT) || 465;
-    const user = process.env.SMTP_USER;
-    const pass = process.env.SMTP_PASS;
-    if (!host || !user || !pass) {
-        throw new Error("SMTP not configured. Set SMTP_HOST, SMTP_USER, and SMTP_PASS in your environment.");
+function getSmtpHost() { return process.env.SMTP_HOST || ""; }
+function getSmtpPort() { return Number(process.env.SMTP_PORT) || 465; }
+
+function getTransporter(userEmail?: string, userSmtpPass?: string): nodemailer.Transporter {
+    const host = getSmtpHost();
+    const port = getSmtpPort();
+    const smtpUser = userEmail || process.env.SMTP_USER || "";
+    const smtpPass = userSmtpPass || process.env.SMTP_PASS || "";
+
+    if (!host || !smtpUser || !smtpPass) {
+        throw new Error("SMTP not configured. Set SMTP_HOST, SMTP_USER, and SMTP_PASS in your environment, or set per-user SMTP credentials in Settings.");
     }
-    transporter = nodemailer.createTransport({
+
+    const cacheKey = `${host}:${port}:${smtpUser}`;
+    const cached = transporterCache.get(cacheKey);
+    if (cached) return cached;
+
+    const t = nodemailer.createTransport({
         host,
         port,
         secure: port === 465,
-        auth: { user, pass },
+        auth: { user: smtpUser, pass: smtpPass },
         tls: { rejectUnauthorized: false },
     });
-    return transporter;
+    transporterCache.set(cacheKey, t);
+    return t;
 }
 
-export async function sendEmail({ to, subject, text, html, replyTo }: {
+export async function sendEmail({ to, subject, text, html, replyTo, fromEmail, fromSmtpPass }: {
     to: string; subject: string; text: string; html?: string; replyTo?: string;
+    fromEmail?: string; fromSmtpPass?: string;
 }) {
-    const transport = getTransporter();
-    const from = process.env.SMTP_FROM || process.env.SMTP_USER;
+    const transport = getTransporter(fromEmail, fromSmtpPass);
+    const from = fromEmail || process.env.SMTP_FROM || process.env.SMTP_USER;
+
     const result = await transport.sendMail({
         from, to, subject, text, html,
         ...(replyTo ? { replyTo } : {}),
     });
+
     return { messageId: result.messageId, accepted: result.accepted, rejected: result.rejected };
 }
 

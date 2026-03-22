@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { requireAuth } from "@/lib/auth";
+import { requireAuth, getSessionUser } from "@/lib/auth";
+import { sql, ensureMigrated } from "@/lib/db";
 import OpenAI from "openai";
 
 export const dynamic = "force-dynamic";
@@ -50,12 +51,20 @@ export async function POST(req: NextRequest) {
 
         const openai = new OpenAI({ apiKey });
 
+        await ensureMigrated();
+        let senderName = "QuantLab Sales Team";
+        const sessionUser = getSessionUser(req);
+        if (sessionUser) {
+            const { rows } = await sql`SELECT full_name FROM crm_users WHERE id = ${sessionUser.id} LIMIT 1`;
+            if (rows[0]?.full_name) senderName = rows[0].full_name;
+        }
+
         const defaultRules = {
             tone: "Professional but conversational — like a sharp colleague, not a marketer",
             maxLength: "120 words",
             callToAction: "Suggest a quick 10-minute call this week",
             avoidWords: "synergy, leverage, disrupt, innovative, cutting-edge, game-changer, scalable, I hope this finds you well",
-            senderName: "QuantLab Sales Team",
+            senderName,
         };
         const rules = { ...defaultRules, ...(promptRules || {}) };
 

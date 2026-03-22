@@ -42,3 +42,6 @@ next-env.d.ts
 
 .vercel
 .env*.local
+
+# J5 original source (integrated into src/app/sales)
+/j5sales

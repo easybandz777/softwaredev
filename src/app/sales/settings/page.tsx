@@ -4,12 +4,15 @@ import React, { useState, useEffect } from "react";
 import { SalesLayout } from "@/components/SalesLayout";
 import { Users, Bot, Key, UserCircle, Save, Plus, Trash2, Loader2 } from "lucide-react";
 
-interface UserInfo { id: number; username: string; full_name: string; role: string; }
+interface UserInfo { id: number; username: string; full_name: string; email: string; role: string; has_smtp: boolean; }
 
 export default function SettingsPage() {
     const [user, setUser] = useState<UserInfo | null>(null);
     const [activeTab, setActiveTab] = useState("rules");
     const [loading, setLoading] = useState(true);
+    const [smtpPass, setSmtpPass] = useState("");
+    const [smtpSaving, setSmtpSaving] = useState(false);
+    const [smtpMsg, setSmtpMsg] = useState("");
     const [rules, setRules] = useState([
         { id: 1, niche: "All Niches", step: "First Touchpoint", tone: "Direct, problem-focused", maxSentences: 5, cta: "10-min chat" },
         { id: 2, niche: "Industrial Supply", step: "First Touchpoint", tone: "Consultative, ROI-focused", maxSentences: 4, cta: "Send a case study" },
@@ -152,20 +155,64 @@ export default function SettingsPage() {
                         )}
 
                         {activeTab === "profile" && (
-                            <div className="rounded-xl p-6" style={{ background: "linear-gradient(145deg, #0d1526, #0a1020)", border: "1px solid rgba(255,255,255,0.05)" }}>
-                                <h3 className="text-sm font-semibold text-white mb-3">My Profile</h3>
-                                <div className="space-y-3">
-                                    <div>
-                                        <span className="text-[10px] uppercase tracking-wider text-gray-600 block">Username</span>
-                                        <p className="text-sm text-gray-300">{user?.username}</p>
+                            <div className="space-y-4">
+                                <div className="rounded-xl p-6" style={{ background: "linear-gradient(145deg, #0d1526, #0a1020)", border: "1px solid rgba(255,255,255,0.05)" }}>
+                                    <h3 className="text-sm font-semibold text-white mb-4">My Profile</h3>
+                                    <div className="space-y-3">
+                                        <div>
+                                            <span className="text-[10px] uppercase tracking-wider text-gray-600 block">Username</span>
+                                            <p className="text-sm text-gray-300">{user?.username}</p>
+                                        </div>
+                                        <div>
+                                            <span className="text-[10px] uppercase tracking-wider text-gray-600 block">Full Name</span>
+                                            <p className="text-sm text-gray-300">{user?.full_name}</p>
+                                        </div>
+                                        <div>
+                                            <span className="text-[10px] uppercase tracking-wider text-gray-600 block">Role</span>
+                                            <p className="text-sm text-gray-300 capitalize">{user?.role}</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <span className="text-[10px] uppercase tracking-wider text-gray-600 block">Full Name</span>
-                                        <p className="text-sm text-gray-300">{user?.full_name}</p>
-                                    </div>
-                                    <div>
-                                        <span className="text-[10px] uppercase tracking-wider text-gray-600 block">Role</span>
-                                        <p className="text-sm text-gray-300 capitalize">{user?.role}</p>
+                                </div>
+
+                                <div className="rounded-xl p-6" style={{ background: "linear-gradient(145deg, #0d1526, #0a1020)", border: "1px solid rgba(255,255,255,0.05)" }}>
+                                    <h3 className="text-sm font-semibold text-white mb-1">Outreach Email</h3>
+                                    <p className="text-gray-500 text-xs mb-4">Outreach emails you send will come FROM this address.</p>
+                                    <div className="space-y-3">
+                                        <div>
+                                            <span className="text-[10px] uppercase tracking-wider text-gray-600 block">Send-as Email</span>
+                                            <p className="text-sm text-emerald-400 font-medium">{user?.email || "Not set"}</p>
+                                        </div>
+                                        <div>
+                                            <span className="text-[10px] uppercase tracking-wider text-gray-600 block">SMTP Status</span>
+                                            {user?.has_smtp ? (
+                                                <p className="text-sm text-emerald-400 flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-emerald-400 inline-block" /> Connected</p>
+                                            ) : (
+                                                <p className="text-sm text-amber-400 flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-amber-400 inline-block" /> Not configured</p>
+                                            )}
+                                        </div>
+                                        <div>
+                                            <label className="text-[10px] uppercase tracking-wider text-gray-600 block mb-1.5">Email Password</label>
+                                            <div className="flex gap-2">
+                                                <input type="password" value={smtpPass} onChange={e => setSmtpPass(e.target.value)}
+                                                    placeholder={user?.has_smtp ? "Update password..." : "Enter your email password"}
+                                                    className="flex-1 max-w-sm text-xs bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-gray-300 focus:outline-none focus:border-emerald-400/40" />
+                                                <button disabled={smtpSaving || !smtpPass.trim()} onClick={async () => {
+                                                    setSmtpSaving(true); setSmtpMsg("");
+                                                    try {
+                                                        const r = await fetch("/api/sales/me", { method: "PATCH", headers: { "Content-Type": "application/json" }, credentials: "include", body: JSON.stringify({ smtp_pass: smtpPass }) });
+                                                        if (r.ok) { setSmtpMsg("Saved"); setSmtpPass(""); setUser(prev => prev ? { ...prev, has_smtp: true } : prev); }
+                                                        else { setSmtpMsg("Failed to save"); }
+                                                    } catch { setSmtpMsg("Error"); }
+                                                    finally { setSmtpSaving(false); }
+                                                }}
+                                                    className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold text-white disabled:opacity-50"
+                                                    style={{ background: "linear-gradient(135deg, #059669, #34d399)" }}>
+                                                    <Save className="w-3 h-3" /> {smtpSaving ? "Saving..." : "Save"}
+                                                </button>
+                                            </div>
+                                            {smtpMsg && <p className={`text-xs mt-1 ${smtpMsg === "Saved" ? "text-emerald-400" : "text-rose-400"}`}>{smtpMsg}</p>}
+                                            <p className="text-gray-600 text-[10px] mt-1">Your Spacemail password for {user?.email}. This lets you send outreach from your own address.</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { requireAuth } from "@/lib/auth";
+import { requireAuth, getSessionUser } from "@/lib/auth";
 import { sendEmail } from "@/lib/mailer";
 import { sql, ensureMigrated } from "@/lib/db";
 
@@ -21,11 +21,28 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ success: false, error: "Invalid email address." }, { status: 400 });
         }
 
+        await ensureMigrated();
+
+        const sessionUser = getSessionUser(req);
+        let fromEmail: string | undefined;
+        let fromSmtpPass: string | undefined;
+
+        if (sessionUser) {
+            const { rows } = await sql`SELECT email, smtp_pass FROM crm_users WHERE id = ${sessionUser.id} LIMIT 1`;
+            const dbUser = rows[0];
+            if (dbUser?.email && dbUser?.smtp_pass) {
+                fromEmail = dbUser.email;
+                fromSmtpPass = dbUser.smtp_pass;
+            }
+        }
+
         const result = await sendEmail({
             to,
             subject,
             text: body,
             html: body.replace(/\n/g, "<br>"),
+            fromEmail,
+            fromSmtpPass,
         });
 
         if (result.rejected && result.rejected.length > 0) {
@@ -34,20 +51,26 @@ export async function POST(req: NextRequest) {
 
         if (leadId) {
             try {
-                await ensureMigrated();
                 await sql`UPDATE consultations SET status = 'contacted', last_activity_at = NOW() WHERE id = ${leadId}`;
             } catch (err) {
                 console.error("Failed to update lead stage after send:", err);
             }
         }
 
-        return NextResponse.json({ success: true, messageId: result.messageId, sentTo: to });
+        return NextResponse.json({
+            success: true,
+            messageId: result.messageId,
+            sentTo: to,
+            sentFrom: fromEmail || process.env.SMTP_FROM || process.env.SMTP_USER,
+        });
     } catch (err: unknown) {
         console.error("Send email error:", err);
         const msg = err instanceof Error ? err.message : "";
         let userMessage = "Failed to send email. Please try again.";
         if (msg.includes("SMTP not configured")) {
-            userMessage = "Email sending is not configured. Contact your admin to set up SMTP credentials.";
+            userMessage = "Email sending is not configured. Set your SMTP password in Settings, or contact your admin.";
+        } else if (msg.includes("EAUTH") || msg.includes("authentication")) {
+            userMessage = "SMTP authentication failed. Check your email password in Settings.";
         }
         return NextResponse.json({ success: false, error: userMessage }, { status: 500 });
     }

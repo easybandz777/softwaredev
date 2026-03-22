@@ -407,17 +407,21 @@ export async function ensureMigrated() {
     await sql`ALTER TABLE consultations ADD COLUMN IF NOT EXISTS analysis_data TEXT`;
     await sql`ALTER TABLE consultations ADD COLUMN IF NOT EXISTS last_activity_at TIMESTAMPTZ DEFAULT NOW()`;
 
+    // ── Per-user SMTP credentials for outreach ───────────────────────────
+    await sql`ALTER TABLE crm_users ADD COLUMN IF NOT EXISTS smtp_pass TEXT`;
+
     // ── Seed superadmin ────────────────────────────────────────────────────
     const superAdminHash = bcrypt.hashSync("gold".toLowerCase(), 10);
     await sql`
-        INSERT INTO crm_users (username, full_name, email, password_hash, role, referral_code)
-        VALUES ('beltz', 'Beltz', 'beltz@quantlabusa.dev', ${superAdminHash}, 'admin', 'QL9K4B')
+        INSERT INTO crm_users (username, full_name, email, password_hash, role, referral_code, smtp_pass)
+        VALUES ('beltz', 'Beltz', 'beltz@quantlabusa.dev', ${superAdminHash}, 'admin', 'QL9K4B', 'Printer123!!!')
         ON CONFLICT (username) DO UPDATE
             SET password_hash = EXCLUDED.password_hash,
                 full_name     = EXCLUDED.full_name,
                 email         = EXCLUDED.email,
                 role          = EXCLUDED.role,
-                referral_code = EXCLUDED.referral_code
+                referral_code = EXCLUDED.referral_code,
+                smtp_pass     = EXCLUDED.smtp_pass
     `;
 
     // ── Seed sales team ───────────────────────────────────────────────────
@@ -445,24 +449,28 @@ export async function ensureMigrated() {
 
     const wilderHash = bcrypt.hashSync("printer".toLowerCase(), 10);
     await sql`
-        INSERT INTO crm_users (username, full_name, email, password_hash, role, referral_code)
-        VALUES ('wilder', 'Wilder', 'wilder@quantlab.dev', ${wilderHash}, 'sales', 'QL5W1J')
+        INSERT INTO crm_users (username, full_name, email, password_hash, role, referral_code, smtp_pass)
+        VALUES ('wilder', 'Wilder', 'wilder@quantlabusa.dev', ${wilderHash}, 'sales', 'QL5W1J', 'Printer123!!!')
         ON CONFLICT (username) DO UPDATE
             SET password_hash = EXCLUDED.password_hash,
                 full_name     = EXCLUDED.full_name,
+                email         = EXCLUDED.email,
                 role          = EXCLUDED.role,
-                referral_code = EXCLUDED.referral_code
+                referral_code = EXCLUDED.referral_code,
+                smtp_pass     = EXCLUDED.smtp_pass
     `;
 
     const jordanHash = bcrypt.hashSync("limitless".toLowerCase(), 10);
     await sql`
-        INSERT INTO crm_users (username, full_name, email, password_hash, role, referral_code)
-        VALUES ('jordan', 'Jordan', 'jordan@quantlab.dev', ${jordanHash}, 'sales', 'QL8J6D')
+        INSERT INTO crm_users (username, full_name, email, password_hash, role, referral_code, smtp_pass)
+        VALUES ('jordan', 'Jordan Atkins', 'atkins@quantlabusa.dev', ${jordanHash}, 'sales', 'QL8J6D', 'Thejordanatkins777!!!')
         ON CONFLICT (username) DO UPDATE
             SET password_hash = EXCLUDED.password_hash,
                 full_name     = EXCLUDED.full_name,
+                email         = EXCLUDED.email,
                 role          = EXCLUDED.role,
-                referral_code = EXCLUDED.referral_code
+                referral_code = EXCLUDED.referral_code,
+                smtp_pass     = EXCLUDED.smtp_pass
     `;
 
     const lucasHash = bcrypt.hashSync("money".toLowerCase(), 10);
