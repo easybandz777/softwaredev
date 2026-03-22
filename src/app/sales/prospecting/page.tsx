@@ -23,6 +23,7 @@ interface Prospect {
     completenessScore?: number;
     jobTitle?: string | null; employer?: string | null;
     socialProfiles?: { platform: string; url: string }[];
+    sourceRefs?: { provider: string; id: string | null; url: string | null }[];
 }
 
 interface Criteria {
@@ -186,6 +187,8 @@ export default function ProspectingPage() {
                     opportunity_level: lead.qualityScore >= 70 ? "critical" : lead.qualityScore >= 40 ? "high" : "medium",
                     entity_type: lead.mode,
                     job_title: lead.jobTitle || null,
+                    source_refs: lead.sourceRefs ? JSON.stringify(lead.sourceRefs) : null,
+                    contact_confidence: lead.qualityScore || null,
                     analysis_data: {
                         rating: lead.rating, reviewCount: lead.reviewCount, niche: lead.niche,
                         qualityScore: lead.qualityScore, mode: lead.mode,

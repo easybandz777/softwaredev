@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireAuth, getSessionUser } from "@/lib/auth";
+import { sql, ensureMigrated } from "@/lib/db";
 import type { SearchMode, RawCandidate, SearchCriteria } from "@/lib/search/types";
 import { OrganizationSearchProvider, OrganizationEnrichmentProvider } from "@/lib/search/providers/organization";
 import { PersonSearchProvider, PersonEnrichmentProvider } from "@/lib/search/providers/person";
 import { normalizeBatch } from "@/lib/search/normalize";
+import { filterOutSavedLeads, type SavedLead } from "@/lib/search/dedupe";
 import { generateJson, resolveUserLlmConfig } from "@/lib/llm";
 
 export const dynamic = "force-dynamic";
@@ -271,15 +273,33 @@ export async function POST(req: NextRequest) {
             sourceRefs: e.sourceRefs,
         }));
 
+        // ── Dedupe: exclude leads already saved by this salesperson ──────────
+        let finalLeads = leads;
+        let dedupedCount = 0;
+        if (sessionUser) {
+            await ensureMigrated();
+            const { rows: savedRows } = await sql`
+                SELECT id, name, email, phone, company, website, location, entity_type, source_refs
+                FROM consultations
+                WHERE assigned_to_id = ${sessionUser.id}
+            `;
+            if (savedRows.length > 0) {
+                const dedupeResult = filterOutSavedLeads(leads, savedRows as unknown as SavedLead[]);
+                finalLeads = dedupeResult.filtered;
+                dedupedCount = dedupeResult.deduped;
+            }
+        }
+
         return NextResponse.json({
-            leads,
+            leads: finalLeads,
             meta: {
                 query: query.trim(),
                 mode,
                 discovered: candidates.length,
                 enriched: enriched.filter((c) => c.emails.length > 0).length,
                 filtered: enriched.length - filtered.length,
-                returned: leads.length,
+                deduped: dedupedCount,
+                returned: finalLeads.length,
                 elapsedMs: Date.now() - startTime,
                 aiProvider: llmConfig?.provider || null,
             },

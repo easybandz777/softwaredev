@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
     if (error) return NextResponse.json({ error }, { status: 401 });
 
     const body = await req.json();
-    const { name, email, phone, company, service, message, website, location, lead_source, opportunity_level, analysis_data, entity_type, job_title } = body;
+    const { name, email, phone, company, service, message, website, location, lead_source, opportunity_level, analysis_data, entity_type, job_title, source_refs, contact_confidence } = body;
 
     if (!name) {
         return NextResponse.json({ error: "name is required" }, { status: 400 });
@@ -68,10 +68,11 @@ export async function POST(req: NextRequest) {
     await ensureMigrated();
 
     const analysisJson = analysis_data ? (typeof analysis_data === "string" ? analysis_data : JSON.stringify(analysis_data)) : null;
+    const sourceRefsJson = source_refs ? (typeof source_refs === "string" ? source_refs : JSON.stringify(source_refs)) : null;
 
     const { rows } = await sql`
-        INSERT INTO consultations (name, email, phone, company, service, message, status, assigned_to_id, website, location, lead_source, opportunity_level, analysis_data, entity_type, job_title)
-        VALUES (${name}, ${email || ''}, ${phone || null}, ${company || null}, ${service || 'General'}, ${message || 'Manually created lead'}, 'new', ${user!.id}, ${website || null}, ${location || null}, ${lead_source || 'Manual Entry'}, ${opportunity_level || 'medium'}, ${analysisJson}, ${entity_type || 'organization'}, ${job_title || null})
+        INSERT INTO consultations (name, email, phone, company, service, message, status, assigned_to_id, website, location, lead_source, opportunity_level, analysis_data, entity_type, job_title, source_refs, contact_confidence)
+        VALUES (${name}, ${email || ''}, ${phone || null}, ${company || null}, ${service || 'General'}, ${message || 'Manually created lead'}, 'new', ${user!.id}, ${website || null}, ${location || null}, ${lead_source || 'Manual Entry'}, ${opportunity_level || 'medium'}, ${analysisJson}, ${entity_type || 'organization'}, ${job_title || null}, ${sourceRefsJson}, ${typeof contact_confidence === 'number' ? contact_confidence : null})
         RETURNING *
     `;
 
