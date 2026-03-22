@@ -53,10 +53,14 @@ export async function POST(req: NextRequest) {
 
         await ensureMigrated();
         let senderName = "QuantLab Sales Team";
+        let savedRules: Record<string, string> = {};
         const sessionUser = getSessionUser(req);
         if (sessionUser) {
-            const { rows } = await sql`SELECT full_name FROM crm_users WHERE id = ${sessionUser.id} LIMIT 1`;
+            const { rows } = await sql`SELECT full_name, outreach_prompt_rules FROM crm_users WHERE id = ${sessionUser.id} LIMIT 1`;
             if (rows[0]?.full_name) senderName = rows[0].full_name;
+            if (rows[0]?.outreach_prompt_rules) {
+                try { savedRules = typeof rows[0].outreach_prompt_rules === "string" ? JSON.parse(rows[0].outreach_prompt_rules) : rows[0].outreach_prompt_rules; } catch { /* ignore */ }
+            }
         }
 
         const defaultRules = {
@@ -66,7 +70,7 @@ export async function POST(req: NextRequest) {
             avoidWords: "synergy, leverage, disrupt, innovative, cutting-edge, game-changer, scalable, I hope this finds you well",
             senderName,
         };
-        const rules = { ...defaultRules, ...(promptRules || {}) };
+        const rules = { ...defaultRules, ...savedRules, ...(promptRules || {}) };
 
         const hasAudit = lead.analysisData && typeof lead.analysisData === "object" && Object.keys(lead.analysisData).length > 0;
         const hasNotes = lead.notes && typeof lead.notes === "string" && lead.notes.trim().length > 0;
@@ -86,6 +90,7 @@ HARD RULES:
 
 ${hasAudit ? "You have a detailed business audit below. Reference the SPECIFIC weaknesses." : ""}
 ${hasNotes ? "Pay attention to the internal notes." : ""}
+${rules.customInstructions ? `\nCUSTOM INSTRUCTIONS:\n${rules.customInstructions}` : ""}
 
 FORMAT: First line is the subject line prefixed with "Subject: ", then a blank line, then the email body. Nothing else.`;
 

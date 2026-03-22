@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
     if (error) return NextResponse.json({ error }, { status: 401 });
 
     const body = await req.json();
-    const { name, email, phone, company, service, message } = body;
+    const { name, email, phone, company, service, message, website, location, lead_source, opportunity_level, analysis_data } = body;
 
     if (!name || !email || !service) {
         return NextResponse.json({ error: "name, email, and service are required" }, { status: 400 });
@@ -67,10 +67,11 @@ export async function POST(req: NextRequest) {
 
     await ensureMigrated();
 
-    // Auto-assign to the creating user
+    const analysisJson = analysis_data ? (typeof analysis_data === "string" ? analysis_data : JSON.stringify(analysis_data)) : null;
+
     const { rows } = await sql`
-        INSERT INTO consultations (name, email, phone, company, service, message, status, assigned_to_id)
-        VALUES (${name}, ${email}, ${phone || null}, ${company || null}, ${service}, ${message || 'Manually created lead'}, 'new', ${user!.id})
+        INSERT INTO consultations (name, email, phone, company, service, message, status, assigned_to_id, website, location, lead_source, opportunity_level, analysis_data)
+        VALUES (${name}, ${email}, ${phone || null}, ${company || null}, ${service}, ${message || 'Manually created lead'}, 'new', ${user!.id}, ${website || null}, ${location || null}, ${lead_source || 'Manual Entry'}, ${opportunity_level || 'medium'}, ${analysisJson})
         RETURNING *
     `;
 

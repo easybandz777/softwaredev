@@ -27,7 +27,18 @@ export async function POST(req: NextRequest) {
 
     try {
         const body = await req.json();
-        const { query, maxResults = 5 } = body;
+        const { query, maxResults = 5, criteria } = body;
+        const filters = {
+            requireWebsite: criteria?.requireWebsite ?? false,
+            requireEmail: criteria?.requireEmail ?? false,
+            requirePhone: criteria?.requirePhone ?? false,
+            minRating: typeof criteria?.minRating === "number" ? criteria.minRating : 0,
+            minReviews: typeof criteria?.minReviews === "number" ? criteria.minReviews : 0,
+            minQualityScore: typeof criteria?.minQualityScore === "number" ? criteria.minQualityScore : 0,
+            nicheKeywords: Array.isArray(criteria?.nicheKeywords) ? criteria.nicheKeywords as string[] : [],
+            locationKeywords: Array.isArray(criteria?.locationKeywords) ? criteria.locationKeywords as string[] : [],
+            includeNoWebsite: criteria?.includeNoWebsite ?? true,
+        };
 
         if (!query || typeof query !== "string" || query.trim().length < 3) {
             return NextResponse.json({ error: "Please enter a more specific search (at least 3 characters)." }, { status: 400 });
@@ -67,13 +78,27 @@ export async function POST(req: NextRequest) {
             enriched = pool.map(l => ({ ...l, email: null as string | null, emailMissing: true }));
         }
 
-        enriched.sort((a, b) => {
+        let filtered = enriched.filter(lead => {
+            if (filters.requireWebsite && !lead.website) return false;
+            if (!filters.includeNoWebsite && !lead.website) return false;
+            if (filters.requireEmail && !lead.email) return false;
+            if (filters.requirePhone && !lead.phone) return false;
+            if (filters.minRating > 0 && (!lead.rating || lead.rating < filters.minRating)) return false;
+            if (filters.minReviews > 0 && lead.reviewCount < filters.minReviews) return false;
+            if (filters.locationKeywords.length > 0) {
+                const loc = (lead.location || "").toLowerCase();
+                if (!filters.locationKeywords.some(kw => loc.includes(kw.toLowerCase()))) return false;
+            }
+            return true;
+        });
+
+        filtered.sort((a, b) => {
             const aScore = (a.email ? 3 : 0) + (a.phone ? 1 : 0) + (a.rating ? 1 : 0);
             const bScore = (b.email ? 3 : 0) + (b.phone ? 1 : 0) + (b.rating ? 1 : 0);
             return bScore - aScore;
         });
 
-        const finalLeads = enriched.slice(0, limit);
+        const finalLeads = filtered.slice(0, limit);
 
         let qualifiedLeads;
         const apiKey = process.env.OPENAI_API_KEY;
@@ -124,6 +149,16 @@ export async function POST(req: NextRequest) {
                     return enrichedLead;
                 });
                 qualifiedLeads.sort((a, b) => (b.qualityScore as number) - (a.qualityScore as number));
+
+                if (filters.minQualityScore > 0) {
+                    qualifiedLeads = qualifiedLeads.filter(l => (l.qualityScore as number) >= filters.minQualityScore);
+                }
+                if (filters.nicheKeywords.length > 0) {
+                    qualifiedLeads = qualifiedLeads.filter(l => {
+                        const niche = ((l.niche as string) || "").toLowerCase();
+                        return filters.nicheKeywords.some(kw => niche.includes(kw.toLowerCase()));
+                    });
+                }
             } catch {
                 qualifiedLeads = null;
             }
@@ -155,9 +190,10 @@ export async function POST(req: NextRequest) {
             leads: qualifiedLeads,
             meta: {
                 query: query.trim(),
-                discovered: candidates.length,
-                enriched: enriched.filter(l => l.email).length,
-                returned: qualifiedLeads.length,
+            discovered: candidates.length,
+            enriched: enriched.filter(l => l.email).length,
+            filtered: enriched.length - filtered.length,
+            returned: qualifiedLeads.length,
                 elapsedMs: Date.now() - startTime,
             },
         });

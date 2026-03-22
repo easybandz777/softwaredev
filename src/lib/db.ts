@@ -407,8 +407,22 @@ export async function ensureMigrated() {
     await sql`ALTER TABLE consultations ADD COLUMN IF NOT EXISTS analysis_data TEXT`;
     await sql`ALTER TABLE consultations ADD COLUMN IF NOT EXISTS last_activity_at TIMESTAMPTZ DEFAULT NOW()`;
 
-    // ── Per-user SMTP credentials for outreach ───────────────────────────
+    // ── Prospect presets (per-user saved search criteria) ─────────────────
+    await sql`
+        CREATE TABLE IF NOT EXISTS sales_prospect_presets (
+            id          SERIAL PRIMARY KEY,
+            user_id     INTEGER NOT NULL,
+            name        TEXT NOT NULL,
+            criteria    TEXT NOT NULL DEFAULT '{}',
+            is_default  BOOLEAN NOT NULL DEFAULT FALSE,
+            created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+            updated_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
+        )
+    `;
+
+    // ── Per-user SMTP credentials + prompt rules for outreach ──────────
     await sql`ALTER TABLE crm_users ADD COLUMN IF NOT EXISTS smtp_pass TEXT`;
+    await sql`ALTER TABLE crm_users ADD COLUMN IF NOT EXISTS outreach_prompt_rules TEXT`;
 
     // ── Seed superadmin ────────────────────────────────────────────────────
     const superAdminHash = bcrypt.hashSync("gold".toLowerCase(), 10);
