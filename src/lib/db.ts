@@ -459,6 +459,17 @@ export async function ensureMigrated() {
         )
     `;
 
+    // ── Per-user lead disqualifications (hides a lead for one salesman) ─
+    await sql`
+        CREATE TABLE IF NOT EXISTS lead_disqualifications (
+            id          SERIAL PRIMARY KEY,
+            lead_id     INTEGER NOT NULL,
+            user_id     INTEGER NOT NULL,
+            created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+            UNIQUE (lead_id, user_id)
+        )
+    `;
+
     // ── Per-user SMTP credentials + prompt rules for outreach ──────────
     await sql`ALTER TABLE crm_users ADD COLUMN IF NOT EXISTS smtp_pass TEXT`;
     await sql`ALTER TABLE crm_users ADD COLUMN IF NOT EXISTS outreach_prompt_rules TEXT`;
