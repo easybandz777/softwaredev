@@ -420,6 +420,15 @@ export async function ensureMigrated() {
         )
     `;
 
+    // ── Dual-mode lookup columns on consultations ──────────────────────
+    await sql`ALTER TABLE consultations ADD COLUMN IF NOT EXISTS entity_type TEXT DEFAULT 'organization'`;
+    await sql`ALTER TABLE consultations ADD COLUMN IF NOT EXISTS job_title TEXT`;
+    await sql`ALTER TABLE consultations ADD COLUMN IF NOT EXISTS source_refs TEXT`;
+    await sql`ALTER TABLE consultations ADD COLUMN IF NOT EXISTS contact_confidence INTEGER`;
+
+    // ── Mode column on presets ─────────────────────────────────────────
+    await sql`ALTER TABLE sales_prospect_presets ADD COLUMN IF NOT EXISTS mode TEXT DEFAULT 'organization'`;
+
     // ── Per-user SMTP credentials + prompt rules for outreach ──────────
     await sql`ALTER TABLE crm_users ADD COLUMN IF NOT EXISTS smtp_pass TEXT`;
     await sql`ALTER TABLE crm_users ADD COLUMN IF NOT EXISTS outreach_prompt_rules TEXT`;

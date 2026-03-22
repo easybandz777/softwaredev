@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { SalesLayout } from "@/components/SalesLayout";
 import {
     Sparkles, RefreshCw, Mail, MapPin, Building, Globe, FileText,
-    AlertTriangle, Copy, Check, Send, Loader2, CheckCircle
+    AlertTriangle, Copy, Check, Send, Loader2, CheckCircle, Briefcase, User
 } from "lucide-react";
 
 interface UserInfo { id: number; username: string; full_name: string; role: string; }
@@ -12,6 +12,7 @@ interface Lead {
     id: number; name: string; email: string; phone: string | null;
     company: string | null; service: string; message: string;
     website?: string; location?: string; analysis_data?: string; solutions?: string;
+    entity_type?: string; job_title?: string;
 }
 
 export default function OutreachPage() {
@@ -48,6 +49,7 @@ export default function OutreachPage() {
     }, []);
 
     const lead = leads.find(l => l.id === selectedLeadId);
+    const isPersonLead = lead?.entity_type === "person";
 
     function handleLeadChange(newId: number) {
         setSelectedLeadId(newId);
@@ -77,6 +79,9 @@ export default function OutreachPage() {
                         email: lead.email,
                         analysisData: analysisData,
                         solutions: solutions,
+                        entityType: lead.entity_type || "organization",
+                        jobTitle: lead.job_title,
+                        employer: lead.company,
                     },
                 }),
             });
@@ -111,6 +116,13 @@ export default function OutreachPage() {
     const hasContent = subjectLine || emailCopy;
     const canSend = hasContent && lead?.email && !isSending && !isGenerating;
 
+    function getLeadDisplayLabel(l: Lead) {
+        if (l.entity_type === "person") {
+            return l.company ? `${l.name} — ${l.company}` : l.name;
+        }
+        return l.company ? `${l.company} — ${l.name}` : l.name;
+    }
+
     return (
         <SalesLayout user={user}>
             <header className="hidden md:flex sticky top-0 z-10 items-center justify-between px-8 py-4" style={{
@@ -118,7 +130,7 @@ export default function OutreachPage() {
             }}>
                 <div>
                     <h1 className="text-xl font-bold text-white">Outreach Generator</h1>
-                    <p className="text-gray-500 text-xs mt-0.5">Select a saved lead, review their context, then generate a personalized email.</p>
+                    <p className="text-gray-500 text-xs mt-0.5">Select a saved lead or contact, review their context, then generate a personalized email.</p>
                 </div>
             </header>
 
@@ -132,10 +144,10 @@ export default function OutreachPage() {
                     <div className="rounded-2xl p-12 text-center" style={{ background: "linear-gradient(145deg, #0d1526, #0a1020)", border: "1px solid rgba(255,255,255,0.05)" }}>
                         <Mail className="w-10 h-10 text-gray-700 mx-auto mb-4" />
                         <h3 className="text-white font-semibold mb-2">No leads saved yet</h3>
-                        <p className="text-gray-500 text-sm max-w-sm mx-auto mb-6">Use the AI Prospecting tool to find and save leads first.</p>
+                        <p className="text-gray-500 text-sm max-w-sm mx-auto mb-6">Use the Lead Search tool to find and save leads first.</p>
                         <a href="/sales/prospecting" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold text-white"
                             style={{ background: "linear-gradient(135deg, #8b5cf6, #3b82f6)" }}>
-                            <Sparkles className="w-4 h-4" /> Find Prospects
+                            <Sparkles className="w-4 h-4" /> Find Leads
                         </a>
                     </div>
                 ) : (
@@ -145,16 +157,26 @@ export default function OutreachPage() {
                                 <label className="text-[10px] uppercase tracking-wider text-gray-600 font-semibold block mb-2">Select Lead</label>
                                 <select value={selectedLeadId} onChange={e => handleLeadChange(Number(e.target.value))}
                                     className="w-full text-sm bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-gray-300 focus:outline-none focus:border-emerald-400/40">
-                                    {leads.map(l => <option key={l.id} value={l.id}>{l.company || l.name} — {l.name}</option>)}
+                                    {leads.map(l => <option key={l.id} value={l.id}>{getLeadDisplayLabel(l)}</option>)}
                                 </select>
                             </div>
                             {lead && (
                                 <div className="rounded-xl p-4" style={{ background: "linear-gradient(145deg, #0d1526, #0a1020)", border: "1px solid rgba(255,255,255,0.05)" }}>
-                                    <h3 className="text-sm font-semibold text-white mb-3">Lead Context</h3>
+                                    <div className="flex items-center gap-2 mb-3">
+                                        {isPersonLead ? <User className="w-3.5 h-3.5 text-purple-400" /> : <Building className="w-3.5 h-3.5 text-indigo-400" />}
+                                        <h3 className="text-sm font-semibold text-white">{isPersonLead ? "Contact" : "Lead"} Context</h3>
+                                        <span className="text-[9px] px-1.5 py-0.5 rounded-full font-semibold uppercase tracking-wider" style={{
+                                            background: isPersonLead ? "rgba(168,85,247,0.15)" : "rgba(99,102,241,0.15)",
+                                            color: isPersonLead ? "#c084fc" : "#818cf8",
+                                        }}>{isPersonLead ? "Person" : "Organization"}</span>
+                                    </div>
                                     <div className="space-y-2 text-xs">
+                                        {isPersonLead && lead.name && <div className="flex items-center gap-2 text-gray-400"><User className="w-3 h-3 text-gray-600" /> {lead.name}</div>}
+                                        {isPersonLead && lead.job_title && <div className="flex items-center gap-2 text-gray-400"><Briefcase className="w-3 h-3 text-gray-600" /> {lead.job_title}</div>}
                                         {lead.company && <div className="flex items-center gap-2 text-gray-400"><Building className="w-3 h-3 text-gray-600" /> {lead.company}</div>}
                                         {lead.location && <div className="flex items-center gap-2 text-gray-400"><MapPin className="w-3 h-3 text-gray-600" /> {lead.location}</div>}
                                         {lead.email && <div className="flex items-center gap-2 text-gray-400"><Mail className="w-3 h-3 text-gray-600" /> {lead.email}</div>}
+                                        {!lead.email && <div className="flex items-center gap-2 text-gray-600 opacity-60"><Mail className="w-3 h-3" /> No email on file</div>}
                                         {lead.website && (
                                             <div className="flex items-center gap-2">
                                                 <Globe className="w-3 h-3 text-gray-600" />
@@ -176,7 +198,11 @@ export default function OutreachPage() {
                             <div className="flex items-center justify-between mb-5">
                                 <div>
                                     <h3 className="text-base font-semibold text-white">{hasContent ? "Generated Email" : "Email Composer"}</h3>
-                                    {lead && <p className="text-gray-500 text-xs mt-0.5">To: {lead.name} at {lead.company || "N/A"}</p>}
+                                    {lead && (
+                                        <p className="text-gray-500 text-xs mt-0.5">
+                                            To: {lead.name}{lead.company ? ` at ${lead.company}` : ""}
+                                        </p>
+                                    )}
                                 </div>
                                 <button onClick={handleGenerate} disabled={isGenerating || !lead}
                                     className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold text-white disabled:opacity-50"
@@ -199,7 +225,7 @@ export default function OutreachPage() {
                                     className="w-full mb-4 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-emerald-400/40" />
                                 <label className="text-[10px] uppercase tracking-wider text-gray-600 font-semibold mb-1.5">Message Body</label>
                                 <textarea value={emailCopy} onChange={e => setEmailCopy(e.target.value)} readOnly={isGenerating}
-                                    placeholder={isGenerating ? "Generating personalized email..." : "Click Generate to write a personalized cold email."}
+                                    placeholder={isGenerating ? "Generating personalized email..." : "Click Generate to write a personalized outreach email."}
                                     className="w-full flex-1 min-h-[250px] resize-y bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-emerald-400/40 leading-relaxed" />
                             </div>
 
@@ -216,7 +242,7 @@ export default function OutreachPage() {
                             {showSendConfirm && (
                                 <div className="mt-4 rounded-lg p-4" style={{ background: "#1a1f2e", border: "1px solid rgba(59,130,246,0.2)" }}>
                                     <p className="text-sm font-semibold text-white mb-1">Send this email?</p>
-                                    <p className="text-xs text-gray-400 mb-3">To: <strong>{lead?.email}</strong> ({lead?.company})</p>
+                                    <p className="text-xs text-gray-400 mb-3">To: <strong>{lead?.email}</strong>{lead?.company ? ` (${lead.company})` : ""}</p>
                                     <div className="flex gap-2 justify-end">
                                         <button onClick={() => setShowSendConfirm(false)} className="px-3 py-1.5 rounded-lg text-xs bg-white/5 text-gray-300 border border-white/10">Cancel</button>
                                         <button onClick={handleSend} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-white"

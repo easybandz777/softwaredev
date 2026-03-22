@@ -130,7 +130,7 @@ function LeadsPage() {
 
     async function createLead(e: React.FormEvent) {
         e.preventDefault();
-        if (!newLead.name || !newLead.email || !newLead.service) return;
+        if (!newLead.name) return;
         setCreating(true);
         try {
             await fetch("/api/sales/leads", {
@@ -217,10 +217,10 @@ function LeadsPage() {
                                     placeholder="Jane Smith" required />
                             </div>
                             <div>
-                                <label className="text-[10px] uppercase tracking-wider text-gray-600 block mb-1">Email *</label>
+                                <label className="text-[10px] uppercase tracking-wider text-gray-600 block mb-1">Email</label>
                                 <input type="email" value={newLead.email} onChange={e => setNewLead(f => ({ ...f, email: e.target.value }))}
                                     className="w-full text-sm bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white placeholder-gray-600 focus:outline-none focus:border-emerald-400/40"
-                                    placeholder="jane@company.com" required />
+                                    placeholder="jane@company.com" />
                             </div>
                             <div>
                                 <label className="text-[10px] uppercase tracking-wider text-gray-600 block mb-1">Phone</label>

@@ -1,24 +1,117 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireAuth } from "@/lib/auth";
 import OpenAI from "openai";
-import { searchPlaces, type PlaceCandidate } from "@/lib/places";
-import { enrichWithEmails } from "@/lib/scraper";
-
-type EnrichedCandidate = PlaceCandidate & { email: string | null; emailMissing: boolean };
+import type { SearchMode, RawCandidate, SearchCriteria } from "@/lib/search/types";
+import { OrganizationSearchProvider, OrganizationEnrichmentProvider } from "@/lib/search/providers/organization";
+import { PersonSearchProvider, PersonEnrichmentProvider } from "@/lib/search/providers/person";
+import { normalizeBatch } from "@/lib/search/normalize";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
 
-function scoreLeadQuality(lead: Record<string, unknown>) {
-    let score = 0;
-    if (lead.email) score += 30;
-    if (lead.phone) score += 15;
-    if (lead.website) score += 10;
-    if (typeof lead.rating === "number" && lead.rating >= 3.5) score += 10;
-    if (typeof lead.reviewCount === "number" && lead.reviewCount >= 10) score += 5;
-    if (typeof lead.reviewCount === "number" && lead.reviewCount >= 50) score += 5;
-    if (typeof lead.aiQuality === "number") score += lead.aiQuality;
-    return Math.min(score, 100);
+const orgSearch = new OrganizationSearchProvider();
+const orgEnrich = new OrganizationEnrichmentProvider();
+const personSearch = new PersonSearchProvider();
+const personEnrich = new PersonEnrichmentProvider();
+
+function filterOrganizations(candidates: RawCandidate[], filters: SearchCriteria): RawCandidate[] {
+    return candidates.filter((c) => {
+        if (filters.requireWebsite && !c.website) return false;
+        if (filters.includeNoWebsite === false && !c.website) return false;
+        if (filters.requireEmail && c.emails.length === 0) return false;
+        if (filters.requirePhone && c.phones.length === 0) return false;
+        const rating = (c.raw.rating as number) ?? 0;
+        const reviewCount = (c.raw.reviewCount as number) ?? 0;
+        if ((filters.minRating ?? 0) > 0 && rating < (filters.minRating ?? 0)) return false;
+        if ((filters.minReviews ?? 0) > 0 && reviewCount < (filters.minReviews ?? 0)) return false;
+        if (filters.locationKeywords.length > 0) {
+            const loc = (c.location || "").toLowerCase();
+            if (!filters.locationKeywords.some((kw) => loc.includes(kw.toLowerCase()))) return false;
+        }
+        return true;
+    });
+}
+
+function filterPersons(candidates: RawCandidate[], filters: SearchCriteria): RawCandidate[] {
+    return candidates.filter((c) => {
+        if (filters.requireEmail && c.emails.length === 0) return false;
+        if (filters.requirePhone && c.phones.length === 0) return false;
+        if (filters.locationKeywords.length > 0) {
+            const loc = (c.location || "").toLowerCase();
+            if (!filters.locationKeywords.some((kw) => loc.includes(kw.toLowerCase()))) return false;
+        }
+        if (filters.titleKeywords && filters.titleKeywords.length > 0) {
+            const title = (c.jobTitle || "").toLowerCase();
+            if (!filters.titleKeywords.some((kw) => title.includes(kw.toLowerCase()))) return false;
+        }
+        if (filters.employerKeywords && filters.employerKeywords.length > 0) {
+            const org = (c.organization || "").toLowerCase();
+            if (!filters.employerKeywords.some((kw) => org.includes(kw.toLowerCase()))) return false;
+        }
+        return true;
+    });
+}
+
+function sortOrganizations(candidates: RawCandidate[]): RawCandidate[] {
+    return [...candidates].sort((a, b) => {
+        const aScore = (a.emails.length > 0 ? 3 : 0) + (a.phones.length > 0 ? 1 : 0) + ((a.raw.rating as number) ? 1 : 0);
+        const bScore = (b.emails.length > 0 ? 3 : 0) + (b.phones.length > 0 ? 1 : 0) + ((b.raw.rating as number) ? 1 : 0);
+        return bScore - aScore;
+    });
+}
+
+function sortPersons(candidates: RawCandidate[]): RawCandidate[] {
+    return [...candidates].sort((a, b) => {
+        const aScore = (a.emails.length > 0 ? 3 : 0) + (a.phones.length > 0 ? 2 : 0) + (a.organization ? 1 : 0);
+        const bScore = (b.emails.length > 0 ? 3 : 0) + (b.phones.length > 0 ? 2 : 0) + (b.organization ? 1 : 0);
+        return bScore - aScore;
+    });
+}
+
+function buildOrgAiPrompt(query: string, candidates: RawCandidate[]): string {
+    const list = candidates
+        .map(
+            (c, i) =>
+                `Business ${i + 1}:\n- Name: ${c.primaryLabel}\n- Location: ${c.location}\n- Website: ${c.website || "N/A"}\n- Phone: ${c.phones[0] || "N/A"}\n- Email: ${c.emails[0] || "Not found"}\n- Google Rating: ${c.raw.rating ? `${c.raw.rating}/5 (${c.raw.reviewCount} reviews)` : "No data"}\n- Business Types: ${((c.raw.types as string[]) || []).slice(0, 4).join(", ")}`,
+        )
+        .join("\n\n");
+
+    return `You are a senior sales intelligence analyst. Review these ${candidates.length} businesses found for: "${query}"
+
+For EACH business, provide:
+1. niche: Precise 2-4 word sub-niche
+2. contactName: Decision-maker title
+3. summary: 1-2 sentences about this business
+4. why: A specific, actionable pain point or opportunity
+5. confidence: Rate 1-5
+
+${list}
+
+Return ONLY valid JSON:
+{ "results": [{ "index": 0, "niche": "...", "contactName": "...", "summary": "...", "why": "...", "confidence": 4 }] }`;
+}
+
+function buildPersonAiPrompt(query: string, candidates: RawCandidate[]): string {
+    const list = candidates
+        .map(
+            (c, i) =>
+                `Person ${i + 1}:\n- Name: ${c.primaryLabel}\n- Employer: ${c.organization || "Unknown"}\n- Title: ${c.jobTitle || "Unknown"}\n- Location: ${c.location || "Unknown"}\n- Email: ${c.emails[0] || "Not found"}\n- Phone: ${c.phones[0] || "Not found"}\n- Source: ${c.sourceRefs[0]?.url || "N/A"}`,
+        )
+        .join("\n\n");
+
+    return `You are a research assistant helping find and qualify contacts. Review these ${candidates.length} people found for: "${query}"
+
+For EACH person, provide:
+1. niche: Their likely profession or industry (2-4 words)
+2. contactName: Their full name or best guess
+3. summary: 1-2 sentences about this person based on available info
+4. why: Why this person might be a valuable contact for the query
+5. confidence: Rate 1-5 how confident you are this is the right person
+
+${list}
+
+Return ONLY valid JSON:
+{ "results": [{ "index": 0, "niche": "...", "contactName": "...", "summary": "...", "why": "...", "confidence": 4 }] }`;
 }
 
 export async function POST(req: NextRequest) {
@@ -27,17 +120,21 @@ export async function POST(req: NextRequest) {
 
     try {
         const body = await req.json();
+        const mode: SearchMode = body.mode === "person" ? "person" : "organization";
         const { query, maxResults = 5, criteria } = body;
-        const filters = {
+
+        const filters: SearchCriteria = {
             requireWebsite: criteria?.requireWebsite ?? false,
             requireEmail: criteria?.requireEmail ?? false,
             requirePhone: criteria?.requirePhone ?? false,
             minRating: typeof criteria?.minRating === "number" ? criteria.minRating : 0,
             minReviews: typeof criteria?.minReviews === "number" ? criteria.minReviews : 0,
             minQualityScore: typeof criteria?.minQualityScore === "number" ? criteria.minQualityScore : 0,
-            nicheKeywords: Array.isArray(criteria?.nicheKeywords) ? criteria.nicheKeywords as string[] : [],
-            locationKeywords: Array.isArray(criteria?.locationKeywords) ? criteria.locationKeywords as string[] : [],
+            nicheKeywords: Array.isArray(criteria?.nicheKeywords) ? (criteria.nicheKeywords as string[]) : [],
+            locationKeywords: Array.isArray(criteria?.locationKeywords) ? (criteria.locationKeywords as string[]) : [],
             includeNoWebsite: criteria?.includeNoWebsite ?? true,
+            titleKeywords: Array.isArray(criteria?.titleKeywords) ? (criteria.titleKeywords as string[]) : [],
+            employerKeywords: Array.isArray(criteria?.employerKeywords) ? (criteria.employerKeywords as string[]) : [],
         };
 
         if (!query || typeof query !== "string" || query.trim().length < 3) {
@@ -47,72 +144,63 @@ export async function POST(req: NextRequest) {
         const limit = Math.min(Math.max(Number(maxResults) || 5, 1), 10);
         const startTime = Date.now();
 
-        let candidates;
+        // ── Discovery ─────────────────────────────────────────────────────────
+        const searchProvider = mode === "organization" ? orgSearch : personSearch;
+        let candidates: RawCandidate[];
         try {
-            candidates = await searchPlaces(query, limit);
+            candidates = await searchProvider.search(query, limit);
         } catch (err: unknown) {
             const msg = err instanceof Error ? err.message : "Search failed";
             const userMessage = msg.includes("API_KEY")
-                ? "Google Places API key is not configured. Contact your admin."
-                : "Business search failed. Try a different query or check your connection.";
+                ? `${mode === "organization" ? "Google Places" : "Search"} API key is not configured. Contact your admin.`
+                : `Search failed. Try a different query or check your connection.`;
             return NextResponse.json({ error: userMessage }, { status: 500 });
         }
 
         if (candidates.length === 0) {
             return NextResponse.json({
                 leads: [],
-                meta: { discovered: 0, enriched: 0, returned: 0, elapsedMs: Date.now() - startTime },
-                message: "No businesses found. Try a broader location or different industry.",
+                meta: { query: query.trim(), mode, discovered: 0, enriched: 0, filtered: 0, returned: 0, elapsedMs: Date.now() - startTime },
+                message: mode === "organization"
+                    ? "No businesses found. Try a broader location or different industry."
+                    : "No contacts found. Try a different search or check your configuration.",
             });
         }
 
+        // ── Enrichment ────────────────────────────────────────────────────────
         const pool = candidates.slice(0, Math.min(limit * 2, candidates.length));
+        const enrichProvider = mode === "organization" ? orgEnrich : personEnrich;
 
-        let enriched: EnrichedCandidate[];
+        let enriched: RawCandidate[];
         try {
             enriched = await Promise.race([
-                enrichWithEmails(pool as (PlaceCandidate & Record<string, unknown>)[], 5) as Promise<EnrichedCandidate[]>,
-                new Promise<never>((_, reject) => setTimeout(() => reject(new Error("Scraping timeout")), 25000)),
+                enrichProvider.enrich(pool, 5),
+                new Promise<never>((_, reject) => setTimeout(() => reject(new Error("Enrichment timeout")), 25000)),
             ]);
         } catch {
-            enriched = pool.map(l => ({ ...l, email: null as string | null, emailMissing: true }));
+            enriched = pool;
         }
 
-        let filtered = enriched.filter(lead => {
-            if (filters.requireWebsite && !lead.website) return false;
-            if (!filters.includeNoWebsite && !lead.website) return false;
-            if (filters.requireEmail && !lead.email) return false;
-            if (filters.requirePhone && !lead.phone) return false;
-            if (filters.minRating > 0 && (!lead.rating || lead.rating < filters.minRating)) return false;
-            if (filters.minReviews > 0 && lead.reviewCount < filters.minReviews) return false;
-            if (filters.locationKeywords.length > 0) {
-                const loc = (lead.location || "").toLowerCase();
-                if (!filters.locationKeywords.some(kw => loc.includes(kw.toLowerCase()))) return false;
-            }
-            return true;
-        });
+        // ── Filtering ─────────────────────────────────────────────────────────
+        let filtered = mode === "organization" ? filterOrganizations(enriched, filters) : filterPersons(enriched, filters);
+        filtered = mode === "organization" ? sortOrganizations(filtered) : sortPersons(filtered);
+        const finalCandidates = filtered.slice(0, limit);
 
-        filtered.sort((a, b) => {
-            const aScore = (a.email ? 3 : 0) + (a.phone ? 1 : 0) + (a.rating ? 1 : 0);
-            const bScore = (b.email ? 3 : 0) + (b.phone ? 1 : 0) + (b.rating ? 1 : 0);
-            return bScore - aScore;
-        });
+        // ── AI Qualification ──────────────────────────────────────────────────
+        type AiResult = { index: number; niche?: string; contactName?: string; summary?: string; why?: string; confidence?: number };
+        let aiResults: AiResult[] | null = null;
 
-        const finalLeads = filtered.slice(0, limit);
-
-        let qualifiedLeads;
-        const apiKey = process.env.OPENAI_API_KEY;
-        if (apiKey) {
+        const openaiKey = process.env.OPENAI_API_KEY;
+        if (openaiKey && finalCandidates.length > 0) {
             try {
-                const openai = new OpenAI({ apiKey });
+                const openai = new OpenAI({ apiKey: openaiKey });
                 const elapsed = Date.now() - startTime;
                 const aiTimeout = Math.max(10000, 55000 - elapsed);
 
-                const businessList = finalLeads.map((lead, i) =>
-                    `Business ${i + 1}:\n- Name: ${lead.companyName}\n- Location: ${lead.location}\n- Website: ${lead.website || "N/A"}\n- Phone: ${lead.phone || "N/A"}\n- Email: ${lead.email || "Not found"}\n- Google Rating: ${lead.rating ? `${lead.rating}/5 (${lead.reviewCount} reviews)` : "No data"}\n- Business Types: ${(lead.types || []).slice(0, 4).join(", ")}`
-                ).join("\n\n");
-
-                const aiPrompt = `You are a senior B2B sales intelligence analyst. Review these ${finalLeads.length} businesses found for: "${query}"\n\nFor EACH business, provide:\n1. niche: Precise 2-4 word sub-niche\n2. contactName: Decision-maker title\n3. summary: 1-2 sentences about this business\n4. why: A specific, actionable pain point or opportunity\n5. confidence: Rate 1-5\n\n${businessList}\n\nReturn ONLY valid JSON:\n{ "results": [{ "index": 0, "niche": "...", "contactName": "...", "summary": "...", "why": "...", "confidence": 4 }] }`;
+                const aiPrompt =
+                    mode === "organization"
+                        ? buildOrgAiPrompt(query, finalCandidates)
+                        : buildPersonAiPrompt(query, finalCandidates);
 
                 const aiResponse = await Promise.race([
                     openai.chat.completions.create({
@@ -124,76 +212,80 @@ export async function POST(req: NextRequest) {
                     new Promise<never>((_, reject) => setTimeout(() => reject(new Error("AI timeout")), aiTimeout)),
                 ]);
 
-                let aiData: { results?: { index: number; niche?: string; contactName?: string; summary?: string; why?: string; confidence?: number }[] };
-                try { aiData = JSON.parse(aiResponse.choices[0].message.content || "{}"); } catch { aiData = { results: [] }; }
-                const aiResults = aiData.results || [];
-
-                qualifiedLeads = finalLeads.map((lead, i) => {
-                    const ai = aiResults.find(r => r.index === i);
-                    const enrichedLead: Record<string, unknown> = {
-                        companyName: lead.companyName,
-                        contactName: ai?.contactName || "Owner",
-                        phone: lead.phone || null,
-                        email: lead.email || null,
-                        emailMissing: lead.emailMissing || !lead.email,
-                        website: lead.website || null,
-                        location: lead.location,
-                        niche: ai?.niche || (lead.types?.[0]?.replace(/_/g, " ") || "Business"),
-                        summary: ai?.summary || "",
-                        why: ai?.why || "",
-                        rating: lead.rating || null,
-                        reviewCount: lead.reviewCount || 0,
-                        aiQuality: (ai?.confidence || 3) * 5,
-                    };
-                    enrichedLead.qualityScore = scoreLeadQuality(enrichedLead);
-                    return enrichedLead;
-                });
-                qualifiedLeads.sort((a, b) => (b.qualityScore as number) - (a.qualityScore as number));
-
-                if (filters.minQualityScore > 0) {
-                    qualifiedLeads = qualifiedLeads.filter(l => (l.qualityScore as number) >= filters.minQualityScore);
+                let aiData: { results?: AiResult[] };
+                try {
+                    aiData = JSON.parse(aiResponse.choices[0].message.content || "{}");
+                } catch {
+                    aiData = { results: [] };
                 }
-                if (filters.nicheKeywords.length > 0) {
-                    qualifiedLeads = qualifiedLeads.filter(l => {
-                        const niche = ((l.niche as string) || "").toLowerCase();
-                        return filters.nicheKeywords.some(kw => niche.includes(kw.toLowerCase()));
-                    });
-                }
+                aiResults = aiData.results || [];
             } catch {
-                qualifiedLeads = null;
+                aiResults = null;
             }
         }
 
-        if (!qualifiedLeads) {
-            qualifiedLeads = finalLeads.map((lead: EnrichedCandidate) => {
-                const enrichedLead: Record<string, unknown> = {
-                    companyName: lead.companyName,
-                    contactName: "Owner",
-                    phone: lead.phone || null,
-                    email: lead.email || null,
-                    emailMissing: lead.emailMissing || !lead.email,
-                    website: lead.website || null,
-                    location: lead.location,
-                    niche: (lead.types?.[0]?.replace(/_/g, " ") || "Business"),
-                    summary: "",
-                    why: "",
-                    rating: lead.rating || null,
-                    reviewCount: lead.reviewCount || 0,
-                    aiQuality: 0,
-                };
-                enrichedLead.qualityScore = scoreLeadQuality(enrichedLead);
-                return enrichedLead;
+        // ── Normalize to SearchEntity[] ───────────────────────────────────────
+        const entities = normalizeBatch(
+            finalCandidates,
+            aiResults?.map((r) => ({
+                index: r.index,
+                summary: r.summary,
+                opportunity: r.why,
+                niche: r.niche,
+                contactName: r.contactName,
+                confidence: r.confidence,
+            })),
+        );
+
+        // ── Post-filters on scored entities ───────────────────────────────────
+        let results = entities.sort((a, b) => b.confidence - a.confidence);
+
+        if (filters.minQualityScore > 0) {
+            results = results.filter((e) => e.confidence >= filters.minQualityScore);
+        }
+        if (mode === "organization" && (filters.nicheKeywords?.length ?? 0) > 0) {
+            results = results.filter((e) => {
+                const niche = (e.orgData?.niche || "").toLowerCase();
+                return filters.nicheKeywords!.some((kw) => niche.includes(kw.toLowerCase()));
             });
         }
 
+        // ── Backward-compatible response ──────────────────────────────────────
+        // Map SearchEntity[] to the legacy lead format the frontend currently expects.
+        const leads = results.map((e) => ({
+            mode: e.mode,
+            companyName: e.mode === "organization" ? e.primaryLabel : (e.organization || ""),
+            contactName: e.mode === "organization"
+                ? (aiResults?.find((_, idx) => idx === results.indexOf(e))?.contactName || "Owner")
+                : e.primaryLabel,
+            phone: e.phones[0] || null,
+            email: e.emails[0] || null,
+            emailMissing: e.emails.length === 0,
+            website: e.website,
+            location: e.location,
+            niche: e.orgData?.niche || (e.personData?.title || "Contact"),
+            summary: e.summary,
+            why: e.opportunity,
+            rating: e.orgData?.rating || null,
+            reviewCount: e.orgData?.reviewCount || 0,
+            qualityScore: e.confidence,
+            completenessScore: e.completenessScore,
+            // Person-specific fields
+            jobTitle: e.personData?.title || null,
+            employer: e.personData?.employer || null,
+            socialProfiles: e.personData?.socialProfiles || [],
+            sourceRefs: e.sourceRefs,
+        }));
+
         return NextResponse.json({
-            leads: qualifiedLeads,
+            leads,
             meta: {
                 query: query.trim(),
-            discovered: candidates.length,
-            enriched: enriched.filter(l => l.email).length,
-            filtered: enriched.length - filtered.length,
-            returned: qualifiedLeads.length,
+                mode,
+                discovered: candidates.length,
+                enriched: enriched.filter((c) => c.emails.length > 0).length,
+                filtered: enriched.length - filtered.length,
+                returned: leads.length,
                 elapsedMs: Date.now() - startTime,
             },
         });

@@ -59,10 +59,10 @@ export async function POST(req: NextRequest) {
     if (error) return NextResponse.json({ error }, { status: 401 });
 
     const body = await req.json();
-    const { name, email, phone, company, service, message, website, location, lead_source, opportunity_level, analysis_data } = body;
+    const { name, email, phone, company, service, message, website, location, lead_source, opportunity_level, analysis_data, entity_type, job_title } = body;
 
-    if (!name || !email || !service) {
-        return NextResponse.json({ error: "name, email, and service are required" }, { status: 400 });
+    if (!name) {
+        return NextResponse.json({ error: "name is required" }, { status: 400 });
     }
 
     await ensureMigrated();
@@ -70,8 +70,8 @@ export async function POST(req: NextRequest) {
     const analysisJson = analysis_data ? (typeof analysis_data === "string" ? analysis_data : JSON.stringify(analysis_data)) : null;
 
     const { rows } = await sql`
-        INSERT INTO consultations (name, email, phone, company, service, message, status, assigned_to_id, website, location, lead_source, opportunity_level, analysis_data)
-        VALUES (${name}, ${email}, ${phone || null}, ${company || null}, ${service}, ${message || 'Manually created lead'}, 'new', ${user!.id}, ${website || null}, ${location || null}, ${lead_source || 'Manual Entry'}, ${opportunity_level || 'medium'}, ${analysisJson})
+        INSERT INTO consultations (name, email, phone, company, service, message, status, assigned_to_id, website, location, lead_source, opportunity_level, analysis_data, entity_type, job_title)
+        VALUES (${name}, ${email || ''}, ${phone || null}, ${company || null}, ${service || 'General'}, ${message || 'Manually created lead'}, 'new', ${user!.id}, ${website || null}, ${location || null}, ${lead_source || 'Manual Entry'}, ${opportunity_level || 'medium'}, ${analysisJson}, ${entity_type || 'organization'}, ${job_title || null})
         RETURNING *
     `;
 

@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
     await ensureMigrated();
 
     const { rows } = await sql`
-        SELECT id, name, criteria, is_default, created_at, updated_at
+        SELECT id, name, criteria, is_default, created_at, updated_at, mode
         FROM sales_prospect_presets
         WHERE user_id = ${user.id}
         ORDER BY is_default DESC, updated_at DESC
@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
     if (error) return NextResponse.json({ error }, { status: 401 });
 
     const body = await req.json();
-    const { name, criteria, is_default } = body;
+    const { name, criteria, is_default, mode } = body;
 
     if (!name || typeof name !== "string" || !name.trim()) {
         return NextResponse.json({ error: "Preset name is required" }, { status: 400 });
@@ -45,8 +45,8 @@ export async function POST(req: NextRequest) {
     const criteriaJson = JSON.stringify(criteria || {});
 
     const { rows } = await sql`
-        INSERT INTO sales_prospect_presets (user_id, name, criteria, is_default)
-        VALUES (${user.id}, ${name.trim()}, ${criteriaJson}, ${!!is_default})
+        INSERT INTO sales_prospect_presets (user_id, name, criteria, is_default, mode)
+        VALUES (${user.id}, ${name.trim()}, ${criteriaJson}, ${!!is_default}, ${mode || 'organization'})
         RETURNING *
     `;
 

@@ -5,30 +5,39 @@ import { useRouter } from "next/navigation";
 import { SalesLayout } from "@/components/SalesLayout";
 import {
     Search, Sparkles, Loader2, Save, ExternalLink, MapPin, Mail, Phone,
-    Globe, CheckCircle, ChevronDown, ChevronUp, Settings2, Star, ArrowRight,
-    RefreshCw, Send, Shield, X, Bookmark, Trash2, Check, Filter
+    Globe, CheckCircle, ChevronDown, ChevronUp, Star, ArrowRight,
+    RefreshCw, Send, Shield, X, Bookmark, Check, Filter,
+    Building2, User, Briefcase
 } from "lucide-react";
+
+type SearchMode = "organization" | "person";
 
 interface UserInfo { id: number; username: string; full_name: string; role: string; }
 
 interface Prospect {
+    mode: SearchMode;
     companyName: string; contactName: string; email: string | null; phone: string | null;
     website: string | null; location: string; niche: string; summary: string; why: string;
     rating: number | null; reviewCount: number; qualityScore: number; emailMissing: boolean;
+    completenessScore?: number;
+    jobTitle?: string | null; employer?: string | null;
+    socialProfiles?: { platform: string; url: string }[];
 }
 
 interface Criteria {
     requireWebsite: boolean; requireEmail: boolean; requirePhone: boolean;
     includeNoWebsite: boolean; minRating: number; minReviews: number;
     minQualityScore: number; nicheKeywords: string[]; locationKeywords: string[];
+    titleKeywords: string[]; employerKeywords: string[];
 }
 
-interface Preset { id: number; name: string; criteria: Criteria; is_default: boolean; }
+interface Preset { id: number; name: string; criteria: Criteria; is_default: boolean; mode?: SearchMode; }
 
 const DEFAULT_CRITERIA: Criteria = {
     requireWebsite: false, requireEmail: false, requirePhone: false,
     includeNoWebsite: true, minRating: 0, minReviews: 0,
     minQualityScore: 0, nicheKeywords: [], locationKeywords: [],
+    titleKeywords: [], employerKeywords: [],
 };
 
 function QualityBar({ score }: { score: number }) {
@@ -44,18 +53,52 @@ function QualityBar({ score }: { score: number }) {
     );
 }
 
-function hasActiveFilters(c: Criteria) {
-    return c.requireWebsite || c.requireEmail || c.requirePhone || !c.includeNoWebsite ||
-        c.minRating > 0 || c.minReviews > 0 || c.minQualityScore > 0 ||
-        c.nicheKeywords.length > 0 || c.locationKeywords.length > 0;
+function hasActiveFilters(c: Criteria, mode: SearchMode) {
+    const shared = c.requireEmail || c.requirePhone || c.minQualityScore > 0 || c.locationKeywords.length > 0;
+    if (mode === "organization") {
+        return shared || c.requireWebsite || !c.includeNoWebsite || c.minRating > 0 || c.minReviews > 0 || c.nicheKeywords.length > 0;
+    }
+    return shared || c.titleKeywords.length > 0 || c.employerKeywords.length > 0;
 }
 
 const inp = "w-full text-xs bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-gray-300 focus:outline-none focus:border-emerald-400/40";
 const chipBtn = "flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-semibold border transition-all";
 
+const MODE_CONFIG = {
+    organization: {
+        title: "Organization Search",
+        subtitle: "Find businesses, filter by criteria, save the best ones to your pipeline.",
+        placeholder: 'Try "Roofers in Dallas" or "Manufacturing companies in Ohio"',
+        suggestions: ["Plumbers in Chicago", "HVAC contractors in Austin TX", "Custom apparel companies in LA", "Landscaping businesses in Atlanta"],
+        phaseMessages: {
+            searching: "Finding businesses matching your criteria...",
+            enriching: "Scraping websites for contact info...",
+            analyzing: "AI is qualifying each prospect...",
+        },
+        emptyTitle: "Describe your ideal customer",
+        emptyDescription: "Enter a trade and location above. The AI will find real businesses, scrape their contact info, and tell you why each one is worth reaching out to.",
+        buttonLabel: "Find Organizations",
+    },
+    person: {
+        title: "Contact Search",
+        subtitle: "Find people by name, role, or employer. Get email and phone when available.",
+        placeholder: 'Try "Life insurance agents in Houston" or "John Smith at Allstate"',
+        suggestions: ["Insurance agents in Dallas TX", "Real estate agents in Miami", "Financial advisors in New York", "Dentists in Los Angeles"],
+        phaseMessages: {
+            searching: "Searching for contacts matching your query...",
+            enriching: "Looking up contact information...",
+            analyzing: "AI is qualifying each contact...",
+        },
+        emptyTitle: "Find the right contacts",
+        emptyDescription: "Describe who you're looking for by name, role, employer, or location. The AI will find matching contacts and surface their information.",
+        buttonLabel: "Find People",
+    },
+};
+
 export default function ProspectingPage() {
     const router = useRouter();
     const [user, setUser] = useState<UserInfo | null>(null);
+    const [mode, setMode] = useState<SearchMode>("organization");
     const [query, setQuery] = useState("");
     const [leads, setLeads] = useState<Prospect[]>([]);
     const [loading, setLoading] = useState(false);
@@ -72,6 +115,10 @@ export default function ProspectingPage() {
     const [showSavePreset, setShowSavePreset] = useState(false);
     const [nicheInput, setNicheInput] = useState("");
     const [locationInput, setLocationInput] = useState("");
+    const [titleInput, setTitleInput] = useState("");
+    const [employerInput, setEmployerInput] = useState("");
+
+    const cfg = MODE_CONFIG[mode];
 
     useEffect(() => {
         fetch("/api/sales/me", { credentials: "include" })
@@ -91,6 +138,15 @@ export default function ProspectingPage() {
         if (r.ok) setPresets(await r.json());
     }, []);
 
+    const handleModeSwitch = (newMode: SearchMode) => {
+        setMode(newMode);
+        setLeads([]);
+        setMeta(null);
+        setError("");
+        setQuery("");
+        setCriteria({ ...DEFAULT_CRITERIA });
+    };
+
     const handleSearch = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!query.trim()) return;
@@ -100,7 +156,7 @@ export default function ProspectingPage() {
         try {
             const res = await fetch("/api/sales/prospect", {
                 method: "POST", headers: { "Content-Type": "application/json" }, credentials: "include",
-                body: JSON.stringify({ query: query.trim(), maxResults, criteria }),
+                body: JSON.stringify({ mode, query: query.trim(), maxResults, criteria }),
             });
             clearTimeout(t1); clearTimeout(t2);
             if (!res.ok) { const d = await res.json(); throw new Error(d.error || "Failed"); }
@@ -117,12 +173,22 @@ export default function ProspectingPage() {
             const res = await fetch("/api/sales/leads", {
                 method: "POST", headers: { "Content-Type": "application/json" }, credentials: "include",
                 body: JSON.stringify({
-                    name: lead.contactName || "Owner", email: lead.email || "", phone: lead.phone || "",
-                    company: lead.companyName || "", service: lead.niche || "Prospecting Lead",
+                    name: lead.mode === "person" ? (lead.contactName || lead.companyName || "Unknown") : (lead.contactName || "Owner"),
+                    email: lead.email || "",
+                    phone: lead.phone || "",
+                    company: lead.mode === "person" ? (lead.employer || lead.companyName || "") : (lead.companyName || ""),
+                    service: lead.niche || (lead.mode === "person" ? "Contact" : "Prospecting Lead"),
                     message: [lead.why ? `OPPORTUNITY: ${lead.why}` : "", lead.summary ? `SUMMARY: ${lead.summary}` : ""].filter(Boolean).join("\n\n"),
-                    website: lead.website || null, location: lead.location || null, lead_source: "AI Prospecting",
+                    website: lead.website || null,
+                    location: lead.location || null,
+                    lead_source: lead.mode === "person" ? "Contact Search" : "AI Prospecting",
                     opportunity_level: lead.qualityScore >= 70 ? "critical" : lead.qualityScore >= 40 ? "high" : "medium",
-                    analysis_data: { rating: lead.rating, reviewCount: lead.reviewCount, niche: lead.niche, qualityScore: lead.qualityScore },
+                    entity_type: lead.mode,
+                    job_title: lead.jobTitle || null,
+                    analysis_data: {
+                        rating: lead.rating, reviewCount: lead.reviewCount, niche: lead.niche,
+                        qualityScore: lead.qualityScore, mode: lead.mode,
+                    },
                 }),
             });
             if (res.ok) setSavedIds(prev => new Set([...prev, index]));
@@ -136,12 +202,15 @@ export default function ProspectingPage() {
         if (!presetName.trim()) return;
         await fetch("/api/sales/prospect-presets", {
             method: "POST", headers: { "Content-Type": "application/json" }, credentials: "include",
-            body: JSON.stringify({ name: presetName.trim(), criteria }),
+            body: JSON.stringify({ name: presetName.trim(), criteria, mode }),
         });
         setPresetName(""); setShowSavePreset(false); loadPresets();
     };
 
-    const applyPreset = (p: Preset) => setCriteria({ ...DEFAULT_CRITERIA, ...p.criteria });
+    const applyPreset = (p: Preset) => {
+        setCriteria({ ...DEFAULT_CRITERIA, ...p.criteria });
+        if (p.mode) setMode(p.mode);
+    };
 
     const deletePreset = async (id: number) => {
         await fetch(`/api/sales/prospect-presets/${id}`, { method: "DELETE", credentials: "include" });
@@ -158,31 +227,57 @@ export default function ProspectingPage() {
 
     const addNiche = () => { if (nicheInput.trim() && !criteria.nicheKeywords.includes(nicheInput.trim())) { setCriteria(c => ({ ...c, nicheKeywords: [...c.nicheKeywords, nicheInput.trim()] })); setNicheInput(""); } };
     const addLocation = () => { if (locationInput.trim() && !criteria.locationKeywords.includes(locationInput.trim())) { setCriteria(c => ({ ...c, locationKeywords: [...c.locationKeywords, locationInput.trim()] })); setLocationInput(""); } };
-
-    const phaseMessages: Record<string, string> = { searching: "Finding businesses matching your criteria...", enriching: "Scraping websites for contact info...", analyzing: "AI is qualifying each prospect..." };
-    const suggestions = ["Plumbers in Chicago", "HVAC contractors in Austin TX", "Custom apparel companies in LA", "Landscaping businesses in Atlanta"];
+    const addTitle = () => { if (titleInput.trim() && !criteria.titleKeywords.includes(titleInput.trim())) { setCriteria(c => ({ ...c, titleKeywords: [...c.titleKeywords, titleInput.trim()] })); setTitleInput(""); } };
+    const addEmployer = () => { if (employerInput.trim() && !criteria.employerKeywords.includes(employerInput.trim())) { setCriteria(c => ({ ...c, employerKeywords: [...c.employerKeywords, employerInput.trim()] })); setEmployerInput(""); } };
 
     const activeFilterLabels: string[] = [];
-    if (criteria.requireWebsite) activeFilterLabels.push("Has Website");
     if (criteria.requireEmail) activeFilterLabels.push("Has Email");
     if (criteria.requirePhone) activeFilterLabels.push("Has Phone");
-    if (!criteria.includeNoWebsite) activeFilterLabels.push("Exclude No-Website");
-    if (criteria.minRating > 0) activeFilterLabels.push(`Rating ${criteria.minRating}+`);
-    if (criteria.minReviews > 0) activeFilterLabels.push(`${criteria.minReviews}+ Reviews`);
     if (criteria.minQualityScore > 0) activeFilterLabels.push(`Quality ${criteria.minQualityScore}+`);
-    criteria.nicheKeywords.forEach(k => activeFilterLabels.push(`Niche: ${k}`));
     criteria.locationKeywords.forEach(k => activeFilterLabels.push(`Location: ${k}`));
+    if (mode === "organization") {
+        if (criteria.requireWebsite) activeFilterLabels.push("Has Website");
+        if (!criteria.includeNoWebsite) activeFilterLabels.push("Exclude No-Website");
+        if (criteria.minRating > 0) activeFilterLabels.push(`Rating ${criteria.minRating}+`);
+        if (criteria.minReviews > 0) activeFilterLabels.push(`${criteria.minReviews}+ Reviews`);
+        criteria.nicheKeywords.forEach(k => activeFilterLabels.push(`Niche: ${k}`));
+    } else {
+        criteria.titleKeywords.forEach(k => activeFilterLabels.push(`Title: ${k}`));
+        criteria.employerKeywords.forEach(k => activeFilterLabels.push(`Employer: ${k}`));
+    }
 
     return (
         <SalesLayout user={user}>
             <header className="hidden md:flex sticky top-0 z-10 items-center justify-between px-8 py-4" style={{ background: "rgba(8,13,24,0.9)", backdropFilter: "blur(16px)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
                 <div>
-                    <h1 className="text-xl font-bold text-white">AI Prospecting</h1>
-                    <p className="text-gray-500 text-xs mt-0.5">Search for businesses, filter by criteria, save the best ones to your pipeline.</p>
+                    <h1 className="text-xl font-bold text-white">Lead Search</h1>
+                    <p className="text-gray-500 text-xs mt-0.5">{cfg.subtitle}</p>
                 </div>
             </header>
 
             <div className="px-4 md:px-8 py-6 max-w-5xl mx-auto">
+                {/* Mode toggle */}
+                <div className="flex items-center gap-1 p-1 rounded-xl mb-4 w-fit" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
+                    <button onClick={() => handleModeSwitch("organization")}
+                        className="flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs font-semibold transition-all"
+                        style={{
+                            background: mode === "organization" ? "rgba(99,102,241,0.15)" : "transparent",
+                            color: mode === "organization" ? "#818cf8" : "#6b7280",
+                            border: mode === "organization" ? "1px solid rgba(99,102,241,0.25)" : "1px solid transparent",
+                        }}>
+                        <Building2 className="w-3.5 h-3.5" /> Organizations
+                    </button>
+                    <button onClick={() => handleModeSwitch("person")}
+                        className="flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs font-semibold transition-all"
+                        style={{
+                            background: mode === "person" ? "rgba(168,85,247,0.15)" : "transparent",
+                            color: mode === "person" ? "#c084fc" : "#6b7280",
+                            border: mode === "person" ? "1px solid rgba(168,85,247,0.25)" : "1px solid transparent",
+                        }}>
+                        <User className="w-3.5 h-3.5" /> People
+                    </button>
+                </div>
+
                 {/* Preset bar */}
                 {presets.length > 0 && (
                     <div className="flex items-center gap-2 mb-4 flex-wrap">
@@ -207,18 +302,18 @@ export default function ProspectingPage() {
                         <div className="relative flex-1">
                             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600" />
                             <input type="text" value={query} onChange={e => setQuery(e.target.value)}
-                                placeholder='Try "Roofers in Dallas" or "Manufacturing companies in Ohio"'
+                                placeholder={cfg.placeholder}
                                 className="w-full pl-10 pr-4 py-3 rounded-lg bg-white/5 border border-white/10 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-emerald-400/40" />
                         </div>
                         <button type="submit" disabled={loading || !query.trim()} className="flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold text-white disabled:opacity-50"
-                            style={{ background: "linear-gradient(135deg, #8b5cf6, #3b82f6)" }}>
+                            style={{ background: mode === "organization" ? "linear-gradient(135deg, #8b5cf6, #3b82f6)" : "linear-gradient(135deg, #a855f7, #6366f1)" }}>
                             {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
-                            {loading ? "Searching..." : "Find Prospects"}
+                            {loading ? "Searching..." : cfg.buttonLabel}
                         </button>
                     </div>
 
                     <div className="flex gap-2 mt-3 flex-wrap">
-                        {suggestions.map(s => (
+                        {cfg.suggestions.map(s => (
                             <button key={s} type="button" onClick={() => setQuery(s)} className="px-3 py-1 rounded-full text-xs text-gray-500 border border-white/10 hover:border-white/20 hover:text-gray-300 transition-all">{s}</button>
                         ))}
                     </div>
@@ -227,7 +322,7 @@ export default function ProspectingPage() {
                     <div className="mt-3 pt-3 border-t border-white/5 flex items-center justify-between">
                         <button type="button" onClick={() => setShowFilters(!showFilters)} className="flex items-center gap-1.5 text-xs text-gray-500 hover:text-gray-300">
                             <Filter className="w-3.5 h-3.5" /> Filters & Criteria
-                            {hasActiveFilters(criteria) && <span className="ml-1 w-4 h-4 rounded-full bg-emerald-400/20 text-emerald-400 text-[9px] font-bold flex items-center justify-center">{activeFilterLabels.length}</span>}
+                            {hasActiveFilters(criteria, mode) && <span className="ml-1 w-4 h-4 rounded-full bg-emerald-400/20 text-emerald-400 text-[9px] font-bold flex items-center justify-center">{activeFilterLabels.length}</span>}
                             {showFilters ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
                         </button>
                         <div className="flex items-center gap-2">
@@ -238,56 +333,99 @@ export default function ProspectingPage() {
 
                     {showFilters && (
                         <div className="mt-4 space-y-4">
-                            {/* Toggle filters */}
+                            {/* Shared toggle filters */}
                             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                                {[
-                                    { key: "requireWebsite" as const, label: "Require Website", icon: <Globe className="w-3 h-3" /> },
-                                    { key: "requireEmail" as const, label: "Require Email", icon: <Mail className="w-3 h-3" /> },
-                                    { key: "requirePhone" as const, label: "Require Phone", icon: <Phone className="w-3 h-3" /> },
-                                ].map(f => (
-                                    <button key={f.key} type="button" onClick={() => setCriteria(c => ({ ...c, [f.key]: !c[f.key] }))}
-                                        className={`flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-medium transition-all ${criteria[f.key] ? "bg-emerald-400/10 text-emerald-400 border border-emerald-400/20" : "bg-white/[0.02] text-gray-500 border border-white/5 hover:border-white/10"}`}>
-                                        {f.icon} {f.label} {criteria[f.key] && <Check className="w-3 h-3 ml-auto" />}
+                                {mode === "organization" && (
+                                    <button type="button" onClick={() => setCriteria(c => ({ ...c, requireWebsite: !c.requireWebsite }))}
+                                        className={`flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-medium transition-all ${criteria.requireWebsite ? "bg-emerald-400/10 text-emerald-400 border border-emerald-400/20" : "bg-white/[0.02] text-gray-500 border border-white/5 hover:border-white/10"}`}>
+                                        <Globe className="w-3 h-3" /> Require Website {criteria.requireWebsite && <Check className="w-3 h-3 ml-auto" />}
                                     </button>
-                                ))}
-                                <button type="button" onClick={() => setCriteria(c => ({ ...c, includeNoWebsite: !c.includeNoWebsite }))}
-                                    className={`flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-medium transition-all ${!criteria.includeNoWebsite ? "bg-amber-400/10 text-amber-400 border border-amber-400/20" : "bg-white/[0.02] text-gray-500 border border-white/5 hover:border-white/10"}`}>
-                                    <X className="w-3 h-3" /> Exclude No-Website {!criteria.includeNoWebsite && <Check className="w-3 h-3 ml-auto" />}
+                                )}
+                                <button type="button" onClick={() => setCriteria(c => ({ ...c, requireEmail: !c.requireEmail }))}
+                                    className={`flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-medium transition-all ${criteria.requireEmail ? "bg-emerald-400/10 text-emerald-400 border border-emerald-400/20" : "bg-white/[0.02] text-gray-500 border border-white/5 hover:border-white/10"}`}>
+                                    <Mail className="w-3 h-3" /> Require Email {criteria.requireEmail && <Check className="w-3 h-3 ml-auto" />}
                                 </button>
+                                <button type="button" onClick={() => setCriteria(c => ({ ...c, requirePhone: !c.requirePhone }))}
+                                    className={`flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-medium transition-all ${criteria.requirePhone ? "bg-emerald-400/10 text-emerald-400 border border-emerald-400/20" : "bg-white/[0.02] text-gray-500 border border-white/5 hover:border-white/10"}`}>
+                                    <Phone className="w-3 h-3" /> Require Phone {criteria.requirePhone && <Check className="w-3 h-3 ml-auto" />}
+                                </button>
+                                {mode === "organization" && (
+                                    <button type="button" onClick={() => setCriteria(c => ({ ...c, includeNoWebsite: !c.includeNoWebsite }))}
+                                        className={`flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-medium transition-all ${!criteria.includeNoWebsite ? "bg-amber-400/10 text-amber-400 border border-amber-400/20" : "bg-white/[0.02] text-gray-500 border border-white/5 hover:border-white/10"}`}>
+                                        <X className="w-3 h-3" /> Exclude No-Website {!criteria.includeNoWebsite && <Check className="w-3 h-3 ml-auto" />}
+                                    </button>
+                                )}
                             </div>
 
-                            {/* Sliders */}
+                            {/* Sliders — mode-aware */}
                             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                                <div>
-                                    <label className="text-[10px] uppercase tracking-wider text-gray-600 block mb-1.5">Min Google Rating: <strong className="text-white">{criteria.minRating || "Any"}</strong></label>
-                                    <input type="range" min={0} max={5} step={0.5} value={criteria.minRating} onChange={e => setCriteria(c => ({ ...c, minRating: Number(e.target.value) }))} className="w-full" />
-                                </div>
-                                <div>
-                                    <label className="text-[10px] uppercase tracking-wider text-gray-600 block mb-1.5">Min Reviews: <strong className="text-white">{criteria.minReviews || "Any"}</strong></label>
-                                    <input type="range" min={0} max={100} step={5} value={criteria.minReviews} onChange={e => setCriteria(c => ({ ...c, minReviews: Number(e.target.value) }))} className="w-full" />
-                                </div>
+                                {mode === "organization" && (
+                                    <>
+                                        <div>
+                                            <label className="text-[10px] uppercase tracking-wider text-gray-600 block mb-1.5">Min Google Rating: <strong className="text-white">{criteria.minRating || "Any"}</strong></label>
+                                            <input type="range" min={0} max={5} step={0.5} value={criteria.minRating} onChange={e => setCriteria(c => ({ ...c, minRating: Number(e.target.value) }))} className="w-full" />
+                                        </div>
+                                        <div>
+                                            <label className="text-[10px] uppercase tracking-wider text-gray-600 block mb-1.5">Min Reviews: <strong className="text-white">{criteria.minReviews || "Any"}</strong></label>
+                                            <input type="range" min={0} max={100} step={5} value={criteria.minReviews} onChange={e => setCriteria(c => ({ ...c, minReviews: Number(e.target.value) }))} className="w-full" />
+                                        </div>
+                                    </>
+                                )}
                                 <div>
                                     <label className="text-[10px] uppercase tracking-wider text-gray-600 block mb-1.5">Min Quality Score: <strong className="text-white">{criteria.minQualityScore || "Any"}</strong></label>
                                     <input type="range" min={0} max={100} step={5} value={criteria.minQualityScore} onChange={e => setCriteria(c => ({ ...c, minQualityScore: Number(e.target.value) }))} className="w-full" />
                                 </div>
                             </div>
 
-                            {/* Keyword filters */}
+                            {/* Keyword filters — mode-aware */}
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <div>
-                                    <label className="text-[10px] uppercase tracking-wider text-gray-600 block mb-1.5">Niche / Business Type Keywords</label>
-                                    <div className="flex gap-2">
-                                        <input value={nicheInput} onChange={e => setNicheInput(e.target.value)} onKeyDown={e => e.key === "Enter" && (e.preventDefault(), addNiche())} placeholder="e.g. Roofing, HVAC..." className={inp} />
-                                        <button type="button" onClick={addNiche} className="px-3 py-2 rounded-lg text-xs bg-white/5 text-gray-400 border border-white/10">Add</button>
+                                {mode === "organization" ? (
+                                    <div>
+                                        <label className="text-[10px] uppercase tracking-wider text-gray-600 block mb-1.5">Niche / Business Type Keywords</label>
+                                        <div className="flex gap-2">
+                                            <input value={nicheInput} onChange={e => setNicheInput(e.target.value)} onKeyDown={e => e.key === "Enter" && (e.preventDefault(), addNiche())} placeholder="e.g. Roofing, HVAC..." className={inp} />
+                                            <button type="button" onClick={addNiche} className="px-3 py-2 rounded-lg text-xs bg-white/5 text-gray-400 border border-white/10">Add</button>
+                                        </div>
+                                        <div className="flex flex-wrap gap-1.5 mt-2">
+                                            {criteria.nicheKeywords.map(k => (
+                                                <span key={k} className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-indigo-400/10 text-indigo-400 border border-indigo-400/20">
+                                                    {k} <button type="button" onClick={() => setCriteria(c => ({ ...c, nicheKeywords: c.nicheKeywords.filter(n => n !== k) }))}><X className="w-2.5 h-2.5" /></button>
+                                                </span>
+                                            ))}
+                                        </div>
                                     </div>
-                                    <div className="flex flex-wrap gap-1.5 mt-2">
-                                        {criteria.nicheKeywords.map(k => (
-                                            <span key={k} className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-indigo-400/10 text-indigo-400 border border-indigo-400/20">
-                                                {k} <button type="button" onClick={() => setCriteria(c => ({ ...c, nicheKeywords: c.nicheKeywords.filter(n => n !== k) }))}><X className="w-2.5 h-2.5" /></button>
-                                            </span>
-                                        ))}
-                                    </div>
-                                </div>
+                                ) : (
+                                    <>
+                                        <div>
+                                            <label className="text-[10px] uppercase tracking-wider text-gray-600 block mb-1.5">Job Title Keywords</label>
+                                            <div className="flex gap-2">
+                                                <input value={titleInput} onChange={e => setTitleInput(e.target.value)} onKeyDown={e => e.key === "Enter" && (e.preventDefault(), addTitle())} placeholder="e.g. Agent, Advisor..." className={inp} />
+                                                <button type="button" onClick={addTitle} className="px-3 py-2 rounded-lg text-xs bg-white/5 text-gray-400 border border-white/10">Add</button>
+                                            </div>
+                                            <div className="flex flex-wrap gap-1.5 mt-2">
+                                                {criteria.titleKeywords.map(k => (
+                                                    <span key={k} className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-purple-400/10 text-purple-400 border border-purple-400/20">
+                                                        {k} <button type="button" onClick={() => setCriteria(c => ({ ...c, titleKeywords: c.titleKeywords.filter(t => t !== k) }))}><X className="w-2.5 h-2.5" /></button>
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label className="text-[10px] uppercase tracking-wider text-gray-600 block mb-1.5">Employer Keywords</label>
+                                            <div className="flex gap-2">
+                                                <input value={employerInput} onChange={e => setEmployerInput(e.target.value)} onKeyDown={e => e.key === "Enter" && (e.preventDefault(), addEmployer())} placeholder="e.g. State Farm, Allstate..." className={inp} />
+                                                <button type="button" onClick={addEmployer} className="px-3 py-2 rounded-lg text-xs bg-white/5 text-gray-400 border border-white/10">Add</button>
+                                            </div>
+                                            <div className="flex flex-wrap gap-1.5 mt-2">
+                                                {criteria.employerKeywords.map(k => (
+                                                    <span key={k} className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-sky-400/10 text-sky-400 border border-sky-400/20">
+                                                        {k} <button type="button" onClick={() => setCriteria(c => ({ ...c, employerKeywords: c.employerKeywords.filter(emp => emp !== k) }))}><X className="w-2.5 h-2.5" /></button>
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </>
+                                )}
                                 <div>
                                     <label className="text-[10px] uppercase tracking-wider text-gray-600 block mb-1.5">Location Keywords</label>
                                     <div className="flex gap-2">
@@ -344,7 +482,7 @@ export default function ProspectingPage() {
                 {loading && (
                     <div className="rounded-2xl p-8 text-center" style={{ background: "linear-gradient(145deg, #0d1526, #0a1020)", border: "1px solid rgba(255,255,255,0.05)" }}>
                         <Loader2 className="w-8 h-8 text-blue-400 animate-spin mx-auto mb-4" />
-                        <p className="text-white font-semibold mb-1">{phaseMessages[phase] || "Working..."}</p>
+                        <p className="text-white font-semibold mb-1">{cfg.phaseMessages[phase as keyof typeof cfg.phaseMessages] || "Working..."}</p>
                         <p className="text-gray-600 text-xs">This typically takes 10-20 seconds</p>
                     </div>
                 )}
@@ -362,7 +500,7 @@ export default function ProspectingPage() {
                     <>
                         <div className="flex items-center justify-between mb-4 flex-wrap gap-3">
                             <div>
-                                <p className="text-white font-semibold">{leads.length} prospects found</p>
+                                <p className="text-white font-semibold">{leads.length} {mode === "person" ? "contacts" : "prospects"} found</p>
                                 {meta && (
                                     <div className="flex gap-4 text-xs text-gray-500 mt-1">
                                         <span className="flex items-center gap-1"><Search className="w-3 h-3" /> {String(meta.discovered)} discovered</span>
@@ -382,18 +520,31 @@ export default function ProspectingPage() {
                             {leads.map((lead, i) => {
                                 const isSaved = savedIds.has(i);
                                 const isSaving = savingId === i;
+                                const isOrg = lead.mode !== "person";
                                 return (
                                     <div key={i} className="rounded-xl p-5 transition-all" style={{ background: "linear-gradient(145deg, #0d1526, #0a1020)", border: isSaved ? "1px solid rgba(52,211,153,0.3)" : "1px solid rgba(255,255,255,0.05)" }}>
                                         <div className="flex justify-between items-start mb-3">
                                             <div className="flex-1 min-w-0">
-                                                <h3 className="text-base font-bold text-white truncate">{lead.companyName}</h3>
-                                                <div className="flex items-center gap-3 mt-1">
-                                                    {lead.contactName && <span className="text-xs text-gray-500">{lead.contactName}</span>}
-                                                    {lead.rating && <span className="flex items-center gap-1 text-xs" style={{ color: "#f59e0b" }}><Star className="w-3 h-3" style={{ fill: "#f59e0b" }} /> {lead.rating}<span className="text-gray-600">({lead.reviewCount})</span></span>}
-                                                </div>
+                                                {isOrg ? (
+                                                    <>
+                                                        <h3 className="text-base font-bold text-white truncate">{lead.companyName}</h3>
+                                                        <div className="flex items-center gap-3 mt-1">
+                                                            {lead.contactName && <span className="text-xs text-gray-500">{lead.contactName}</span>}
+                                                            {lead.rating != null && lead.rating > 0 && <span className="flex items-center gap-1 text-xs" style={{ color: "#f59e0b" }}><Star className="w-3 h-3" style={{ fill: "#f59e0b" }} /> {lead.rating}<span className="text-gray-600">({lead.reviewCount})</span></span>}
+                                                        </div>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <h3 className="text-base font-bold text-white truncate">{lead.contactName}</h3>
+                                                        <div className="flex items-center gap-3 mt-1">
+                                                            {lead.jobTitle && <span className="flex items-center gap-1 text-xs text-gray-500"><Briefcase className="w-3 h-3" /> {lead.jobTitle}</span>}
+                                                            {lead.employer && <span className="flex items-center gap-1 text-xs text-gray-500"><Building2 className="w-3 h-3" /> {lead.employer}</span>}
+                                                        </div>
+                                                    </>
+                                                )}
                                             </div>
                                             <div className="flex flex-col items-end gap-1 flex-shrink-0 ml-3">
-                                                {lead.niche && <span className="text-[10px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider" style={{ background: "rgba(99,102,241,0.15)", color: "#818cf8" }}>{lead.niche}</span>}
+                                                {lead.niche && <span className="text-[10px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider" style={{ background: isOrg ? "rgba(99,102,241,0.15)" : "rgba(168,85,247,0.15)", color: isOrg ? "#818cf8" : "#c084fc" }}>{lead.niche}</span>}
                                                 {lead.qualityScore != null && <QualityBar score={lead.qualityScore} />}
                                             </div>
                                         </div>
@@ -423,8 +574,8 @@ export default function ProspectingPage() {
                 {!loading && !error && leads.length === 0 && (
                     <div className="text-center py-16">
                         <Sparkles className="w-12 h-12 text-violet-500 mx-auto mb-4 opacity-50" />
-                        <h3 className="text-white font-semibold mb-2">Describe your ideal customer</h3>
-                        <p className="text-gray-500 text-sm max-w-md mx-auto leading-relaxed">Enter a trade and location above. The AI will find real businesses, scrape their contact info, and tell you why each one is worth reaching out to.</p>
+                        <h3 className="text-white font-semibold mb-2">{cfg.emptyTitle}</h3>
+                        <p className="text-gray-500 text-sm max-w-md mx-auto leading-relaxed">{cfg.emptyDescription}</p>
                     </div>
                 )}
             </div>
