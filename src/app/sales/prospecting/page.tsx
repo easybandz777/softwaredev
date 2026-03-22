@@ -249,17 +249,21 @@ export default function ProspectingPage() {
 
     return (
         <SalesLayout user={user}>
-            <header className="hidden md:flex sticky top-0 z-10 items-center justify-between px-8 py-5" style={{ background: "rgba(8,13,24,0.92)", backdropFilter: "blur(20px)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
-                <div className="flex items-center gap-5">
-                    <Image
-                        src="/thequantlabxTJ5automailer.png"
-                        alt="TheQuantLab x TJ5 AutoMailer"
-                        width={160}
-                        height={44}
-                        className="object-contain"
-                        priority
-                    />
-                    <div className="h-8 w-px bg-white/10" />
+            <header className="hidden md:flex sticky top-0 z-10 items-center justify-between px-8 py-6" style={{ background: "rgba(8,13,24,0.92)", backdropFilter: "blur(20px)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+                <div className="flex items-center gap-6">
+                    <div className="relative flex-shrink-0">
+                        <div className="absolute -inset-4 rounded-2xl opacity-60 blur-xl" style={{ background: "radial-gradient(ellipse at center, rgba(99,102,241,0.35), rgba(59,130,246,0.2), transparent 70%)" }} />
+                        <div className="absolute -inset-2 rounded-xl opacity-40 blur-md" style={{ background: "radial-gradient(ellipse at center, rgba(139,92,246,0.5), transparent 60%)" }} />
+                        <Image
+                            src="/thequantlabxTJ5automailer.png"
+                            alt="TheQuantLab x TJ5 AutoMailer"
+                            width={480}
+                            height={132}
+                            className="object-contain relative z-10 drop-shadow-[0_0_20px_rgba(99,102,241,0.3)]"
+                            priority
+                        />
+                    </div>
+                    <div className="h-12 w-px bg-white/10" />
                     <p className="text-sm font-bold tracking-wide" style={{ background: "linear-gradient(135deg, #a78bfa, #60a5fa, #34d399)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
                         {cfg.subtitle}
                     </p>
