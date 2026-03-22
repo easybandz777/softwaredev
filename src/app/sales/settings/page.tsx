@@ -2,9 +2,13 @@
 
 import React, { useState, useEffect } from "react";
 import { SalesLayout } from "@/components/SalesLayout";
-import { Users, Bot, Key, UserCircle, Save, Loader2, Check, Eye, EyeOff } from "lucide-react";
+import { Users, Bot, Key, UserCircle, Save, Loader2, Check, Eye, EyeOff, Trash2, Shield } from "lucide-react";
 
-interface UserInfo { id: number; username: string; full_name: string; email: string; role: string; has_smtp: boolean; outreach_prompt_rules: string | null; }
+interface UserInfo {
+    id: number; username: string; full_name: string; email: string; role: string;
+    has_smtp: boolean; outreach_prompt_rules: string | null;
+    has_llm_key: boolean; llm_provider: string | null; llm_model: string | null;
+}
 
 interface PromptRules {
     tone: string; maxLength: string; callToAction: string; avoidWords: string; customInstructions: string;
@@ -16,6 +20,24 @@ const DEFAULT_RULES: PromptRules = {
     callToAction: "Suggest a quick 10-minute call this week",
     avoidWords: "synergy, leverage, disrupt, innovative, cutting-edge, game-changer, scalable, I hope this finds you well",
     customInstructions: "",
+};
+
+const PROVIDER_OPTIONS = [
+    { value: "openai", label: "OpenAI" },
+    { value: "anthropic", label: "Anthropic (Claude)" },
+];
+
+const MODEL_OPTIONS: Record<string, { value: string; label: string }[]> = {
+    openai: [
+        { value: "gpt-4o-mini", label: "GPT-4o Mini" },
+        { value: "gpt-4o", label: "GPT-4o" },
+        { value: "gpt-4.1-mini", label: "GPT-4.1 Mini" },
+        { value: "gpt-4.1-nano", label: "GPT-4.1 Nano" },
+    ],
+    anthropic: [
+        { value: "claude-sonnet-4-20250514", label: "Claude Sonnet 4" },
+        { value: "claude-3-5-haiku-20241022", label: "Claude 3.5 Haiku" },
+    ],
 };
 
 const inp = "w-full text-xs bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-gray-300 focus:outline-none focus:border-emerald-400/40";
@@ -32,6 +54,13 @@ export default function SettingsPage() {
     const [rulesMsg, setRulesMsg] = useState("");
     const [showPreview, setShowPreview] = useState(false);
 
+    // LLM config state
+    const [llmProvider, setLlmProvider] = useState("openai");
+    const [llmModel, setLlmModel] = useState("gpt-4o-mini");
+    const [llmKey, setLlmKey] = useState("");
+    const [llmSaving, setLlmSaving] = useState(false);
+    const [llmMsg, setLlmMsg] = useState("");
+
     useEffect(() => {
         fetch("/api/sales/me", { credentials: "include" })
             .then(r => { if (!r.ok) { window.location.href = "/sales"; return null; } return r.json(); })
@@ -44,6 +73,10 @@ export default function SettingsPage() {
                             setRules({ ...DEFAULT_RULES, ...parsed });
                         } catch { /* keep defaults */ }
                     }
+                    if (u.llm_provider && !u.llm_provider.includes("system")) {
+                        setLlmProvider(u.llm_provider);
+                    }
+                    if (u.llm_model) setLlmModel(u.llm_model);
                 }
                 setLoading(false);
             });
@@ -61,7 +94,44 @@ export default function SettingsPage() {
         finally { setRulesSaving(false); setTimeout(() => setRulesMsg(""), 3000); }
     };
 
-    const previewPrompt = `You are an elite B2B cold outreach copywriter. You write emails that get replies because they are specific, short, and lead with the prospect's problem.
+    const saveLlmConfig = async () => {
+        if (!llmKey.trim()) return;
+        setLlmSaving(true); setLlmMsg("");
+        try {
+            const r = await fetch("/api/sales/me", {
+                method: "PATCH", headers: { "Content-Type": "application/json" }, credentials: "include",
+                body: JSON.stringify({ llm_config: { provider: llmProvider, model: llmModel, api_key: llmKey } }),
+            });
+            const data = await r.json();
+            if (r.ok) {
+                setLlmMsg("Saved");
+                setLlmKey("");
+                setUser(prev => prev ? { ...prev, has_llm_key: true, llm_provider: llmProvider, llm_model: llmModel } : prev);
+            } else {
+                setLlmMsg(data.error || "Failed to save");
+            }
+        } catch { setLlmMsg("Error"); }
+        finally { setLlmSaving(false); setTimeout(() => setLlmMsg(""), 4000); }
+    };
+
+    const clearLlmConfig = async () => {
+        setLlmSaving(true); setLlmMsg("");
+        try {
+            const r = await fetch("/api/sales/me", {
+                method: "PATCH", headers: { "Content-Type": "application/json" }, credentials: "include",
+                body: JSON.stringify({ llm_config: null }),
+            });
+            if (r.ok) {
+                setLlmMsg("Cleared");
+                setUser(prev => prev ? { ...prev, has_llm_key: false, llm_provider: null, llm_model: null } : prev);
+            }
+        } catch { setLlmMsg("Error"); }
+        finally { setLlmSaving(false); setTimeout(() => setLlmMsg(""), 3000); }
+    };
+
+    const providerLabel = PROVIDER_OPTIONS.find(p => p.value === (user?.llm_provider || ""))?.label || user?.llm_provider;
+
+    const previewPrompt = `You are an elite outreach copywriter. You write emails that get replies because they are specific, short, and lead with relevance.
 
 HARD RULES:
 - Tone: ${rules.tone}
@@ -69,7 +139,7 @@ HARD RULES:
 - Call to action: ${rules.callToAction}
 - NEVER use these words/phrases: ${rules.avoidWords}
 - Sign off as: ${user?.full_name || "Your Name"}
-- First sentence MUST reference a specific detail about their business
+- First sentence MUST reference a specific detail about the prospect
 - NO filler openers
 - NO generic claims
 - Subject line must be short (under 8 words), specific, and curiosity-driven
@@ -89,7 +159,7 @@ FORMAT: First line is the subject line prefixed with "Subject: ", then a blank l
     return (
         <SalesLayout user={user}>
             <header className="hidden md:flex sticky top-0 z-10 items-center px-8 py-4" style={{ background: "rgba(8,13,24,0.9)", backdropFilter: "blur(16px)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
-                <div><h1 className="text-xl font-bold text-white">Settings</h1><p className="text-gray-500 text-xs mt-0.5">Manage your LLM prompt, team, and integrations.</p></div>
+                <div><h1 className="text-xl font-bold text-white">Settings</h1><p className="text-gray-500 text-xs mt-0.5">Manage your AI provider, prompt rules, team, and integrations.</p></div>
             </header>
 
             <div className="px-4 md:px-8 py-6 max-w-5xl mx-auto">
@@ -111,7 +181,7 @@ FORMAT: First line is the subject line prefixed with "Subject: ", then a blank l
                                     <div className="flex items-center justify-between mb-4">
                                         <div>
                                             <h3 className="text-sm font-semibold text-white">Outreach Master Prompt</h3>
-                                            <p className="text-gray-500 text-xs mt-0.5">These rules control how the AI writes your cold emails. Changes apply to all future outreach you generate.</p>
+                                            <p className="text-gray-500 text-xs mt-0.5">These rules control how the AI writes your emails. Changes apply to all future outreach.</p>
                                         </div>
                                         <button onClick={() => setShowPreview(!showPreview)} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs text-gray-500 border border-white/10 hover:border-white/20 hover:text-gray-300">
                                             {showPreview ? <EyeOff className="w-3 h-3" /> : <Eye className="w-3 h-3" />} {showPreview ? "Hide" : "Preview"} Full Prompt
@@ -120,7 +190,7 @@ FORMAT: First line is the subject line prefixed with "Subject: ", then a blank l
 
                                     {showPreview && (
                                         <div className="mb-5 p-4 rounded-lg bg-black/30 border border-white/5">
-                                            <p className="text-[10px] text-gray-600 uppercase tracking-wider font-semibold mb-2">System Prompt (sent to GPT-4o-mini)</p>
+                                            <p className="text-[10px] text-gray-600 uppercase tracking-wider font-semibold mb-2">System Prompt (sent to {providerLabel || "your AI provider"})</p>
                                             <pre className="text-xs text-gray-400 whitespace-pre-wrap font-mono leading-relaxed">{previewPrompt}</pre>
                                         </div>
                                     )}
@@ -129,7 +199,7 @@ FORMAT: First line is the subject line prefixed with "Subject: ", then a blank l
                                         <div>
                                             <label className="text-[10px] uppercase tracking-wider text-gray-600 block mb-1.5">Tone & Style</label>
                                             <input value={rules.tone} onChange={e => setRules(r => ({ ...r, tone: e.target.value }))} className={inp} placeholder="Professional but conversational..." />
-                                            <p className="text-gray-700 text-[10px] mt-1">How the email should sound. Examples: "Direct and punchy", "Casual and friendly", "Formal B2B"</p>
+                                            <p className="text-gray-700 text-[10px] mt-1">How the email should sound. Examples: &quot;Direct and punchy&quot;, &quot;Casual and friendly&quot;, &quot;Formal B2B&quot;</p>
                                         </div>
                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                             <div>
@@ -153,8 +223,8 @@ FORMAT: First line is the subject line prefixed with "Subject: ", then a blank l
                                         </div>
                                         <div>
                                             <label className="text-[10px] uppercase tracking-wider text-gray-600 block mb-1.5">Custom Instructions (optional)</label>
-                                            <textarea value={rules.customInstructions} onChange={e => setRules(r => ({ ...r, customInstructions: e.target.value }))} rows={4} className={inp + " resize-y font-mono"} placeholder="Add any extra rules, industry-specific instructions, or messaging angles you want the AI to always follow..." />
-                                            <p className="text-gray-700 text-[10px] mt-1">Free-form rules injected directly into the system prompt. Use this for industry-specific angles, company positioning, or any custom logic.</p>
+                                            <textarea value={rules.customInstructions} onChange={e => setRules(r => ({ ...r, customInstructions: e.target.value }))} rows={4} className={inp + " resize-y font-mono"} placeholder="Add any extra rules, industry-specific instructions, or messaging angles..." />
+                                            <p className="text-gray-700 text-[10px] mt-1">Free-form rules injected directly into the system prompt.</p>
                                         </div>
                                     </div>
 
@@ -181,25 +251,87 @@ FORMAT: First line is the subject line prefixed with "Subject: ", then a blank l
                             </div>
                         )}
 
-                        {/* ═══ API ═══ */}
+                        {/* ═══ API INTEGRATIONS ═══ */}
                         {activeTab === "api" && (
-                            <div className="rounded-xl p-6" style={{ background: "linear-gradient(145deg, #0d1526, #0a1020)", border: "1px solid rgba(255,255,255,0.05)" }}>
-                                <h3 className="text-sm font-semibold text-white mb-5">API Integrations</h3>
-                                <div className="space-y-5">
-                                    <div>
-                                        <label className="text-[10px] uppercase tracking-wider text-gray-600 block mb-1.5">LLM Provider (OpenAI)</label>
-                                        <input type="password" defaultValue="sk-proj-xxxxxxxx" className={"max-w-sm " + inp} />
-                                        <p className="text-gray-600 text-[10px] mt-1">Used for Outreach Generator + Prospecting. Set via OPENAI_API_KEY env var.</p>
+                            <div className="space-y-4">
+                                {/* LLM Provider */}
+                                <div className="rounded-xl p-6" style={{ background: "linear-gradient(145deg, #0d1526, #0a1020)", border: "1px solid rgba(255,255,255,0.05)" }}>
+                                    <div className="flex items-center justify-between mb-4">
+                                        <div>
+                                            <h3 className="text-sm font-semibold text-white flex items-center gap-2">
+                                                <Bot className="w-4 h-4 text-violet-400" /> AI Provider
+                                            </h3>
+                                            <p className="text-gray-500 text-xs mt-0.5">Powers outreach generation and lead qualification. Your key is encrypted and never displayed.</p>
+                                        </div>
+                                        {user?.has_llm_key && (
+                                            <div className="flex items-center gap-1.5 text-xs">
+                                                <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block" />
+                                                <span className="text-emerald-400 font-medium">{providerLabel}</span>
+                                                <span className="text-gray-600">/ {user.llm_model}</span>
+                                            </div>
+                                        )}
                                     </div>
-                                    <div>
-                                        <label className="text-[10px] uppercase tracking-wider text-gray-600 block mb-1.5">Google Places API</label>
-                                        <input type="password" placeholder="Enter API Key" className={"max-w-sm " + inp} />
-                                        <p className="text-gray-600 text-[10px] mt-1">Used for AI Prospecting. Set via GOOGLE_PLACES_API_KEY env var.</p>
+
+                                    <div className="space-y-4">
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                            <div>
+                                                <label className="text-[10px] uppercase tracking-wider text-gray-600 block mb-1.5">Provider</label>
+                                                <select value={llmProvider} onChange={e => {
+                                                    setLlmProvider(e.target.value);
+                                                    const models = MODEL_OPTIONS[e.target.value];
+                                                    if (models) setLlmModel(models[0].value);
+                                                }} className={inp}>
+                                                    {PROVIDER_OPTIONS.map(p => <option key={p.value} value={p.value}>{p.label}</option>)}
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <label className="text-[10px] uppercase tracking-wider text-gray-600 block mb-1.5">Model</label>
+                                                <select value={llmModel} onChange={e => setLlmModel(e.target.value)} className={inp}>
+                                                    {(MODEL_OPTIONS[llmProvider] || []).map(m => <option key={m.value} value={m.value}>{m.label}</option>)}
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <label className="text-[10px] uppercase tracking-wider text-gray-600 block mb-1.5">API Key</label>
+                                            <div className="flex gap-2">
+                                                <input type="password" value={llmKey} onChange={e => setLlmKey(e.target.value)}
+                                                    onKeyDown={e => e.key === "Enter" && (e.preventDefault(), saveLlmConfig())}
+                                                    placeholder={user?.has_llm_key ? "Enter new key to update..." : "Paste your API key here"}
+                                                    className={"flex-1 max-w-md " + inp} />
+                                                <button onClick={saveLlmConfig} disabled={llmSaving || !llmKey.trim()}
+                                                    className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold text-white disabled:opacity-50"
+                                                    style={{ background: "linear-gradient(135deg, #059669, #34d399)" }}>
+                                                    <Save className="w-3 h-3" /> {llmSaving ? "Saving..." : "Save"}
+                                                </button>
+                                                {user?.has_llm_key && (
+                                                    <button onClick={clearLlmConfig} disabled={llmSaving}
+                                                        className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs text-gray-500 border border-white/10 hover:border-rose-400/30 hover:text-rose-400 disabled:opacity-50">
+                                                        <Trash2 className="w-3 h-3" /> Clear
+                                                    </button>
+                                                )}
+                                            </div>
+                                            {llmMsg && <p className={`text-xs mt-1.5 ${llmMsg === "Saved" || llmMsg === "Cleared" ? "text-emerald-400" : "text-rose-400"}`}>{llmMsg === "Saved" || llmMsg === "Cleared" ? <Check className="w-3 h-3 inline mr-1" /> : null}{llmMsg}</p>}
+                                            <div className="flex items-center gap-1.5 mt-2 text-gray-700 text-[10px]">
+                                                <Shield className="w-3 h-3" /> Your key is encrypted server-side and never exposed in the UI.
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <label className="text-[10px] uppercase tracking-wider text-gray-600 block mb-1.5">SMTP Email</label>
-                                        <input type="password" placeholder="Enter SMTP Host" className={"max-w-sm " + inp} />
-                                        <p className="text-gray-600 text-[10px] mt-1">Set via SMTP_HOST, SMTP_USER, SMTP_PASS env vars. Per-user password is in My Profile.</p>
+                                </div>
+
+                                {/* Other integrations */}
+                                <div className="rounded-xl p-6" style={{ background: "linear-gradient(145deg, #0d1526, #0a1020)", border: "1px solid rgba(255,255,255,0.05)" }}>
+                                    <h3 className="text-sm font-semibold text-white mb-5">Other Integrations</h3>
+                                    <div className="space-y-5">
+                                        <div>
+                                            <label className="text-[10px] uppercase tracking-wider text-gray-600 block mb-1.5">Google Places API</label>
+                                            <input type="password" placeholder="Set via GOOGLE_PLACES_API_KEY env var" className={"max-w-sm " + inp} readOnly />
+                                            <p className="text-gray-600 text-[10px] mt-1">Used for organization search. Configured at the platform level.</p>
+                                        </div>
+                                        <div>
+                                            <label className="text-[10px] uppercase tracking-wider text-gray-600 block mb-1.5">SMTP Email</label>
+                                            <p className="text-gray-600 text-[10px]">Per-user email password is configured in My Profile.</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

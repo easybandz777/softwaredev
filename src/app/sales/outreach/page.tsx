@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { SalesLayout } from "@/components/SalesLayout";
 import {
     Sparkles, RefreshCw, Mail, MapPin, Building, Globe, FileText,
-    AlertTriangle, Copy, Check, Send, Loader2, CheckCircle, Briefcase, User
+    AlertTriangle, Copy, Check, Send, Loader2, CheckCircle, Briefcase, User,
+    Bookmark, X, Save, ChevronDown, Trash2, Pencil, Tag
 } from "lucide-react";
 
 interface UserInfo { id: number; username: string; full_name: string; role: string; }
@@ -14,6 +15,12 @@ interface Lead {
     website?: string; location?: string; analysis_data?: string; solutions?: string;
     entity_type?: string; job_title?: string;
 }
+interface OutreachPreset {
+    id: number; name: string; instructions: string;
+    industry_label: string | null; mode: string | null; description: string | null;
+}
+
+const inp = "w-full text-xs bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-gray-300 focus:outline-none focus:border-emerald-400/40";
 
 export default function OutreachPage() {
     const [user, setUser] = useState<UserInfo | null>(null);
@@ -25,10 +32,22 @@ export default function OutreachPage() {
     const [subjectLine, setSubjectLine] = useState("");
     const [genError, setGenError] = useState("");
     const [tokensUsed, setTokensUsed] = useState(0);
+    const [usedProvider, setUsedProvider] = useState("");
+    const [usedModel, setUsedModel] = useState("");
     const [copied, setCopied] = useState(false);
     const [isSending, setIsSending] = useState(false);
     const [sendResult, setSendResult] = useState<{ type: string; message: string } | null>(null);
     const [showSendConfirm, setShowSendConfirm] = useState(false);
+
+    // Prompt composer state
+    const [promptText, setPromptText] = useState("");
+    const [presets, setPresets] = useState<OutreachPreset[]>([]);
+    const [activePresetId, setActivePresetId] = useState<number | null>(null);
+    const [showPresetDropdown, setShowPresetDropdown] = useState(false);
+    const [showSavePreset, setShowSavePreset] = useState(false);
+    const [newPresetName, setNewPresetName] = useState("");
+    const [newPresetIndustry, setNewPresetIndustry] = useState("");
+    const [editingPresetId, setEditingPresetId] = useState<number | null>(null);
 
     useEffect(() => {
         async function load() {
@@ -46,10 +65,19 @@ export default function OutreachPage() {
             finally { setLoadingLeads(false); }
         }
         load();
+        loadPresets();
+    }, []);
+
+    const loadPresets = useCallback(async () => {
+        try {
+            const r = await fetch("/api/sales/outreach-presets", { credentials: "include" });
+            if (r.ok) setPresets(await r.json());
+        } catch { /* ignore */ }
     }, []);
 
     const lead = leads.find(l => l.id === selectedLeadId);
     const isPersonLead = lead?.entity_type === "person";
+    const activePreset = presets.find(p => p.id === activePresetId);
 
     function handleLeadChange(newId: number) {
         setSelectedLeadId(newId);
@@ -83,11 +111,13 @@ export default function OutreachPage() {
                         jobTitle: lead.job_title,
                         employer: lead.company,
                     },
+                    presetInstructions: activePreset?.instructions || "",
+                    promptInstructions: promptText.trim(),
                 }),
             });
             const data = await res.json();
             if (data.success) {
-                setSubjectLine(data.subject || ""); setEmailCopy(data.content || ""); setTokensUsed(data.tokensUsed || 0);
+                setSubjectLine(data.subject || ""); setEmailCopy(data.content || ""); setTokensUsed(data.tokensUsed || 0); setUsedProvider(data.provider || ""); setUsedModel(data.model || "");
             } else { setGenError(data.error || "Failed to generate email"); }
         } catch (err: unknown) { setGenError(err instanceof Error ? err.message : "Error"); }
         finally { setIsGenerating(false); }
@@ -113,6 +143,58 @@ export default function OutreachPage() {
         finally { setIsSending(false); }
     }
 
+    function applyPreset(preset: OutreachPreset) {
+        setActivePresetId(preset.id);
+        setPromptText(preset.instructions);
+        setShowPresetDropdown(false);
+    }
+
+    function clearPrompt() {
+        setActivePresetId(null);
+        setPromptText("");
+    }
+
+    async function saveAsPreset() {
+        if (!newPresetName.trim() || !promptText.trim()) return;
+        const body: Record<string, string | null> = {
+            name: newPresetName.trim(),
+            instructions: promptText.trim(),
+            industry_label: newPresetIndustry.trim() || null,
+            mode: isPersonLead ? "person" : "organization",
+        };
+
+        if (editingPresetId) {
+            await fetch(`/api/sales/outreach-presets/${editingPresetId}`, {
+                method: "PATCH", headers: { "Content-Type": "application/json" }, credentials: "include",
+                body: JSON.stringify(body),
+            });
+        } else {
+            await fetch("/api/sales/outreach-presets", {
+                method: "POST", headers: { "Content-Type": "application/json" }, credentials: "include",
+                body: JSON.stringify(body),
+            });
+        }
+
+        setNewPresetName(""); setNewPresetIndustry(""); setShowSavePreset(false); setEditingPresetId(null);
+        loadPresets();
+    }
+
+    async function deletePreset(id: number) {
+        await fetch(`/api/sales/outreach-presets/${id}`, { method: "DELETE", credentials: "include" });
+        if (activePresetId === id) { setActivePresetId(null); setPromptText(""); }
+        loadPresets();
+    }
+
+    function startEditPreset(preset: OutreachPreset) {
+        setEditingPresetId(preset.id);
+        setNewPresetName(preset.name);
+        setNewPresetIndustry(preset.industry_label || "");
+        setPromptText(preset.instructions);
+        setActivePresetId(preset.id);
+        setShowSavePreset(true);
+        setShowPresetDropdown(false);
+    }
+
     const hasContent = subjectLine || emailCopy;
     const canSend = hasContent && lead?.email && !isSending && !isGenerating;
 
@@ -130,7 +212,7 @@ export default function OutreachPage() {
             }}>
                 <div>
                     <h1 className="text-xl font-bold text-white">Outreach Generator</h1>
-                    <p className="text-gray-500 text-xs mt-0.5">Select a saved lead or contact, review their context, then generate a personalized email.</p>
+                    <p className="text-gray-500 text-xs mt-0.5">Select a lead, prompt the AI with custom instructions, then generate a personalized email.</p>
                 </div>
             </header>
 
@@ -152,14 +234,16 @@ export default function OutreachPage() {
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-6 items-start">
-                        <div>
-                            <div className="rounded-xl p-4 mb-4" style={{ background: "linear-gradient(145deg, #0d1526, #0a1020)", border: "1px solid rgba(255,255,255,0.05)" }}>
+                        {/* Left sidebar: Lead select + context + prompt composer */}
+                        <div className="space-y-4">
+                            <div className="rounded-xl p-4" style={{ background: "linear-gradient(145deg, #0d1526, #0a1020)", border: "1px solid rgba(255,255,255,0.05)" }}>
                                 <label className="text-[10px] uppercase tracking-wider text-gray-600 font-semibold block mb-2">Select Lead</label>
                                 <select value={selectedLeadId} onChange={e => handleLeadChange(Number(e.target.value))}
                                     className="w-full text-sm bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-gray-300 focus:outline-none focus:border-emerald-400/40">
                                     {leads.map(l => <option key={l.id} value={l.id}>{getLeadDisplayLabel(l)}</option>)}
                                 </select>
                             </div>
+
                             {lead && (
                                 <div className="rounded-xl p-4" style={{ background: "linear-gradient(145deg, #0d1526, #0a1020)", border: "1px solid rgba(255,255,255,0.05)" }}>
                                     <div className="flex items-center gap-2 mb-3">
@@ -192,8 +276,104 @@ export default function OutreachPage() {
                                     </div>
                                 </div>
                             )}
+
+                            {/* Prompt Composer */}
+                            <div className="rounded-xl p-4" style={{ background: "linear-gradient(145deg, #0d1526, #0a1020)", border: "1px solid rgba(255,255,255,0.05)" }}>
+                                <div className="flex items-center justify-between mb-2">
+                                    <label className="text-[10px] uppercase tracking-wider text-gray-600 font-semibold">Prompt This Email</label>
+                                    {promptText && (
+                                        <button onClick={clearPrompt} className="text-[10px] text-gray-600 hover:text-gray-400 flex items-center gap-1">
+                                            <X className="w-2.5 h-2.5" /> Clear
+                                        </button>
+                                    )}
+                                </div>
+                                <textarea
+                                    value={promptText}
+                                    onChange={e => { setPromptText(e.target.value); if (activePresetId) setActivePresetId(null); }}
+                                    placeholder='e.g. "Make it more direct for roofers" or "Mention family protection, warm tone"'
+                                    rows={3}
+                                    className={inp + " resize-y font-mono text-[11px]"}
+                                />
+
+                                {/* Active preset badge */}
+                                {activePreset && (
+                                    <div className="mt-2 flex items-center gap-1.5">
+                                        <span className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-violet-400/10 text-violet-400 border border-violet-400/20">
+                                            <Bookmark className="w-2.5 h-2.5" /> {activePreset.name}
+                                            {activePreset.industry_label && <span className="text-violet-400/60">({activePreset.industry_label})</span>}
+                                        </span>
+                                        <button onClick={() => setActivePresetId(null)} className="text-gray-600 hover:text-gray-400"><X className="w-3 h-3" /></button>
+                                    </div>
+                                )}
+
+                                {/* Preset picker + save */}
+                                <div className="flex items-center gap-2 mt-3">
+                                    <div className="relative flex-1">
+                                        <button onClick={() => setShowPresetDropdown(!showPresetDropdown)}
+                                            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[11px] text-gray-500 border border-white/10 hover:border-white/20 hover:text-gray-300 w-full justify-between">
+                                            <span className="flex items-center gap-1.5"><Bookmark className="w-3 h-3" /> {presets.length > 0 ? "Saved Presets" : "No presets yet"}</span>
+                                            <ChevronDown className="w-3 h-3" />
+                                        </button>
+
+                                        {showPresetDropdown && (
+                                            <div className="absolute z-20 top-full left-0 right-0 mt-1 rounded-lg overflow-hidden shadow-xl" style={{ background: "#111827", border: "1px solid rgba(255,255,255,0.1)" }}>
+                                                {presets.length === 0 ? (
+                                                    <div className="px-3 py-4 text-center text-xs text-gray-600">No saved presets. Write instructions above and save them.</div>
+                                                ) : (
+                                                    <div className="max-h-52 overflow-y-auto">
+                                                        {presets.map(p => (
+                                                            <div key={p.id} className="flex items-center gap-2 px-3 py-2.5 hover:bg-white/5 group">
+                                                                <button onClick={() => applyPreset(p)} className="flex-1 text-left min-w-0">
+                                                                    <div className="text-xs text-gray-300 font-medium truncate">{p.name}</div>
+                                                                    <div className="flex items-center gap-2 mt-0.5">
+                                                                        {p.industry_label && <span className="text-[9px] text-gray-600 flex items-center gap-0.5"><Tag className="w-2 h-2" />{p.industry_label}</span>}
+                                                                        {p.mode && <span className="text-[9px] text-gray-600">{p.mode}</span>}
+                                                                    </div>
+                                                                </button>
+                                                                <button onClick={() => startEditPreset(p)} className="p-1 text-gray-700 hover:text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity"><Pencil className="w-3 h-3" /></button>
+                                                                <button onClick={() => deletePreset(p.id)} className="p-1 text-gray-700 hover:text-rose-400 opacity-0 group-hover:opacity-100 transition-opacity"><Trash2 className="w-3 h-3" /></button>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    {promptText.trim() && (
+                                        <button onClick={() => { setShowSavePreset(!showSavePreset); setEditingPresetId(null); setNewPresetName(""); setNewPresetIndustry(""); }}
+                                            className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[11px] text-gray-500 border border-white/10 hover:border-white/20 hover:text-gray-300 flex-shrink-0">
+                                            <Save className="w-3 h-3" /> Save
+                                        </button>
+                                    )}
+                                </div>
+
+                                {/* Save preset form */}
+                                {showSavePreset && (
+                                    <div className="mt-3 p-3 rounded-lg" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)" }}>
+                                        <p className="text-[10px] text-gray-500 font-semibold uppercase tracking-wider mb-2">{editingPresetId ? "Update Preset" : "Save as Preset"}</p>
+                                        <div className="space-y-2">
+                                            <input value={newPresetName} onChange={e => setNewPresetName(e.target.value)}
+                                                onKeyDown={e => e.key === "Enter" && (e.preventDefault(), saveAsPreset())}
+                                                placeholder="Preset name..." className={inp} autoFocus />
+                                            <input value={newPresetIndustry} onChange={e => setNewPresetIndustry(e.target.value)}
+                                                onKeyDown={e => e.key === "Enter" && (e.preventDefault(), saveAsPreset())}
+                                                placeholder="Industry / trade label (optional)" className={inp} />
+                                            <div className="flex gap-2 justify-end">
+                                                <button onClick={() => { setShowSavePreset(false); setEditingPresetId(null); }} className="px-2.5 py-1.5 rounded-lg text-[11px] text-gray-600 hover:text-gray-400">Cancel</button>
+                                                <button onClick={saveAsPreset} disabled={!newPresetName.trim()}
+                                                    className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-[11px] font-semibold text-white disabled:opacity-50"
+                                                    style={{ background: "linear-gradient(135deg, #059669, #34d399)" }}>
+                                                    <Save className="w-3 h-3" /> {editingPresetId ? "Update" : "Save"}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
                         </div>
 
+                        {/* Right side: Generated email */}
                         <div className="rounded-xl p-6 flex flex-col" style={{ background: "linear-gradient(145deg, #0d1526, #0a1020)", border: "1px solid rgba(255,255,255,0.05)", minHeight: 500 }}>
                             <div className="flex items-center justify-between mb-5">
                                 <div>
@@ -255,7 +435,7 @@ export default function OutreachPage() {
 
                             {hasContent && !showSendConfirm && (
                                 <div className="mt-4 flex items-center justify-between pt-4 border-t border-white/5">
-                                    <span className="text-xs text-gray-600">{tokensUsed > 0 && `${tokensUsed} tokens used`}</span>
+                                    <span className="text-xs text-gray-600">{tokensUsed > 0 && `${tokensUsed} tokens`}{usedProvider && ` · ${usedProvider}${usedModel ? ` / ${usedModel}` : ""}`}</span>
                                     <div className="flex gap-2">
                                         <button onClick={handleCopy} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs bg-white/5 text-gray-300 border border-white/10">
                                             {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />} {copied ? "Copied!" : "Copy"}

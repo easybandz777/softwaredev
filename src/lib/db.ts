@@ -429,6 +429,36 @@ export async function ensureMigrated() {
     // ── Mode column on presets ─────────────────────────────────────────
     await sql`ALTER TABLE sales_prospect_presets ADD COLUMN IF NOT EXISTS mode TEXT DEFAULT 'organization'`;
 
+    // ── Outreach prompt presets (per-user saved instruction snippets) ───
+    await sql`
+        CREATE TABLE IF NOT EXISTS sales_outreach_presets (
+            id              SERIAL PRIMARY KEY,
+            user_id         INTEGER NOT NULL,
+            name            TEXT NOT NULL,
+            instructions    TEXT NOT NULL DEFAULT '',
+            industry_label  TEXT,
+            mode            TEXT,
+            description     TEXT,
+            created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+            updated_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
+        )
+    `;
+
+    // ── Per-user LLM provider configuration ────────────────────────────
+    await sql`
+        CREATE TABLE IF NOT EXISTS crm_user_llm_configs (
+            id                    SERIAL PRIMARY KEY,
+            user_id               INTEGER NOT NULL UNIQUE,
+            provider              TEXT NOT NULL DEFAULT 'openai',
+            model                 TEXT NOT NULL DEFAULT 'gpt-4o-mini',
+            api_key_encrypted     TEXT NOT NULL,
+            validated_at          TIMESTAMPTZ,
+            last_validation_error TEXT,
+            created_at            TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+            updated_at            TIMESTAMPTZ NOT NULL DEFAULT NOW()
+        )
+    `;
+
     // ── Per-user SMTP credentials + prompt rules for outreach ──────────
     await sql`ALTER TABLE crm_users ADD COLUMN IF NOT EXISTS smtp_pass TEXT`;
     await sql`ALTER TABLE crm_users ADD COLUMN IF NOT EXISTS outreach_prompt_rules TEXT`;

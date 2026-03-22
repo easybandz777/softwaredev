@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireAuth, getSessionUser } from "@/lib/auth";
 import { sql, ensureMigrated } from "@/lib/db";
-import OpenAI from "openai";
+import { generateText, resolveUserLlmConfig } from "@/lib/llm";
 
 export const dynamic = "force-dynamic";
 
@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
     if (error) return NextResponse.json({ error }, { status: 401 });
 
     try {
-        const { lead, promptRules } = await req.json();
+        const { lead, promptRules, presetInstructions, promptInstructions } = await req.json();
         const isPersonMode = lead?.entityType === "person" || lead?.entity_type === "person";
 
         if (!lead || (!isPersonMode && !lead.companyName && !lead.company) || (!lead.contactName && !lead.name)) {
@@ -61,23 +61,26 @@ export async function POST(req: NextRequest) {
             }, { status: 400 });
         }
 
-        const apiKey = process.env.OPENAI_API_KEY;
-        if (!apiKey) {
-            return NextResponse.json({ success: false, error: "OpenAI API key is not configured. Contact your admin." }, { status: 500 });
+        const sessionUser = getSessionUser(req);
+        if (!sessionUser) {
+            return NextResponse.json({ success: false, error: "Session expired." }, { status: 401 });
         }
 
-        const openai = new OpenAI({ apiKey });
+        const llmConfig = await resolveUserLlmConfig(sessionUser.id);
+        if (!llmConfig) {
+            return NextResponse.json({
+                success: false,
+                error: "No AI provider configured. Go to Settings > API Integrations to add your API key.",
+            }, { status: 500 });
+        }
 
         await ensureMigrated();
-        let senderName = "QuantLab Sales Team";
+        let senderName = "Sales Team";
         let savedRules: Record<string, string> = {};
-        const sessionUser = getSessionUser(req);
-        if (sessionUser) {
-            const { rows } = await sql`SELECT full_name, outreach_prompt_rules FROM crm_users WHERE id = ${sessionUser.id} LIMIT 1`;
-            if (rows[0]?.full_name) senderName = rows[0].full_name;
-            if (rows[0]?.outreach_prompt_rules) {
-                try { savedRules = typeof rows[0].outreach_prompt_rules === "string" ? JSON.parse(rows[0].outreach_prompt_rules) : rows[0].outreach_prompt_rules; } catch { /* ignore */ }
-            }
+        const { rows } = await sql`SELECT full_name, outreach_prompt_rules FROM crm_users WHERE id = ${sessionUser.id} LIMIT 1`;
+        if (rows[0]?.full_name) senderName = rows[0].full_name;
+        if (rows[0]?.outreach_prompt_rules) {
+            try { savedRules = typeof rows[0].outreach_prompt_rules === "string" ? JSON.parse(rows[0].outreach_prompt_rules) : rows[0].outreach_prompt_rules; } catch { /* ignore */ }
         }
 
         const defaultRules = {
@@ -87,7 +90,17 @@ export async function POST(req: NextRequest) {
             avoidWords: "synergy, leverage, disrupt, innovative, cutting-edge, game-changer, scalable, I hope this finds you well",
             senderName,
         };
-        const rules = { ...defaultRules, ...savedRules, ...(promptRules || {}) };
+        const rules: Record<string, string> = { ...defaultRules, ...savedRules, ...(promptRules || {}) };
+
+        const instructionParts: string[] = [];
+        if (rules.customInstructions) instructionParts.push(rules.customInstructions);
+        if (presetInstructions && typeof presetInstructions === "string" && presetInstructions.trim()) {
+            instructionParts.push(presetInstructions.trim());
+        }
+        if (promptInstructions && typeof promptInstructions === "string" && promptInstructions.trim()) {
+            instructionParts.push(promptInstructions.trim());
+        }
+        rules.customInstructions = instructionParts.join("\n\n");
 
         const hasAudit = lead.analysisData && typeof lead.analysisData === "object" && Object.keys(lead.analysisData).length > 0;
         const hasNotes = lead.notes && typeof lead.notes === "string" && lead.notes.trim().length > 0;
@@ -131,20 +144,17 @@ ${rules.customInstructions ? `\nCUSTOM INSTRUCTIONS:\n${rules.customInstructions
 FORMAT: First line is the subject line prefixed with "Subject: ", then a blank line, then the email body. Nothing else.`;
 
         const leadContext = buildLeadContext(lead);
-        const response = await openai.chat.completions.create({
-            model: "gpt-4o-mini",
-            messages: [
-                { role: "system", content: systemPrompt },
-                { role: "user", content: `Write a ${isPersonMode ? "personalized" : "cold"} outreach email for this ${isPersonMode ? "contact" : "prospect"}:\n\n${leadContext}` },
-            ],
+
+        const response = await generateText(llmConfig, {
+            systemPrompt,
+            userPrompt: `Write a ${isPersonMode ? "personalized" : "cold"} outreach email for this ${isPersonMode ? "contact" : "prospect"}:\n\n${leadContext}`,
             temperature: 0.75,
-            max_tokens: 500,
+            maxTokens: 500,
         });
 
-        const content = response.choices[0].message.content || "";
-        const lines = content.split("\n");
+        const lines = response.content.split("\n");
         let subject = "";
-        let body = content;
+        let body = response.content;
 
         if (lines[0].toLowerCase().startsWith("subject:")) {
             subject = lines[0].replace(/^subject:\s*/i, "").trim();
@@ -155,7 +165,9 @@ FORMAT: First line is the subject line prefixed with "Subject: ", then a blank l
             success: true,
             subject,
             content: body,
-            tokensUsed: response.usage?.total_tokens || 0,
+            tokensUsed: response.usage.totalTokens,
+            provider: response.provider,
+            model: response.model,
         });
     } catch (err) {
         console.error("Error generating outreach:", err);

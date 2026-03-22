@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { requireAuth } from "@/lib/auth";
-import OpenAI from "openai";
+import { requireAuth, getSessionUser } from "@/lib/auth";
 import type { SearchMode, RawCandidate, SearchCriteria } from "@/lib/search/types";
 import { OrganizationSearchProvider, OrganizationEnrichmentProvider } from "@/lib/search/providers/organization";
 import { PersonSearchProvider, PersonEnrichmentProvider } from "@/lib/search/providers/person";
 import { normalizeBatch } from "@/lib/search/normalize";
+import { generateJson, resolveUserLlmConfig } from "@/lib/llm";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
@@ -186,14 +186,15 @@ export async function POST(req: NextRequest) {
         filtered = mode === "organization" ? sortOrganizations(filtered) : sortPersons(filtered);
         const finalCandidates = filtered.slice(0, limit);
 
-        // ── AI Qualification ──────────────────────────────────────────────────
+        // ── AI Qualification (provider-agnostic) ──────────────────────────────
         type AiResult = { index: number; niche?: string; contactName?: string; summary?: string; why?: string; confidence?: number };
         let aiResults: AiResult[] | null = null;
 
-        const openaiKey = process.env.OPENAI_API_KEY;
-        if (openaiKey && finalCandidates.length > 0) {
+        const sessionUser = getSessionUser(req);
+        const llmConfig = sessionUser ? await resolveUserLlmConfig(sessionUser.id) : null;
+
+        if (llmConfig && finalCandidates.length > 0) {
             try {
-                const openai = new OpenAI({ apiKey: openaiKey });
                 const elapsed = Date.now() - startTime;
                 const aiTimeout = Math.max(10000, 55000 - elapsed);
 
@@ -203,18 +204,13 @@ export async function POST(req: NextRequest) {
                         : buildPersonAiPrompt(query, finalCandidates);
 
                 const aiResponse = await Promise.race([
-                    openai.chat.completions.create({
-                        model: "gpt-4o-mini",
-                        messages: [{ role: "user", content: aiPrompt }],
-                        temperature: 0.7,
-                        response_format: { type: "json_object" },
-                    }),
+                    generateJson(llmConfig, { prompt: aiPrompt, temperature: 0.7 }),
                     new Promise<never>((_, reject) => setTimeout(() => reject(new Error("AI timeout")), aiTimeout)),
                 ]);
 
                 let aiData: { results?: AiResult[] };
                 try {
-                    aiData = JSON.parse(aiResponse.choices[0].message.content || "{}");
+                    aiData = JSON.parse(aiResponse.content);
                 } catch {
                     aiData = { results: [] };
                 }
@@ -251,7 +247,6 @@ export async function POST(req: NextRequest) {
         }
 
         // ── Backward-compatible response ──────────────────────────────────────
-        // Map SearchEntity[] to the legacy lead format the frontend currently expects.
         const leads = results.map((e) => ({
             mode: e.mode,
             companyName: e.mode === "organization" ? e.primaryLabel : (e.organization || ""),
@@ -270,7 +265,6 @@ export async function POST(req: NextRequest) {
             reviewCount: e.orgData?.reviewCount || 0,
             qualityScore: e.confidence,
             completenessScore: e.completenessScore,
-            // Person-specific fields
             jobTitle: e.personData?.title || null,
             employer: e.personData?.employer || null,
             socialProfiles: e.personData?.socialProfiles || [],
@@ -287,6 +281,7 @@ export async function POST(req: NextRequest) {
                 filtered: enriched.length - filtered.length,
                 returned: leads.length,
                 elapsedMs: Date.now() - startTime,
+                aiProvider: llmConfig?.provider || null,
             },
         });
     } catch (err) {
