@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { SalesLayout } from "@/components/SalesLayout";
 import {
     Search, Sparkles, Loader2, Save, ExternalLink, MapPin, Mail, Phone,
@@ -67,7 +68,7 @@ const chipBtn = "flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] fo
 const MODE_CONFIG = {
     organization: {
         title: "Organization Search",
-        subtitle: "Find businesses, filter by criteria, save the best ones to your pipeline.",
+        subtitle: "Search for businesses. Filter by criteria. Save the best ones to your pipeline.",
         placeholder: 'Try "Roofers in Dallas" or "Manufacturing companies in Ohio"',
         suggestions: ["Plumbers in Chicago", "HVAC contractors in Austin TX", "Custom apparel companies in LA", "Landscaping businesses in Atlanta"],
         phaseMessages: {
@@ -81,7 +82,7 @@ const MODE_CONFIG = {
     },
     person: {
         title: "Contact Search",
-        subtitle: "Find people by name, role, or employer. Get email and phone when available.",
+        subtitle: "Find contacts by name, role, or employer. Surface emails and phones instantly.",
         placeholder: 'Try "Life insurance agents in Houston" or "John Smith at Allstate"',
         suggestions: ["Insurance agents in Dallas TX", "Real estate agents in Miami", "Financial advisors in New York", "Dentists in Los Angeles"],
         phaseMessages: {
@@ -248,10 +249,20 @@ export default function ProspectingPage() {
 
     return (
         <SalesLayout user={user}>
-            <header className="hidden md:flex sticky top-0 z-10 items-center justify-between px-8 py-4" style={{ background: "rgba(8,13,24,0.9)", backdropFilter: "blur(16px)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
-                <div>
-                    <h1 className="text-xl font-bold text-white">Lead Search</h1>
-                    <p className="text-gray-500 text-xs mt-0.5">{cfg.subtitle}</p>
+            <header className="hidden md:flex sticky top-0 z-10 items-center justify-between px-8 py-5" style={{ background: "rgba(8,13,24,0.92)", backdropFilter: "blur(20px)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+                <div className="flex items-center gap-5">
+                    <Image
+                        src="/thequantlabxTJ5automailer.png"
+                        alt="TheQuantLab x TJ5 AutoMailer"
+                        width={160}
+                        height={44}
+                        className="object-contain"
+                        priority
+                    />
+                    <div className="h-8 w-px bg-white/10" />
+                    <p className="text-sm font-bold tracking-wide" style={{ background: "linear-gradient(135deg, #a78bfa, #60a5fa, #34d399)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+                        {cfg.subtitle}
+                    </p>
                 </div>
             </header>
 
