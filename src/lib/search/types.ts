@@ -81,14 +81,26 @@ export interface SearchResponse {
   meta: SearchMeta;
 }
 
+export interface FilterBreakdownItem {
+  key: string;
+  label: string;
+  count: number;
+  stage: "pre-ai" | "post-ai" | "system";
+}
+
 export interface SearchMeta {
   query: string;
   mode: SearchMode;
   discovered: number;
   enriched: number;
+  /** Aggregate count of leads removed by user-selected filters (pre-AI + post-AI). Kept for backward compat. */
   filtered: number;
+  /** Per-filter first-blocking exclusion counts, ordered by pipeline position. */
+  filterBreakdown: FilterBreakdownItem[];
+  deduped: number;
   returned: number;
   elapsedMs: number;
+  aiProvider?: string | null;
 }
 
 // ─── Provider contract ────────────────────────────────────────────────────────
