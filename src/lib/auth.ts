@@ -28,18 +28,44 @@ export function parseSessionToken(token: string): { id: number; role: string; us
 }
 
 /**
+ * Resolve the real DB id for the legacy admin token so that per-user
+ * features (SMTP, LLM config, etc.) work correctly for Beltz even
+ * when using the old cookie.
+ */
+let legacyBeltzId: number | null = null;
+async function resolveLegacyBeltzId(): Promise<number> {
+    if (legacyBeltzId !== null) return legacyBeltzId;
+    try {
+        await ensureMigrated();
+        const { rows } = await sql`SELECT id FROM crm_users WHERE username = 'beltz' LIMIT 1`;
+        legacyBeltzId = (rows[0] as { id: number } | undefined)?.id ?? 0;
+    } catch {
+        legacyBeltzId = 0;
+    }
+    return legacyBeltzId;
+}
+
+/**
  * Check if user is authenticated and optionally check role.
  */
 export function getSessionUser(req: NextRequest): { id: number; role: string; username: string } | null {
     const token = req.cookies.get(SESSION_COOKIE)?.value;
     if (!token) return null;
 
-    // Support legacy admin token
+    // Support legacy admin token — resolve real DB id lazily
     if (token === "quantlab_admin_authenticated_v1") {
-        return { id: 0, role: "admin", username: "beltz" };
+        return { id: legacyBeltzId ?? 0, role: "admin", username: "beltz" };
     }
 
     return parseSessionToken(token);
+}
+
+/**
+ * Ensure legacy admin session has a real DB id before any DB-dependent
+ * operations. Call once early in request handlers that need per-user data.
+ */
+export async function ensureLegacyResolved(): Promise<void> {
+    if (legacyBeltzId === null) await resolveLegacyBeltzId();
 }
 
 /**

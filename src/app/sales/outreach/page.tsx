@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import { SalesLayout } from "@/components/SalesLayout";
+import { VoicePromptButton } from "@/components/VoicePromptButton";
 import {
     Sparkles, RefreshCw, Mail, MapPin, Building, Globe, FileText,
     AlertTriangle, Copy, Check, Send, Loader2, CheckCircle, Briefcase, User,
@@ -280,7 +281,13 @@ export default function OutreachPage() {
                             {/* Prompt Composer */}
                             <div className="rounded-xl p-4" style={{ background: "linear-gradient(145deg, #0d1526, #0a1020)", border: "1px solid rgba(255,255,255,0.05)" }}>
                                 <div className="flex items-center justify-between mb-2">
-                                    <label className="text-[10px] uppercase tracking-wider text-gray-600 font-semibold">Prompt This Email</label>
+                                    <div className="flex items-center gap-2">
+                                        <label className="text-[10px] uppercase tracking-wider text-gray-600 font-semibold">Prompt This Email</label>
+                                        <VoicePromptButton
+                                            onTranscript={(text) => { setPromptText(prev => prev ? prev.trimEnd() + " " + text : text); if (activePresetId) setActivePresetId(null); }}
+                                            disabled={isGenerating}
+                                        />
+                                    </div>
                                     {promptText && (
                                         <button onClick={clearPrompt} className="text-[10px] text-gray-600 hover:text-gray-400 flex items-center gap-1">
                                             <X className="w-2.5 h-2.5" /> Clear

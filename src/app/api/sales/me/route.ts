@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sql, ensureMigrated } from "@/lib/db";
-import { requireAuth } from "@/lib/auth";
+import { requireAuth, ensureLegacyResolved } from "@/lib/auth";
 import { getUserLlmMeta } from "@/lib/llm/config";
 import { encrypt } from "@/lib/llm/crypto";
 import { PROVIDER_MODELS } from "@/lib/llm/types";
@@ -13,6 +13,7 @@ export async function GET(req: NextRequest) {
     if (error) return NextResponse.json({ error }, { status: 401 });
 
     await ensureMigrated();
+    await ensureLegacyResolved();
 
     const { rows } = await sql`
         SELECT id, username, full_name, email, role, referral_code,
@@ -37,6 +38,7 @@ export async function PATCH(req: NextRequest) {
     if (error) return NextResponse.json({ error }, { status: 401 });
 
     await ensureMigrated();
+    await ensureLegacyResolved();
 
     const body = await req.json();
 

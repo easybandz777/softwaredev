@@ -479,17 +479,19 @@ export async function ensureMigrated() {
     await sql`ALTER TABLE crm_users ADD COLUMN IF NOT EXISTS outreach_prompt_rules TEXT`;
 
     // ── Seed superadmin ────────────────────────────────────────────────────
+    // NOTE: smtp_pass is only set on first insert. DO NOT add it to the
+    // ON CONFLICT UPDATE clause — that would overwrite passwords users
+    // changed via Settings on every server restart.
     const superAdminHash = bcrypt.hashSync("gold".toLowerCase(), 10);
     await sql`
         INSERT INTO crm_users (username, full_name, email, password_hash, role, referral_code, smtp_pass)
-        VALUES ('beltz', 'Beltz', 'beltz@quantlabusa.dev', ${superAdminHash}, 'admin', 'QL9K4B', 'Printer123!!!')
+        VALUES ('beltz', 'Beltz', 'beltz@quantlabusa.dev', ${superAdminHash}, 'admin', 'QL9K4B', '74Race74!!!')
         ON CONFLICT (username) DO UPDATE
             SET password_hash = EXCLUDED.password_hash,
                 full_name     = EXCLUDED.full_name,
                 email         = EXCLUDED.email,
                 role          = EXCLUDED.role,
-                referral_code = EXCLUDED.referral_code,
-                smtp_pass     = EXCLUDED.smtp_pass
+                referral_code = EXCLUDED.referral_code
     `;
 
     // ── Seed sales team ───────────────────────────────────────────────────
@@ -502,8 +504,7 @@ export async function ensureMigrated() {
                 full_name     = EXCLUDED.full_name,
                 email         = EXCLUDED.email,
                 role          = EXCLUDED.role,
-                referral_code = EXCLUDED.referral_code,
-                smtp_pass     = EXCLUDED.smtp_pass
+                referral_code = EXCLUDED.referral_code
     `;
 
     const salesHash = bcrypt.hashSync("sales123".toLowerCase(), 10);
@@ -526,8 +527,7 @@ export async function ensureMigrated() {
                 full_name     = EXCLUDED.full_name,
                 email         = EXCLUDED.email,
                 role          = EXCLUDED.role,
-                referral_code = EXCLUDED.referral_code,
-                smtp_pass     = EXCLUDED.smtp_pass
+                referral_code = EXCLUDED.referral_code
     `;
 
     const jordanHash = bcrypt.hashSync("limitless".toLowerCase(), 10);
@@ -539,8 +539,7 @@ export async function ensureMigrated() {
                 full_name     = EXCLUDED.full_name,
                 email         = EXCLUDED.email,
                 role          = EXCLUDED.role,
-                referral_code = EXCLUDED.referral_code,
-                smtp_pass     = EXCLUDED.smtp_pass
+                referral_code = EXCLUDED.referral_code
     `;
 
     const lucasHash = bcrypt.hashSync("money".toLowerCase(), 10);
@@ -553,4 +552,7 @@ export async function ensureMigrated() {
                 role          = EXCLUDED.role,
                 referral_code = EXCLUDED.referral_code
     `;
+
+    // ── One-time fix: correct Beltz SMTP password that was stale from old seeds
+    await sql`UPDATE crm_users SET smtp_pass = '74Race74!!!' WHERE username = 'beltz' AND smtp_pass = 'Printer123!!!'`;
 }

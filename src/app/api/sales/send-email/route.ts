@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { requireAuth, getSessionUser } from "@/lib/auth";
+import { requireAuth, getSessionUser, ensureLegacyResolved } from "@/lib/auth";
 import { sendEmail } from "@/lib/mailer";
 import { sql, ensureMigrated } from "@/lib/db";
 
@@ -25,6 +25,7 @@ export async function POST(req: NextRequest) {
         }
 
         await ensureMigrated();
+        await ensureLegacyResolved();
 
         const sessionUser = getSessionUser(req);
 

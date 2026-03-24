@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { SalesLayout } from "@/components/SalesLayout";
+import { VoicePromptButton } from "@/components/VoicePromptButton";
 import {
     Search, Sparkles, Loader2, Save, ExternalLink, MapPin, Mail, Phone,
     Globe, CheckCircle, ChevronDown, ChevronUp, Star, ArrowRight,
@@ -335,6 +336,11 @@ export default function ProspectingPage() {
                                 placeholder={cfg.placeholder}
                                 className="w-full pl-10 pr-4 py-3 rounded-lg bg-white/5 border border-white/10 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-emerald-400/40" />
                         </div>
+                        <VoicePromptButton
+                            onTranscript={(text) => setQuery(prev => prev ? prev.trimEnd() + " " + text : text)}
+                            disabled={loading}
+                            size="md"
+                        />
                         <button type="submit" disabled={loading || !query.trim()} className="flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold text-white disabled:opacity-50"
                             style={{ background: mode === "organization" ? "linear-gradient(135deg, #8b5cf6, #3b82f6)" : "linear-gradient(135deg, #a855f7, #6366f1)" }}>
                             {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
