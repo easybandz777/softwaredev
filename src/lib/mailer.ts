@@ -2,8 +2,8 @@ import nodemailer from "nodemailer";
 
 const transporterCache = new Map<string, nodemailer.Transporter>();
 
-function getSmtpHost() { return process.env.SMTP_HOST || ""; }
-function getSmtpPort() { return Number(process.env.SMTP_PORT) || 465; }
+function getSmtpHost() { return (process.env.SMTP_HOST || "").trim(); }
+function getSmtpPort() { return Number((process.env.SMTP_PORT || "465").trim()); }
 
 function getTransporter(userEmail?: string, userSmtpPass?: string): nodemailer.Transporter {
     const host = getSmtpHost();
