@@ -495,13 +495,15 @@ export async function ensureMigrated() {
     // ── Seed sales team ───────────────────────────────────────────────────
     const marshHash = bcrypt.hashSync("printer".toLowerCase(), 10);
     await sql`
-        INSERT INTO crm_users (username, full_name, email, password_hash, role, referral_code)
-        VALUES ('marsh', 'Marsh', 'marsh@quantlab.dev', ${marshHash}, 'sales', 'QL7X2M')
+        INSERT INTO crm_users (username, full_name, email, password_hash, role, referral_code, smtp_pass)
+        VALUES ('marsh', 'Marsh', 'amarsh@quantlabusa.dev', ${marshHash}, 'sales', 'QL7X2M', 'Zayne2015!')
         ON CONFLICT (username) DO UPDATE
             SET password_hash = EXCLUDED.password_hash,
                 full_name     = EXCLUDED.full_name,
+                email         = EXCLUDED.email,
                 role          = EXCLUDED.role,
-                referral_code = EXCLUDED.referral_code
+                referral_code = EXCLUDED.referral_code,
+                smtp_pass     = EXCLUDED.smtp_pass
     `;
 
     const salesHash = bcrypt.hashSync("sales123".toLowerCase(), 10);
