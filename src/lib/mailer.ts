@@ -8,26 +8,34 @@ function getSmtpPort() { return Number(process.env.SMTP_PORT) || 465; }
 function getTransporter(userEmail?: string, userSmtpPass?: string): nodemailer.Transporter {
     const host = getSmtpHost();
     const port = getSmtpPort();
+    const isPerUser = !!(userEmail && userSmtpPass);
     const smtpUser = userEmail || process.env.SMTP_USER || "";
     const smtpPass = userSmtpPass || process.env.SMTP_PASS || "";
 
     if (!host || !smtpUser || !smtpPass) {
-        throw new Error("SMTP not configured. Set SMTP_HOST, SMTP_USER, and SMTP_PASS in your environment, or set per-user SMTP credentials in Settings.");
+        throw new Error(`SMTP not configured (host=${host ? "ok" : "missing"}, user=${smtpUser ? "ok" : "missing"}, pass=${smtpPass ? "ok" : "missing"}). Set SMTP_HOST, SMTP_USER, and SMTP_PASS in your environment, or set per-user SMTP credentials in Settings.`);
     }
 
-    const cacheKey = `${host}:${port}:${smtpUser}`;
-    const cached = transporterCache.get(cacheKey);
-    if (cached) return cached;
+    // Per-user transporters are never cached — passwords can change at any time
+    if (!isPerUser) {
+        const cacheKey = `${host}:${port}:${smtpUser}`;
+        const cached = transporterCache.get(cacheKey);
+        if (cached) return cached;
 
-    const t = nodemailer.createTransport({
-        host,
-        port,
-        secure: port === 465,
+        const t = nodemailer.createTransport({
+            host, port, secure: port === 465,
+            auth: { user: smtpUser, pass: smtpPass },
+            tls: { rejectUnauthorized: false },
+        });
+        transporterCache.set(cacheKey, t);
+        return t;
+    }
+
+    return nodemailer.createTransport({
+        host, port, secure: port === 465,
         auth: { user: smtpUser, pass: smtpPass },
         tls: { rejectUnauthorized: false },
     });
-    transporterCache.set(cacheKey, t);
-    return t;
 }
 
 export async function sendEmail({ to, subject, text, html, replyTo, fromEmail, fromSmtpPass }: {

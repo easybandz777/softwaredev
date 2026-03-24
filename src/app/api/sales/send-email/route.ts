@@ -64,14 +64,17 @@ export async function POST(req: NextRequest) {
             sentFrom: fromEmail || process.env.SMTP_FROM || process.env.SMTP_USER,
         });
     } catch (err: unknown) {
-        console.error("Send email error:", err);
-        const msg = err instanceof Error ? err.message : "";
+        const msg = err instanceof Error ? err.message : String(err);
+        const code = (err as { code?: string })?.code || "";
+        console.error(`Send email error [from=${fromEmail || "env"} code=${code}]: ${msg}`);
         let userMessage = "Failed to send email. Please try again.";
         if (msg.includes("SMTP not configured")) {
             userMessage = "Email sending is not configured. Set your SMTP password in Settings, or contact your admin.";
-        } else if (msg.includes("EAUTH") || msg.includes("authentication")) {
-            userMessage = "SMTP authentication failed. Check your email password in Settings.";
+        } else if (code === "EAUTH" || msg.includes("EAUTH") || msg.includes("authentication")) {
+            userMessage = `SMTP authentication failed for ${fromEmail || "default account"}. Check your email password in Settings.`;
+        } else if (code === "ESOCKET" || msg.includes("ESOCKET") || msg.includes("ECONNREFUSED")) {
+            userMessage = "Could not connect to the email server. Please try again later.";
         }
-        return NextResponse.json({ success: false, error: userMessage }, { status: 500 });
+        return NextResponse.json({ success: false, error: userMessage, detail: msg }, { status: 500 });
     }
 }
