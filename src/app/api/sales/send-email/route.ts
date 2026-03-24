@@ -9,6 +9,9 @@ export async function POST(req: NextRequest) {
     const { error } = requireAuth(req, ["admin", "sales"]);
     if (error) return NextResponse.json({ error }, { status: 401 });
 
+    let fromEmail: string | undefined;
+    let fromSmtpPass: string | undefined;
+
     try {
         const { to, subject, body, leadId } = await req.json();
 
@@ -24,8 +27,6 @@ export async function POST(req: NextRequest) {
         await ensureMigrated();
 
         const sessionUser = getSessionUser(req);
-        let fromEmail: string | undefined;
-        let fromSmtpPass: string | undefined;
 
         if (sessionUser) {
             const { rows } = await sql`SELECT email, smtp_pass FROM crm_users WHERE id = ${sessionUser.id} LIMIT 1`;
