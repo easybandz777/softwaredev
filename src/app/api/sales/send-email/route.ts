@@ -66,8 +66,12 @@ export async function POST(req: NextRequest) {
         });
     } catch (err: unknown) {
         const msg = err instanceof Error ? err.message : String(err);
-        const code = (err as { code?: string })?.code || "";
-        console.error(`Send email error [from=${fromEmail || "env"} code=${code}]: ${msg}`);
+        const code = (err as { code?: string })?.code || "none";
+        const cmd = (err as { command?: string })?.command || "";
+        console.error(`SMTP_FAIL from=${fromEmail || "env"}`);
+        console.error(`SMTP_FAIL code=${code} cmd=${cmd}`);
+        console.error(`SMTP_FAIL msg=${msg.slice(0, 200)}`);
+        if (msg.length > 200) console.error(`SMTP_FAIL msg2=${msg.slice(200, 400)}`);
         let userMessage = "Failed to send email. Please try again.";
         if (msg.includes("SMTP not configured")) {
             userMessage = "Email sending is not configured. Set your SMTP password in Settings, or contact your admin.";
