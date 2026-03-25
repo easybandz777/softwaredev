@@ -102,8 +102,17 @@ export async function syncInbox(userId: number, userEmail: string, userSmtpPass:
                     bodyText = "(could not retrieve body)";
                 }
 
-                const msgIdHeader = msg.headers?.get("message-id");
-                const inReplyToHeader = msg.headers?.get("in-reply-to");
+                let msgIdHeader: string | undefined;
+                let inReplyToHeader: string | undefined;
+                if (msg.headers) {
+                    const headerStr = Buffer.isBuffer(msg.headers)
+                        ? msg.headers.toString("utf-8")
+                        : typeof msg.headers === "string" ? msg.headers : "";
+                    const idMatch = headerStr.match(/message-id:\s*(.+)/i);
+                    if (idMatch) msgIdHeader = idMatch[1].trim();
+                    const replyMatch = headerStr.match(/in-reply-to:\s*(.+)/i);
+                    if (replyMatch) inReplyToHeader = replyMatch[1].trim();
+                }
 
                 messages.push({
                     messageId: typeof msgIdHeader === "string" ? msgIdHeader.trim() : null,
