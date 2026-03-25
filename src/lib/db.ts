@@ -32,6 +32,35 @@ export interface Consultation {
     value_est: number | null;
     next_follow_up: string | null;
     created_at: string;
+    temperature: "hot" | "warm" | "cold" | "dead" | null;
+    cadence_step: number;
+    cadence_started_at: string | null;
+    cadence_paused: boolean;
+    last_reply_at: string | null;
+}
+
+export interface LeadEmail {
+    id: number;
+    lead_id: number;
+    message_id: string | null;
+    in_reply_to: string | null;
+    thread_id: string | null;
+    direction: "inbound" | "outbound";
+    from_address: string;
+    to_address: string;
+    subject: string | null;
+    body_text: string | null;
+    body_html: string | null;
+    sent_at: string;
+    synced_at: string;
+}
+
+export interface EmailSyncState {
+    id: number;
+    user_id: number;
+    last_uid: number;
+    last_synced_at: string;
+    auto_create_leads: boolean;
 }
 
 export interface LeadNote {
@@ -555,4 +584,41 @@ export async function ensureMigrated() {
 
     // ── One-time fix: correct Beltz SMTP password that was stale from old seeds
     await sql`UPDATE crm_users SET smtp_pass = '74Race74!!!' WHERE username = 'beltz' AND smtp_pass = 'Printer123!!!'`;
+
+    // ── Lead Emails (email thread storage) ────────────────────────────────
+    await sql`
+        CREATE TABLE IF NOT EXISTS lead_emails (
+            id            SERIAL PRIMARY KEY,
+            lead_id       INTEGER NOT NULL,
+            message_id    TEXT,
+            in_reply_to   TEXT,
+            thread_id     TEXT,
+            direction     TEXT NOT NULL DEFAULT 'inbound',
+            from_address  TEXT NOT NULL,
+            to_address    TEXT NOT NULL,
+            subject       TEXT,
+            body_text     TEXT,
+            body_html     TEXT,
+            sent_at       TIMESTAMPTZ,
+            synced_at     TIMESTAMPTZ DEFAULT NOW()
+        )
+    `;
+
+    // ── Email Sync State (per-user IMAP cursor) ───────────────────────────
+    await sql`
+        CREATE TABLE IF NOT EXISTS email_sync_state (
+            id               SERIAL PRIMARY KEY,
+            user_id          INTEGER NOT NULL UNIQUE,
+            last_uid         INTEGER DEFAULT 0,
+            last_synced_at   TIMESTAMPTZ DEFAULT NOW(),
+            auto_create_leads BOOLEAN DEFAULT true
+        )
+    `;
+
+    // ── Cadence + temperature columns on consultations ────────────────────
+    await sql`ALTER TABLE consultations ADD COLUMN IF NOT EXISTS temperature TEXT DEFAULT 'warm'`;
+    await sql`ALTER TABLE consultations ADD COLUMN IF NOT EXISTS cadence_step INTEGER DEFAULT 0`;
+    await sql`ALTER TABLE consultations ADD COLUMN IF NOT EXISTS cadence_started_at TIMESTAMPTZ`;
+    await sql`ALTER TABLE consultations ADD COLUMN IF NOT EXISTS cadence_paused BOOLEAN DEFAULT false`;
+    await sql`ALTER TABLE consultations ADD COLUMN IF NOT EXISTS last_reply_at TIMESTAMPTZ`;
 }

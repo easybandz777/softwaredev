@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { SalesLayout } from "@/components/SalesLayout";
-import { Users, Bot, Key, UserCircle, Save, Loader2, Check, Eye, EyeOff, Trash2, Shield } from "lucide-react";
+import { Users, Bot, Key, UserCircle, Save, Loader2, Check, Eye, EyeOff, Trash2, Shield, RefreshCw, Inbox, ToggleLeft, ToggleRight } from "lucide-react";
 
 interface UserInfo {
     id: number; username: string; full_name: string; email: string; role: string;
@@ -61,6 +61,17 @@ export default function SettingsPage() {
     const [llmSaving, setLlmSaving] = useState(false);
     const [llmMsg, setLlmMsg] = useState("");
 
+    // Email sync state
+    const [syncStatus, setSyncStatus] = useState<{ lastSyncedAt: string | null; totalEmails: number; autoCreateLeads: boolean } | null>(null);
+    const [syncing, setSyncing] = useState(false);
+    const [syncResult, setSyncResult] = useState<{ synced: number; newLeads: number; matched: number; error?: string } | null>(null);
+
+    const fetchSyncStatus = () => {
+        fetch("/api/sales/email-sync", { credentials: "include" })
+            .then(r => r.ok ? r.json() : null)
+            .then(data => { if (data) setSyncStatus(data); });
+    };
+
     useEffect(() => {
         fetch("/api/sales/me", { credentials: "include" })
             .then(r => { if (!r.ok) { window.location.href = "/sales"; return null; } return r.json(); })
@@ -80,6 +91,7 @@ export default function SettingsPage() {
                 }
                 setLoading(false);
             });
+        fetchSyncStatus();
     }, []);
 
     const saveRules = async () => {
@@ -129,6 +141,30 @@ export default function SettingsPage() {
         finally { setLlmSaving(false); setTimeout(() => setLlmMsg(""), 3000); }
     };
 
+    const triggerSync = async () => {
+        setSyncing(true); setSyncResult(null);
+        try {
+            const r = await fetch("/api/sales/email-sync", { method: "POST", headers: { "Content-Type": "application/json" }, credentials: "include", body: JSON.stringify({}) });
+            const data = await r.json();
+            if (r.ok) {
+                setSyncResult({ synced: data.synced, newLeads: data.newLeads, matched: data.matched });
+                fetchSyncStatus();
+            } else {
+                setSyncResult({ synced: 0, newLeads: 0, matched: 0, error: data.error });
+            }
+        } catch { setSyncResult({ synced: 0, newLeads: 0, matched: 0, error: "Network error" }); }
+        finally { setSyncing(false); }
+    };
+
+    const toggleAutoCreate = async () => {
+        const newVal = !syncStatus?.autoCreateLeads;
+        await fetch("/api/sales/email-sync", {
+            method: "POST", headers: { "Content-Type": "application/json" }, credentials: "include",
+            body: JSON.stringify({ action: "set_auto_create", auto_create_leads: newVal }),
+        });
+        fetchSyncStatus();
+    };
+
     const providerLabel = PROVIDER_OPTIONS.find(p => p.value === (user?.llm_provider || ""))?.label || user?.llm_provider;
 
     const previewPrompt = `You are an elite outreach copywriter. You write emails that get replies because they are specific, short, and lead with relevance.
@@ -149,6 +185,7 @@ FORMAT: First line is the subject line prefixed with "Subject: ", then a blank l
 
     const tabs = [
         { id: "rules", label: "Prompt Engine", icon: <Bot className="w-4 h-4" /> },
+        { id: "email-sync", label: "Email Sync", icon: <Inbox className="w-4 h-4" /> },
         { id: "team", label: "Team & Roles", icon: <Users className="w-4 h-4" /> },
         { id: "api", label: "API Integrations", icon: <Key className="w-4 h-4" /> },
         { id: "profile", label: "My Profile", icon: <UserCircle className="w-4 h-4" /> },
@@ -237,6 +274,92 @@ FORMAT: First line is the subject line prefixed with "Subject: ", then a blank l
                                                 <Save className="w-3.5 h-3.5" /> {rulesSaving ? "Saving..." : "Save Prompt Rules"}
                                             </button>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* ═══ EMAIL SYNC ═══ */}
+                        {activeTab === "email-sync" && (
+                            <div className="space-y-4">
+                                <div className="rounded-xl p-6" style={{ background: "linear-gradient(145deg, #0d1526, #0a1020)", border: "1px solid rgba(255,255,255,0.05)" }}>
+                                    <div className="flex items-center justify-between mb-4">
+                                        <div>
+                                            <h3 className="text-sm font-semibold text-white flex items-center gap-2">
+                                                <Inbox className="w-4 h-4 text-sky-400" /> Inbox Sync
+                                            </h3>
+                                            <p className="text-gray-500 text-xs mt-0.5">Pull emails from your IMAP inbox and automatically match them to leads. New senders can be auto-created as leads.</p>
+                                        </div>
+                                    </div>
+
+                                    <div className="space-y-4">
+                                        {/* Sync status */}
+                                        <div className="flex items-center gap-4 p-3 rounded-lg" style={{ background: "rgba(0,0,0,0.2)", border: "1px solid rgba(255,255,255,0.05)" }}>
+                                            <div className="flex-1">
+                                                <p className="text-xs text-gray-500">Last Synced</p>
+                                                <p className="text-sm text-gray-300">
+                                                    {syncStatus?.lastSyncedAt
+                                                        ? new Date(syncStatus.lastSyncedAt).toLocaleString("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })
+                                                        : "Never"}
+                                                </p>
+                                            </div>
+                                            <div className="flex-1">
+                                                <p className="text-xs text-gray-500">Total Emails Stored</p>
+                                                <p className="text-sm text-gray-300">{syncStatus?.totalEmails ?? 0}</p>
+                                            </div>
+                                            <div className="flex-1">
+                                                <p className="text-xs text-gray-500">SMTP Status</p>
+                                                {user?.has_smtp
+                                                    ? <p className="text-sm text-emerald-400 flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-emerald-400 inline-block" /> Connected</p>
+                                                    : <p className="text-sm text-amber-400 flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-amber-400 inline-block" /> Not configured</p>}
+                                            </div>
+                                        </div>
+
+                                        {/* Sync button */}
+                                        <div className="flex items-center gap-3">
+                                            <button onClick={triggerSync} disabled={syncing || !user?.has_smtp}
+                                                className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-semibold text-white disabled:opacity-50 transition-all"
+                                                style={{ background: "linear-gradient(135deg, #0284c7, #38bdf8)" }}>
+                                                <RefreshCw className={`w-3.5 h-3.5 ${syncing ? "animate-spin" : ""}`} />
+                                                {syncing ? "Syncing Inbox…" : "Sync Now"}
+                                            </button>
+                                            {!user?.has_smtp && (
+                                                <p className="text-xs text-amber-400">Set your email password in My Profile first.</p>
+                                            )}
+                                        </div>
+
+                                        {/* Sync result */}
+                                        {syncResult && (
+                                            <div className={`p-3 rounded-lg text-xs ${syncResult.error ? "bg-rose-500/10 border border-rose-500/20 text-rose-400" : "bg-emerald-500/10 border border-emerald-500/20 text-emerald-400"}`}>
+                                                {syncResult.error ? (
+                                                    <p>{syncResult.error}</p>
+                                                ) : (
+                                                    <p>
+                                                        Synced <strong>{syncResult.synced}</strong> email{syncResult.synced !== 1 ? "s" : ""}.
+                                                        {syncResult.matched > 0 && <> Matched to <strong>{syncResult.matched}</strong> existing lead{syncResult.matched !== 1 ? "s" : ""}.</>}
+                                                        {syncResult.newLeads > 0 && <> Created <strong>{syncResult.newLeads}</strong> new lead{syncResult.newLeads !== 1 ? "s" : ""}.</>}
+                                                    </p>
+                                                )}
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+
+                                {/* Auto-create toggle */}
+                                <div className="rounded-xl p-6" style={{ background: "linear-gradient(145deg, #0d1526, #0a1020)", border: "1px solid rgba(255,255,255,0.05)" }}>
+                                    <h3 className="text-sm font-semibold text-white mb-3">Lead Auto-Import</h3>
+                                    <div className="flex items-center justify-between">
+                                        <div>
+                                            <p className="text-xs text-gray-400">Auto-create leads from unknown senders</p>
+                                            <p className="text-[10px] text-gray-600 mt-0.5">When enabled, inbound emails from addresses not matching any existing lead will create a new lead automatically.</p>
+                                        </div>
+                                        <button onClick={toggleAutoCreate}
+                                            className="flex items-center gap-1 text-sm transition-colors"
+                                            style={{ color: syncStatus?.autoCreateLeads ? "#34d399" : "#6b7280" }}>
+                                            {syncStatus?.autoCreateLeads
+                                                ? <ToggleRight className="w-8 h-8" />
+                                                : <ToggleLeft className="w-8 h-8" />}
+                                        </button>
                                     </div>
                                 </div>
                             </div>

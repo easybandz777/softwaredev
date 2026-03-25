@@ -8,6 +8,7 @@ import {
     Mail, Phone,
     DollarSign, UserCheck,
     Plus, X, Trash2,
+    Flame, Snowflake, Thermometer,
 } from "lucide-react";
 import { SalesLayout } from "@/components/SalesLayout";
 
@@ -26,7 +27,15 @@ interface Lead {
     value_est: number | null;
     next_follow_up: string | null;
     created_at: string;
+    temperature: string | null;
 }
+
+const TEMP_CONFIG: Record<string, { label: string; color: string; bg: string; icon: React.ReactNode }> = {
+    hot: { label: "Hot", color: "#ef4444", bg: "rgba(239,68,68,0.12)", icon: <Flame className="w-3 h-3" /> },
+    warm: { label: "Warm", color: "#f59e0b", bg: "rgba(245,158,11,0.12)", icon: <Thermometer className="w-3 h-3" /> },
+    cold: { label: "Cold", color: "#3b82f6", bg: "rgba(59,130,246,0.12)", icon: <Snowflake className="w-3 h-3" /> },
+    dead: { label: "Dead", color: "#6b7280", bg: "rgba(107,114,128,0.12)", icon: <Snowflake className="w-3 h-3" /> },
+};
 
 interface SalesUser {
     id: number;
@@ -81,6 +90,7 @@ function LeadsPage() {
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState("");
     const [filterStatus, setFilterStatus] = useState<string>(searchParams.get("status") || "all");
+    const [filterTemp, setFilterTemp] = useState<string>("all");
     const [showNew, setShowNew] = useState(searchParams.get("new") === "1");
     const [creating, setCreating] = useState(false);
     const [newLead, setNewLead] = useState({
@@ -154,6 +164,9 @@ function LeadsPage() {
         } else if (filterStatus !== "all" && l.status !== filterStatus) {
             return false;
         }
+        if (filterTemp !== "all" && (l.temperature || "warm") !== filterTemp) {
+            return false;
+        }
         if (search) {
             const s = search.toLowerCase();
             return l.name.toLowerCase().includes(s) || l.email.toLowerCase().includes(s) || (l.company?.toLowerCase().includes(s) ?? false);
@@ -186,19 +199,19 @@ function LeadsPage() {
             </header>
 
             {/* Mobile page header */}
-            <div className="md:hidden flex items-center justify-between px-4 py-4 border-b" style={{ borderColor: "rgba(255,255,255,0.05)" }}>
+            <div className="md:hidden flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: "rgba(255,255,255,0.05)" }}>
                 <div>
-                    <h1 className="text-lg font-bold text-white">Leads</h1>
-                    <p className="text-gray-500 text-xs">{filtered.length} of {leads.length}</p>
+                    <h1 className="text-base font-bold text-white">Leads</h1>
+                    <p className="text-gray-500 text-[10px]">{filtered.length} of {leads.length}</p>
                 </div>
                 <button onClick={() => setShowNew(true)}
-                    className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold"
+                    className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[11px] font-semibold"
                     style={{ background: "linear-gradient(135deg, #059669, #34d399)", color: "white" }}>
-                    <Plus className="w-3.5 h-3.5" /> New Lead
+                    <Plus className="w-3 h-3" /> New
                 </button>
             </div>
 
-            <div className="px-4 md:px-8 py-6 max-w-7xl mx-auto">
+            <div className="px-3 md:px-8 py-3 md:py-6 max-w-7xl mx-auto">
                 {/* New lead form */}
                 {showNew && (
                     <div className="rounded-2xl p-5 mb-6" style={{
@@ -258,33 +271,57 @@ function LeadsPage() {
                     </div>
                 )}
 
-                {/* Filters — wrap on mobile */}
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mb-6">
-                    <div className="relative flex-1 sm:max-w-xs">
+                {/* Filters */}
+                <div className="space-y-2 mb-4 md:mb-6">
+                    {/* Search bar — always full width on mobile */}
+                    <div className="relative">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600" />
                         <input
                             value={search}
                             onChange={e => setSearch(e.target.value)}
                             placeholder="Search leads…"
-                            className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-white/5 border border-white/10 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-emerald-400/40 transition-all"
+                            className="w-full md:max-w-xs pl-10 pr-4 py-2 rounded-lg bg-white/5 border border-white/10 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-emerald-400/40 transition-all"
                         />
                     </div>
 
-                    {/* Status filter pills — scrollable on mobile */}
-                    <div className="flex items-center gap-1 p-1 rounded-xl overflow-x-auto flex-shrink-0" style={{
-                        background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)",
-                    }}>
-                        {statuses.map(s => (
-                            <button key={s} onClick={() => setFilterStatus(s)}
-                                className="px-3 py-1.5 rounded-lg text-xs font-medium transition-all capitalize"
-                                style={{
-                                    background: filterStatus === s ? "rgba(52,211,153,0.12)" : "transparent",
-                                    color: filterStatus === s ? "#34d399" : "#6b7280",
-                                    border: filterStatus === s ? "1px solid rgba(52,211,153,0.2)" : "1px solid transparent",
-                                }}>
-                                {s}
-                            </button>
-                        ))}
+                    {/* Filter rows — single scrollable row on mobile, separate rows on desktop */}
+                    <div className="flex flex-col sm:flex-row gap-2">
+                        {/* Status filter pills */}
+                        <div className="flex items-center gap-0.5 p-0.5 rounded-lg overflow-x-auto flex-shrink-0 -mx-1 px-1" style={{
+                            background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)",
+                        }}>
+                            {statuses.map(s => (
+                                <button key={s} onClick={() => setFilterStatus(s)}
+                                    className="px-2 py-1 rounded-md text-[11px] font-medium transition-all capitalize whitespace-nowrap"
+                                    style={{
+                                        background: filterStatus === s ? "rgba(52,211,153,0.12)" : "transparent",
+                                        color: filterStatus === s ? "#34d399" : "#6b7280",
+                                        border: filterStatus === s ? "1px solid rgba(52,211,153,0.2)" : "1px solid transparent",
+                                    }}>
+                                    {s}
+                                </button>
+                            ))}
+                        </div>
+
+                        {/* Temperature filter pills */}
+                        <div className="flex items-center gap-0.5 p-0.5 rounded-lg overflow-x-auto flex-shrink-0 -mx-1 px-1" style={{
+                            background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)",
+                        }}>
+                            {["all", "hot", "warm", "cold", "dead"].map(t => {
+                                const tc = TEMP_CONFIG[t];
+                                return (
+                                    <button key={t} onClick={() => setFilterTemp(t)}
+                                        className="flex items-center gap-0.5 px-2 py-1 rounded-md text-[11px] font-medium transition-all capitalize whitespace-nowrap"
+                                        style={{
+                                            background: filterTemp === t ? (tc ? tc.bg : "rgba(52,211,153,0.12)") : "transparent",
+                                            color: filterTemp === t ? (tc ? tc.color : "#34d399") : "#6b7280",
+                                            border: filterTemp === t ? `1px solid ${tc ? tc.color + "30" : "rgba(52,211,153,0.2)"}` : "1px solid transparent",
+                                        }}>
+                                        {tc?.icon} {t}
+                                    </button>
+                                );
+                            })}
+                        </div>
                     </div>
                 </div>
 
@@ -294,12 +331,13 @@ function LeadsPage() {
                     border: "1px solid rgba(255,255,255,0.05)",
                 }}>
                     {/* Desktop header row — hidden on mobile */}
-                    <div className="hidden md:grid text-xs font-semibold text-gray-500 uppercase tracking-wider px-6 py-3 border-b"
-                        style={{ gridTemplateColumns: "2fr 1.5fr 1.5fr 1fr 1fr 1fr 40px", borderColor: "rgba(255,255,255,0.05)" }}>
+                                    <div className="hidden md:grid text-xs font-semibold text-gray-500 uppercase tracking-wider px-6 py-3 border-b"
+                        style={{ gridTemplateColumns: "2fr 1.5fr 1fr 0.7fr 0.6fr 1fr 0.8fr 40px", borderColor: "rgba(255,255,255,0.05)" }}>
                         <span>Name / Company</span>
                         <span>Contact</span>
                         <span>Service</span>
                         <span>Status</span>
+                        <span>Temp</span>
                         <span>Assigned To</span>
                         <span>Value</span>
                         <span />
@@ -321,7 +359,7 @@ function LeadsPage() {
                                 {/* Desktop row */}
                                 <div className="hidden md:grid items-center px-6 py-4 cursor-pointer transition-colors hover:bg-white/[0.02]"
                                     style={{
-                                        gridTemplateColumns: "2fr 1.5fr 1.5fr 1fr 1fr 1fr 40px",
+                                        gridTemplateColumns: "2fr 1.5fr 1fr 0.7fr 0.6fr 1fr 0.8fr 40px",
                                         borderBottom: idx < filtered.length - 1 ? "1px solid rgba(255,255,255,0.04)" : "none",
                                     }}
                                     onClick={() => router.push(`/sales/leads/${lead.id}`)}
@@ -346,6 +384,18 @@ function LeadsPage() {
                                             ))}
                                         </select>
                                     </div>
+                                    <div>
+                                        {(() => {
+                                            const temp = lead.temperature || "warm";
+                                            const tc = TEMP_CONFIG[temp];
+                                            return tc ? (
+                                                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase"
+                                                    style={{ color: tc.color, background: tc.bg }}>
+                                                    {tc.icon} {tc.label}
+                                                </span>
+                                            ) : null;
+                                        })()}
+                                    </div>
                                     <div onClick={e => e.stopPropagation()}>
                                         <select value={lead.assigned_to_id ?? ""}
                                             onChange={e => updateLead(lead.id, { assigned_to_id: e.target.value ? parseInt(e.target.value) : null })}
@@ -367,7 +417,7 @@ function LeadsPage() {
                                 </div>
 
                                 {/* Mobile card row */}
-                                <div className="md:hidden flex items-start justify-between px-4 py-4 cursor-pointer hover:bg-white/[0.02] transition-colors"
+                                <div className="md:hidden flex items-start justify-between px-3 py-3 cursor-pointer hover:bg-white/[0.02] transition-colors"
                                     style={{ borderBottom: idx < filtered.length - 1 ? "1px solid rgba(255,255,255,0.04)" : "none" }}
                                     onClick={() => router.push(`/sales/leads/${lead.id}`)}
                                 >
@@ -376,6 +426,16 @@ function LeadsPage() {
                                             <p className="text-sm font-medium text-white truncate">{lead.name}</p>
                                             <span className="inline-flex px-2 py-0.5 rounded-full text-[10px] font-semibold flex-shrink-0"
                                                 style={{ color: cfg.color, background: cfg.bg }}>{cfg.label}</span>
+                                            {(() => {
+                                                const temp = lead.temperature || "warm";
+                                                const tc = TEMP_CONFIG[temp];
+                                                return tc ? (
+                                                    <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full text-[9px] font-bold uppercase flex-shrink-0"
+                                                        style={{ color: tc.color, background: tc.bg }}>
+                                                        {tc.icon} {tc.label}
+                                                    </span>
+                                                ) : null;
+                                            })()}
                                         </div>
                                         {lead.company && <p className="text-xs text-gray-500 truncate">{lead.company}</p>}
                                         <p className="text-xs text-gray-600 mt-1">{lead.service}</p>

@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireAuth, getSessionUser, ensureLegacyResolved } from "@/lib/auth";
-import { sendEmail } from "@/lib/mailer";
+import { sendEmail, buildSignatureHtml, buildSignatureText } from "@/lib/mailer";
 import { sql, ensureMigrated } from "@/lib/db";
+import { advanceCadence } from "@/lib/cadence";
+import { recalculateTemperature } from "@/lib/temperature";
 
 export const dynamic = "force-dynamic";
 
@@ -29,20 +31,29 @@ export async function POST(req: NextRequest) {
 
         const sessionUser = getSessionUser(req);
 
+        let senderName = "QuantLab USA";
+        let senderEmailAddr = "";
+
         if (sessionUser) {
-            const { rows } = await sql`SELECT email, smtp_pass FROM crm_users WHERE id = ${sessionUser.id} LIMIT 1`;
+            const { rows } = await sql`SELECT full_name, email, smtp_pass FROM crm_users WHERE id = ${sessionUser.id} LIMIT 1`;
             const dbUser = rows[0];
             if (dbUser?.email && dbUser?.smtp_pass) {
                 fromEmail = dbUser.email;
                 fromSmtpPass = dbUser.smtp_pass;
             }
+            if (dbUser?.full_name) senderName = dbUser.full_name;
+            if (dbUser?.email) senderEmailAddr = dbUser.email;
         }
+
+        senderEmailAddr = senderEmailAddr || fromEmail || process.env.SMTP_FROM || process.env.SMTP_USER || "";
+        const sigHtml = buildSignatureHtml(senderName, senderEmailAddr);
+        const sigText = buildSignatureText(senderName, senderEmailAddr);
 
         const result = await sendEmail({
             to,
             subject,
-            text: body,
-            html: body.replace(/\n/g, "<br>"),
+            text: body + sigText,
+            html: body.replace(/\n/g, "<br>") + sigHtml,
             fromEmail,
             fromSmtpPass,
         });
@@ -51,11 +62,21 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ success: false, error: `Email rejected by server for: ${result.rejected.join(", ")}` }, { status: 422 });
         }
 
+        const senderAddress = fromEmail || process.env.SMTP_FROM || process.env.SMTP_USER || "";
+
         if (leadId) {
             try {
                 await sql`UPDATE consultations SET status = 'contacted', last_activity_at = NOW() WHERE id = ${leadId}`;
+
+                await sql`
+                    INSERT INTO lead_emails (lead_id, message_id, direction, from_address, to_address, subject, body_text, body_html, sent_at)
+                    VALUES (${leadId}, ${result.messageId || null}, 'outbound', ${senderAddress}, ${to}, ${subject}, ${body}, ${body.replace(/\n/g, "<br>")}, NOW())
+                `;
+
+                await advanceCadence(parseInt(leadId));
+                await recalculateTemperature(parseInt(leadId));
             } catch (err) {
-                console.error("Failed to update lead stage after send:", err);
+                console.error("Failed to update lead after send:", err);
             }
         }
 
@@ -63,7 +84,7 @@ export async function POST(req: NextRequest) {
             success: true,
             messageId: result.messageId,
             sentTo: to,
-            sentFrom: fromEmail || process.env.SMTP_FROM || process.env.SMTP_USER,
+            sentFrom: senderAddress,
         });
     } catch (err: unknown) {
         const msg = err instanceof Error ? err.message : String(err);

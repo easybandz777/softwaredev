@@ -113,7 +113,7 @@ HARD RULES:
 - Maximum length: ${rules.maxLength}
 - Call to action: ${rules.callToAction}
 - NEVER use these words/phrases: ${rules.avoidWords}
-- Sign off as: ${rules.senderName}
+- End the body with just the sender's first name (e.g. "— ${rules.senderName.split(" ")[0]}"). Do NOT add a full signature block, title, company name, or contact info — the system appends a professional signature automatically.
 - First sentence MUST reference something specific about the person or their role
 - NO filler openers
 - NO generic claims
@@ -131,7 +131,7 @@ HARD RULES:
 - Maximum length: ${rules.maxLength}
 - Call to action: ${rules.callToAction}
 - NEVER use these words/phrases: ${rules.avoidWords}
-- Sign off as: ${rules.senderName}
+- End the body with just the sender's first name (e.g. "— ${rules.senderName.split(" ")[0]}"). Do NOT add a full signature block, title, company name, or contact info — the system appends a professional signature automatically.
 - First sentence MUST reference a specific detail about their business
 - NO filler openers
 - NO generic claims

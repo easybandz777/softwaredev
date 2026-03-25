@@ -92,6 +92,71 @@ async function buildRawMessage(opts: nodemailer.SendMailOptions): Promise<Buffer
     return mail.compile().build();
 }
 
+export function buildSignatureHtml(senderName: string, senderEmail: string): string {
+    const firstName = senderName.split(" ")[0];
+    const initial = senderName.charAt(0).toUpperCase();
+
+    return `
+<div style="margin-top:28px;padding-top:16px;border-top:1px solid #e2e8f0;font-family:Arial,Helvetica,sans-serif;">
+  <table cellpadding="0" cellspacing="0" style="border:none;">
+    <tr>
+      <td style="padding-right:14px;border-right:2px solid #059669;vertical-align:top;">
+        <div style="width:48px;height:48px;border-radius:8px;background:linear-gradient(135deg,#059669,#34d399);display:flex;align-items:center;justify-content:center;">
+          <span style="font-size:20px;font-weight:700;color:#fff;line-height:48px;text-align:center;display:block;width:48px;">${initial}</span>
+        </div>
+      </td>
+      <td style="padding-left:14px;vertical-align:top;">
+        <p style="margin:0;font-size:14px;font-weight:700;color:#1f2937;">${senderName}</p>
+        <p style="margin:2px 0 0;font-size:12px;color:#6b7280;">QuantLab USA &mdash; Business Solutions</p>
+        <p style="margin:6px 0 0;font-size:12px;color:#6b7280;">
+          <a href="mailto:${senderEmail}" style="color:#059669;text-decoration:none;">${senderEmail}</a>
+        </p>
+        <p style="margin:2px 0 0;font-size:12px;">
+          <a href="https://quantlabusa.dev" style="color:#059669;text-decoration:none;font-weight:600;">quantlabusa.dev</a>
+        </p>
+      </td>
+    </tr>
+  </table>
+  <a href="https://quantlabusa.dev" style="text-decoration:none;display:block;margin-top:14px;">
+    <table cellpadding="0" cellspacing="0" width="380" style="border:none;border-radius:8px;overflow:hidden;border-collapse:separate;">
+      <tr>
+        <td style="background:#0A0E1A;padding:14px 18px;border-radius:8px;border:1px solid #1a2540;">
+          <table cellpadding="0" cellspacing="0" width="100%" style="border:none;">
+            <tr>
+              <td width="44" style="vertical-align:middle;">
+                <div style="width:40px;height:40px;border-radius:6px;background:linear-gradient(135deg,#0d1526,#0A0E1A);border:1px solid #22D3EE30;display:flex;align-items:center;justify-content:center;">
+                  <span style="font-family:'Segoe UI',Arial,sans-serif;font-size:18px;font-weight:800;color:#22D3EE;line-height:40px;text-align:center;display:block;width:40px;">${initial}</span>
+                </div>
+              </td>
+              <td style="padding-left:12px;vertical-align:middle;">
+                <p style="margin:0;font-family:'Segoe UI',Arial,sans-serif;font-size:13px;font-weight:700;color:#F0F6FF;letter-spacing:0.01em;">${senderName}</p>
+                <p style="margin:1px 0 0;font-family:'Segoe UI',Arial,sans-serif;font-size:10px;color:#22D3EE;letter-spacing:0.08em;text-transform:uppercase;font-weight:600;">Solution Expert</p>
+              </td>
+              <td style="vertical-align:middle;text-align:right;">
+                <p style="margin:0;font-family:'Courier New',monospace;font-size:10px;color:#7A90A8;line-height:1.6;">${senderEmail}</p>
+                <p style="margin:0;font-family:'Courier New',monospace;font-size:10px;color:#22D3EE;font-weight:700;line-height:1.6;">quantlabusa.dev</p>
+              </td>
+            </tr>
+          </table>
+          <table cellpadding="0" cellspacing="0" width="100%" style="border:none;margin-top:8px;">
+            <tr>
+              <td style="height:1px;background:linear-gradient(90deg,transparent,#22D3EE40,transparent);font-size:0;line-height:0;">&nbsp;</td>
+            </tr>
+          </table>
+          <p style="margin:6px 0 0;font-family:'Courier New',monospace;font-size:9px;color:#3D5066;letter-spacing:0.05em;text-align:center;">
+            Web Platforms &middot; Business Automation &middot; Custom Software &middot; Data Systems
+          </p>
+        </td>
+      </tr>
+    </table>
+  </a>
+</div>`;
+}
+
+export function buildSignatureText(senderName: string, senderEmail: string): string {
+    return `\n\n--\n${senderName}\nQuantLab USA — Business Solutions\n${senderEmail}\nhttps://quantlabusa.dev`;
+}
+
 export async function verifySMTP() {
     const transport = getTransporter();
     await transport.verify();
