@@ -59,9 +59,11 @@ export async function POST(req: NextRequest) {
         console.error("Email sync error:", msg);
 
         let userMessage = "Failed to sync emails. Please try again.";
-        if (msg.includes("EAUTH") || msg.includes("authentication")) {
+        if (msg.includes("timed out")) {
+            userMessage = "Sync timed out — press Sync again to continue from where it left off.";
+        } else if (msg.includes("EAUTH") || msg.includes("authentication")) {
             userMessage = "IMAP authentication failed. Check your email password in Settings.";
-        } else if (msg.includes("ESOCKET") || msg.includes("ECONNREFUSED")) {
+        } else if (msg.includes("ESOCKET") || msg.includes("ECONNREFUSED") || msg.includes("ENOTFOUND")) {
             userMessage = "Could not connect to the email server. Please try again later.";
         }
         return NextResponse.json({ error: userMessage }, { status: 500 });

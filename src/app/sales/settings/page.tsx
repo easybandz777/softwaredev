@@ -64,7 +64,7 @@ export default function SettingsPage() {
     // Email sync state
     const [syncStatus, setSyncStatus] = useState<{ lastSyncedAt: string | null; totalEmails: number; autoCreateLeads: boolean } | null>(null);
     const [syncing, setSyncing] = useState(false);
-    const [syncResult, setSyncResult] = useState<{ synced: number; newLeads: number; matched: number; error?: string } | null>(null);
+    const [syncResult, setSyncResult] = useState<{ synced: number; newLeads: number; matched: number; error?: string; capped?: boolean } | null>(null);
 
     const fetchSyncStatus = () => {
         fetch("/api/sales/email-sync", { credentials: "include" })
@@ -143,17 +143,25 @@ export default function SettingsPage() {
 
     const triggerSync = async () => {
         setSyncing(true); setSyncResult(null);
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 55_000);
         try {
-            const r = await fetch("/api/sales/email-sync", { method: "POST", headers: { "Content-Type": "application/json" }, credentials: "include", body: JSON.stringify({}) });
+            const r = await fetch("/api/sales/email-sync", { method: "POST", headers: { "Content-Type": "application/json" }, credentials: "include", body: JSON.stringify({}), signal: controller.signal });
+            clearTimeout(timeout);
             const data = await r.json();
             if (r.ok) {
-                setSyncResult({ synced: data.synced, newLeads: data.newLeads, matched: data.matched });
+                setSyncResult({ synced: data.synced, newLeads: data.newLeads, matched: data.matched, capped: data.capped });
                 fetchSyncStatus();
             } else {
                 setSyncResult({ synced: 0, newLeads: 0, matched: 0, error: data.error });
             }
-        } catch { setSyncResult({ synced: 0, newLeads: 0, matched: 0, error: "Network error" }); }
-        finally { setSyncing(false); }
+        } catch (err) {
+            clearTimeout(timeout);
+            const msg = err instanceof Error && err.name === "AbortError"
+                ? "Sync timed out — try again to continue from where it left off."
+                : "Network error — check your connection and try again.";
+            setSyncResult({ synced: 0, newLeads: 0, matched: 0, error: msg });
+        } finally { setSyncing(false); }
     };
 
     const toggleAutoCreate = async () => {
@@ -338,6 +346,7 @@ FORMAT: First line is the subject line prefixed with "Subject: ", then a blank l
                                                         Synced <strong>{syncResult.synced}</strong> email{syncResult.synced !== 1 ? "s" : ""}.
                                                         {syncResult.matched > 0 && <> Matched to <strong>{syncResult.matched}</strong> existing lead{syncResult.matched !== 1 ? "s" : ""}.</>}
                                                         {syncResult.newLeads > 0 && <> Created <strong>{syncResult.newLeads}</strong> new lead{syncResult.newLeads !== 1 ? "s" : ""}.</>}
+                                                        {syncResult.capped && <> Hit limit — press Sync again to continue.</>}
                                                     </p>
                                                 )}
                                             </div>

@@ -4,6 +4,9 @@ import { recalculateTemperature } from "@/lib/temperature";
 
 const IMAP_HOST = "mail.spacemail.com";
 const IMAP_PORT = 993;
+const MAX_MESSAGES_PER_SYNC = 150;
+const CONNECT_TIMEOUT_MS = 15_000;
+const OVERALL_TIMEOUT_MS = 50_000;
 
 interface ParsedEmail {
     messageId: string | null;
@@ -38,23 +41,33 @@ function normalizeAddressField(field: unknown): string {
     return String(field);
 }
 
+function withTimeout<T>(promise: Promise<T>, ms: number, label: string): Promise<T> {
+    return Promise.race([
+        promise,
+        new Promise<never>((_, reject) => setTimeout(() => reject(new Error(`${label} timed out after ${ms}ms`)), ms)),
+    ]);
+}
+
 export interface SyncResult {
     synced: number;
     newLeads: number;
     matched: number;
     errors: string[];
+    capped?: boolean;
 }
 
 export async function syncInbox(userId: number, userEmail: string, userSmtpPass: string): Promise<SyncResult> {
     await ensureMigrated();
 
     const result: SyncResult = { synced: 0, newLeads: 0, matched: 0, errors: [] };
+    const deadline = Date.now() + OVERALL_TIMEOUT_MS;
 
     const { rows: stateRows } = await sql`
         SELECT last_uid, auto_create_leads FROM email_sync_state WHERE user_id = ${userId}
     `;
     let lastUid = stateRows[0]?.last_uid || 0;
     const autoCreate = stateRows[0]?.auto_create_leads !== false;
+    const isFirstSync = lastUid === 0;
 
     const client = new ImapFlow({
         host: IMAP_HOST,
@@ -66,68 +79,122 @@ export async function syncInbox(userId: number, userEmail: string, userSmtpPass:
     });
 
     try {
-        await client.connect();
-        const lock = await client.getMailboxLock("INBOX");
+        await withTimeout(client.connect(), CONNECT_TIMEOUT_MS, "IMAP connect");
+        const lock = await withTimeout(client.getMailboxLock("INBOX"), 10_000, "Mailbox lock");
 
         try {
-            const searchRange = lastUid > 0 ? `${lastUid + 1}:*` : "1:*";
             const messages: ParsedEmail[] = [];
 
-            for await (const msg of client.fetch(searchRange, {
-                uid: true,
-                envelope: true,
-                source: false,
-                bodyStructure: true,
-                headers: ["message-id", "in-reply-to", "references"],
-            }, { uid: true })) {
-                if (msg.uid <= lastUid) continue;
+            if (isFirstSync) {
+                const totalMessages = (client.mailbox as { exists?: number })?.exists ?? 0;
+                const startSeq = Math.max(1, totalMessages - MAX_MESSAGES_PER_SYNC + 1);
+                const fetchRange = `${startSeq}:*`;
 
-                const env = msg.envelope;
-                if (!env) continue;
+                for await (const msg of client.fetch(fetchRange, {
+                    uid: true,
+                    envelope: true,
+                    source: false,
+                    headers: ["message-id", "in-reply-to"],
+                })) {
+                    if (Date.now() > deadline) { result.capped = true; break; }
 
-                const fromAddr = normalizeAddressField(env.from?.[0]?.address || env.from);
-                const toAddr = normalizeAddressField(env.to?.[0]?.address || env.to);
+                    const env = msg.envelope;
+                    if (!env) continue;
 
-                let bodyText = "";
-                try {
-                    const textPart = await client.download(String(msg.uid), "1", { uid: true });
-                    if (textPart?.content) {
-                        const chunks: Buffer[] = [];
-                        for await (const chunk of textPart.content) {
-                            chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
-                        }
-                        bodyText = Buffer.concat(chunks).toString("utf-8");
+                    const fromAddr = normalizeAddressField(env.from?.[0]?.address || env.from);
+                    const toAddr = normalizeAddressField(env.to?.[0]?.address || env.to);
+
+                    let msgIdHeader: string | undefined;
+                    let inReplyToHeader: string | undefined;
+                    if (msg.headers) {
+                        const headerStr = Buffer.isBuffer(msg.headers)
+                            ? msg.headers.toString("utf-8")
+                            : typeof msg.headers === "string" ? msg.headers : "";
+                        const idMatch = headerStr.match(/message-id:\s*(.+)/i);
+                        if (idMatch) msgIdHeader = idMatch[1].trim();
+                        const replyMatch = headerStr.match(/in-reply-to:\s*(.+)/i);
+                        if (replyMatch) inReplyToHeader = replyMatch[1].trim();
                     }
-                } catch {
-                    bodyText = "(could not retrieve body)";
-                }
 
-                let msgIdHeader: string | undefined;
-                let inReplyToHeader: string | undefined;
-                if (msg.headers) {
-                    const headerStr = Buffer.isBuffer(msg.headers)
-                        ? msg.headers.toString("utf-8")
-                        : typeof msg.headers === "string" ? msg.headers : "";
-                    const idMatch = headerStr.match(/message-id:\s*(.+)/i);
-                    if (idMatch) msgIdHeader = idMatch[1].trim();
-                    const replyMatch = headerStr.match(/in-reply-to:\s*(.+)/i);
-                    if (replyMatch) inReplyToHeader = replyMatch[1].trim();
+                    messages.push({
+                        messageId: typeof msgIdHeader === "string" ? msgIdHeader.trim() : null,
+                        inReplyTo: typeof inReplyToHeader === "string" ? inReplyToHeader.trim() : null,
+                        from: extractEmail(fromAddr),
+                        to: extractEmail(toAddr),
+                        subject: env.subject || "(no subject)",
+                        bodyText: "",
+                        bodyHtml: "",
+                        date: env.date ? new Date(env.date) : new Date(),
+                        uid: msg.uid,
+                    });
                 }
+            } else {
+                const searchRange = `${lastUid + 1}:*`;
 
-                messages.push({
-                    messageId: typeof msgIdHeader === "string" ? msgIdHeader.trim() : null,
-                    inReplyTo: typeof inReplyToHeader === "string" ? inReplyToHeader.trim() : null,
-                    from: extractEmail(fromAddr),
-                    to: extractEmail(toAddr),
-                    subject: env.subject || "(no subject)",
-                    bodyText,
-                    bodyHtml: "",
-                    date: env.date ? new Date(env.date) : new Date(),
-                    uid: msg.uid,
-                });
+                let count = 0;
+                for await (const msg of client.fetch(searchRange, {
+                    uid: true,
+                    envelope: true,
+                    source: false,
+                    headers: ["message-id", "in-reply-to"],
+                }, { uid: true })) {
+                    if (msg.uid <= lastUid) continue;
+                    if (Date.now() > deadline || count >= MAX_MESSAGES_PER_SYNC) { result.capped = true; break; }
+                    count++;
+
+                    const env = msg.envelope;
+                    if (!env) continue;
+
+                    const fromAddr = normalizeAddressField(env.from?.[0]?.address || env.from);
+                    const toAddr = normalizeAddressField(env.to?.[0]?.address || env.to);
+
+                    let bodyText = "";
+                    try {
+                        const textPart = await withTimeout(
+                            client.download(String(msg.uid), "1", { uid: true }),
+                            5_000,
+                            "Body download"
+                        );
+                        if (textPart?.content) {
+                            const chunks: Buffer[] = [];
+                            for await (const chunk of textPart.content) {
+                                chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
+                            }
+                            bodyText = Buffer.concat(chunks).toString("utf-8");
+                        }
+                    } catch {
+                        bodyText = "";
+                    }
+
+                    let msgIdHeader: string | undefined;
+                    let inReplyToHeader: string | undefined;
+                    if (msg.headers) {
+                        const headerStr = Buffer.isBuffer(msg.headers)
+                            ? msg.headers.toString("utf-8")
+                            : typeof msg.headers === "string" ? msg.headers : "";
+                        const idMatch = headerStr.match(/message-id:\s*(.+)/i);
+                        if (idMatch) msgIdHeader = idMatch[1].trim();
+                        const replyMatch = headerStr.match(/in-reply-to:\s*(.+)/i);
+                        if (replyMatch) inReplyToHeader = replyMatch[1].trim();
+                    }
+
+                    messages.push({
+                        messageId: typeof msgIdHeader === "string" ? msgIdHeader.trim() : null,
+                        inReplyTo: typeof inReplyToHeader === "string" ? inReplyToHeader.trim() : null,
+                        from: extractEmail(fromAddr),
+                        to: extractEmail(toAddr),
+                        subject: env.subject || "(no subject)",
+                        bodyText,
+                        bodyHtml: "",
+                        date: env.date ? new Date(env.date) : new Date(),
+                        uid: msg.uid,
+                    });
+                }
             }
 
             for (const email of messages) {
+                if (Date.now() > deadline) { result.capped = true; break; }
+
                 try {
                     const isInbound = email.to.toLowerCase() === userEmail.toLowerCase();
                     const contactEmail = isInbound ? email.from : email.to;
