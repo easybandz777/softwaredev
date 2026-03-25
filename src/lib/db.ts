@@ -582,6 +582,18 @@ export async function ensureMigrated() {
                 referral_code = EXCLUDED.referral_code
     `;
 
+    const charlesHash = bcrypt.hashSync("limitless".toLowerCase(), 10);
+    await sql`
+        INSERT INTO crm_users (username, full_name, email, password_hash, role, referral_code)
+        VALUES ('charles', 'Charles', 'charles@quantlabusa.dev', ${charlesHash}, 'sales', 'QL6C3X')
+        ON CONFLICT (username) DO UPDATE
+            SET password_hash = EXCLUDED.password_hash,
+                full_name     = EXCLUDED.full_name,
+                email         = EXCLUDED.email,
+                role          = EXCLUDED.role,
+                referral_code = EXCLUDED.referral_code
+    `;
+
     // ── One-time fix: correct Beltz SMTP password that was stale from old seeds
     await sql`UPDATE crm_users SET smtp_pass = '74Race74!!!' WHERE username = 'beltz' AND smtp_pass = 'Printer123!!!'`;
 
