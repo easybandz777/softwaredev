@@ -47,7 +47,14 @@ export async function recalculateTemperature(leadId: number): Promise<Temperatur
     `;
     if (!rows[0]) return "warm";
 
-    const temp = calculateTemperature(rows[0]);
+    const temp = calculateTemperature(rows[0] as {
+        status: string;
+        last_reply_at: string | null;
+        cadence_step: number;
+        cadence_paused: boolean;
+        cadence_started_at: string | null;
+        last_activity_at: string | null;
+    });
     await sql`UPDATE consultations SET temperature = ${temp} WHERE id = ${leadId}`;
     return temp;
 }
