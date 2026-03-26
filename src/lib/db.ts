@@ -653,13 +653,14 @@ export async function ensureMigrated() {
     await sql`ALTER TABLE sales_outreach_presets ADD COLUMN IF NOT EXISTS is_global BOOLEAN NOT NULL DEFAULT false`;
 
     // Seed the Hat & Apparel Builder global preset (idempotent — skip if already exists)
+    // Also update existing row to keep instructions current
     await sql`
         INSERT INTO sales_outreach_presets (user_id, name, instructions, industry_label, mode, description, is_global)
         SELECT 0,
             'Hat & Shirt Builder Platform',
             'You are writing a cold outreach email to the owner or operator of a custom hat or branded apparel shop.
 
-Your goal is to make them feel like this email was written specifically for them. You are reaching out on behalf of a software company that recently built a full e-commerce and operations platform for a custom hat brand called Hobbs Peak.
+Your goal is to make them feel like this email was written specifically for them. You are reaching out on behalf of a software company that recently built a full e-commerce and operations platform for a custom hat brand called Hobbs Peak (live at hobbspeak.business).
 
 Use these three specific talking points naturally throughout the email:
 
@@ -681,5 +682,14 @@ CALL TO ACTION: End with one low-friction question, e.g., "How are you currently
         WHERE NOT EXISTS (
             SELECT 1 FROM sales_outreach_presets WHERE name = 'Hat & Shirt Builder Platform' AND is_global = true
         )
+    `;
+
+    // Update existing row so the website URL is always current
+    await sql`
+        UPDATE sales_outreach_presets
+        SET instructions = instructions,
+            description = 'Pitch the interactive hat & shirt builder, live S&S catalog/inventory sync, and automated order + proof flow built for Hobbs Peak (hobbspeak.business).'
+        WHERE name = 'Hat & Shirt Builder Platform' AND is_global = true
+          AND description NOT LIKE '%hobbspeak.business%'
     `;
 }
