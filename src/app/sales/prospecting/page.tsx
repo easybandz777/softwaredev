@@ -114,6 +114,7 @@ function ProspectingPageInner() {
     const [error, setError] = useState("");
     const [savedIds, setSavedIds] = useState<Set<number>>(new Set());
     const [savingId, setSavingId] = useState<number | null>(null);
+    const [savedLeadIds, setSavedLeadIds] = useState<Map<number, number>>(new Map()); // lead index → DB lead id
     const [phase, setPhase] = useState("");
     const [showFilters, setShowFilters] = useState(false);
     const [maxResults, setMaxResults] = useState(5);
@@ -130,7 +131,7 @@ function ProspectingPageInner() {
     const [loadingSession, setLoadingSession] = useState(false);
 
     // Batch email state
-    interface BatchEmail { leadIndex: number; leadName: string; email: string; subject: string; body: string; sent?: boolean; error?: string; }
+    interface BatchEmail { leadIndex: number; leadName: string; email: string; subject: string; body: string; sent?: boolean; error?: string; leadId?: number; }
     const [batchEmails, setBatchEmails] = useState<BatchEmail[]>([]);
     const [showBatchPreview, setShowBatchPreview] = useState(false);
     const [batchGenerating, setBatchGenerating] = useState(false);
@@ -257,9 +258,17 @@ function ProspectingPageInner() {
                     },
                 }),
             });
-            if (res.ok) setSavedIds(prev => new Set([...prev, index]));
+            if (res.ok) {
+                const savedLead = await res.json();
+                setSavedIds(prev => new Set([...prev, index]));
+                if (savedLead?.id) {
+                    setSavedLeadIds(prev => new Map([...prev, [index, savedLead.id]]));
+                    return savedLead.id as number;
+                }
+            }
         } catch (err) { console.error("Failed to save lead:", err); }
         finally { setSavingId(null); }
+        return null;
     };
 
     const handleSaveAll = async () => { for (let i = 0; i < leads.length; i++) { if (!savedIds.has(i)) await handleSave(leads[i], i); } };
@@ -271,7 +280,7 @@ function ProspectingPageInner() {
         setBatchGenerating(true); setBatchGenProgress(0); setBatchEmails([]);
         const selectedPreset = outreachPresets.find(p => p.id === selectedOutreachPresetId);
 
-        // Save all unsaved leads first
+        // Save all unsaved leads first and capture their DB IDs
         for (let i = 0; i < leads.length; i++) { if (!savedIds.has(i)) await handleSave(leads[i], i); }
 
         const results: BatchEmail[] = [];
@@ -304,6 +313,7 @@ function ProspectingPageInner() {
                     email: lead.email!,
                     subject: data.subject || "(no subject)",
                     body: data.content || "(failed to generate)",
+                    leadId: savedLeadIds.get(index) || undefined,
                 });
             } catch {
                 results.push({
@@ -313,6 +323,7 @@ function ProspectingPageInner() {
                     subject: "(generation failed)",
                     body: "Could not generate email for this lead.",
                     error: "Generation failed",
+                    leadId: savedLeadIds.get(index) || undefined,
                 });
             }
         }
@@ -330,7 +341,7 @@ function ProspectingPageInner() {
             try {
                 const res = await fetch("/api/sales/send-email", {
                     method: "POST", headers: { "Content-Type": "application/json" }, credentials: "include",
-                    body: JSON.stringify({ to: updated[i].email, subject: updated[i].subject, body: updated[i].body }),
+                    body: JSON.stringify({ to: updated[i].email, subject: updated[i].subject, body: updated[i].body, leadId: updated[i].leadId || null }),
                 });
                 const data = await res.json();
                 updated[i] = { ...updated[i], sent: data.success, error: data.success ? undefined : (data.error || "Send failed") };
