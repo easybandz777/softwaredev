@@ -66,7 +66,7 @@ export async function syncInbox(userId: number, userEmail: string, userSmtpPass:
         SELECT last_uid, auto_create_leads FROM email_sync_state WHERE user_id = ${userId}
     `;
     let lastUid = stateRows[0]?.last_uid || 0;
-    const autoCreate = stateRows[0]?.auto_create_leads !== false;
+    const autoCreate = stateRows[0]?.auto_create_leads === true;
     const isFirstSync = lastUid === 0;
 
     const client = new ImapFlow({
