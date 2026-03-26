@@ -692,4 +692,16 @@ CALL TO ACTION: End with one low-friction question, e.g., "How are you currently
         WHERE name = 'Hat & Shirt Builder Platform' AND is_global = true
           AND description NOT LIKE '%hobbspeak.business%'
     `;
+
+    // ── Deduplicate: keep only the oldest global preset of each name ──────
+    await sql`
+        DELETE FROM sales_outreach_presets
+        WHERE is_global = true
+          AND id NOT IN (
+              SELECT MIN(id) FROM sales_outreach_presets WHERE is_global = true GROUP BY name
+          )
+    `;
+
+    // Prevent future duplicates with a unique partial index
+    await sql`CREATE UNIQUE INDEX IF NOT EXISTS idx_unique_global_preset_name ON sales_outreach_presets (name) WHERE is_global = true`;
 }
