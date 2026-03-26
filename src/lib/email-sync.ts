@@ -4,9 +4,9 @@ import { recalculateTemperature } from "@/lib/temperature";
 
 const IMAP_HOST = "mail.spacemail.com";
 const IMAP_PORT = 993;
-const MAX_MESSAGES_PER_SYNC = 150;
-const CONNECT_TIMEOUT_MS = 15_000;
-const OVERALL_TIMEOUT_MS = 50_000;
+const MAX_MESSAGES_PER_SYNC = 40;
+const CONNECT_TIMEOUT_MS = 10_000;
+const OVERALL_TIMEOUT_MS = 45_000;
 
 interface ParsedEmail {
     messageId: string | null;
@@ -269,6 +269,12 @@ export async function syncInbox(userId: number, userEmail: string, userSmtpPass:
         }
 
         // ── Sync Sent folder for outbound email recovery ─────────────────────
+        // If we are extremely close to the deadline, skip Sent sync this round so we can exit gracefully
+        if (Date.now() > deadline - 5000) {
+            result.capped = true;
+            return result; // return early, next sync will pick up
+        }
+
         const sentFolderNames = ["Sent", "INBOX.Sent", "Sent Items", "Sent Messages", "[Gmail]/Sent Mail"];
         let sentFolder: string | null = null;
         try {
