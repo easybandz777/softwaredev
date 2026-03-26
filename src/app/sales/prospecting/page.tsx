@@ -280,8 +280,15 @@ function ProspectingPageInner() {
         setBatchGenerating(true); setBatchGenProgress(0); setBatchEmails([]);
         const selectedPreset = outreachPresets.find(p => p.id === selectedOutreachPresetId);
 
-        // Save all unsaved leads first and capture their DB IDs
-        for (let i = 0; i < leads.length; i++) { if (!savedIds.has(i)) await handleSave(leads[i], i); }
+        // Save all unsaved leads first and capture their DB IDs in a LOCAL map
+        // (React state won't be available until next render — must use local variable)
+        const leadIdMap = new Map<number, number>();
+        for (let i = 0; i < leads.length; i++) {
+            if (!savedIds.has(i)) {
+                const dbId = await handleSave(leads[i], i);
+                if (dbId) leadIdMap.set(i, dbId);
+            }
+        }
 
         const results: BatchEmail[] = [];
         for (let idx = 0; idx < emailableLeads.length; idx++) {
@@ -313,7 +320,7 @@ function ProspectingPageInner() {
                     email: lead.email!,
                     subject: data.subject || "(no subject)",
                     body: data.content || "(failed to generate)",
-                    leadId: savedLeadIds.get(index) || undefined,
+                    leadId: leadIdMap.get(index) || savedLeadIds.get(index) || undefined,
                 });
             } catch {
                 results.push({
@@ -323,7 +330,7 @@ function ProspectingPageInner() {
                     subject: "(generation failed)",
                     body: "Could not generate email for this lead.",
                     error: "Generation failed",
-                    leadId: savedLeadIds.get(index) || undefined,
+                    leadId: leadIdMap.get(index) || savedLeadIds.get(index) || undefined,
                 });
             }
         }
