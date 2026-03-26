@@ -191,7 +191,7 @@ export async function POST(req: NextRequest) {
         }
 
         // ── Enrichment ────────────────────────────────────────────────────────
-        const pool = candidates.slice(0, Math.min(limit * 2, candidates.length));
+        const pool = candidates.slice(0, Math.min(limit * 4, candidates.length));
         const enrichProvider = mode === "organization" ? orgEnrich : personEnrich;
 
         let enriched: RawCandidate[];
@@ -226,8 +226,37 @@ export async function POST(req: NextRequest) {
             }
         }
 
-        const sorted = mode === "organization" ? sortOrganizations(afterDQ) : sortPersons(afterDQ);
-        const finalCandidates = sorted.slice(0, limit);
+        // ── Dedupe early: remove leads already in this user's pipeline ──────
+        let dedupedCandidates = afterDQ;
+        let dedupedCount = 0;
+        if (sessionUserForDQ) {
+            await ensureMigrated();
+            const { rows: savedRows } = await sql`
+                SELECT id, name, email, phone, company, website, location, entity_type, source_refs
+                FROM consultations
+                WHERE assigned_to_id = ${sessionUserForDQ.id}
+            `;
+            if (savedRows.length > 0) {
+                const asProspects = afterDQ.map(c => ({
+                    companyName: c.mode === "organization" ? c.primaryLabel : (c.organization || ""),
+                    contactName: c.mode === "person" ? c.primaryLabel : "Owner",
+                    email: c.emails[0] || null,
+                    phone: c.phones[0] || null,
+                    website: c.website,
+                    location: c.location,
+                    mode: c.mode,
+                    sourceRefs: c.sourceRefs,
+                    _raw: c,
+                }));
+                const dedupeResult = filterOutSavedLeads(asProspects, savedRows as unknown as SavedLead[]);
+                dedupedCandidates = dedupeResult.filtered.map(p => p._raw);
+                dedupedCount = dedupeResult.deduped;
+            }
+        }
+
+        const sorted = mode === "organization" ? sortOrganizations(dedupedCandidates) : sortPersons(dedupedCandidates);
+        const aiPoolSize = Math.min(Math.ceil(limit * 1.5), sorted.length);
+        const finalCandidates = sorted.slice(0, aiPoolSize);
 
         // ── AI Qualification (provider-agnostic) ──────────────────────────────
         type AiResult = { index: number; niche?: string; contactName?: string; summary?: string; why?: string; confidence?: number };
@@ -307,22 +336,8 @@ export async function POST(req: NextRequest) {
             sourceRefs: e.sourceRefs,
         }));
 
-        // ── Dedupe: exclude leads already saved by this salesperson ──────────
-        let finalLeads = leads;
-        let dedupedCount = 0;
-        if (sessionUser) {
-            await ensureMigrated();
-            const { rows: savedRows } = await sql`
-                SELECT id, name, email, phone, company, website, location, entity_type, source_refs
-                FROM consultations
-                WHERE assigned_to_id = ${sessionUser.id}
-            `;
-            if (savedRows.length > 0) {
-                const dedupeResult = filterOutSavedLeads(leads, savedRows as unknown as SavedLead[]);
-                finalLeads = dedupeResult.filtered;
-                dedupedCount = dedupeResult.deduped;
-            }
-        }
+        // ── Final truncation: enforce the requested limit ────────────────────
+        const finalLeads = leads.slice(0, limit);
 
         const filterBreakdown: FilterBreakdownItem[] = [
             ...preAiBreakdown,

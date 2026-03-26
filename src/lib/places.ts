@@ -35,7 +35,7 @@ export async function searchPlaces(query: string, limit = 10): Promise<PlaceCand
     if (!apiKey) throw new Error("GOOGLE_PLACES_API_KEY is not set");
 
     const candidates: PlaceCandidate[] = [];
-    const targetCount = Math.min(limit * 3, 20);
+    const targetCount = Math.min(limit * 5, 40);
     let pageToken: string | null = null;
     const maxPages = 3;
 
