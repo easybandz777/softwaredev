@@ -64,7 +64,7 @@ export default function SettingsPage() {
     // Email sync state
     const [syncStatus, setSyncStatus] = useState<{ lastSyncedAt: string | null; totalEmails: number; autoCreateLeads: boolean } | null>(null);
     const [syncing, setSyncing] = useState(false);
-    const [syncResult, setSyncResult] = useState<{ synced: number; newLeads: number; matched: number; error?: string; capped?: boolean } | null>(null);
+    const [syncResult, setSyncResult] = useState<{ synced: number; newLeads: number; matched: number; error?: string; errors?: string[]; capped?: boolean } | null>(null);
 
     const fetchSyncStatus = () => {
         fetch("/api/sales/email-sync", { credentials: "include" })
@@ -150,7 +150,7 @@ export default function SettingsPage() {
             clearTimeout(timeout);
             const data = await r.json();
             if (r.ok) {
-                setSyncResult({ synced: data.synced, newLeads: data.newLeads, matched: data.matched, capped: data.capped });
+                setSyncResult({ synced: data.synced, newLeads: data.newLeads, matched: data.matched, capped: data.capped, errors: data.errors });
                 fetchSyncStatus();
             } else {
                 setSyncResult({ synced: 0, newLeads: 0, matched: 0, error: data.error });
@@ -296,7 +296,7 @@ FORMAT: First line is the subject line prefixed with "Subject: ", then a blank l
                                             <h3 className="text-sm font-semibold text-white flex items-center gap-2">
                                                 <Inbox className="w-4 h-4 text-sky-400" /> Inbox Sync
                                             </h3>
-                                            <p className="text-gray-500 text-xs mt-0.5">Pull emails from your IMAP inbox and automatically match them to leads. New senders can be auto-created as leads.</p>
+                                            <p className="text-gray-500 text-xs mt-0.5">Pull emails from your IMAP inbox and sent folder, automatically matching them to leads.</p>
                                         </div>
                                     </div>
 
@@ -329,7 +329,7 @@ FORMAT: First line is the subject line prefixed with "Subject: ", then a blank l
                                                 className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-semibold text-white disabled:opacity-50 transition-all"
                                                 style={{ background: "linear-gradient(135deg, #0284c7, #38bdf8)" }}>
                                                 <RefreshCw className={`w-3.5 h-3.5 ${syncing ? "animate-spin" : ""}`} />
-                                                {syncing ? "Syncing Inbox…" : "Sync Now"}
+                                                {syncing ? "Syncing Inbox + Sent…" : "Sync Now"}
                                             </button>
                                             {!user?.has_smtp && (
                                                 <p className="text-xs text-amber-400">Set your email password in My Profile first.</p>
@@ -348,6 +348,9 @@ FORMAT: First line is the subject line prefixed with "Subject: ", then a blank l
                                                         {syncResult.newLeads > 0 && <> Created <strong>{syncResult.newLeads}</strong> new lead{syncResult.newLeads !== 1 ? "s" : ""}.</>}
                                                         {syncResult.capped && <> Hit limit — press Sync again to continue.</>}
                                                     </p>
+                                                    {syncResult.errors && syncResult.errors.length > 0 && (
+                                                        <p className="mt-1 text-amber-400">{syncResult.errors.length} warning{syncResult.errors.length !== 1 ? "s" : ""}: {syncResult.errors[0]}</p>
+                                                    )}
                                                 )}
                                             </div>
                                         )}
