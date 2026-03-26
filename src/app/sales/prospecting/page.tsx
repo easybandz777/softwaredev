@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
-import { useRouter } from "next/navigation";
+import React, { useState, useEffect, useCallback, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { SalesLayout } from "@/components/SalesLayout";
 import { VoicePromptButton } from "@/components/VoicePromptButton";
@@ -9,7 +9,7 @@ import {
     Search, Sparkles, Loader2, Save, ExternalLink, MapPin, Mail, Phone,
     Globe, CheckCircle, ChevronDown, ChevronUp, Star, ArrowRight,
     RefreshCw, Send, Shield, X, Bookmark, Check, Filter,
-    Building2, User, Briefcase, AlertTriangle, Ban
+    Building2, User, Briefcase, AlertTriangle, Ban, Clock, History
 } from "lucide-react";
 
 type SearchMode = "organization" | "person";
@@ -35,6 +35,11 @@ interface Criteria {
 }
 
 interface Preset { id: number; name: string; criteria: Criteria; is_default: boolean; mode?: SearchMode; }
+
+interface SearchSession {
+    id: number; mode: SearchMode; query: string;
+    result_count: number; created_at: string;
+}
 
 const DEFAULT_CRITERIA: Criteria = {
     requireWebsite: false, requireEmail: false, requirePhone: false,
@@ -98,8 +103,9 @@ const MODE_CONFIG = {
     },
 };
 
-export default function ProspectingPage() {
+function ProspectingPageInner() {
     const router = useRouter();
+    const searchParams = useSearchParams();
     const [user, setUser] = useState<UserInfo | null>(null);
     const [mode, setMode] = useState<SearchMode>("organization");
     const [query, setQuery] = useState("");
@@ -120,8 +126,34 @@ export default function ProspectingPage() {
     const [locationInput, setLocationInput] = useState("");
     const [titleInput, setTitleInput] = useState("");
     const [employerInput, setEmployerInput] = useState("");
+    const [sessions, setSessions] = useState<SearchSession[]>([]);
+    const [loadingSession, setLoadingSession] = useState(false);
 
     const cfg = MODE_CONFIG[mode];
+
+    const loadSessions = useCallback(async () => {
+        try {
+            const r = await fetch("/api/sales/prospect-sessions", { credentials: "include" });
+            if (r.ok) setSessions(await r.json());
+        } catch { /* ignore */ }
+    }, []);
+
+    const loadSession = useCallback(async (sessionId: number) => {
+        setLoadingSession(true); setError("");
+        try {
+            const r = await fetch(`/api/sales/prospect-sessions?id=${sessionId}`, { credentials: "include" });
+            if (!r.ok) throw new Error("Failed to load session");
+            const data = await r.json();
+            setLeads(data.results || []);
+            setMeta(data.meta || null);
+            setMode(data.mode || "organization");
+            setQuery(data.query || "");
+            setSavedIds(new Set());
+            setPhase("done");
+        } catch (err: unknown) {
+            setError(err instanceof Error ? err.message : "Failed to load session");
+        } finally { setLoadingSession(false); }
+    }, []);
 
     useEffect(() => {
         fetch("/api/sales/me", { credentials: "include" })
@@ -134,7 +166,13 @@ export default function ProspectingPage() {
                 const def = data.find(p => p.is_default);
                 if (def) setCriteria({ ...DEFAULT_CRITERIA, ...def.criteria });
             });
-    }, []);
+        loadSessions();
+        // Auto-load session from URL param (deep link from outreach page)
+        const sessionParam = searchParams.get("session");
+        if (sessionParam) {
+            loadSession(Number(sessionParam));
+        }
+    }, [loadSessions, loadSession, searchParams]);
 
     const loadPresets = useCallback(async () => {
         const r = await fetch("/api/sales/prospect-presets", { credentials: "include" });
@@ -165,10 +203,13 @@ export default function ProspectingPage() {
             if (!res.ok) { const d = await res.json(); throw new Error(d.error || "Failed"); }
             const data = await res.json();
             setLeads(data.leads || []); setMeta(data.meta || null); setPhase("done");
+            loadSessions(); // refresh recent searches
         } catch (err: unknown) {
             setError(err instanceof Error ? err.message : "Search failed"); setPhase("");
         } finally { setLoading(false); }
     };
+
+
 
     const handleSave = async (lead: Prospect, index: number) => {
         setSavingId(index);
@@ -504,6 +545,37 @@ export default function ProspectingPage() {
                     )}
                 </form>
 
+                {/* Recent Searches */}
+                {sessions.length > 0 && !loading && (
+                    <div className="rounded-xl p-4 mb-4" style={{ background: "linear-gradient(145deg, #0d1526, #0a1020)", border: "1px solid rgba(255,255,255,0.05)" }}>
+                        <p className="text-[10px] uppercase tracking-wider text-gray-500 font-semibold mb-2.5 flex items-center gap-1.5">
+                            <History className="w-3 h-3" /> Recent Searches
+                        </p>
+                        <div className="flex gap-2 flex-wrap">
+                            {sessions.map(s => (
+                                <button key={s.id} onClick={() => loadSession(s.id)} disabled={loadingSession}
+                                    className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs transition-all hover:bg-white/5"
+                                    style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.08)" }}>
+                                    {s.mode === "person" ? <User className="w-3 h-3 text-purple-400 flex-shrink-0" /> : <Building2 className="w-3 h-3 text-indigo-400 flex-shrink-0" />}
+                                    <span className="text-gray-300 truncate max-w-[180px]">{s.query}</span>
+                                    <span className="text-[10px] text-gray-600 flex-shrink-0">{s.result_count}</span>
+                                    <span className="text-[10px] text-gray-700 flex-shrink-0 flex items-center gap-0.5">
+                                        <Clock className="w-2.5 h-2.5" />
+                                        {new Date(s.created_at).toLocaleDateString(undefined, { month: "short", day: "numeric" })}
+                                    </span>
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
+                {loadingSession && (
+                    <div className="rounded-2xl p-8 text-center mb-4" style={{ background: "linear-gradient(145deg, #0d1526, #0a1020)", border: "1px solid rgba(255,255,255,0.05)" }}>
+                        <Loader2 className="w-6 h-6 text-blue-400 animate-spin mx-auto mb-3" />
+                        <p className="text-gray-500 text-xs">Loading saved results...</p>
+                    </div>
+                )}
+
                 {/* Active filter chips */}
                 {activeFilterLabels.length > 0 && !showFilters && (
                     <div className="flex items-center gap-2 mb-4 flex-wrap">
@@ -672,5 +744,13 @@ export default function ProspectingPage() {
                 )}
             </div>
         </SalesLayout>
+    );
+}
+
+export default function ProspectingPage() {
+    return (
+        <Suspense fallback={null}>
+            <ProspectingPageInner />
+        </Suspense>
     );
 }

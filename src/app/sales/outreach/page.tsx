@@ -6,7 +6,8 @@ import { VoicePromptButton } from "@/components/VoicePromptButton";
 import {
     Sparkles, RefreshCw, Mail, MapPin, Building, Globe, FileText,
     AlertTriangle, Copy, Check, Send, Loader2, CheckCircle, Briefcase, User,
-    Bookmark, X, Save, ChevronDown, Trash2, Pencil, Tag
+    Bookmark, X, Save, ChevronDown, Trash2, Pencil, Tag, History, Clock,
+    Building2, ArrowRight
 } from "lucide-react";
 
 interface UserInfo { id: number; username: string; full_name: string; role: string; }
@@ -19,6 +20,11 @@ interface Lead {
 interface OutreachPreset {
     id: number; name: string; instructions: string;
     industry_label: string | null; mode: string | null; description: string | null;
+}
+
+interface SearchSession {
+    id: number; mode: string; query: string;
+    result_count: number; created_at: string;
 }
 
 const inp = "w-full text-xs bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-gray-300 focus:outline-none focus:border-emerald-400/40";
@@ -49,6 +55,8 @@ export default function OutreachPage() {
     const [newPresetName, setNewPresetName] = useState("");
     const [newPresetIndustry, setNewPresetIndustry] = useState("");
     const [editingPresetId, setEditingPresetId] = useState<number | null>(null);
+    const [sessions, setSessions] = useState<SearchSession[]>([]);
+    const [showSessions, setShowSessions] = useState(false);
 
     useEffect(() => {
         async function load() {
@@ -62,6 +70,11 @@ export default function OutreachPage() {
                 setLeads(data);
                 if (data.length > 0) setSelectedLeadId(data[0].id);
                 if (meRes.ok) setUser(await meRes.json());
+                // Load recent search sessions
+                try {
+                    const sessRes = await fetch("/api/sales/prospect-sessions", { credentials: "include" });
+                    if (sessRes.ok) setSessions(await sessRes.json());
+                } catch { /* ignore */ }
             } catch (err) { console.error(err); }
             finally { setLoadingLeads(false); }
         }
@@ -215,6 +228,12 @@ export default function OutreachPage() {
                     <h1 className="text-xl font-bold text-white">Outreach Generator</h1>
                     <p className="text-gray-500 text-xs mt-0.5">Select a lead, prompt the AI with custom instructions, then generate a personalized email.</p>
                 </div>
+                {sessions.length > 0 && (
+                    <a href="/sales/prospecting" className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all hover:opacity-90"
+                        style={{ background: "linear-gradient(135deg, #8b5cf6, #3b82f6)", color: "white" }}>
+                        <History className="w-3.5 h-3.5" /> Recent Searches <ArrowRight className="w-3 h-3" />
+                    </a>
+                )}
             </header>
 
             <div className="px-4 md:px-8 py-6 max-w-6xl mx-auto">
@@ -423,6 +442,34 @@ export default function OutreachPage() {
                                 }}>
                                     {sendResult.type === "success" ? <CheckCircle className="w-4 h-4 text-emerald-400" /> : <AlertTriangle className="w-4 h-4 text-rose-400" />}
                                     <span style={{ color: sendResult.type === "success" ? "#34d399" : "#f87171" }}>{sendResult.message}</span>
+                                </div>
+                            )}
+
+                            {/* Recent Searches — shown inline after sending */}
+                            {sendResult?.type === "success" && sessions.length > 0 && (
+                                <div className="mt-4 rounded-lg p-3" style={{ background: "rgba(99,102,241,0.06)", border: "1px solid rgba(99,102,241,0.15)" }}>
+                                    <button onClick={() => setShowSessions(!showSessions)} className="flex items-center gap-1.5 text-xs font-semibold text-indigo-400 w-full">
+                                        <History className="w-3.5 h-3.5" /> Back to Generated Leads
+                                        <ChevronDown className={`w-3 h-3 ml-auto transition-transform ${showSessions ? "rotate-180" : ""}`} />
+                                    </button>
+                                    {showSessions && (
+                                        <div className="mt-2 space-y-1.5">
+                                            {sessions.slice(0, 5).map(s => (
+                                                <a key={s.id} href={`/sales/prospecting?session=${s.id}`}
+                                                    className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs transition-all hover:bg-white/5"
+                                                    style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)" }}>
+                                                    {s.mode === "person" ? <User className="w-3 h-3 text-purple-400 flex-shrink-0" /> : <Building2 className="w-3 h-3 text-indigo-400 flex-shrink-0" />}
+                                                    <span className="text-gray-300 truncate flex-1">{s.query}</span>
+                                                    <span className="text-[10px] text-gray-600 flex-shrink-0">{s.result_count} leads</span>
+                                                    <span className="text-[10px] text-gray-700 flex-shrink-0 flex items-center gap-0.5">
+                                                        <Clock className="w-2.5 h-2.5" />
+                                                        {new Date(s.created_at).toLocaleDateString(undefined, { month: "short", day: "numeric" })}
+                                                    </span>
+                                                    <ArrowRight className="w-3 h-3 text-gray-600" />
+                                                </a>
+                                            ))}
+                                        </div>
+                                    )}
                                 </div>
                             )}
 

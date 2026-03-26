@@ -328,20 +328,49 @@ export async function POST(req: NextRequest) {
         ];
         const totalFiltered = preAiBreakdown.reduce((s, b) => s + b.count, 0) + postAiBreakdown.reduce((s, b) => s + b.count, 0);
 
+        const responseMeta = {
+            query: query.trim(),
+            mode,
+            discovered: candidates.length,
+            enriched: enriched.filter((c) => c.emails.length > 0).length,
+            filtered: totalFiltered,
+            filterBreakdown,
+            deduped: dedupedCount,
+            returned: finalLeads.length,
+            elapsedMs: Date.now() - startTime,
+            aiProvider: llmConfig?.provider || null,
+        };
+
+        // ── Auto-save search session for recall ───────────────────────────────
+        let sessionId: number | null = null;
+        if (sessionUser && finalLeads.length > 0) {
+            try {
+                const { rows: insertedRows } = await sql`
+                    INSERT INTO prospect_search_sessions (user_id, mode, query, results, meta, result_count)
+                    VALUES (${sessionUser.id}, ${mode}, ${query.trim()}, ${JSON.stringify(finalLeads)}, ${JSON.stringify(responseMeta)}, ${finalLeads.length})
+                    RETURNING id
+                `;
+                sessionId = (insertedRows[0] as { id: number })?.id ?? null;
+
+                // Prune older sessions — keep only the latest 10
+                await sql`
+                    DELETE FROM prospect_search_sessions
+                    WHERE user_id = ${sessionUser.id}
+                      AND id NOT IN (
+                          SELECT id FROM prospect_search_sessions
+                          WHERE user_id = ${sessionUser.id}
+                          ORDER BY created_at DESC LIMIT 10
+                      )
+                `;
+            } catch (e) {
+                console.error("Failed to save search session:", e);
+            }
+        }
+
         return NextResponse.json({
             leads: finalLeads,
-            meta: {
-                query: query.trim(),
-                mode,
-                discovered: candidates.length,
-                enriched: enriched.filter((c) => c.emails.length > 0).length,
-                filtered: totalFiltered,
-                filterBreakdown,
-                deduped: dedupedCount,
-                returned: finalLeads.length,
-                elapsedMs: Date.now() - startTime,
-                aiProvider: llmConfig?.provider || null,
-            },
+            meta: responseMeta,
+            sessionId,
         });
     } catch (err) {
         console.error("Prospect API Error:", err);

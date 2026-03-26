@@ -633,4 +633,18 @@ export async function ensureMigrated() {
     await sql`ALTER TABLE consultations ADD COLUMN IF NOT EXISTS cadence_started_at TIMESTAMPTZ`;
     await sql`ALTER TABLE consultations ADD COLUMN IF NOT EXISTS cadence_paused BOOLEAN DEFAULT false`;
     await sql`ALTER TABLE consultations ADD COLUMN IF NOT EXISTS last_reply_at TIMESTAMPTZ`;
+
+    // ── Prospect search sessions (persist search results for recall) ──────
+    await sql`
+        CREATE TABLE IF NOT EXISTS prospect_search_sessions (
+            id            SERIAL PRIMARY KEY,
+            user_id       INTEGER NOT NULL,
+            mode          TEXT NOT NULL DEFAULT 'organization',
+            query         TEXT NOT NULL,
+            results       TEXT NOT NULL DEFAULT '[]',
+            meta          TEXT,
+            result_count  INTEGER NOT NULL DEFAULT 0,
+            created_at    TIMESTAMPTZ NOT NULL DEFAULT NOW()
+        )
+    `;
 }
