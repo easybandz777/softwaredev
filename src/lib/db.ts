@@ -647,4 +647,39 @@ export async function ensureMigrated() {
             created_at    TIMESTAMPTZ NOT NULL DEFAULT NOW()
         )
     `;
+
+    // ── Global outreach presets (visible to all users) ────────────────────
+    // Add is_global column if it doesn't exist yet
+    await sql`ALTER TABLE sales_outreach_presets ADD COLUMN IF NOT EXISTS is_global BOOLEAN NOT NULL DEFAULT false`;
+
+    // Seed the Hat & Apparel Builder global preset (idempotent — skip if already exists)
+    await sql`
+        INSERT INTO sales_outreach_presets (user_id, name, instructions, industry_label, mode, description, is_global)
+        SELECT 0,
+            'Hat & Shirt Builder Platform',
+            'You are writing a cold outreach email to the owner or operator of a custom hat or branded apparel shop.
+
+Your goal is to make them feel like this email was written specifically for them. You are reaching out on behalf of a software company that recently built a full e-commerce and operations platform for a custom hat brand called Hobbs Peak.
+
+Use these three specific talking points naturally throughout the email:
+
+1. Interactive Hat Builder & Shirt Builder — we built two visual product configurators where customers select blank styles from a live S&S Activewear catalog (real color swatches, product images), upload their logo artwork to specific zones (front panel, left side, back, left chest), choose decoration method per zone (embroidery, screen print, leather patch), adjust quantity, and see a live price breakdown with volume discounts. They submit a complete build sheet directly to the admin dashboard — no more back-and-forth quoting emails.
+
+2. Live S&S Activewear Catalog & Inventory Sync — the platform connects directly to the S&S Activewear API for real-time per-color inventory levels by size and live per-size pricing. Customers only see what''s actually in stock before they submit.
+
+3. Automated Order & Proof Flow — submitted build sheets flow into an admin dashboard with all artwork files and specs in one place. The team sends digital proof approvals, tracks production status, handles fulfillment updates, and reorders with artwork already on file.
+
+TONE: Confident, operational, peer-to-peer. Position this as eliminating manual quoting, back-and-forth email chains, and inventory problems — not as a web design pitch.
+Keep the email under 140 words. No fluff.
+Subject line should reference something specific to their business (product type, niche, or a pain point like cutting their quoting time in half).
+
+CALL TO ACTION: End with one low-friction question, e.g., "How are you currently handling custom order quotes — still going back and forth by email?" or "Would it be worth a 15-minute call to see how the Hobbs Peak builder workflow could work for your shop?"',
+            'Custom Apparel / Hat Companies',
+            'organization',
+            'Pitch the interactive hat & shirt builder, live S&S catalog/inventory sync, and automated order + proof flow built for Hobbs Peak.',
+            true
+        WHERE NOT EXISTS (
+            SELECT 1 FROM sales_outreach_presets WHERE name = 'Hat & Shirt Builder Platform' AND is_global = true
+        )
+    `;
 }

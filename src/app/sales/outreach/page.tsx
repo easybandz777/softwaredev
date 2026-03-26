@@ -20,6 +20,7 @@ interface Lead {
 interface OutreachPreset {
     id: number; name: string; instructions: string;
     industry_label: string | null; mode: string | null; description: string | null;
+    is_global?: boolean;
 }
 
 interface SearchSession {
@@ -350,14 +351,17 @@ export default function OutreachPage() {
                                                         {presets.map(p => (
                                                             <div key={p.id} className="flex items-center gap-2 px-3 py-2.5 hover:bg-white/5 group">
                                                                 <button onClick={() => applyPreset(p)} className="flex-1 text-left min-w-0">
-                                                                    <div className="text-xs text-gray-300 font-medium truncate">{p.name}</div>
+                                                                    <div className="flex items-center gap-1.5">
+                                                                        <span className="text-xs text-gray-300 font-medium truncate">{p.name}</span>
+                                                                        {p.is_global && <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-emerald-400/10 text-emerald-400 border border-emerald-400/20 font-semibold flex-shrink-0">Shared</span>}
+                                                                    </div>
                                                                     <div className="flex items-center gap-2 mt-0.5">
                                                                         {p.industry_label && <span className="text-[9px] text-gray-600 flex items-center gap-0.5"><Tag className="w-2 h-2" />{p.industry_label}</span>}
                                                                         {p.mode && <span className="text-[9px] text-gray-600">{p.mode}</span>}
                                                                     </div>
                                                                 </button>
-                                                                <button onClick={() => startEditPreset(p)} className="p-1 text-gray-700 hover:text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity"><Pencil className="w-3 h-3" /></button>
-                                                                <button onClick={() => deletePreset(p.id)} className="p-1 text-gray-700 hover:text-rose-400 opacity-0 group-hover:opacity-100 transition-opacity"><Trash2 className="w-3 h-3" /></button>
+                                                                {!p.is_global && <button onClick={() => startEditPreset(p)} className="p-1 text-gray-700 hover:text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity"><Pencil className="w-3 h-3" /></button>}
+                                                                {!p.is_global && <button onClick={() => deletePreset(p.id)} className="p-1 text-gray-700 hover:text-rose-400 opacity-0 group-hover:opacity-100 transition-opacity"><Trash2 className="w-3 h-3" /></button>}
                                                             </div>
                                                         ))}
                                                     </div>

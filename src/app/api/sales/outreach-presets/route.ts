@@ -11,10 +11,10 @@ export async function GET(req: NextRequest) {
     await ensureMigrated();
 
     const { rows } = await sql`
-        SELECT id, name, instructions, industry_label, mode, description, created_at, updated_at
+        SELECT id, name, instructions, industry_label, mode, description, is_global, created_at, updated_at
         FROM sales_outreach_presets
-        WHERE user_id = ${user.id}
-        ORDER BY updated_at DESC
+        WHERE user_id = ${user.id} OR is_global = true
+        ORDER BY is_global DESC, updated_at DESC
     `;
 
     return NextResponse.json(rows);
