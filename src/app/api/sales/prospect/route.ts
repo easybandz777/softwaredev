@@ -91,7 +91,7 @@ function buildOrgAiPrompt(query: string, candidates: RawCandidate[]): string {
     const list = candidates
         .map(
             (c, i) =>
-                `Business ${i + 1}:\n- Name: ${c.primaryLabel}\n- Location: ${c.location}\n- Website: ${c.website || "N/A"}\n- Phone: ${c.phones[0] || "N/A"}\n- Email: ${c.emails[0] || "Not found"}\n- Google Rating: ${c.raw.rating ? `${c.raw.rating}/5 (${c.raw.reviewCount} reviews)` : "No data"}\n- Business Types: ${((c.raw.types as string[]) || []).slice(0, 4).join(", ")}`,
+                `Business ${i}:\n- Name: ${c.primaryLabel}\n- Location: ${c.location}\n- Website: ${c.website || "N/A"}\n- Phone: ${c.phones[0] || "N/A"}\n- Email: ${c.emails[0] || "Not found"}\n- Google Rating: ${c.raw.rating ? `${c.raw.rating}/5 (${c.raw.reviewCount} reviews)` : "No data"}\n- Business Types: ${((c.raw.types as string[]) || []).slice(0, 4).join(", ")}`,
         )
         .join("\n\n");
 
@@ -104,6 +104,8 @@ For EACH business, provide:
 4. why: A specific, actionable pain point or opportunity
 5. confidence: Rate 1-5
 
+IMPORTANT: Use ZERO-BASED indexing. The first business is index 0.
+
 ${list}
 
 Return ONLY valid JSON:
@@ -114,7 +116,7 @@ function buildPersonAiPrompt(query: string, candidates: RawCandidate[]): string 
     const list = candidates
         .map(
             (c, i) =>
-                `Person ${i + 1}:\n- Name: ${c.primaryLabel}\n- Employer: ${c.organization || "Unknown"}\n- Title: ${c.jobTitle || "Unknown"}\n- Location: ${c.location || "Unknown"}\n- Email: ${c.emails[0] || "Not found"}\n- Phone: ${c.phones[0] || "Not found"}\n- Source: ${c.sourceRefs[0]?.url || "N/A"}`,
+                `Person ${i}:\n- Name: ${c.primaryLabel}\n- Employer: ${c.organization || "Unknown"}\n- Title: ${c.jobTitle || "Unknown"}\n- Location: ${c.location || "Unknown"}\n- Email: ${c.emails[0] || "Not found"}\n- Phone: ${c.phones[0] || "Not found"}\n- Source: ${c.sourceRefs[0]?.url || "N/A"}`,
         )
         .join("\n\n");
 
@@ -126,6 +128,8 @@ For EACH person, provide:
 3. summary: 1-2 sentences about this person based on available info
 4. why: Why this person might be a valuable contact for the query
 5. confidence: Rate 1-5 how confident you are this is the right person
+
+IMPORTANT: Use ZERO-BASED indexing. The first person is index 0.
 
 ${list}
 

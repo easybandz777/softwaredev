@@ -53,7 +53,8 @@ export function normalizeBatch(
   aiResults?: { index: number; summary?: string; opportunity?: string; niche?: string; contactName?: string; confidence?: number }[],
 ): SearchEntity[] {
   return candidates.map((c, i) => {
-    const ai = aiResults?.find((r) => r.index === i);
+    // AI may return 0-based OR 1-based indexes — handle both
+    const ai = aiResults?.find((r) => r.index === i || r.index === i + 1);
     return normalizeCandidate(c, ai);
   });
 }

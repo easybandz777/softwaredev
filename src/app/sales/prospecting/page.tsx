@@ -129,6 +129,17 @@ function ProspectingPageInner() {
     const [sessions, setSessions] = useState<SearchSession[]>([]);
     const [loadingSession, setLoadingSession] = useState(false);
 
+    // Batch email state
+    interface BatchEmail { leadIndex: number; leadName: string; email: string; subject: string; body: string; sent?: boolean; error?: string; }
+    const [batchEmails, setBatchEmails] = useState<BatchEmail[]>([]);
+    const [showBatchPreview, setShowBatchPreview] = useState(false);
+    const [batchGenerating, setBatchGenerating] = useState(false);
+    const [batchGenProgress, setBatchGenProgress] = useState(0);
+    const [batchSending, setBatchSending] = useState(false);
+    const [batchSendProgress, setBatchSendProgress] = useState(0);
+    const [outreachPresets, setOutreachPresets] = useState<{id: number; name: string; instructions: string; is_global?: boolean}[]>([]);
+    const [selectedOutreachPresetId, setSelectedOutreachPresetId] = useState<number | null>(null);
+
     const cfg = MODE_CONFIG[mode];
 
     const loadSessions = useCallback(async () => {
@@ -167,6 +178,15 @@ function ProspectingPageInner() {
                 if (def) setCriteria({ ...DEFAULT_CRITERIA, ...def.criteria });
             });
         loadSessions();
+        // Load outreach presets for batch email
+        fetch("/api/sales/outreach-presets", { credentials: "include" })
+            .then(r => r.ok ? r.json() : [])
+            .then((data: {id: number; name: string; instructions: string; is_global?: boolean}[]) => {
+                setOutreachPresets(data);
+                // Auto-select the first global preset if available
+                const globalPreset = data.find(p => p.is_global);
+                if (globalPreset) setSelectedOutreachPresetId(globalPreset.id);
+            });
         // Auto-load session from URL param (deep link from outreach page)
         const sessionParam = searchParams.get("session");
         if (sessionParam) {
@@ -243,6 +263,84 @@ function ProspectingPageInner() {
     };
 
     const handleSaveAll = async () => { for (let i = 0; i < leads.length; i++) { if (!savedIds.has(i)) await handleSave(leads[i], i); } };
+
+    // ── Batch Email: Generate → Preview → Send ────────────────────────────
+    const handleBatchGenerate = async () => {
+        const emailableLeads = leads.map((l, i) => ({ lead: l, index: i })).filter(({ lead }) => !!lead.email);
+        if (emailableLeads.length === 0) return;
+        setBatchGenerating(true); setBatchGenProgress(0); setBatchEmails([]);
+        const selectedPreset = outreachPresets.find(p => p.id === selectedOutreachPresetId);
+
+        // Save all unsaved leads first
+        for (let i = 0; i < leads.length; i++) { if (!savedIds.has(i)) await handleSave(leads[i], i); }
+
+        const results: BatchEmail[] = [];
+        for (let idx = 0; idx < emailableLeads.length; idx++) {
+            const { lead, index } = emailableLeads[idx];
+            setBatchGenProgress(idx + 1);
+            try {
+                const res = await fetch("/api/sales/generate-outreach", {
+                    method: "POST", headers: { "Content-Type": "application/json" }, credentials: "include",
+                    body: JSON.stringify({
+                        lead: {
+                            companyName: lead.mode === "person" ? (lead.employer || lead.companyName) : lead.companyName,
+                            contactName: lead.contactName || lead.companyName || "Owner",
+                            niche: lead.niche,
+                            location: lead.location,
+                            website: lead.website,
+                            notes: lead.why || "",
+                            email: lead.email,
+                            entityType: lead.mode || "organization",
+                            jobTitle: lead.jobTitle,
+                            employer: lead.employer,
+                        },
+                        presetInstructions: selectedPreset?.instructions || "",
+                    }),
+                });
+                const data = await res.json();
+                results.push({
+                    leadIndex: index,
+                    leadName: lead.mode === "person" ? (lead.contactName || "") : (lead.companyName || ""),
+                    email: lead.email!,
+                    subject: data.subject || "(no subject)",
+                    body: data.content || "(failed to generate)",
+                });
+            } catch {
+                results.push({
+                    leadIndex: index,
+                    leadName: lead.mode === "person" ? (lead.contactName || "") : (lead.companyName || ""),
+                    email: lead.email!,
+                    subject: "(generation failed)",
+                    body: "Could not generate email for this lead.",
+                    error: "Generation failed",
+                });
+            }
+        }
+        setBatchEmails(results);
+        setBatchGenerating(false);
+        setShowBatchPreview(true);
+    };
+
+    const handleBatchSend = async () => {
+        setBatchSending(true); setBatchSendProgress(0);
+        const updated = [...batchEmails];
+        for (let i = 0; i < updated.length; i++) {
+            if (updated[i].error || updated[i].sent) continue;
+            setBatchSendProgress(i + 1);
+            try {
+                const res = await fetch("/api/sales/send-email", {
+                    method: "POST", headers: { "Content-Type": "application/json" }, credentials: "include",
+                    body: JSON.stringify({ to: updated[i].email, subject: updated[i].subject, body: updated[i].body }),
+                });
+                const data = await res.json();
+                updated[i] = { ...updated[i], sent: data.success, error: data.success ? undefined : (data.error || "Send failed") };
+            } catch {
+                updated[i] = { ...updated[i], error: "Network error" };
+            }
+            setBatchEmails([...updated]);
+        }
+        setBatchSending(false);
+    };
 
     const savePreset = async () => {
         if (!presetName.trim()) return;
@@ -618,7 +716,33 @@ function ProspectingPageInner() {
                                     </div>
                                 )}
                             </div>
-                            <div className="flex gap-2">
+                            <div className="flex gap-2 flex-wrap">
+                                {leads.filter(l => l.email).length > 0 && (
+                                    <div className="flex items-center gap-2">
+                                        {outreachPresets.length > 0 && (
+                                            <select
+                                                value={selectedOutreachPresetId ?? ""}
+                                                onChange={e => setSelectedOutreachPresetId(e.target.value ? Number(e.target.value) : null)}
+                                                className="text-xs bg-white/5 border border-white/10 rounded-lg px-2 py-1.5 text-gray-300 focus:outline-none focus:border-violet-400/40 max-w-[160px]"
+                                                title="Select outreach preset"
+                                            >
+                                                <option value="">No preset</option>
+                                                {outreachPresets.map(p => (
+                                                    <option key={p.id} value={p.id}>{p.is_global ? '🌐 ' : ''}{p.name}</option>
+                                                ))}
+                                            </select>
+                                        )}
+                                        <button
+                                            onClick={handleBatchGenerate}
+                                            disabled={batchGenerating}
+                                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-white disabled:opacity-50"
+                                            style={{ background: "linear-gradient(135deg, #8b5cf6, #6d28d9)" }}
+                                        >
+                                            {batchGenerating ? <Loader2 className="w-3 h-3 animate-spin" /> : <Mail className="w-3 h-3" />}
+                                            {batchGenerating ? `Generating ${batchGenProgress}/${leads.filter(l => l.email).length}...` : `Email All (${leads.filter(l => l.email).length})`}
+                                        </button>
+                                    </div>
+                                )}
                                 {leads.length - savedIds.size > 0 && <button onClick={handleSaveAll} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs bg-white/5 text-gray-300 border border-white/10"><Save className="w-3 h-3" /> Save All ({leads.length - savedIds.size})</button>}
                                 {savedIds.size > 0 && <button onClick={() => router.push("/sales/outreach")} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold" style={{ background: "linear-gradient(135deg, #059669, #34d399)", color: "white" }}><Send className="w-3 h-3" /> Write Outreach <ArrowRight className="w-3 h-3" /></button>}
                             </div>
@@ -743,6 +867,75 @@ function ProspectingPageInner() {
                     )
                 )}
             </div>
+
+            {/* Batch email preview modal */}
+            {showBatchPreview && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center" style={{ background: "rgba(0,0,0,0.8)" }}>
+                    <div className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto mx-4 rounded-2xl p-6" style={{ background: "linear-gradient(145deg, #0d1526, #0a1020)", border: "1px solid rgba(255,255,255,0.1)" }}>
+                        <div className="flex items-center justify-between mb-5">
+                            <div>
+                                <h2 className="text-lg font-bold text-white">Review Emails Before Sending</h2>
+                                <p className="text-xs text-gray-500 mt-0.5">{batchEmails.length} emails generated — edit any before sending</p>
+                            </div>
+                            <div className="flex items-center gap-3">
+                                {!batchSending && batchEmails.some(e => e.sent) && (
+                                    <span className="text-xs text-emerald-400 font-semibold">
+                                        {batchEmails.filter(e => e.sent).length}/{batchEmails.length} sent ✓
+                                    </span>
+                                )}
+                                <button onClick={() => setShowBatchPreview(false)} className="text-gray-500 hover:text-white transition-colors"><X className="w-5 h-5" /></button>
+                            </div>
+                        </div>
+
+                        <div className="space-y-4 mb-6">
+                            {batchEmails.map((email, idx) => (
+                                <div key={idx} className="rounded-xl p-4" style={{ background: "rgba(255,255,255,0.02)", border: email.sent ? "1px solid rgba(52,211,153,0.3)" : email.error ? "1px solid rgba(239,68,68,0.3)" : "1px solid rgba(255,255,255,0.06)" }}>
+                                    <div className="flex items-center justify-between mb-2">
+                                        <div className="flex items-center gap-2">
+                                            <span className="text-sm font-semibold text-white">{email.leadName}</span>
+                                            <span className="text-[10px] text-gray-500">{email.email}</span>
+                                        </div>
+                                        {email.sent && <span className="flex items-center gap-1 text-[10px] text-emerald-400 font-semibold"><CheckCircle className="w-3 h-3" /> Sent</span>}
+                                        {email.error && !email.sent && <span className="text-[10px] text-rose-400">{email.error}</span>}
+                                    </div>
+                                    <div className="mb-2">
+                                        <label className="text-[10px] uppercase tracking-wider text-gray-600 block mb-1">Subject</label>
+                                        <input
+                                            value={email.subject}
+                                            onChange={e => { const updated = [...batchEmails]; updated[idx] = { ...updated[idx], subject: e.target.value }; setBatchEmails(updated); }}
+                                            className="w-full text-xs bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-gray-300 focus:outline-none focus:border-violet-400/40"
+                                            disabled={email.sent}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="text-[10px] uppercase tracking-wider text-gray-600 block mb-1">Body</label>
+                                        <textarea
+                                            value={email.body}
+                                            onChange={e => { const updated = [...batchEmails]; updated[idx] = { ...updated[idx], body: e.target.value }; setBatchEmails(updated); }}
+                                            rows={5}
+                                            className="w-full text-xs bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-gray-300 focus:outline-none focus:border-violet-400/40 resize-y font-mono"
+                                            disabled={email.sent}
+                                        />
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="flex items-center justify-between">
+                            <button onClick={() => setShowBatchPreview(false)} className="px-4 py-2 rounded-lg text-xs text-gray-400 border border-white/10 hover:text-white transition-colors">Cancel</button>
+                            <button
+                                onClick={handleBatchSend}
+                                disabled={batchSending || batchEmails.every(e => e.sent || e.error)}
+                                className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold text-white disabled:opacity-50 transition-all"
+                                style={{ background: "linear-gradient(135deg, #059669, #34d399)" }}
+                            >
+                                {batchSending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
+                                {batchSending ? `Sending ${batchSendProgress}/${batchEmails.filter(e => !e.sent && !e.error).length}...` : `Send All (${batchEmails.filter(e => !e.sent && !e.error).length})`}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </SalesLayout>
     );
 }
