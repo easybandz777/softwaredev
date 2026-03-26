@@ -267,6 +267,139 @@ export async function syncInbox(userId: number, userEmail: string, userSmtpPass:
         } finally {
             lock.release();
         }
+
+        // ── Sync Sent folder for outbound email recovery ─────────────────────
+        const sentFolderNames = ["Sent", "INBOX.Sent", "Sent Items", "Sent Messages", "[Gmail]/Sent Mail"];
+        let sentFolder: string | null = null;
+        try {
+            const mailboxes = await client.list();
+            for (const name of sentFolderNames) {
+                if (mailboxes.some(mb => mb.path === name || mb.name === name)) {
+                    sentFolder = name;
+                    break;
+                }
+            }
+        } catch { /* list not supported, try common names */ }
+        if (!sentFolder) sentFolder = "Sent"; // default guess
+
+        try {
+            // Get last UID for sent folder
+            await sql`ALTER TABLE email_sync_state ADD COLUMN IF NOT EXISTS last_uid_sent INT NOT NULL DEFAULT 0`;
+            const { rows: sentState } = await sql`SELECT last_uid_sent FROM email_sync_state WHERE user_id = ${userId}`;
+            let lastUidSent = sentState[0]?.last_uid_sent || 0;
+
+            const sentLock = await withTimeout(client.getMailboxLock(sentFolder), 10_000, "Sent lock");
+            try {
+                const sentMessages: ParsedEmail[] = [];
+                const searchRange = lastUidSent === 0
+                    ? `${Math.max(1, ((client.mailbox as { exists?: number })?.exists ?? 0) - MAX_MESSAGES_PER_SYNC + 1)}:*`
+                    : `${lastUidSent + 1}:*`;
+
+                let count = 0;
+                for await (const msg of client.fetch(searchRange, {
+                    uid: true,
+                    envelope: true,
+                    source: false,
+                    headers: ["message-id", "in-reply-to"],
+                }, lastUidSent > 0 ? { uid: true } : undefined)) {
+                    if (lastUidSent > 0 && msg.uid <= lastUidSent) continue;
+                    if (Date.now() > deadline || count >= MAX_MESSAGES_PER_SYNC) { result.capped = true; break; }
+                    count++;
+
+                    const env = msg.envelope;
+                    if (!env) continue;
+
+                    const fromAddr = normalizeAddressField(env.from?.[0]?.address || env.from);
+                    const toAddr = normalizeAddressField(env.to?.[0]?.address || env.to);
+
+                    let bodyText = "";
+                    try {
+                        const textPart = await withTimeout(
+                            client.download(String(msg.uid), "1", { uid: true }),
+                            5_000,
+                            "Sent body download"
+                        );
+                        if (textPart?.content) {
+                            const chunks: Buffer[] = [];
+                            for await (const chunk of textPart.content) {
+                                chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
+                            }
+                            bodyText = Buffer.concat(chunks).toString("utf-8");
+                        }
+                    } catch { bodyText = ""; }
+
+                    let msgIdHeader: string | undefined;
+                    let inReplyToHeader: string | undefined;
+                    if (msg.headers) {
+                        const headerStr = Buffer.isBuffer(msg.headers)
+                            ? msg.headers.toString("utf-8")
+                            : typeof msg.headers === "string" ? msg.headers : "";
+                        const idMatch = headerStr.match(/message-id:\s*(.+)/i);
+                        if (idMatch) msgIdHeader = idMatch[1].trim();
+                        const replyMatch = headerStr.match(/in-reply-to:\s*(.+)/i);
+                        if (replyMatch) inReplyToHeader = replyMatch[1].trim();
+                    }
+
+                    sentMessages.push({
+                        messageId: typeof msgIdHeader === "string" ? msgIdHeader.trim() : null,
+                        inReplyTo: typeof inReplyToHeader === "string" ? inReplyToHeader.trim() : null,
+                        from: extractEmail(fromAddr),
+                        to: extractEmail(toAddr),
+                        subject: env.subject || "(no subject)",
+                        bodyText,
+                        bodyHtml: "",
+                        date: env.date ? new Date(env.date) : new Date(),
+                        uid: msg.uid,
+                    });
+                }
+
+                // Process sent messages — all are outbound
+                for (const email of sentMessages) {
+                    if (Date.now() > deadline) { result.capped = true; break; }
+                    try {
+                        const contactEmail = email.to;
+                        const { rows: leadRows } = await sql`
+                            SELECT id FROM consultations WHERE LOWER(email) = ${contactEmail.toLowerCase()} LIMIT 1
+                        `;
+                        if (leadRows.length === 0) {
+                            if (email.uid > lastUidSent) lastUidSent = email.uid;
+                            continue;
+                        }
+                        const leadId = leadRows[0].id;
+
+                        const { rows: dupeCheck } = await sql`
+                            SELECT id FROM lead_emails WHERE message_id = ${email.messageId} AND message_id IS NOT NULL LIMIT 1
+                        `;
+                        if (dupeCheck.length > 0) {
+                            if (email.uid > lastUidSent) lastUidSent = email.uid;
+                            continue;
+                        }
+
+                        const threadId = email.inReplyTo || email.messageId || null;
+                        await sql`
+                            INSERT INTO lead_emails (lead_id, message_id, in_reply_to, thread_id, direction, from_address, to_address, subject, body_text, body_html, sent_at)
+                            VALUES (${leadId}, ${email.messageId}, ${email.inReplyTo}, ${threadId}, 'outbound', ${email.from}, ${email.to}, ${email.subject}, ${email.bodyText}, ${email.bodyHtml}, ${email.date.toISOString()})
+                        `;
+                        await sql`UPDATE consultations SET last_activity_at = NOW() WHERE id = ${leadId}`;
+                        await recalculateTemperature(leadId);
+                        result.synced++;
+                        result.matched++;
+                        if (email.uid > lastUidSent) lastUidSent = email.uid;
+                    } catch (err) {
+                        result.errors.push(`Sent UID ${email.uid}: ${err instanceof Error ? err.message : String(err)}`);
+                        if (email.uid > lastUidSent) lastUidSent = email.uid;
+                    }
+                }
+
+                await sql`
+                    UPDATE email_sync_state SET last_uid_sent = ${lastUidSent} WHERE user_id = ${userId}
+                `;
+            } finally {
+                sentLock.release();
+            }
+        } catch (sentErr) {
+            result.errors.push(`Sent folder sync: ${sentErr instanceof Error ? sentErr.message : String(sentErr)}`);
+        }
     } finally {
         await client.logout().catch(() => {});
     }
