@@ -64,17 +64,28 @@ export async function POST(req: NextRequest) {
 
         const senderAddress = fromEmail || process.env.SMTP_FROM || process.env.SMTP_USER || "";
 
-        if (leadId) {
+        // Resolve leadId: use explicit value, or fall back to looking up by recipient email
+        let resolvedLeadId = leadId;
+        if (!resolvedLeadId) {
             try {
-                await sql`UPDATE consultations SET status = 'contacted', last_activity_at = NOW() WHERE id = ${leadId}`;
+                const { rows: matchRows } = await sql`
+                    SELECT id FROM consultations WHERE LOWER(email) = LOWER(${to}) ORDER BY created_at DESC LIMIT 1
+                `;
+                if (matchRows.length > 0) resolvedLeadId = matchRows[0].id;
+            } catch (e) { console.error("Lead lookup by email failed:", e); }
+        }
+
+        if (resolvedLeadId) {
+            try {
+                await sql`UPDATE consultations SET status = 'contacted', last_activity_at = NOW() WHERE id = ${resolvedLeadId}`;
 
                 await sql`
                     INSERT INTO lead_emails (lead_id, message_id, direction, from_address, to_address, subject, body_text, body_html, sent_at)
-                    VALUES (${leadId}, ${result.messageId || null}, 'outbound', ${senderAddress}, ${to}, ${subject}, ${body}, ${body.replace(/\n/g, "<br>")}, NOW())
+                    VALUES (${resolvedLeadId}, ${result.messageId || null}, 'outbound', ${senderAddress}, ${to}, ${subject}, ${body}, ${body.replace(/\n/g, "<br>")}, NOW())
                 `;
 
-                await advanceCadence(parseInt(leadId));
-                await recalculateTemperature(parseInt(leadId));
+                await advanceCadence(parseInt(resolvedLeadId));
+                await recalculateTemperature(parseInt(resolvedLeadId));
             } catch (err) {
                 console.error("Failed to update lead after send:", err);
             }
