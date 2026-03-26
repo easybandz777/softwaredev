@@ -342,15 +342,17 @@ FORMAT: First line is the subject line prefixed with "Subject: ", then a blank l
                                                 {syncResult.error ? (
                                                     <p>{syncResult.error}</p>
                                                 ) : (
-                                                    <p>
-                                                        Synced <strong>{syncResult.synced}</strong> email{syncResult.synced !== 1 ? "s" : ""}.
-                                                        {syncResult.matched > 0 && <> Matched to <strong>{syncResult.matched}</strong> existing lead{syncResult.matched !== 1 ? "s" : ""}.</>}
-                                                        {syncResult.newLeads > 0 && <> Created <strong>{syncResult.newLeads}</strong> new lead{syncResult.newLeads !== 1 ? "s" : ""}.</>}
-                                                        {syncResult.capped && <> Hit limit — press Sync again to continue.</>}
-                                                    </p>
-                                                    {syncResult.errors && syncResult.errors.length > 0 && (
-                                                        <p className="mt-1 text-amber-400">{syncResult.errors.length} warning{syncResult.errors.length !== 1 ? "s" : ""}: {syncResult.errors[0]}</p>
-                                                    )}
+                                                    <>
+                                                        <p>
+                                                            Synced <strong>{syncResult.synced}</strong> email{syncResult.synced !== 1 ? "s" : ""}.
+                                                            {syncResult.matched > 0 && <> Matched to <strong>{syncResult.matched}</strong> existing lead{syncResult.matched !== 1 ? "s" : ""}.</>}
+                                                            {syncResult.newLeads > 0 && <> Created <strong>{syncResult.newLeads}</strong> new lead{syncResult.newLeads !== 1 ? "s" : ""}.</>}
+                                                            {syncResult.capped && <> Hit limit — press Sync again to continue.</>}
+                                                        </p>
+                                                        {syncResult.errors && syncResult.errors.length > 0 && (
+                                                            <p className="mt-1 text-amber-400">{syncResult.errors.length} warning{syncResult.errors.length !== 1 ? "s" : ""}: {syncResult.errors[0]}</p>
+                                                        )}
+                                                    </>
                                                 )}
                                             </div>
                                         )}
