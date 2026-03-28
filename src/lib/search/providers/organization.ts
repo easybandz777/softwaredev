@@ -1,12 +1,24 @@
 import type { SearchProvider, EnrichmentProvider, RawCandidate } from "../types";
 import { searchPlaces } from "@/lib/places";
+import { searchApify } from "@/lib/apify";
 import { enrichWithEmails } from "@/lib/scraper";
 
 export class OrganizationSearchProvider implements SearchProvider {
   mode = "organization" as const;
 
   async search(query: string, limit: number): Promise<RawCandidate[]> {
-    const places = await searchPlaces(query, limit);
+    let places;
+    const hasApify = !!(process.env.APIFY_API_TOKEN || "").trim();
+    if (hasApify) {
+      try {
+        places = await searchApify(query, limit);
+      } catch (err) {
+        console.warn("Apify search failed, falling back to Google Places:", err instanceof Error ? err.message : err);
+        places = await searchPlaces(query, limit);
+      }
+    } else {
+      places = await searchPlaces(query, limit);
+    }
 
     return places.map((p) => ({
       mode: "organization" as const,
