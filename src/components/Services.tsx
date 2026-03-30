@@ -3,7 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { AnimatedSection } from "./ui/AnimatedSection";
-import { Terminal, Bot, Globe, CreditCard, FileText, Shield } from "lucide-react";
+import { Terminal, Bot, Globe, CreditCard, FileText, Shield, Crosshair, Lock } from "lucide-react";
 
 const services = [
     {
@@ -95,6 +95,26 @@ const services = [
         description:
             "We don't reskin generic software. We've built from scratch for motorcycle shops, contractors, musicians, and trading firms — with workflows, terminology, and reporting that match how each industry actually operates. If your business has unique processes, we build tools that fit them.",
         proof: "Deployed platforms across automotive, construction, entertainment, and financial services.",
+    },
+    {
+        icon: Crosshair,
+        color: "from-red-500 to-orange-400",
+        glow: "rgba(239,68,68,0.3)",
+        title: "Penetration Testing & Red Team Ops",
+        headline: "Find the holes before someone else does.",
+        description:
+            "Full-scope offensive security engagements — network penetration testing, Active Directory attacks, wireless security audits, web application testing, and advanced red team operations. We use custom-built tooling to simulate real-world adversaries across your entire attack surface: credential spraying, lateral movement, Kerberos abuse, ADCS exploitation, and C2 infrastructure. Every finding is mapped to MITRE ATT&CK with actionable remediation.",
+        proof: "Custom red team toolkit with 11 attack modules. MITRE ATT&CK-mapped reporting on every engagement.",
+    },
+    {
+        icon: Lock,
+        color: "from-slate-400 to-zinc-300",
+        glow: "rgba(148,163,184,0.3)",
+        title: "Cybersecurity Consulting",
+        headline: "Security that's built in — not bolted on after a breach.",
+        description:
+            "From vulnerability assessments and security architecture reviews to incident response planning and compliance hardening — we help businesses lock down their infrastructure before it becomes a headline. We assess your network, endpoints, wireless, web apps, and cloud environments, then deliver executive-ready reports with prioritized remediation roadmaps.",
+        proof: "Full-stack security assessments covering network, wireless, web, and Active Directory environments.",
     },
 ];
 
