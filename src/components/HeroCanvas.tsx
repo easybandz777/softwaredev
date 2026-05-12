@@ -50,12 +50,6 @@ const EDGES: [number, number][] = [
     [1, 4], [2, 3],
 ];
 
-const METRICS = [
-    { x: 0.14, y: 0.10, label: "LATENCY", value: "11ms", color: CYAN },
-    { x: 0.74, y: 0.10, label: "UPTIME", value: "99.99%", color: "#34d399" },
-    { x: 0.82, y: 0.88, label: "REQ/S", value: "84.2K", color: VIOLET },
-    { x: 0.06, y: 0.88, label: "THREADS", value: "512", color: BLUE },
-];
 
 /* Draw hex grid to an offscreen canvas once — reuse every frame */
 function buildHexGrid(w: number, h: number, dpr: number): HTMLCanvasElement {
@@ -292,22 +286,6 @@ export function HeroCanvas() {
                 }
             });
 
-            // ── Metric overlays
-            METRICS.forEach(m => {
-                const mx = m.x * w, my = m.y * h;
-                const cardW = 90, cardH = 36;
-                ctx!.fillStyle = "rgba(13,21,38,0.75)";
-                ctx!.strokeStyle = m.color + "55";
-                ctx!.lineWidth = 0.8;
-                roundRect(ctx!, mx - cardW / 2, my, cardW, cardH, 6);
-                ctx!.font = "600 8px 'Inter', sans-serif";
-                ctx!.fillStyle = m.color + "bb";
-                ctx!.textAlign = "center";
-                ctx!.fillText(m.label, mx, my + 12);
-                ctx!.font = "700 13px 'Inter', sans-serif";
-                ctx!.fillStyle = m.color;
-                ctx!.fillText(m.value, mx, my + 27);
-            });
 
             // (rAF already requested at top of draw)
         }

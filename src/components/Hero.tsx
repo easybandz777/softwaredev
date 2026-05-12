@@ -1,12 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Button } from "./ui/Button";
 import { HeroCanvas } from "./HeroCanvas";
 import { ConsultationModal } from "./ConsultationModal";
 
-const words = ["Engineering", "the", "Next", "Level."];
+const words = ["We", "build", "the", "software."];
 
 export function Hero() {
     const [modalOpen, setModalOpen] = useState(false);
@@ -25,7 +26,7 @@ export function Hero() {
                 className="absolute inset-0 pointer-events-none z-[1]"
                 style={{
                     background:
-                        "radial-gradient(ellipse 60% 70% at 50% 50%, transparent 20%, rgba(17,24,39,0.65) 65%, rgba(17,24,39,0.92) 100%)",
+                        "radial-gradient(ellipse at 50% 50%, transparent 40%, rgba(17,24,39,0.8) 100%)",
                 }}
             />
 
@@ -34,17 +35,20 @@ export function Hero() {
 
                 {/* Logo — centered above headline, visible on all sizes */}
                 <motion.div
-                    initial={{ opacity: 0, scale: 0.85, filter: "blur(12px)" }}
-                    animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-                    transition={{ duration: 1, ease: "easeOut" }}
+                    initial={{ opacity: 0, scale: 0.92 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
                     className="mb-8"
                 >
-                    <img
+                    <Image
                         src="/logo.png"
                         alt="QuantLab Software Solutions"
+                        width={288}
+                        height={288}
+                        priority
                         className="w-56 sm:w-64 md:w-72 h-auto object-contain mx-auto"
                         style={{
-                            filter: "drop-shadow(0 0 22px rgba(56,189,248,0.85)) drop-shadow(0 0 48px rgba(99,179,237,0.4)) brightness(1.2) saturate(1.4)",
+                            filter: "drop-shadow(0 0 20px rgba(56,189,248,0.6))",
                         }}
                     />
                 </motion.div>
@@ -85,8 +89,8 @@ export function Hero() {
                     transition={{ duration: 0.8, delay: 0.75, ease: "easeOut" }}
                     className="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl leading-relaxed"
                 >
-                    From fully automated trading bots to enterprise custom software.{" "}
-                    We build robust, scalable systems that execute with absolute precision.
+                    Custom software and trading systems for businesses that need
+                    more than off-the-shelf tools.
                 </motion.p>
 
                 {/* Single primary CTA */}
@@ -100,22 +104,6 @@ export function Hero() {
                     </Button>
                 </motion.div>
 
-                {/* Live status */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 1, delay: 1.2 }}
-                    className="mt-14 flex items-center gap-6 text-xs text-gray-500 font-mono"
-                >
-                    <span className="flex items-center gap-1.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                        All systems operational
-                    </span>
-                    <span className="text-gray-700">|</span>
-                    <span>99.99% uptime</span>
-                    <span className="text-gray-700">|</span>
-                    <span>&lt;12ms avg latency</span>
-                </motion.div>
             </div>
 
             {/* Scroll indicator */}
@@ -146,7 +134,7 @@ export function Hero() {
             </motion.button>
 
             {/* Bottom fade */}
-            <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#111827] to-transparent pointer-events-none z-[2]" />
+            <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#111827] to-transparent pointer-events-none z-[2]" />
 
             <ConsultationModal open={modalOpen} onClose={() => setModalOpen(false)} />
         </section>

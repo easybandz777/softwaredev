@@ -22,7 +22,7 @@ export function Navbar() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex items-center justify-between border-b border-white/5 bg-quant-bg/60 backdrop-blur-xl"
         >
-            <div className="flex items-center gap-4 cursor-pointer">
+            <Link href="/" className="flex items-center gap-4 cursor-pointer">
                 <div className="relative w-12 h-12 rounded-full overflow-hidden shadow-[0_0_15px_rgba(59,130,246,0.5)]">
                     <Image
                         src="/logo.png"
@@ -35,27 +35,20 @@ export function Navbar() {
                 <span className="text-xl font-bold tracking-tight text-white hidden sm:block">
                     QuantLab
                 </span>
-            </div>
+            </Link>
 
             <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
-                <a href="#services" className="hover:text-white transition-colors">Services</a>
-                <a href="#about" className="hover:text-white transition-colors">About</a>
-                <a href="#contact" className="hover:text-white transition-colors">Contact</a>
+                <Link href="/services" className="hover:text-white transition-colors">Services</Link>
+                <Link href="/work" className="hover:text-white transition-colors">Work</Link>
+                <Link href="/about" className="hover:text-white transition-colors">About</Link>
+                <Link href="/faq" className="hover:text-white transition-colors">FAQ</Link>
             </nav>
 
             <div className="flex items-center gap-4">
-                <Button size="sm" variant="glass" className="hidden sm:inline-flex" onClick={() => {
-                    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-                }}>
-                    Initiate Contact
-                </Button>
-                {/* Discreet admin link — low-key, for internal use */}
-                <Link
-                    href="/admin"
-                    className="hidden md:block text-xs text-gray-700 hover:text-gray-400 transition-colors duration-200 select-none"
-                    tabIndex={-1}
-                >
-                    admin
+                <Link href="/#contact">
+                    <Button size="sm" variant="glass" className="hidden sm:inline-flex">
+                        Get in Touch
+                    </Button>
                 </Link>
             </div>
         </motion.header>
