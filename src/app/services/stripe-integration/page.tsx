@@ -124,7 +124,7 @@ export default function StripeIntegrationPage() {
 
             <div className="container mx-auto px-6 max-w-4xl">
                 <nav aria-label="Breadcrumb" className="mb-8">
-                    <ol className="flex items-center gap-2 text-xs text-gray-500">
+                    <ol className="flex items-center gap-2 text-xs text-gray-400">
                         <li><Link href="/" className="hover:text-sky-400 transition-colors">Home</Link></li>
                         <li aria-hidden="true" className="text-gray-700">›</li>
                         <li><Link href="/services" className="hover:text-sky-400 transition-colors">Services</Link></li>
@@ -143,7 +143,7 @@ export default function StripeIntegrationPage() {
                     <p className="text-xl text-gray-400 leading-relaxed mb-8 max-w-2xl">
                         Stripe's docs are good. Real business problems are messy. We build the 40% of payment logic that Stripe Checkout and Billing can't handle — Connect marketplaces, custom subscription proration, idempotent webhooks, and accounting sync.
                     </p>
-                    <ConsultationCTA label="Scope a Stripe Build" />
+                    <ConsultationCTA label="Scope a Stripe Build" service="Stripe Integration" source="services-stripe" />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-16">
@@ -280,7 +280,7 @@ export default function StripeIntegrationPage() {
                             >
                                 <div className="flex items-center justify-between mb-2">
                                     <h3 className="text-white font-semibold">{s.title}</h3>
-                                    <ArrowRight className="w-4 h-4 text-gray-500 group-hover:text-violet-400 group-hover:translate-x-0.5 transition-all" />
+                                    <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-violet-400 group-hover:translate-x-0.5 transition-all" />
                                 </div>
                                 <p className="text-sm text-gray-400 leading-relaxed">{s.desc}</p>
                             </Link>
@@ -294,9 +294,9 @@ export default function StripeIntegrationPage() {
                             Have a Stripe edge case nobody else can solve?
                         </h2>
                         <p className="text-gray-400 max-w-xl mx-auto mb-8 leading-relaxed">
-                            Call William Beltz at (770) 652-1282 or book a scoping call. We'll tell you straight whether it's a build or a config change.
+                            Call William Beltz at <a href="tel:+17706521282" className="inline-flex items-center min-h-[44px] text-current hover:text-indigo-400 underline-offset-2 hover:underline focus-visible:outline-2 focus-visible:outline-indigo-400">(770) 652-1282</a> or book a scoping call. We'll tell you straight whether it's a build or a config change.
                         </p>
-                        <ConsultationCTA label="Book a Scope Call" />
+                        <ConsultationCTA label="Book a Scope Call" service="Stripe Integration" source="services-stripe" />
                     </div>
                 </AnimatedSection>
             </div>

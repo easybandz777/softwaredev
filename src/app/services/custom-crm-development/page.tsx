@@ -113,7 +113,7 @@ export default function CustomCRMDevelopmentPage() {
 
             <div className="container mx-auto px-6 max-w-4xl">
                 <nav aria-label="Breadcrumb" className="mb-8">
-                    <ol className="flex items-center gap-2 text-xs text-gray-500">
+                    <ol className="flex items-center gap-2 text-xs text-gray-400">
                         <li><Link href="/" className="hover:text-sky-400 transition-colors">Home</Link></li>
                         <li aria-hidden="true" className="text-gray-700">›</li>
                         <li><Link href="/services" className="hover:text-sky-400 transition-colors">Services</Link></li>
@@ -132,7 +132,7 @@ export default function CustomCRMDevelopmentPage() {
                     <p className="text-xl text-gray-400 leading-relaxed mb-8 max-w-2xl">
                         Custom CRM software that mirrors your actual sales motion — pipeline stages, automation, integrations, and reporting — so the system serves your team instead of the other way around.
                     </p>
-                    <ConsultationCTA label="Scope a CRM Build" />
+                    <ConsultationCTA label="Scope a CRM Build" service="Custom CRM Development" source="services-crm" />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-16">
@@ -197,7 +197,7 @@ export default function CustomCRMDevelopmentPage() {
                             </div>
                         ))}
                     </div>
-                    <p className="text-sm text-gray-500 mt-4 leading-relaxed">
+                    <p className="text-sm text-gray-400 mt-4 leading-relaxed">
                         Hosted on Vercel, AWS, or your own infrastructure — your call. PostgreSQL is the source of truth for everything; the rest of the stack defers to it.
                     </p>
                 </AnimatedSection>
@@ -294,7 +294,7 @@ export default function CustomCRMDevelopmentPage() {
                             >
                                 <div className="flex items-center justify-between mb-2">
                                     <h3 className="text-white font-semibold">{s.title}</h3>
-                                    <ArrowRight className="w-4 h-4 text-gray-500 group-hover:text-sky-400 group-hover:translate-x-0.5 transition-all" />
+                                    <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-sky-400 group-hover:translate-x-0.5 transition-all" />
                                 </div>
                                 <p className="text-sm text-gray-400 leading-relaxed">{s.desc}</p>
                             </Link>
@@ -335,9 +335,9 @@ export default function CustomCRMDevelopmentPage() {
                             Stop fighting your CRM.
                         </h2>
                         <p className="text-gray-400 max-w-xl mx-auto mb-8 leading-relaxed">
-                            Call William Beltz directly at (770) 652-1282 or book a 20-minute scope call to walk through your sales process. Founder-led from quote to handoff.
+                            Call William Beltz directly at <a href="tel:+17706521282" className="inline-flex items-center min-h-[44px] text-current hover:text-indigo-400 underline-offset-2 hover:underline focus-visible:outline-2 focus-visible:outline-indigo-400">(770) 652-1282</a> or book a 20-minute scope call to walk through your sales process. Founder-led from quote to handoff.
                         </p>
-                        <ConsultationCTA label="Book a Scope Call" />
+                        <ConsultationCTA label="Book a Scope Call" service="Custom CRM Development" source="services-crm" />
                     </div>
                 </AnimatedSection>
             </div>

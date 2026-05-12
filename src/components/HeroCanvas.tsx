@@ -105,6 +105,13 @@ export function HeroCanvas() {
         const ctx = canvas.getContext("2d");
         if (!ctx) return;
 
+        // Respect users who prefer reduced motion — skip the animation loop.
+        const reducedMotion =
+            typeof window !== "undefined" &&
+            window.matchMedia &&
+            window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (reducedMotion) return;
+
         let animId: number;
         const dpr = Math.min(window.devicePixelRatio || 1, 1.5); // cap retina blowup
         let w = canvas.offsetWidth;

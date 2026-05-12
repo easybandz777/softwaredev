@@ -79,7 +79,7 @@ export default function WorkPage() {
                                         {cs.industry}
                                     </span>
                                     <span className="text-gray-700">·</span>
-                                    <span className="text-xs text-gray-500 font-mono">
+                                    <span className="text-xs text-gray-400 font-mono">
                                         {cs.year}
                                     </span>
                                 </div>
@@ -114,6 +114,9 @@ export default function WorkPage() {
                     <p className="text-gray-400 text-lg mb-8 leading-relaxed">
                         Tell us what you're trying to build. We'll tell you whether we can
                         help and what it would take.
+                    </p>
+                    <p className="text-gray-400 text-sm mb-6 leading-relaxed text-center">
+                        Or talk to us directly: <a href="tel:+17706521282" className="inline-flex items-center min-h-[44px] text-current hover:text-indigo-400 underline-offset-2 hover:underline focus-visible:outline-2 focus-visible:outline-indigo-400">(770) 652-1282</a> · <a href="mailto:beltz@quantlabusa.dev" className="text-current hover:text-indigo-400 underline-offset-2 hover:underline focus-visible:outline-2 focus-visible:outline-indigo-400">beltz@quantlabusa.dev</a>
                     </p>
                     <ConsultationCTA label="Book a Consultation" />
                 </div>

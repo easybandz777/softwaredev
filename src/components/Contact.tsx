@@ -109,7 +109,7 @@ export function Contact() {
 
                             {/* Right: How it works */}
                             <div className="flex flex-col gap-5">
-                                <p className="text-xs font-semibold tracking-widest text-gray-500 uppercase">How it works</p>
+                                <p className="text-xs font-semibold tracking-widest text-gray-400 uppercase">How it works</p>
                                 {WHAT_HAPPENS.map(({ step, title, desc }, i) => (
                                     <motion.div
                                         key={step}
@@ -126,7 +126,7 @@ export function Contact() {
                                         </div>
                                         <div>
                                             <h4 className="text-white font-semibold mb-1">{title}</h4>
-                                            <p className="text-gray-500 text-sm leading-relaxed">{desc}</p>
+                                            <p className="text-gray-400 text-sm leading-relaxed">{desc}</p>
                                         </div>
                                     </motion.div>
                                 ))}
@@ -134,7 +134,7 @@ export function Contact() {
                                 {/* Bottom contact line */}
                                 <div className="flex items-center gap-2 mt-2 px-1">
                                     <Mail className="w-4 h-4 text-gray-600" />
-                                    <span className="text-sm text-gray-500">
+                                    <span className="text-sm text-gray-400">
                                         Prefer email?{" "}
                                         <a href="mailto:beltz@quantlabusa.dev"
                                             className="text-sky-400 hover:text-sky-300 transition-colors">

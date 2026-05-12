@@ -1,19 +1,22 @@
+// NOTE: Six client quotes were removed pending sign-off (see audit-01). Replace with verbatim approved quotes once each client confirms.
+
 /**
  * Case study data.
  *
  * Each entry powers both the /work index and its dedicated /work/[slug] page.
- * Older entries are anonymized; newer client-named entries include liveUrl,
- * structured Situation / Challenge / Approach / Solution / Outcomes content,
- * and DRAFT client quotes that must be confirmed before publishing.
+ * Older entries are anonymized; newer client-named entries include liveUrl
+ * and structured Situation / Challenge / Approach / Solution / Outcomes content.
+ *
+ * Client testimonials (`clientQuote`) are intentionally omitted until each
+ * client signs off in writing. Do not add a quote here unless it has been
+ * approved verbatim by the client.
  */
 
 export interface CaseStudyQuote {
-    /** The draft testimonial copy. Treat as DRAFT until confirmed. */
+    /** Approved testimonial copy. Only populate when the client has signed off in writing. */
     text: string;
     /** Person / org being quoted. */
     author: string;
-    /** TODO note for William — left in the data so it surfaces in PRs/diffs. */
-    draftNote?: string;
 }
 
 export interface CaseStudyRelatedLink {
@@ -46,7 +49,7 @@ export interface CaseStudy {
     outcome: string;
     /** Bullet-style outcomes/wins shown as cards. */
     highlights: string[];
-    /** Optional DRAFT client testimonial. Confirm in writing before launch. */
+    /** Optional approved client testimonial. Only set after written client sign-off. */
     clientQuote?: CaseStudyQuote;
     /** Optional related service pages. */
     relatedServices?: CaseStudyRelatedLink[];
@@ -107,13 +110,7 @@ export const caseStudies: CaseStudy[] = [
             "Automated branded PDF proposals via @react-pdf/renderer",
             "Single admin portal replaces spreadsheets and Word docs",
         ],
-        clientQuote: {
-            // TODO(william): confirm with Northcrest ownership in writing before publishing.
-            text: "QuantLab built us a system that finally matches the way we actually run jobs. Quotes go out before the homeowner walks back inside. The proposals look as good as our work, and the admin side keeps every lead in one place. We close more first-visit estimates than we ever have.",
-            author: "Northcrest Fence & Gate ownership",
-            draftNote:
-                "DRAFT — confirm with Northcrest ownership before publishing.",
-        },
+        // clientQuote omitted — pending Northcrest ownership sign-off (see audit-01).
         relatedServices: [
             { label: "Custom Business Software", href: "/services/custom-business-software" },
             { label: "Web Applications", href: "/services/web-applications" },
@@ -180,13 +177,7 @@ export const caseStudies: CaseStudy[] = [
             "Stripe checkout + affiliate program in one platform",
             "Single admin console replaces 5+ separate tools",
         ],
-        clientQuote: {
-            // TODO(william): confirm with HobbsPeak ownership in writing before publishing.
-            text: "We came to QuantLab because we needed something Shopify couldn't do — live wholesale catalog, digitized artwork, and a real admin console. William built all of it. Customers get proofs faster, repeat orders are a two-click thing, and I can run the whole shop from one screen.",
-            author: "HobbsPeak ownership",
-            draftNote:
-                "DRAFT — confirm with HobbsPeak ownership before publishing.",
-        },
+        // clientQuote omitted — pending HobbsPeak ownership sign-off (see audit-01).
         relatedServices: [
             { label: "Web Applications", href: "/services/web-applications" },
             { label: "Custom Business Software", href: "/services/custom-business-software" },
@@ -243,13 +234,7 @@ export const caseStudies: CaseStudy[] = [
             "Estimates and invoices mirrored to QBO automatically",
             "Nine Atlanta-metro service-area marketing pages",
         ],
-        clientQuote: {
-            // TODO(william): confirm with Bridgepointe ownership in writing before publishing.
-            text: "QuantLab understood that our brand is luxury and our back-office had to match. The QuickBooks integration alone saves us hours every week, and our clients love the portal. William built exactly the platform we needed — nothing off-the-shelf could have done this.",
-            author: "Bridgepointe Painting ownership",
-            draftNote:
-                "DRAFT — confirm with Bridgepointe ownership before publishing.",
-        },
+        // clientQuote omitted — pending Bridgepointe ownership sign-off (see audit-01).
         relatedServices: [
             { label: "Custom Business Software", href: "/services/custom-business-software" },
             { label: "Web Applications", href: "/services/web-applications" },
@@ -303,13 +288,7 @@ export const caseStudies: CaseStudy[] = [
             "Structured consultation intake, zero third-party form services",
             "Core Web Vitals in the green on mobile",
         ],
-        clientQuote: {
-            // TODO(william): confirm with Brianna Willis in writing before publishing.
-            text: "William understood my practice before he wrote a line of code. The site sounds like me, not like an insurance pitch. Clients tell me they booked because the website felt honest — and that's exactly what I wanted.",
-            author: "Brianna Willis, ProtectWithBri",
-            draftNote:
-                "DRAFT — confirm with Brianna Willis before publishing.",
-        },
+        // clientQuote omitted — pending Brianna Willis sign-off (see audit-01).
         relatedServices: [
             { label: "Web Applications", href: "/services/web-applications" },
         ],
@@ -367,13 +346,7 @@ export const caseStudies: CaseStudy[] = [
             "OpenAI lead scoring + personalized outreach generation",
             "Full CRM pipeline, analytics, and settings in one tool",
         ],
-        clientQuote: {
-            // TODO(william): confirm with J5 Sales OS team in writing before publishing.
-            text: "J5 Sales OS does what the big tools refused to do. It finds the real businesses, gets their real emails, and writes the first message so we can spend our time on conversations, not on lookups. Built by someone who actually understood the sales motion.",
-            author: "J5 Sales OS team",
-            draftNote:
-                "DRAFT — confirm with J5 Sales OS team before publishing.",
-        },
+        // clientQuote omitted — pending J5 Sales OS team sign-off (see audit-01).
         relatedServices: [
             { label: "Custom Business Software", href: "/services/custom-business-software" },
             { label: "Web Applications", href: "/services/web-applications" },
@@ -436,13 +409,7 @@ export const caseStudies: CaseStudy[] = [
             "Role-based admin (admin, mgmt, dispatcher, driver, viewer)",
             "Immutable audit log capturing every meaningful action",
         ],
-        clientQuote: {
-            // TODO(william): confirm with Wilder Recovery ownership in writing before publishing.
-            text: "Wilder runs on this system now. From the tow truck to the lot to the release, everything is logged, every photo is in the file, and we can pull a complete history of any vehicle in seconds. QuantLab built exactly what towing operators actually need.",
-            author: "Wilder Recovery ownership",
-            draftNote:
-                "DRAFT — confirm with Wilder Recovery ownership before publishing.",
-        },
+        // clientQuote omitted — pending Wilder Recovery ownership sign-off (see audit-01).
         relatedServices: [
             { label: "Custom Business Software", href: "/services/custom-business-software" },
             { label: "Cloud Infrastructure", href: "/services/cloud-infrastructure" },

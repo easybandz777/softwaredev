@@ -9,6 +9,9 @@ interface Props {
     variant?: "primary" | "secondary" | "outline" | "ghost" | "glass";
     size?: "sm" | "md" | "lg";
     className?: string;
+    service?: string;
+    city?: string;
+    source?: string;
 }
 
 export function ConsultationCTA({
@@ -16,6 +19,9 @@ export function ConsultationCTA({
     variant = "glass",
     size = "lg",
     className = "min-w-[220px]",
+    service,
+    city,
+    source,
 }: Props) {
     const [open, setOpen] = useState(false);
     return (
@@ -23,7 +29,13 @@ export function ConsultationCTA({
             <Button variant={variant} size={size} className={className} onClick={() => setOpen(true)}>
                 {label}
             </Button>
-            <ConsultationModal open={open} onClose={() => setOpen(false)} />
+            <ConsultationModal
+                open={open}
+                onClose={() => setOpen(false)}
+                defaultService={service}
+                defaultCity={city}
+                source={source}
+            />
         </>
     );
 }

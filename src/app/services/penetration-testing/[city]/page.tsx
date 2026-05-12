@@ -712,7 +712,7 @@ export default async function CityPentestPage({
 
             <div className="container mx-auto px-6 max-w-4xl">
                 <nav aria-label="Breadcrumb" className="mb-8">
-                    <ol className="flex items-center gap-2 text-xs text-gray-500">
+                    <ol className="flex items-center gap-2 text-xs text-gray-400">
                         <li><Link href="/" className="hover:text-sky-400 transition-colors">Home</Link></li>
                         <li aria-hidden="true" className="text-gray-700">›</li>
                         <li><Link href="/services" className="hover:text-sky-400 transition-colors">Services</Link></li>
@@ -733,7 +733,7 @@ export default async function CityPentestPage({
                     <p className="text-xl text-gray-400 leading-relaxed mb-8 max-w-2xl">
                         {data.hook}
                     </p>
-                    <ConsultationCTA label="Request a Scope" />
+                    <ConsultationCTA label="Request a Scope" service="Penetration Testing" city={`${data.displayName}, ${data.state}`} source={`pentest-${data.slug}`} />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-16">
@@ -818,7 +818,7 @@ export default async function CityPentestPage({
                             >
                                 <div className="flex items-center justify-between mb-2">
                                     <h3 className="text-white font-semibold">{s.title}</h3>
-                                    <ArrowRight className="w-4 h-4 text-gray-500 group-hover:text-red-400 group-hover:translate-x-0.5 transition-all" />
+                                    <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-red-400 group-hover:translate-x-0.5 transition-all" />
                                 </div>
                                 <p className="text-sm text-gray-400 leading-relaxed">{s.desc}</p>
                             </Link>
@@ -831,10 +831,13 @@ export default async function CityPentestPage({
                         <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
                             Ready to scope a {data.displayName} pentest?
                         </h2>
-                        <p className="text-gray-400 max-w-xl mx-auto mb-8 leading-relaxed">
+                        <p className="text-gray-400 max-w-xl mx-auto mb-6 leading-relaxed">
                             Book a scoping call. We will walk through rules of engagement, environment, and pricing in one conversation.
                         </p>
-                        <ConsultationCTA label="Book a Consultation" />
+                        <p className="text-gray-400 text-sm max-w-xl mx-auto mb-8 leading-relaxed">
+                            Or talk to us directly: <a href="tel:+17706521282" className="inline-flex items-center min-h-[44px] text-current hover:text-indigo-400 underline-offset-2 hover:underline focus-visible:outline-2 focus-visible:outline-indigo-400">(770) 652-1282</a> · <a href="mailto:beltz@quantlabusa.dev" className="text-current hover:text-indigo-400 underline-offset-2 hover:underline focus-visible:outline-2 focus-visible:outline-indigo-400">beltz@quantlabusa.dev</a>
+                        </p>
+                        <ConsultationCTA label="Book a Consultation" service="Penetration Testing" city={`${data.displayName}, ${data.state}`} source={`pentest-${data.slug}`} />
                     </div>
                 </AnimatedSection>
             </div>

@@ -105,7 +105,7 @@ export function Services() {
                                         </div>
 
                                         <div className="mb-3">
-                                            <p className="text-xs font-semibold tracking-wider text-gray-500 uppercase mb-1">{service.title}</p>
+                                            <p className="text-xs font-semibold tracking-wider text-gray-400 uppercase mb-1">{service.title}</p>
                                             <h3 className="text-lg font-bold text-white leading-snug">{service.headline}</h3>
                                         </div>
 

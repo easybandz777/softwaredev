@@ -7,13 +7,22 @@ import { X, CheckCircle, Loader2, ChevronRight, ChevronLeft, User, Briefcase, Me
 // ─── Config ────────────────────────────────────────────────────────────────
 
 const SERVICES = [
-    "Custom CRM & ECM Systems",
-    "Algorithmic Trading Bots",
-    "High-Performance Web Portals",
-    "Payment & Invoicing Systems",
-    "Estimating & Proposal Generators",
-    "Enterprise Architecture",
+    "Active Directory Pentest",
     "AI / Machine Learning Integration",
+    "Algorithmic Trading Bot",
+    "Algorithmic Trading Bots",
+    "Custom CRM & ECM Systems",
+    "Custom CRM Development",
+    "Enterprise Architecture",
+    "Estimating & Proposal Generators",
+    "High-Performance Web Portals",
+    "MITRE ATT&CK Assessment",
+    "Network Pentest",
+    "Payment & Invoicing Systems",
+    "Penetration Testing",
+    "Software Licensing System",
+    "Stripe Integration",
+    "Web Application Pentest",
     "Other / Not Sure Yet",
 ];
 
@@ -56,6 +65,9 @@ const REFERRALS = [
 interface Props {
     open: boolean;
     onClose: () => void;
+    defaultService?: string;
+    defaultCity?: string;
+    source?: string;
 }
 
 type Status = "idle" | "loading" | "success" | "error";
@@ -71,12 +83,13 @@ interface FormData {
     timeline: string;
     message: string;
     referral: string;
+    city: string;
 }
 
 const EMPTY: FormData = {
     name: "", email: "", phone: "", company: "",
     service: "", project_type: [], budget: "", timeline: "",
-    message: "", referral: "",
+    message: "", referral: "", city: "",
 };
 
 // ─── Step config ────────────────────────────────────────────────────────────
@@ -139,24 +152,32 @@ function StepIndicator({ current }: { current: number }) {
 
 // ─── Main Component ─────────────────────────────────────────────────────────
 
-export function ConsultationModal({ open, onClose }: Props) {
+export function ConsultationModal({ open, onClose, defaultService, defaultCity, source }: Props) {
     const [step, setStep] = useState(0);
     const [dir, setDir] = useState(1);   // slide direction: 1=forward, -1=back
-    const [form, setForm] = useState<FormData>(EMPTY);
+    const [form, setForm] = useState<FormData>({
+        ...EMPTY,
+        service: defaultService || "",
+        city: defaultCity || "",
+    });
     const [status, setStatus] = useState<Status>("idle");
     const [errorMsg, setErrorMsg] = useState("");
     const overlayRef = useRef<HTMLDivElement>(null);
 
-    // Reset on open
+    // Reset on open — preserve defaultService / defaultCity prefill
     useEffect(() => {
         if (open) {
-            setForm(EMPTY);
+            setForm({
+                ...EMPTY,
+                service: defaultService || "",
+                city: defaultCity || "",
+            });
             setStep(0);
             setDir(1);
             setStatus("idle");
             setErrorMsg("");
         }
-    }, [open]);
+    }, [open, defaultService, defaultCity]);
 
     // Trap scroll
     useEffect(() => {
@@ -219,6 +240,7 @@ export function ConsultationModal({ open, onClose }: Props) {
                 body: JSON.stringify({
                     ...form,
                     project_type: form.project_type.join(", "),
+                    source: source || null,
                 }),
             });
             if (!res.ok) {
@@ -283,28 +305,46 @@ export function ConsultationModal({ open, onClose }: Props) {
                             <motion.div
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 animate={{ opacity: 1, scale: 1 }}
-                                className="p-12 text-center"
+                                className="p-8 pt-10 text-center"
                             >
                                 <motion.div
                                     initial={{ scale: 0 }}
                                     animate={{ scale: 1 }}
                                     transition={{ delay: 0.15, type: "spring", stiffness: 220 }}
-                                    className="mx-auto mb-5 w-20 h-20 rounded-full bg-emerald-400/10 flex items-center justify-center"
+                                    className="mx-auto mb-4 w-16 h-16 rounded-full bg-emerald-400/10 flex items-center justify-center"
                                     style={{ border: "1px solid rgba(52,211,153,0.2)" }}
                                 >
-                                    <CheckCircle className="w-10 h-10 text-emerald-400" />
+                                    <CheckCircle className="w-8 h-8 text-emerald-400" />
                                 </motion.div>
                                 <h3 className="text-2xl font-bold text-white mb-2">Request Received!</h3>
-                                <p className="text-gray-400 text-sm leading-relaxed max-w-sm mx-auto">
-                                    We've logged your consultation and will be in touch within 1 business day.
+                                <p className="text-gray-400 text-sm leading-relaxed max-w-md mx-auto mb-5">
+                                    Want to skip the wait? Pick a time below and we'll meet directly.
                                 </p>
-                                <button
-                                    onClick={onClose}
-                                    className="mt-8 px-8 py-3 rounded-xl text-sm font-semibold text-white transition-all duration-200"
-                                    style={{ background: "linear-gradient(135deg,#0ea5e9,#38bdf8)", boxShadow: "0 0 24px rgba(56,189,248,0.25)" }}
-                                >
-                                    Close
-                                </button>
+                                {/* TODO: replace WILLIAM-CAL-USERNAME with William's actual Cal.com handle */}
+                                <div className="rounded-xl overflow-hidden border border-white/10 bg-black/30 mb-4">
+                                    <iframe
+                                        src="https://cal.com/WILLIAM-CAL-USERNAME/intro"
+                                        title="Book a time with William"
+                                        className="w-full"
+                                        style={{ height: 480, border: 0 }}
+                                    />
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-3 items-center justify-center">
+                                    <a
+                                        href="mailto:beltz@quantlabusa.dev"
+                                        className="px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all duration-200"
+                                        style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)" }}
+                                    >
+                                        Or email William directly
+                                    </a>
+                                    <button
+                                        onClick={onClose}
+                                        className="px-6 py-2.5 rounded-xl text-sm font-semibold text-white transition-all duration-200"
+                                        style={{ background: "linear-gradient(135deg,#0ea5e9,#38bdf8)", boxShadow: "0 0 24px rgba(56,189,248,0.25)" }}
+                                    >
+                                        Close
+                                    </button>
+                                </div>
                             </motion.div>
                         ) : (
                             <div className="p-8 pt-10">
@@ -355,6 +395,11 @@ export function ConsultationModal({ open, onClose }: Props) {
                                                                 <input className={inp} placeholder="Acme Corp"
                                                                     value={form.company} onChange={e => set("company", e.target.value)} />
                                                             </div>
+                                                        </div>
+                                                        <div>
+                                                            <label className="block text-xs font-medium text-gray-400 mb-1.5">City <span className="text-gray-600">(optional)</span></label>
+                                                            <input className={inp} placeholder="Atlanta, GA"
+                                                                value={form.city} onChange={e => set("city", e.target.value)} />
                                                         </div>
                                                     </div>
                                                 )}

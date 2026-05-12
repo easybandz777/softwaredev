@@ -14,7 +14,7 @@ export function Founder() {
                         {/* Photo */}
                         <div className="flex-shrink-0">
                             <div className="relative w-48 h-48 rounded-2xl overflow-hidden border border-white/10">
-                                {/* Replace /founder.jpg with your actual photo */}
+                                {/* TODO: William — replace with real founder photo (1200×1200 sq, focus eyes) */}
                                 <Image
                                     src="/founder.jpg"
                                     alt="William Beltz — Founder of QuantLab Software Solutions"

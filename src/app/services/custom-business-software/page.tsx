@@ -97,7 +97,7 @@ export default function CustomBusinessSoftwarePage() {
             <div className="container mx-auto px-6 max-w-4xl">
                 {/* Breadcrumb */}
                 <nav aria-label="Breadcrumb" className="mb-8">
-                    <ol className="flex items-center gap-2 text-xs text-gray-500">
+                    <ol className="flex items-center gap-2 text-xs text-gray-400">
                         <li><Link href="/" className="hover:text-sky-400 transition-colors">Home</Link></li>
                         <li aria-hidden="true" className="text-gray-700">›</li>
                         <li><Link href="/services" className="hover:text-sky-400 transition-colors">Services</Link></li>
@@ -188,7 +188,7 @@ export default function CustomBusinessSoftwarePage() {
                             </div>
                         ))}
                     </div>
-                    <p className="text-sm text-gray-500 mt-4 leading-relaxed">
+                    <p className="text-sm text-gray-400 mt-4 leading-relaxed">
                         Stack picks are deliberate. PostgreSQL plus Prisma gives us migrations and type safety end-to-end. Next.js on Vercel means the same codebase renders the dashboard, the public marketing site, and the API routes — one repo, one deploy.
                     </p>
                 </AnimatedSection>
@@ -264,7 +264,7 @@ export default function CustomBusinessSoftwarePage() {
                             >
                                 <div className="flex items-center justify-between mb-2">
                                     <h3 className="text-white font-semibold">{s.title}</h3>
-                                    <ArrowRight className="w-4 h-4 text-gray-500 group-hover:text-sky-400 group-hover:translate-x-0.5 transition-all" />
+                                    <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-sky-400 group-hover:translate-x-0.5 transition-all" />
                                 </div>
                                 <p className="text-sm text-gray-400 leading-relaxed">{s.desc}</p>
                             </Link>

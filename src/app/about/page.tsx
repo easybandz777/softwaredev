@@ -244,7 +244,7 @@ export default function AboutPage() {
                                     href="https://linkedin.com/in/williambeltz"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-gray-500 hover:text-white transition-colors"
+                                    className="text-gray-400 hover:text-white transition-colors"
                                     aria-label="LinkedIn"
                                 >
                                     <Linkedin className="w-5 h-5" />
@@ -253,13 +253,13 @@ export default function AboutPage() {
                                     href="https://github.com/williambeltz"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-gray-500 hover:text-white transition-colors"
+                                    className="text-gray-400 hover:text-white transition-colors"
                                     aria-label="GitHub"
                                 >
                                     <Github className="w-5 h-5" />
                                 </a>
                                 <span className="text-gray-700">·</span>
-                                <div className="flex items-center gap-2 text-gray-500 text-sm">
+                                <div className="flex items-center gap-2 text-gray-400 text-sm">
                                     <MapPin className="w-4 h-4" />
                                     Georgia, USA
                                 </div>
@@ -296,7 +296,7 @@ export default function AboutPage() {
                     </div>
 
                     <div className="mt-10 rounded-2xl border border-white/8 bg-[#0d1526]/70 backdrop-blur-sm p-7">
-                        <p className="text-xs font-semibold tracking-[0.2em] uppercase text-gray-500 mb-4">
+                        <p className="text-xs font-semibold tracking-[0.2em] uppercase text-gray-400 mb-4">
                             Day-to-day tech
                         </p>
                         <div className="flex flex-wrap gap-2.5">
@@ -338,9 +338,16 @@ export default function AboutPage() {
                         Start with a call. You tell us what you're building, we'll tell you
                         whether we can help.
                     </p>
-                    <p className="text-gray-500 text-sm mb-8 flex items-center justify-center gap-2">
+                    <p className="text-gray-400 text-sm mb-8 flex items-center justify-center gap-2 flex-wrap">
                         <Mail className="w-4 h-4" />
-                        Or email{" "}
+                        Call{" "}
+                        <a
+                            href="tel:+17706521282"
+                            className="inline-flex items-center min-h-[44px] text-sky-400 hover:text-sky-300 transition-colors underline-offset-2 hover:underline focus-visible:outline-2 focus-visible:outline-indigo-400"
+                        >
+                            (770) 652-1282
+                        </a>
+                        <span>or email</span>
                         <a
                             href="mailto:beltz@quantlabusa.dev"
                             className="text-sky-400 hover:text-sky-300 transition-colors"

@@ -94,7 +94,7 @@ export default function InsuranceIndustryPage() {
 
             <div className="container mx-auto px-6 max-w-4xl">
                 <nav aria-label="Breadcrumb" className="mb-8">
-                    <ol className="flex items-center gap-2 text-xs text-gray-500">
+                    <ol className="flex items-center gap-2 text-xs text-gray-400">
                         <li><Link href="/" className="hover:text-sky-400 transition-colors">Home</Link></li>
                         <li aria-hidden="true" className="text-gray-700">›</li>
                         <li><Link href="/industries" className="hover:text-sky-400 transition-colors">Industries</Link></li>
@@ -220,7 +220,7 @@ export default function InsuranceIndustryPage() {
                             >
                                 <div className="flex items-center justify-between mb-2">
                                     <h3 className="text-white font-semibold">{s.title}</h3>
-                                    <ArrowRight className="w-4 h-4 text-gray-500 group-hover:text-indigo-400 group-hover:translate-x-0.5 transition-all" />
+                                    <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-indigo-400 group-hover:translate-x-0.5 transition-all" />
                                 </div>
                                 <p className="text-sm text-gray-400 leading-relaxed">{s.desc}</p>
                             </Link>
@@ -234,7 +234,7 @@ export default function InsuranceIndustryPage() {
                             Build a practice site that sounds like you.
                         </h2>
                         <p className="text-gray-400 max-w-xl mx-auto mb-8 leading-relaxed">
-                            Call William Beltz at (770) 652-1282 or book a 20-minute scope call. Founder-led from the first call to the production deploy.
+                            Call William Beltz at <a href="tel:+17706521282" className="inline-flex items-center min-h-[44px] text-current hover:text-indigo-400 underline-offset-2 hover:underline focus-visible:outline-2 focus-visible:outline-indigo-400">(770) 652-1282</a> or book a 20-minute scope call. Founder-led from the first call to the production deploy.
                         </p>
                         <ConsultationCTA label="Book a Scope Call" />
                     </div>

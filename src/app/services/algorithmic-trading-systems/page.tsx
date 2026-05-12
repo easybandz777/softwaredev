@@ -96,7 +96,7 @@ export default function AlgorithmicTradingPage() {
 
             <div className="container mx-auto px-6 max-w-4xl">
                 <nav aria-label="Breadcrumb" className="mb-8">
-                    <ol className="flex items-center gap-2 text-xs text-gray-500">
+                    <ol className="flex items-center gap-2 text-xs text-gray-400">
                         <li><Link href="/" className="hover:text-sky-400 transition-colors">Home</Link></li>
                         <li aria-hidden="true" className="text-gray-700">›</li>
                         <li><Link href="/services" className="hover:text-sky-400 transition-colors">Services</Link></li>
@@ -185,7 +185,7 @@ export default function AlgorithmicTradingPage() {
                             </div>
                         ))}
                     </div>
-                    <p className="text-sm text-gray-500 mt-4 leading-relaxed">
+                    <p className="text-sm text-gray-400 mt-4 leading-relaxed">
                         Python for research and strategy logic (pandas, numpy, vectorbt where it fits). Node.js for the low-latency WebSocket and order routing side on certain crypto systems. TimescaleDB when the tick-level history gets large enough that plain Postgres chokes on aggregations.
                     </p>
                 </AnimatedSection>
@@ -259,7 +259,7 @@ export default function AlgorithmicTradingPage() {
                             >
                                 <div className="flex items-center justify-between mb-2">
                                     <h3 className="text-white font-semibold">{s.title}</h3>
-                                    <ArrowRight className="w-4 h-4 text-gray-500 group-hover:text-violet-400 group-hover:translate-x-0.5 transition-all" />
+                                    <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-violet-400 group-hover:translate-x-0.5 transition-all" />
                                 </div>
                                 <p className="text-sm text-gray-400 leading-relaxed">{s.desc}</p>
                             </Link>

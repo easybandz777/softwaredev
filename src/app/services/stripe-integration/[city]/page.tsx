@@ -7,6 +7,34 @@ import { CreditCard, Check, ArrowRight } from "lucide-react";
 
 export const dynamicParams = false;
 
+const PHONE_DISPLAY = "(770) 652-1282";
+const PHONE_HREF = "tel:+17706521282";
+const EMAIL_ADDRESS = "beltz@quantlabusa.dev";
+const TAP_LINK_CLASS =
+    "inline-flex items-center min-h-[44px] text-current hover:text-indigo-400 underline-offset-2 hover:underline focus-visible:outline-2 focus-visible:outline-indigo-400";
+
+function renderTaglineWithLinks(text: string) {
+    const tokenRegex = /(\(770\) 652-1282|beltz@quantlabusa\.dev)/g;
+    const parts = text.split(tokenRegex);
+    return parts.map((part, i) => {
+        if (part === PHONE_DISPLAY) {
+            return (
+                <a key={i} href={PHONE_HREF} className={TAP_LINK_CLASS}>
+                    {PHONE_DISPLAY}
+                </a>
+            );
+        }
+        if (part === EMAIL_ADDRESS) {
+            return (
+                <a key={i} href={`mailto:${EMAIL_ADDRESS}`} className={TAP_LINK_CLASS}>
+                    {EMAIL_ADDRESS}
+                </a>
+            );
+        }
+        return <span key={i}>{part}</span>;
+    });
+}
+
 interface CityConfig {
     slug: string;
     city: string;
@@ -713,7 +741,7 @@ export default async function StripeIntegrationCityPage({
 
             <div className="container mx-auto px-6 max-w-4xl">
                 <nav aria-label="Breadcrumb" className="mb-8">
-                    <ol className="flex items-center gap-2 text-xs text-gray-500">
+                    <ol className="flex items-center gap-2 text-xs text-gray-400">
                         <li><Link href="/" className="hover:text-sky-400 transition-colors">Home</Link></li>
                         <li aria-hidden="true" className="text-gray-700">›</li>
                         <li><Link href="/services" className="hover:text-sky-400 transition-colors">Services</Link></li>
@@ -734,7 +762,7 @@ export default async function StripeIntegrationCityPage({
                     <p className="text-xl text-gray-400 leading-relaxed mb-8 max-w-2xl">
                         {cfg.angle} Founder-led from quote to handoff. Modern stack, fixed-scope, no offshore handoff.
                     </p>
-                    <ConsultationCTA label="Scope a Stripe Build" />
+                    <ConsultationCTA label="Scope a Stripe Build" service="Stripe Integration" city={`${cfg.city}, ${cfg.state}`} source={`stripe-${cfg.slug}`} />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-16">
@@ -796,7 +824,7 @@ export default async function StripeIntegrationCityPage({
                             </div>
                         ))}
                     </div>
-                    <p className="text-sm text-gray-500 mt-4 leading-relaxed">
+                    <p className="text-sm text-gray-400 mt-4 leading-relaxed">
                         PostgreSQL is the source-of-truth ledger. Stripe is the rail. Every webhook is signed, idempotent, and queued with retry and audit logs. API versions are pinned explicitly so a Stripe-side change does not break your billing overnight.
                     </p>
                 </AnimatedSection>
@@ -834,7 +862,7 @@ export default async function StripeIntegrationCityPage({
                         >
                             <div className="flex items-center justify-between mb-2">
                                 <h3 className="text-white font-semibold">All Stripe Integration Services</h3>
-                                <ArrowRight className="w-4 h-4 text-gray-500 group-hover:text-indigo-400 group-hover:translate-x-0.5 transition-all" />
+                                <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-indigo-400 group-hover:translate-x-0.5 transition-all" />
                             </div>
                             <p className="text-sm text-gray-400 leading-relaxed">
                                 Full custom Stripe development — checkout, Connect, subscriptions, ERP sync, license-tied entitlement.
@@ -846,7 +874,7 @@ export default async function StripeIntegrationCityPage({
                         >
                             <div className="flex items-center justify-between mb-2">
                                 <h3 className="text-white font-semibold">Payments, Invoicing &amp; Licensing</h3>
-                                <ArrowRight className="w-4 h-4 text-gray-500 group-hover:text-indigo-400 group-hover:translate-x-0.5 transition-all" />
+                                <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-indigo-400 group-hover:translate-x-0.5 transition-all" />
                             </div>
                             <p className="text-sm text-gray-400 leading-relaxed">
                                 Broader scope — invoicing systems, customer portals, license-server-tied entitlement.
@@ -864,7 +892,7 @@ export default async function StripeIntegrationCityPage({
                                 >
                                     <div className="flex items-center justify-between mb-2">
                                         <h3 className="text-white font-semibold">Stripe Integration in {sib.label}</h3>
-                                        <ArrowRight className="w-4 h-4 text-gray-500 group-hover:text-indigo-400 group-hover:translate-x-0.5 transition-all" />
+                                        <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-indigo-400 group-hover:translate-x-0.5 transition-all" />
                                     </div>
                                     <p className="text-sm text-gray-400 leading-relaxed">{sibCity?.angle ?? "Custom Stripe integration."}</p>
                                 </Link>
@@ -880,7 +908,7 @@ export default async function StripeIntegrationCityPage({
                             >
                                 <div className="flex items-center justify-between mb-2">
                                     <h3 className="text-white font-semibold">{r.label}</h3>
-                                    <ArrowRight className="w-4 h-4 text-gray-500 group-hover:text-indigo-400 group-hover:translate-x-0.5 transition-all" />
+                                    <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-indigo-400 group-hover:translate-x-0.5 transition-all" />
                                 </div>
                                 <p className="text-sm text-gray-400 leading-relaxed">{r.desc}</p>
                             </Link>
@@ -894,9 +922,9 @@ export default async function StripeIntegrationCityPage({
                             Have a Stripe edge case in {cfg.city}?
                         </h2>
                         <p className="text-gray-400 max-w-xl mx-auto mb-8 leading-relaxed">
-                            {cfg.ctaTagline}
+                            {renderTaglineWithLinks(cfg.ctaTagline)}
                         </p>
-                        <ConsultationCTA label="Book a Scope Call" />
+                        <ConsultationCTA label="Book a Scope Call" service="Stripe Integration" city={`${cfg.city}, ${cfg.state}`} source={`stripe-${cfg.slug}`} />
                     </div>
                 </AnimatedSection>
             </div>

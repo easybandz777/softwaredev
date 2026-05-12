@@ -7,7 +7,7 @@ const NOTIFICATION_EMAIL = "beltz@quantlabusa.dev";
 export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
-        const { name, email, phone, company, service, project_type, budget, timeline, message, referral } = body;
+        const { name, email, phone, company, service, project_type, budget, timeline, message, referral, city, source } = body;
 
         if (!name || !email || !service || !message) {
             return NextResponse.json({ error: "Missing required fields." }, { status: 400 });
@@ -58,6 +58,8 @@ export async function POST(req: NextRequest) {
                                 ${budget ? `<tr><td style="padding:8px 12px;color:#9ca3af;">Budget</td><td style="padding:8px 12px;color:#fff;">${budget}</td></tr>` : ""}
                                 ${timeline ? `<tr><td style="padding:8px 12px;color:#9ca3af;">Timeline</td><td style="padding:8px 12px;color:#fff;">${timeline}</td></tr>` : ""}
                                 ${referral ? `<tr><td style="padding:8px 12px;color:#9ca3af;">Referral</td><td style="padding:8px 12px;color:#fff;">${referral.trim()}</td></tr>` : ""}
+                                ${city ? `<tr><td style="padding:8px 12px;color:#9ca3af;">City</td><td style="padding:8px 12px;color:#fff;">${city.toString().trim()}</td></tr>` : ""}
+                                ${source ? `<tr><td style="padding:8px 12px;color:#9ca3af;">Source</td><td style="padding:8px 12px;color:#fff;">${source.toString().trim()}</td></tr>` : ""}
                             </table>
                             <div style="margin-top:16px;padding:16px;background:rgba(255,255,255,0.05);border-radius:8px;">
                                 <p style="color:#9ca3af;margin:0 0 8px;font-size:13px;">Message</p>

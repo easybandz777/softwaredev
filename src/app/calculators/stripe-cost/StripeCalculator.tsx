@@ -280,7 +280,7 @@ export function StripeCalculator() {
                         <h2 className="text-xl md:text-2xl font-bold text-white mb-1">
                             Your Stripe scope
                         </h2>
-                        <p className="text-sm text-gray-500">
+                        <p className="text-sm text-gray-400">
                             Update any field — the estimate recalculates live.
                         </p>
                     </div>
@@ -425,7 +425,7 @@ export function StripeCalculator() {
                                 <p className="text-3xl md:text-4xl font-bold text-white leading-tight">
                                     {formatCurrency(result.costLow)}
                                 </p>
-                                <p className="text-sm text-gray-500 my-1">to</p>
+                                <p className="text-sm text-gray-400 my-1">to</p>
                                 <p className="text-3xl md:text-4xl font-bold text-white leading-tight">
                                     {formatCurrency(result.costHigh)}
                                 </p>
@@ -495,7 +495,7 @@ export function StripeCalculator() {
                         <h3 className="text-lg font-semibold text-white mb-1 text-center">
                             Get the PDF breakdown
                         </h3>
-                        <p className="text-sm text-gray-500 mb-5 text-center">
+                        <p className="text-sm text-gray-400 mb-5 text-center">
                             Three fields. Single confirmed opt-in. No sales blast — you&apos;ll hear from
                             William directly.
                         </p>
@@ -583,7 +583,7 @@ export function StripeCalculator() {
                             <button
                                 type="button"
                                 onClick={() => setShowLeadForm(false)}
-                                className="text-sm text-gray-500 hover:text-gray-300 transition-colors"
+                                className="text-sm text-gray-400 hover:text-gray-300 transition-colors"
                             >
                                 Never mind
                             </button>

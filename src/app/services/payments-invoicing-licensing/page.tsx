@@ -96,7 +96,7 @@ export default function PaymentsLicensingPage() {
 
             <div className="container mx-auto px-6 max-w-4xl">
                 <nav aria-label="Breadcrumb" className="mb-8">
-                    <ol className="flex items-center gap-2 text-xs text-gray-500">
+                    <ol className="flex items-center gap-2 text-xs text-gray-400">
                         <li><Link href="/" className="hover:text-sky-400 transition-colors">Home</Link></li>
                         <li aria-hidden="true" className="text-gray-700">›</li>
                         <li><Link href="/services" className="hover:text-sky-400 transition-colors">Services</Link></li>
@@ -209,7 +209,7 @@ export default function PaymentsLicensingPage() {
                             </div>
                         ))}
                     </div>
-                    <p className="text-sm text-gray-500 mt-4 leading-relaxed">
+                    <p className="text-sm text-gray-400 mt-4 leading-relaxed">
                         Stripe is the default for payments in 95% of our builds. It's the most developer-honest billing platform out there. For everything else — licensing, revenue reporting, dunning — we build on top of Node and Postgres so you own the logic and can migrate it later if needed.
                     </p>
                 </AnimatedSection>
@@ -283,7 +283,7 @@ export default function PaymentsLicensingPage() {
                             >
                                 <div className="flex items-center justify-between mb-2">
                                     <h3 className="text-white font-semibold">{s.title}</h3>
-                                    <ArrowRight className="w-4 h-4 text-gray-500 group-hover:text-emerald-400 group-hover:translate-x-0.5 transition-all" />
+                                    <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-emerald-400 group-hover:translate-x-0.5 transition-all" />
                                 </div>
                                 <p className="text-sm text-gray-400 leading-relaxed">{s.desc}</p>
                             </Link>

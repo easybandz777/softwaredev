@@ -110,7 +110,7 @@ export default function CustomCrmVsSalesforcePage() {
 
             <div className="container mx-auto px-6 max-w-4xl">
                 <nav aria-label="Breadcrumb" className="mb-8">
-                    <ol className="flex items-center gap-2 text-xs text-gray-500">
+                    <ol className="flex items-center gap-2 text-xs text-gray-400">
                         <li><Link href="/" className="hover:text-sky-400 transition-colors">Home</Link></li>
                         <li aria-hidden="true" className="text-gray-700">›</li>
                         <li><Link href="/services/custom-crm-development" className="hover:text-sky-400 transition-colors">Custom CRM</Link></li>
@@ -254,15 +254,15 @@ export default function CustomCrmVsSalesforcePage() {
                             Run the simple version. Salesforce Sales Cloud at $150 per seat per month, 50 users, three years:
                         </p>
                         <ul className="space-y-2 text-sm text-gray-300 mb-4">
-                            <li className="flex gap-2"><span className="text-sky-400">$150 × 50 × 36</span><span className="text-gray-500">=</span><span className="text-white font-semibold">$270,000</span> in seat license alone</li>
-                            <li className="flex gap-2"><span className="text-sky-400">+ ~$40k</span><span className="text-gray-500">=</span><span className="text-white">AppExchange add-ons over 3 years</span></li>
-                            <li className="flex gap-2"><span className="text-sky-400">+ ~$60k</span><span className="text-gray-500">=</span><span className="text-white">implementation and ongoing admin/consulting</span></li>
-                            <li className="flex gap-2 border-t border-white/5 pt-2 mt-2"><span className="text-emerald-400 font-semibold">~ $370k</span><span className="text-gray-500">=</span><span className="text-white font-semibold">3-year Salesforce TCO at 50 seats</span></li>
+                            <li className="flex gap-2"><span className="text-sky-400">$150 × 50 × 36</span><span className="text-gray-400">=</span><span className="text-white font-semibold">$270,000</span> in seat license alone</li>
+                            <li className="flex gap-2"><span className="text-sky-400">+ ~$40k</span><span className="text-gray-400">=</span><span className="text-white">AppExchange add-ons over 3 years</span></li>
+                            <li className="flex gap-2"><span className="text-sky-400">+ ~$60k</span><span className="text-gray-400">=</span><span className="text-white">implementation and ongoing admin/consulting</span></li>
+                            <li className="flex gap-2 border-t border-white/5 pt-2 mt-2"><span className="text-emerald-400 font-semibold">~ $370k</span><span className="text-gray-400">=</span><span className="text-white font-semibold">3-year Salesforce TCO at 50 seats</span></li>
                         </ul>
                         <p className="text-gray-300 mb-4 leading-relaxed">
                             Compare against a custom CRM at $40k to $65k one-time, plus a $15k to $25k annual retainer for feature work and maintenance. That comes to $85k to $140k over the same three years — breakeven typically lands inside the first 18 months.
                         </p>
-                        <p className="text-gray-500 text-sm leading-relaxed">
+                        <p className="text-gray-400 text-sm leading-relaxed">
                             The math flips for organizations under 15 to 20 seats — there the Salesforce seat economics often beat a one-time build. Above ~30 seats with a non-standard motion, custom usually wins. The honest answer is do the math for your situation.
                         </p>
                     </div>
@@ -326,7 +326,7 @@ export default function CustomCrmVsSalesforcePage() {
                         >
                             <div className="flex items-center justify-between mb-2">
                                 <h3 className="text-white font-semibold">Custom CRM Development</h3>
-                                <ArrowRight className="w-4 h-4 text-gray-500 group-hover:text-sky-400 group-hover:translate-x-0.5 transition-all" />
+                                <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-sky-400 group-hover:translate-x-0.5 transition-all" />
                             </div>
                             <p className="text-sm text-gray-400 leading-relaxed">The full service page — what we build, methodology, pricing.</p>
                         </Link>
@@ -336,7 +336,7 @@ export default function CustomCrmVsSalesforcePage() {
                         >
                             <div className="flex items-center justify-between mb-2">
                                 <h3 className="text-white font-semibold">Stripe Cost Calculator</h3>
-                                <ArrowRight className="w-4 h-4 text-gray-500 group-hover:text-sky-400 group-hover:translate-x-0.5 transition-all" />
+                                <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-sky-400 group-hover:translate-x-0.5 transition-all" />
                             </div>
                             <p className="text-sm text-gray-400 leading-relaxed">Model the recurring-billing side of your stack with real numbers.</p>
                         </Link>
@@ -349,7 +349,7 @@ export default function CustomCrmVsSalesforcePage() {
                             Do the math on your situation.
                         </h2>
                         <p className="text-gray-400 max-w-xl mx-auto mb-8 leading-relaxed">
-                            Call William Beltz at (770) 652-1282 or book a 20-minute scope call. We will walk through your seat count, your workflows, and your data model and tell you straight whether Salesforce is right, custom is right, or you should run a hybrid.
+                            Call William Beltz at <a href="tel:+17706521282" className="inline-flex items-center min-h-[44px] text-current hover:text-indigo-400 underline-offset-2 hover:underline focus-visible:outline-2 focus-visible:outline-indigo-400">(770) 652-1282</a> or book a 20-minute scope call. We will walk through your seat count, your workflows, and your data model and tell you straight whether Salesforce is right, custom is right, or you should run a hybrid.
                         </p>
                         <ConsultationCTA label="Book a Scope Call" />
                     </div>

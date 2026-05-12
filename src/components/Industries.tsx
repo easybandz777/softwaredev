@@ -17,14 +17,14 @@ export function Industries() {
             <div className="container mx-auto px-6 relative z-10">
                 <AnimatedSection>
                     <div className="text-center mb-10">
-                        <p className="text-xs font-semibold tracking-[0.2em] uppercase text-gray-500">
+                        <p className="text-xs font-semibold tracking-[0.2em] uppercase text-gray-400">
                             Industries We've Built For
                         </p>
                     </div>
                     <div className="flex flex-wrap justify-center gap-8 md:gap-16">
                         {industries.map(({ icon: Icon, label }) => (
                             <div key={label} className="flex items-center gap-3 text-gray-400">
-                                <Icon className="w-5 h-5 text-gray-500" />
+                                <Icon className="w-5 h-5 text-gray-400" />
                                 <span className="text-sm font-medium">{label}</span>
                             </div>
                         ))}

@@ -219,7 +219,7 @@ function ServiceGrid({ items }: { items: ServiceCard[] }) {
                                     </div>
 
                                     <div className="mb-3">
-                                        <p className="text-xs font-semibold tracking-wider text-gray-500 uppercase mb-1">{service.title}</p>
+                                        <p className="text-xs font-semibold tracking-wider text-gray-400 uppercase mb-1">{service.title}</p>
                                         <h3 className="text-lg font-bold text-white leading-snug">{service.headline}</h3>
                                     </div>
 
@@ -231,7 +231,7 @@ function ServiceGrid({ items }: { items: ServiceCard[] }) {
                                         <p className={`text-xs font-medium text-transparent bg-clip-text bg-gradient-to-r ${service.color}`}>
                                             {service.tag}
                                         </p>
-                                        <ArrowRight className="w-4 h-4 text-gray-500 group-hover:text-sky-400 group-hover:translate-x-0.5 transition-all" />
+                                        <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-sky-400 group-hover:translate-x-0.5 transition-all" />
                                     </div>
                                 </div>
                             </div>
@@ -249,7 +249,7 @@ export default function ServicesIndexPage() {
             <section className="container mx-auto px-6 relative z-10">
                 <AnimatedSection className="text-center mb-16 max-w-3xl mx-auto">
                     <nav aria-label="Breadcrumb" className="mb-6">
-                        <ol className="flex items-center justify-center gap-2 text-xs text-gray-500">
+                        <ol className="flex items-center justify-center gap-2 text-xs text-gray-400">
                             <li><Link href="/" className="hover:text-sky-400 transition-colors">Home</Link></li>
                             <li aria-hidden="true" className="text-gray-700">›</li>
                             <li className="text-gray-300">Services</li>
@@ -351,7 +351,7 @@ export default function ServicesIndexPage() {
                                 >
                                     <div className="flex items-center justify-between mb-2">
                                         <h3 className="text-white font-semibold">{i.name}</h3>
-                                        <ArrowRight className="w-4 h-4 text-gray-500 group-hover:text-emerald-400 group-hover:translate-x-0.5 transition-all" />
+                                        <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-emerald-400 group-hover:translate-x-0.5 transition-all" />
                                     </div>
                                     <p className="text-sm text-gray-400 leading-relaxed">{i.blurb}</p>
                                 </Link>
@@ -377,7 +377,7 @@ export default function ServicesIndexPage() {
                             >
                                 <div className="flex items-center justify-between mb-2">
                                     <h3 className="text-white font-semibold text-lg">Custom CRM vs Salesforce</h3>
-                                    <ArrowRight className="w-4 h-4 text-gray-500 group-hover:text-violet-400 group-hover:translate-x-0.5 transition-all" />
+                                    <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-violet-400 group-hover:translate-x-0.5 transition-all" />
                                 </div>
                                 <p className="text-sm text-gray-400 leading-relaxed">
                                     What you pay, what you own, and when each one is the right call.
@@ -389,7 +389,7 @@ export default function ServicesIndexPage() {
                             >
                                 <div className="flex items-center justify-between mb-2">
                                     <h3 className="text-white font-semibold text-lg">Custom Storefront vs Shopify</h3>
-                                    <ArrowRight className="w-4 h-4 text-gray-500 group-hover:text-violet-400 group-hover:translate-x-0.5 transition-all" />
+                                    <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-violet-400 group-hover:translate-x-0.5 transition-all" />
                                 </div>
                                 <p className="text-sm text-gray-400 leading-relaxed">
                                     Where Shopify wins, where it caps your unit economics, and when to leave.
@@ -403,8 +403,11 @@ export default function ServicesIndexPage() {
                     <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
                         Not sure which fits?
                     </h2>
-                    <p className="text-gray-400 mb-8 leading-relaxed">
+                    <p className="text-gray-400 mb-6 leading-relaxed">
                         Most projects touch two or three of these. Book a free consultation and we'll figure out what the right build actually looks like — or tell you if there's a better off-the-shelf option.
+                    </p>
+                    <p className="text-gray-400 text-sm mb-8 leading-relaxed">
+                        Or talk to us directly: <a href="tel:+17706521282" className="inline-flex items-center min-h-[44px] text-current hover:text-indigo-400 underline-offset-2 hover:underline focus-visible:outline-2 focus-visible:outline-indigo-400">(770) 652-1282</a> · <a href="mailto:beltz@quantlabusa.dev" className="text-current hover:text-indigo-400 underline-offset-2 hover:underline focus-visible:outline-2 focus-visible:outline-indigo-400">beltz@quantlabusa.dev</a>
                     </p>
                     <ConsultationCTA />
                 </AnimatedSection>

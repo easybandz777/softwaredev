@@ -251,14 +251,13 @@ export default async function CaseStudyPage({
 
                     <Section label="The Outcome" body={study.outcome} />
 
-                    {/* Client quote (DRAFT — confirm before publishing) */}
-                    {study.clientQuote && (
+                    {/*
+                     * Client quote: renders only when an approved (non-empty) testimonial is present.
+                     * Otherwise we show a soft inline CTA. Approved quotes are added back per-client
+                     * once each has signed off in writing (see audit-01 note in case-studies.ts).
+                     */}
+                    {study.clientQuote && study.clientQuote.text.trim().length > 0 ? (
                         <figure className="mb-16 rounded-2xl border border-sky-400/15 bg-sky-400/5 p-7 md:p-9">
-                            {study.clientQuote.draftNote && (
-                                <p className="text-[10px] uppercase tracking-[0.2em] text-amber-400 font-semibold mb-4">
-                                    {study.clientQuote.draftNote}
-                                </p>
-                            )}
                             <blockquote className="text-gray-200 text-lg md:text-xl leading-relaxed italic">
                                 &ldquo;{study.clientQuote.text}&rdquo;
                             </blockquote>
@@ -266,6 +265,18 @@ export default async function CaseStudyPage({
                                 — {study.clientQuote.author}
                             </figcaption>
                         </figure>
+                    ) : (
+                        <p className="mb-16 text-gray-400 text-base md:text-lg leading-relaxed">
+                            Like to know more about this project?{" "}
+                            <Link
+                                href="/contact"
+                                className="text-sky-400 hover:text-sky-300 transition-colors font-medium inline-flex items-center gap-1.5"
+                            >
+                                Talk to William
+                                <ArrowRight className="w-3.5 h-3.5" />
+                            </Link>
+                            .
+                        </p>
                     )}
 
                     {/* Related links (services + city) */}

@@ -110,7 +110,7 @@ export default function CustomEcommerceVsShopifyPage() {
 
             <div className="container mx-auto px-6 max-w-4xl">
                 <nav aria-label="Breadcrumb" className="mb-8">
-                    <ol className="flex items-center gap-2 text-xs text-gray-500">
+                    <ol className="flex items-center gap-2 text-xs text-gray-400">
                         <li><Link href="/" className="hover:text-sky-400 transition-colors">Home</Link></li>
                         <li aria-hidden="true" className="text-gray-700">›</li>
                         <li><Link href="/services" className="hover:text-sky-400 transition-colors">Services</Link></li>
@@ -254,15 +254,15 @@ export default function CustomEcommerceVsShopifyPage() {
                             Run the simple version. A mid-market B2B Shopify Plus stack over three years:
                         </p>
                         <ul className="space-y-2 text-sm text-gray-300 mb-4">
-                            <li className="flex gap-2"><span className="text-sky-400">$2,000 × 36</span><span className="text-gray-500">=</span><span className="text-white font-semibold">$72,000</span> in Shopify Plus subscription</li>
-                            <li className="flex gap-2"><span className="text-sky-400">+ ~$36k</span><span className="text-gray-500">=</span><span className="text-white">apps at ~$1,000/mo (B2B, multi-currency, sync, reporting)</span></li>
-                            <li className="flex gap-2"><span className="text-sky-400">+ ~$60k</span><span className="text-gray-500">=</span><span className="text-white">Liquid + Plus partner work across 3 years</span></li>
-                            <li className="flex gap-2 border-t border-white/5 pt-2 mt-2"><span className="text-emerald-400 font-semibold">~ $168k</span><span className="text-gray-500">=</span><span className="text-white font-semibold">3-year Shopify Plus TCO</span></li>
+                            <li className="flex gap-2"><span className="text-sky-400">$2,000 × 36</span><span className="text-gray-400">=</span><span className="text-white font-semibold">$72,000</span> in Shopify Plus subscription</li>
+                            <li className="flex gap-2"><span className="text-sky-400">+ ~$36k</span><span className="text-gray-400">=</span><span className="text-white">apps at ~$1,000/mo (B2B, multi-currency, sync, reporting)</span></li>
+                            <li className="flex gap-2"><span className="text-sky-400">+ ~$60k</span><span className="text-gray-400">=</span><span className="text-white">Liquid + Plus partner work across 3 years</span></li>
+                            <li className="flex gap-2 border-t border-white/5 pt-2 mt-2"><span className="text-emerald-400 font-semibold">~ $168k</span><span className="text-gray-400">=</span><span className="text-white font-semibold">3-year Shopify Plus TCO</span></li>
                         </ul>
                         <p className="text-gray-300 mb-4 leading-relaxed">
                             A complex custom e-commerce build comes in at $55k to $120k one-time depending on scope, plus $18k to $30k annually in hosting and feature retainer. That works out to $109k to $210k over three years — breakeven on the high end of Shopify Plus, with the difference being you own the system and stop paying app rent.
                         </p>
-                        <p className="text-gray-500 text-sm leading-relaxed">
+                        <p className="text-gray-400 text-sm leading-relaxed">
                             For straightforward B2C under $1M in revenue, Shopify Basic at $39 per month is unbeatable. The math only flips when the platform fee plus app stack plus partner customization passes roughly $4k per month — at that point a custom build pays for itself inside 18 to 30 months.
                         </p>
                     </div>
@@ -318,7 +318,7 @@ export default function CustomEcommerceVsShopifyPage() {
                         >
                             <div className="flex items-center justify-between mb-2">
                                 <h3 className="text-white font-semibold">Web Application Development</h3>
-                                <ArrowRight className="w-4 h-4 text-gray-500 group-hover:text-sky-400 group-hover:translate-x-0.5 transition-all" />
+                                <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-sky-400 group-hover:translate-x-0.5 transition-all" />
                             </div>
                             <p className="text-sm text-gray-400 leading-relaxed">The full Next.js + PostgreSQL stack we use for custom storefronts and admin consoles.</p>
                         </Link>
@@ -328,7 +328,7 @@ export default function CustomEcommerceVsShopifyPage() {
                         >
                             <div className="flex items-center justify-between mb-2">
                                 <h3 className="text-white font-semibold">Custom Stripe Integration</h3>
-                                <ArrowRight className="w-4 h-4 text-gray-500 group-hover:text-sky-400 group-hover:translate-x-0.5 transition-all" />
+                                <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-sky-400 group-hover:translate-x-0.5 transition-all" />
                             </div>
                             <p className="text-sm text-gray-400 leading-relaxed">Subscriptions, marketplaces, custom checkout, and QuickBooks sync wired to the storefront.</p>
                         </Link>
@@ -341,7 +341,7 @@ export default function CustomEcommerceVsShopifyPage() {
                             Hit the Shopify ceiling? Or do not need to.
                         </h2>
                         <p className="text-gray-400 max-w-xl mx-auto mb-8 leading-relaxed">
-                            Call William Beltz at (770) 652-1282 or book a 20-minute scope call. We will walk through your catalog, your B2B workflows, and your integrations and tell you straight whether Shopify is right, a custom build is right, or you should run Shopify with a custom layer on top.
+                            Call William Beltz at <a href="tel:+17706521282" className="inline-flex items-center min-h-[44px] text-current hover:text-indigo-400 underline-offset-2 hover:underline focus-visible:outline-2 focus-visible:outline-indigo-400">(770) 652-1282</a> or book a 20-minute scope call. We will walk through your catalog, your B2B workflows, and your integrations and tell you straight whether Shopify is right, a custom build is right, or you should run Shopify with a custom layer on top.
                         </p>
                         <ConsultationCTA label="Book a Scope Call" />
                     </div>

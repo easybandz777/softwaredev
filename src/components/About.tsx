@@ -93,7 +93,7 @@ export function About() {
 
                     <AnimatedSection delay={0.2} className="w-full lg:w-1/2">
                         <div className="relative rounded-2xl border border-white/8 bg-[#080e1c]/80 backdrop-blur-sm p-6 overflow-hidden">
-                            <p className="text-xs font-semibold tracking-[0.2em] uppercase text-gray-500 mb-5">
+                            <p className="text-xs font-semibold tracking-[0.2em] uppercase text-gray-400 mb-5">
                                 System Architecture
                             </p>
 
@@ -119,7 +119,7 @@ export function About() {
                                             <p className="text-xs font-bold tracking-widest uppercase mb-0.5" style={{ color: layer.color }}>
                                                 {layer.label}
                                             </p>
-                                            <p className="text-xs text-gray-500">{layer.sublabel}</p>
+                                            <p className="text-xs text-gray-400">{layer.sublabel}</p>
                                         </div>
                                     </motion.div>
                                 ))}
@@ -130,7 +130,7 @@ export function About() {
 
                 <AnimatedSection delay={0.1} className="mb-16">
                     <div className="rounded-2xl border border-white/6 bg-[#0a101e]/60 backdrop-blur-sm p-8">
-                        <p className="text-xs font-semibold tracking-[0.2em] uppercase text-gray-500 mb-5">
+                        <p className="text-xs font-semibold tracking-[0.2em] uppercase text-gray-400 mb-5">
                             Tech Stack
                         </p>
                         <div className="flex flex-wrap gap-2.5">

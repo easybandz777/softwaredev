@@ -100,9 +100,12 @@ export default function FAQPage() {
                     <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
                         Still have questions?
                     </h2>
-                    <p className="text-gray-400 text-lg mb-8 leading-relaxed">
+                    <p className="text-gray-400 text-lg mb-6 leading-relaxed">
                         The easiest way to find out if we're a fit is a short call. No
                         pressure, no slide deck.
+                    </p>
+                    <p className="text-gray-400 text-sm mb-8 leading-relaxed">
+                        Or talk to us directly: <a href="tel:+17706521282" className="inline-flex items-center min-h-[44px] text-current hover:text-indigo-400 underline-offset-2 hover:underline focus-visible:outline-2 focus-visible:outline-indigo-400">(770) 652-1282</a> · <a href="mailto:beltz@quantlabusa.dev" className="text-current hover:text-indigo-400 underline-offset-2 hover:underline focus-visible:outline-2 focus-visible:outline-indigo-400">beltz@quantlabusa.dev</a>
                     </p>
                     <ConsultationCTA label="Book a Consultation" />
                 </div>

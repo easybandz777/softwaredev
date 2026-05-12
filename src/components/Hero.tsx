@@ -2,10 +2,17 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { Button } from "./ui/Button";
-import { HeroCanvas } from "./HeroCanvas";
 import { ConsultationModal } from "./ConsultationModal";
+
+// Dynamically load HeroCanvas client-side only — keeps it out of the
+// SSR/LCP critical path and reduces initial JS for first paint.
+const HeroCanvas = dynamic(
+    () => import("./HeroCanvas").then((m) => m.HeroCanvas),
+    { ssr: false }
+);
 
 const words = ["We", "build", "the", "software."];
 
@@ -41,11 +48,12 @@ export function Hero() {
                     className="mb-8"
                 >
                     <Image
-                        src="/logo.png"
+                        src="/logo-optimized.webp"
                         alt="QuantLab Software Solutions"
                         width={288}
                         height={288}
                         priority
+                        fetchPriority="high"
                         className="w-56 sm:w-64 md:w-72 h-auto object-contain mx-auto"
                         style={{
                             filter: "drop-shadow(0 0 20px rgba(56,189,248,0.6))",
@@ -115,7 +123,7 @@ export function Hero() {
                 className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 group cursor-pointer"
                 aria-label="Explore services"
             >
-                <span className="text-[10px] font-mono tracking-[0.25em] uppercase text-gray-500 group-hover:text-sky-400 transition-colors duration-200">
+                <span className="text-[10px] font-mono tracking-[0.25em] uppercase text-gray-400 group-hover:text-sky-400 transition-colors duration-200">
                     Explore Services
                 </span>
                 <motion.div

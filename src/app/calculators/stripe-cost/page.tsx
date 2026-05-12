@@ -101,7 +101,7 @@ export default function StripeCostCalculatorPage() {
 
             <div className="container mx-auto px-6 max-w-5xl">
                 <nav aria-label="Breadcrumb" className="mb-8">
-                    <ol className="flex items-center gap-2 text-xs text-gray-500">
+                    <ol className="flex items-center gap-2 text-xs text-gray-400">
                         <li>
                             <Link href="/" className="hover:text-sky-400 transition-colors">
                                 Home
@@ -129,7 +129,7 @@ export default function StripeCostCalculatorPage() {
                     <p className="text-xl text-gray-400 leading-relaxed mb-8 max-w-3xl">
                         Plug in your scope. Get a real, defensible hours and dollar range for your custom Stripe build — subscriptions, multi-currency, Stripe Connect, tax handling, the works. Walk into your next board or co-founder meeting with a number you can stand behind.
                     </p>
-                    <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500">
+                    <div className="flex flex-wrap items-center gap-4 text-sm text-gray-400">
                         <div className="flex items-center gap-2">
                             <Clock className="w-4 h-4 text-emerald-400" />
                             <span>60-second estimate</span>
@@ -190,15 +190,15 @@ export default function StripeCostCalculatorPage() {
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-white/5">
                             <div>
                                 <p className="text-2xl font-bold text-white">~6 weeks</p>
-                                <p className="text-xs text-gray-500 uppercase tracking-wide">Build to live</p>
+                                <p className="text-xs text-gray-400 uppercase tracking-wide">Build to live</p>
                             </div>
                             <div>
                                 <p className="text-2xl font-bold text-white">0 dup invoices</p>
-                                <p className="text-xs text-gray-500 uppercase tracking-wide">Since go-live</p>
+                                <p className="text-xs text-gray-400 uppercase tracking-wide">Since go-live</p>
                             </div>
                             <div>
                                 <p className="text-2xl font-bold text-white">~8 hrs/wk</p>
-                                <p className="text-xs text-gray-500 uppercase tracking-wide">Bookkeeping saved</p>
+                                <p className="text-xs text-gray-400 uppercase tracking-wide">Bookkeeping saved</p>
                             </div>
                         </div>
                     </div>
@@ -246,8 +246,11 @@ export default function StripeCostCalculatorPage() {
                         <h2 className="text-2xl md:text-4xl font-bold text-white mb-4">
                             Skip the form — book a 20-min Stripe call
                         </h2>
-                        <p className="text-gray-400 leading-relaxed mb-8 max-w-2xl mx-auto">
+                        <p className="text-gray-400 leading-relaxed mb-6 max-w-2xl mx-auto">
                             If your scope is anything past Stripe Checkout, the cheapest way to get a real number is 20 minutes on a call. We&apos;ll walk through your stack, your billing model, and the gnarly edges — and you&apos;ll leave with a number you can defend.
+                        </p>
+                        <p className="text-gray-400 text-sm max-w-2xl mx-auto mb-8 leading-relaxed">
+                            Or talk to us directly: <a href="tel:+17706521282" className="inline-flex items-center min-h-[44px] text-current hover:text-indigo-400 underline-offset-2 hover:underline focus-visible:outline-2 focus-visible:outline-indigo-400">(770) 652-1282</a> · <a href="mailto:beltz@quantlabusa.dev" className="text-current hover:text-indigo-400 underline-offset-2 hover:underline focus-visible:outline-2 focus-visible:outline-indigo-400">beltz@quantlabusa.dev</a>
                         </p>
                         <ConsultationCTA label="Book a 20-min Stripe Call" />
                     </div>

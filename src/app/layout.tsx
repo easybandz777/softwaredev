@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
@@ -18,26 +18,33 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#0a0a0f",
+  viewportFit: "cover",
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://quantlabusa.dev"),
-  title: "QuantLab Software Solutions",
+  title: "QUANT LAB USA",
   description:
     "Custom software development and cybersecurity services. CRM systems, trading bots, web applications, and penetration testing.",
   openGraph: {
-    title: "QuantLab Software Solutions",
+    title: "QUANT LAB USA",
     description:
       "Custom software development and cybersecurity services. CRM systems, trading bots, web applications, and penetration testing.",
     url: "https://quantlabusa.dev",
-    siteName: "QuantLab Software Solutions",
-    images: [{ url: "/logo.png", width: 512, height: 512 }],
+    siteName: "QUANT LAB USA",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "QUANT LAB USA — Custom Software & Cybersecurity" }],
     type: "website",
   },
   twitter: {
-    card: "summary",
-    title: "QuantLab Software Solutions",
+    card: "summary_large_image",
+    title: "QUANT LAB USA",
     description:
       "Custom software development and cybersecurity services.",
-    images: ["/logo.png"],
+    images: ["/og-image.png"],
   },
   robots: { index: true, follow: true },
 };
@@ -59,6 +66,16 @@ const organizationSchema = {
   image: "https://quantlabusa.dev/logo-transparent.png",
   telephone: "+17706521282",
   email: "beltz@quantlabusa.dev",
+  contactPoint: [
+    {
+      "@type": "ContactPoint",
+      telephone: "+1-770-652-1282",
+      email: "beltz@quantlabusa.dev",
+      contactType: "sales",
+      availableLanguage: ["English"],
+      areaServed: "US",
+    },
+  ],
   foundingDate: "2024-11-09",
   founder: {
     "@type": "Person",
@@ -223,12 +240,11 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark sm:scroll-smooth">
       <head>
-        {/* TODO: Replace with actual Google Search Console verification token from https://search.google.com/search-console */}
+        {/* TODO: William — replace with the real verification meta token from https://search.google.com/search-console (Property → Verify ownership → HTML tag). */}
         <meta
           name="google-site-verification"
           content="REPLACE_WITH_VERIFICATION_TOKEN-AWAITING-USER-INPUT"
         />
-        <meta name="theme-color" content="#111827" />
         <link rel="manifest" href="/manifest.json" />
         <link
           rel="apple-touch-icon"
@@ -258,10 +274,16 @@ export default function RootLayout({
         suppressHydrationWarning
         className={`${geistSans.variable} ${geistMono.variable} antialiased selection:bg-quant-blue selection:text-white bg-quant-bg text-quant-text`}
       >
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:px-4 focus:py-2 focus:rounded-md focus:bg-quant-blue focus:text-white focus:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300"
+        >
+          Skip to main content
+        </a>
         <FuturisticBackground />
         <Navbar />
         <PageTracker />
-        {children}
+        <div id="main">{children}</div>
         <Footer />
         <AgentationWrapper />
         <Analytics />
