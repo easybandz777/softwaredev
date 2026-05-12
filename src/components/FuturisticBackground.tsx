@@ -10,7 +10,7 @@ export function FuturisticBackground() {
     if (pathname?.startsWith("/questionnaire")) return null;
 
     return (
-        <div className="fixed inset-0 z-[-1] overflow-hidden bg-quant-bg pointer-events-none">
+        <div className="fixed inset-0 z-[-1] overflow-hidden bg-quant-bg pointer-events-none" aria-hidden="true">
 
             {/* Grid Lines */}
             <div

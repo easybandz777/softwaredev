@@ -8,31 +8,59 @@ import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Menu, X, Phone, Mail, ChevronDown } from "lucide-react";
 import { Button } from "./ui/Button";
 import { ConsultationModal } from "./ConsultationModal";
+import { MegaMenu, type MegaMenuColumn } from "./MegaMenu";
 
-// ─── Nav Data ─────────────────────────────────────────────────────────────────
+type NavLeaf = { label: string; href: string; description?: string };
 
 type NavSection = {
     label: string;
     href?: string;
-    children?: { label: string; href: string }[];
+    columns?: MegaMenuColumn[];
+    children?: NavLeaf[];
 };
 
-const NAV_SECTIONS: NavSection[] = [
+const SERVICES_COLUMNS: MegaMenuColumn[] = [
     {
-        label: "Services",
+        heading: "Software",
         href: "/services",
-        children: [
-            { label: "All Services", href: "/services" },
-            { label: "Penetration Testing", href: "/services/penetration-testing" },
+        items: [
+            { label: "Custom Business Software", href: "/services/custom-business-software" },
             { label: "Custom CRM Development", href: "/services/custom-crm-development" },
-            { label: "Stripe Integration", href: "/services/stripe-integration" },
             { label: "Web Applications", href: "/services/web-applications" },
-            { label: "MITRE ATT&CK Assessment", href: "/services/mitre-attack-assessment" },
+            { label: "Mobile App Development", href: "/services/mobile-app-development" },
+            { label: "API Development", href: "/services/api-development" },
+            { label: "Cloud Infrastructure", href: "/services/cloud-infrastructure" },
         ],
     },
     {
-        label: "Industries",
-        children: [
+        heading: "Payments & Revenue",
+        href: "/services",
+        items: [
+            { label: "Stripe Integration", href: "/services/stripe-integration" },
+            { label: "Subscription Billing", href: "/services/subscription-billing" },
+            { label: "Payments, Invoicing & Licensing", href: "/services/payments-invoicing-licensing" },
+            { label: "License Server", href: "/services/license-server" },
+            { label: "Algorithmic Trading Systems", href: "/services/algorithmic-trading-systems" },
+        ],
+    },
+    {
+        heading: "Cybersecurity",
+        href: "/services/penetration-testing",
+        items: [
+            { label: "Penetration Testing", href: "/services/penetration-testing" },
+            { label: "Web App Pentest", href: "/services/web-app-pentest" },
+            { label: "Network Pentest", href: "/services/network-pentest" },
+            { label: "Active Directory Pentest", href: "/services/active-directory-pentest" },
+            { label: "MITRE ATT&CK Assessment", href: "/services/mitre-attack-assessment" },
+        ],
+    },
+];
+
+const INDUSTRIES_COLUMNS: MegaMenuColumn[] = [
+    {
+        heading: "Industries we build for",
+        href: "/industries",
+        items: [
             { label: "FinTech", href: "/industries/fintech" },
             { label: "Construction", href: "/industries/construction" },
             { label: "Insurance", href: "/industries/insurance" },
@@ -41,32 +69,147 @@ const NAV_SECTIONS: NavSection[] = [
         ],
     },
     {
+        heading: "Featured Work",
+        href: "/work",
+        items: [
+            { label: "Northcrest Fence & Gate", href: "/work/northcrest-fence" },
+            { label: "J5 Sales OS", href: "/work/j5-sales-os" },
+            { label: "Bridgepointe Painting", href: "/work/bridgepointe-painting" },
+            { label: "Wilder Recovery", href: "/work/wilder-recovery" },
+            { label: "All Case Studies", href: "/work" },
+        ],
+    },
+];
+
+const RESOURCES_COLUMNS: MegaMenuColumn[] = [
+    {
+        heading: "Read",
+        href: "/blog",
+        items: [
+            { label: "Blog", href: "/blog" },
+            { label: "Custom CRM Guide", href: "/blog/custom-crm-development-guide" },
+            { label: "CRM vs Salesforce vs HubSpot", href: "/blog/custom-crm-vs-salesforce-vs-hubspot-2026" },
+            { label: "Build vs Buy 2026", href: "/blog/build-vs-buy-software-2026" },
+            { label: "Pentest Cost 2026", href: "/blog/penetration-test-cost-2026" },
+        ],
+    },
+    {
+        heading: "Calculate",
+        href: "/calculators/stripe-cost",
+        items: [
+            { label: "Stripe Cost Calculator", href: "/calculators/stripe-cost" },
+            { label: "CRM ROI Calculator", href: "/calculators/crm-roi" },
+            { label: "Pentest Cost Calculator", href: "/calculators/pentest-cost" },
+            { label: "Build vs Buy Calculator", href: "/calculators/build-vs-buy" },
+        ],
+    },
+    {
+        heading: "Learn",
+        items: [
+            { label: "FAQ", href: "/faq" },
+            { label: "Methodology", href: "/methodology" },
+            { label: "Our Process", href: "/process" },
+            { label: "Case Studies", href: "/work" },
+            { label: "Reviews", href: "/reviews" },
+            { label: "Security", href: "/security" },
+        ],
+    },
+];
+
+const COMPARE_COLUMNS: MegaMenuColumn[] = [
+    {
+        heading: "CRM & Sales",
+        items: [
+            { label: "vs Salesforce", href: "/vs/salesforce" },
+            { label: "vs HubSpot", href: "/vs/hubspot" },
+        ],
+    },
+    {
+        heading: "Commerce",
+        items: [
+            { label: "vs Shopify", href: "/vs/shopify" },
+        ],
+    },
+    {
+        heading: "Security",
+        items: [
+            { label: "vs Big 4 Pentest", href: "/vs/big-4-pentest" },
+        ],
+    },
+];
+
+const NAV_SECTIONS: NavSection[] = [
+    {
+        label: "Services",
+        href: "/services",
+        columns: SERVICES_COLUMNS,
+        children: [
+            { label: "Custom Business Software", href: "/services/custom-business-software" },
+            { label: "Custom CRM Development", href: "/services/custom-crm-development" },
+            { label: "Web Applications", href: "/services/web-applications" },
+            { label: "Mobile App Development", href: "/services/mobile-app-development" },
+            { label: "API Development", href: "/services/api-development" },
+            { label: "Cloud Infrastructure", href: "/services/cloud-infrastructure" },
+            { label: "Stripe Integration", href: "/services/stripe-integration" },
+            { label: "Subscription Billing", href: "/services/subscription-billing" },
+            { label: "Payments, Invoicing & Licensing", href: "/services/payments-invoicing-licensing" },
+            { label: "License Server", href: "/services/license-server" },
+            { label: "Penetration Testing", href: "/services/penetration-testing" },
+            { label: "Web App Pentest", href: "/services/web-app-pentest" },
+            { label: "Network Pentest", href: "/services/network-pentest" },
+            { label: "Active Directory Pentest", href: "/services/active-directory-pentest" },
+            { label: "MITRE ATT&CK Assessment", href: "/services/mitre-attack-assessment" },
+            { label: "Algorithmic Trading Systems", href: "/services/algorithmic-trading-systems" },
+        ],
+    },
+    {
+        label: "Industries",
+        href: "/industries",
+        columns: INDUSTRIES_COLUMNS,
+        children: [
+            { label: "FinTech", href: "/industries/fintech" },
+            { label: "Construction", href: "/industries/construction" },
+            { label: "Insurance", href: "/industries/insurance" },
+            { label: "E-Commerce", href: "/industries/e-commerce" },
+            { label: "Healthcare", href: "/industries/healthcare" },
+            { label: "Case Studies", href: "/work" },
+        ],
+    },
+    {
+        label: "Resources",
+        columns: RESOURCES_COLUMNS,
+        children: [
+            { label: "Blog", href: "/blog" },
+            { label: "FAQ", href: "/faq" },
+            { label: "Methodology", href: "/methodology" },
+            { label: "Our Process", href: "/process" },
+            { label: "Case Studies", href: "/work" },
+            { label: "Reviews", href: "/reviews" },
+            { label: "Security", href: "/security" },
+            { label: "Stripe Cost Calculator", href: "/calculators/stripe-cost" },
+            { label: "CRM ROI Calculator", href: "/calculators/crm-roi" },
+            { label: "Pentest Cost Calculator", href: "/calculators/pentest-cost" },
+            { label: "Build vs Buy Calculator", href: "/calculators/build-vs-buy" },
+        ],
+    },
+    {
         label: "Compare",
+        columns: COMPARE_COLUMNS,
         children: [
             { label: "vs Salesforce", href: "/vs/salesforce" },
+            { label: "vs HubSpot", href: "/vs/hubspot" },
             { label: "vs Shopify", href: "/vs/shopify" },
             { label: "vs Big 4 Pentest", href: "/vs/big-4-pentest" },
         ],
     },
-    { label: "Calculator", href: "/calculators/stripe-cost" },
     { label: "Work", href: "/work" },
-    { label: "FAQ", href: "/faq" },
     { label: "About", href: "/about" },
-    { label: "Contact", href: "/#contact" },
-];
-
-const DESKTOP_LINKS = [
-    { href: "/services", label: "Services" },
-    { href: "/work", label: "Work" },
-    { href: "/about", label: "About" },
-    { href: "/faq", label: "FAQ" },
+    { label: "Contact", href: "/contact" },
 ];
 
 const PHONE_E164 = "+17706521282";
 const PHONE_DISPLAY = "(770) 652-1282";
 const EMAIL = "beltz@quantlabusa.dev";
-
-// ─── Component ────────────────────────────────────────────────────────────────
 
 export function Navbar() {
     const pathname = usePathname();
@@ -80,19 +223,16 @@ export function Navbar() {
     const triggerRef = useRef<HTMLButtonElement | null>(null);
     const firstFocusableRef = useRef<HTMLAnchorElement | null>(null);
 
-    // Hide on portal routes
     const hideOnPortal =
         pathname?.startsWith("/sales") ||
         pathname?.startsWith("/admin") ||
         pathname?.startsWith("/training") ||
         pathname?.startsWith("/questionnaire");
 
-    // Close drawer on route change
     useEffect(() => {
         setOpen(false);
     }, [pathname]);
 
-    // ESC key closes drawer; also lock body scroll
     useEffect(() => {
         if (!open) return;
 
@@ -109,7 +249,6 @@ export function Navbar() {
 
         document.addEventListener("keydown", onKeyDown);
 
-        // Move focus into the drawer on open
         const focusTimer = window.setTimeout(() => {
             firstFocusableRef.current?.focus();
         }, 50);
@@ -121,7 +260,6 @@ export function Navbar() {
         };
     }, [open]);
 
-    // Focus trap: keep tab focus inside drawer while open
     const handleDrawerKeyDown = useCallback((e: React.KeyboardEvent) => {
         if (e.key !== "Tab" || !drawerRef.current) return;
 
@@ -155,7 +293,6 @@ export function Navbar() {
     const focusRing =
         "focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2 focus-visible:ring-offset-quant-bg rounded-md";
 
-    // Animation variants gated on prefers-reduced-motion
     const drawerInitial = prefersReducedMotion ? { x: 0, opacity: 0 } : { x: "100%" };
     const drawerAnimate = prefersReducedMotion ? { x: 0, opacity: 1 } : { x: 0 };
     const drawerExit = prefersReducedMotion ? { x: 0, opacity: 0 } : { x: "100%" };
@@ -189,28 +326,47 @@ export function Navbar() {
                     </span>
                 </Link>
 
-                {/* Desktop nav */}
                 <nav
                     aria-label="Primary"
-                    className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300"
+                    className="hidden lg:flex items-center gap-6 text-sm font-medium text-gray-300"
                 >
-                    {DESKTOP_LINKS.map((l) => (
-                        <Link
-                            key={l.href}
-                            href={l.href}
-                            className={`hover:text-white transition-colors min-h-[44px] flex items-center px-1 ${focusRing}`}
-                        >
-                            {l.label}
-                        </Link>
-                    ))}
+                    <MegaMenu
+                        label="Services"
+                        columns={SERVICES_COLUMNS}
+                        footerHref="/services"
+                        footerLabel="Browse all services →"
+                    />
+                    <MegaMenu
+                        label="Industries"
+                        columns={INDUSTRIES_COLUMNS}
+                        footerHref="/industries"
+                        footerLabel="See every industry →"
+                    />
+                    <MegaMenu
+                        label="Resources"
+                        columns={RESOURCES_COLUMNS}
+                        footerHref="/blog"
+                        footerLabel="Read the blog →"
+                    />
+                    <MegaMenu label="Compare" columns={COMPARE_COLUMNS} />
+                    <Link
+                        href="/work"
+                        className={`hover:text-white transition-colors min-h-[44px] flex items-center px-1 ${focusRing}`}
+                    >
+                        Work
+                    </Link>
+                    <Link
+                        href="/about"
+                        className={`hover:text-white transition-colors min-h-[44px] flex items-center px-1 ${focusRing}`}
+                    >
+                        About
+                    </Link>
                 </nav>
 
-                {/* Right-side actions */}
                 <div className="flex items-center gap-2 sm:gap-4">
-                    {/* Desktop phone link */}
                     <a
                         href={`tel:${PHONE_E164}`}
-                        className={`hidden md:inline-flex items-center gap-2 text-sm font-medium text-gray-300 hover:text-white transition-colors min-h-[44px] px-2 ${focusRing}`}
+                        className={`hidden lg:inline-flex items-center gap-2 text-sm font-medium text-gray-300 hover:text-white transition-colors min-h-[44px] px-2 ${focusRing}`}
                         aria-label={`Call QuantLab at ${PHONE_DISPLAY}`}
                     >
                         <Phone className="w-4 h-4" aria-hidden="true" />
@@ -223,7 +379,6 @@ export function Navbar() {
                         </Button>
                     </Link>
 
-                    {/* Hamburger — mobile + tablet */}
                     <button
                         ref={triggerRef}
                         type="button"
@@ -231,18 +386,16 @@ export function Navbar() {
                         aria-expanded={open}
                         aria-controls="mobile-nav-drawer"
                         aria-label="Open navigation menu"
-                        className={`md:hidden inline-flex items-center justify-center min-h-[44px] min-w-[44px] text-white hover:bg-white/5 active:bg-white/10 transition-colors ${focusRing}`}
+                        className={`lg:hidden inline-flex items-center justify-center min-h-[44px] min-w-[44px] text-white hover:bg-white/5 active:bg-white/10 transition-colors ${focusRing}`}
                     >
                         <Menu className="w-6 h-6" aria-hidden="true" />
                     </button>
                 </div>
             </motion.header>
 
-            {/* Mobile drawer + backdrop */}
             <AnimatePresence>
                 {open && (
                     <>
-                        {/* Backdrop */}
                         <motion.div
                             key="mobile-nav-backdrop"
                             initial={{ opacity: 0 }}
@@ -250,11 +403,10 @@ export function Navbar() {
                             exit={{ opacity: 0 }}
                             transition={{ duration: prefersReducedMotion ? 0.1 : 0.2 }}
                             onClick={() => setOpen(false)}
-                            className="fixed inset-0 z-[60] bg-black/50 backdrop-blur-sm md:hidden"
+                            className="fixed inset-0 z-[60] bg-black/50 backdrop-blur-sm lg:hidden"
                             aria-hidden="true"
                         />
 
-                        {/* Drawer */}
                         <motion.div
                             key="mobile-nav-drawer"
                             id="mobile-nav-drawer"
@@ -267,9 +419,8 @@ export function Navbar() {
                             animate={drawerAnimate}
                             exit={drawerExit}
                             transition={drawerTransition}
-                            className="fixed top-0 right-0 bottom-0 z-[70] w-[88vw] max-w-sm bg-quant-bg border-l border-white/10 shadow-2xl flex flex-col md:hidden"
+                            className="fixed top-0 right-0 bottom-0 z-[70] w-[88vw] max-w-sm bg-quant-bg border-l border-white/10 shadow-2xl flex flex-col lg:hidden"
                         >
-                            {/* Header row */}
                             <div className="flex items-center justify-between px-4 py-4 border-b border-white/5">
                                 <Link
                                     ref={firstFocusableRef}
@@ -307,7 +458,6 @@ export function Navbar() {
                                 </button>
                             </div>
 
-                            {/* Scrollable nav body */}
                             <nav
                                 aria-label="Mobile primary"
                                 className="flex-1 overflow-y-auto overscroll-contain px-2 py-3"
@@ -354,6 +504,17 @@ export function Navbar() {
                                                         id={`mobile-nav-section-${section.label}`}
                                                         className="ml-3 mt-1 mb-2 pl-3 border-l border-white/10 flex flex-col"
                                                     >
+                                                        {section.href && (
+                                                            <li>
+                                                                <Link
+                                                                    href={section.href}
+                                                                    onClick={() => setOpen(false)}
+                                                                    className={`block min-h-[44px] py-3 px-3 text-sm font-semibold text-indigo-300 hover:text-indigo-200 hover:bg-white/5 rounded-md transition-colors ${focusRing}`}
+                                                                >
+                                                                    All {section.label}
+                                                                </Link>
+                                                            </li>
+                                                        )}
                                                         {section.children!.map((child) => (
                                                             <li key={child.href}>
                                                                 <Link
@@ -373,7 +534,6 @@ export function Navbar() {
                                 </ul>
                             </nav>
 
-                            {/* Sticky bottom: CTA + tap-to-call + email */}
                             <div className="border-t border-white/10 bg-quant-bg/95 px-4 py-4 space-y-3">
                                 <button
                                     type="button"

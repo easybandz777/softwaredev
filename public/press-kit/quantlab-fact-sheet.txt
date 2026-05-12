@@ -1,0 +1,63 @@
+QUANT LAB USA INC
+Company Fact Sheet
+
+ABOUT
+QUANT LAB USA INC (quantlabusa.dev) is a Georgia-based custom software and cybersecurity firm founded by Bill Beltz in 2026. The company builds custom CRMs, SaaS platforms, payment integrations, and trading systems for SMB and SaaS clients, and performs penetration testing and security assessments for organizations preparing for SOC 2, PCI-DSS, and HIPAA compliance. Headquartered in Macon, Georgia, with service coverage across 14 U.S. cities.
+
+FOUNDED
+2026
+
+FOUNDER & CEO
+Bill Beltz
+
+HEADQUARTERS
+Macon, Georgia
+
+ENTITY TYPE
+C-Corporation (Georgia)
+Georgia SOS File No. 26086454
+EIN 42-2039870
+
+WEBSITE
+https://quantlabusa.dev
+
+PRIMARY EMAIL
+beltz@quantlabusa.dev
+
+PRIMARY PHONE
+(770) 652-1282
+
+SERVICE COVERAGE
+14 U.S. cities including Macon GA, Atlanta GA, Augusta GA, Columbus GA, Savannah GA, Charlotte NC, Nashville TN, Miami FL, Austin TX, Dallas TX, Chicago IL, New York NY, San Francisco CA, and Seattle WA.
+
+CORE SERVICES
+- Custom Business Software (CRMs, internal portals, ops platforms)
+- Web Applications (Next.js, React, TypeScript)
+- Payments, Invoicing and Licensing (Stripe, Stripe Connect)
+- Cloud Infrastructure (Vercel, Postgres, audit-aware data modeling)
+- Trading Systems Development (Python orchestrators, risk gates, event stores)
+- Cybersecurity and Penetration Testing (SOC 2, PCI-DSS, HIPAA readiness)
+
+REPRESENTATIVE INDUSTRIES SERVED
+Construction, E-Commerce, Healthcare, Financial Services, Insurance, SaaS, Media, Automotive, Operations, Maritime
+
+REPRESENTATIVE PROJECTS
+- Northcrest Fence and Gate sales platform (Atlanta metro)
+- HobbsPeak headless e-commerce with live S&S Activewear catalog sync
+- Bridgepointe Painting QuickBooks-synced operations platform
+- ProtectWithBri insurance advisor conversion site
+- J5 Sales OS AI-powered lead gen and pipeline SaaS
+- Wilder Recovery towing and repossession lot-management system
+- Regional medical billing HIPAA-aware claim-status portal
+- Coastal Yacht Services booking platform with Stripe Connect deposits
+- NorthStar Trading Desk multi-strategy bot framework
+- Regional three-station broadcaster multi-tenant ad inventory SaaS
+- Active Directory penetration test for a regional financial services firm
+
+PRESS CONTACT
+Bill Beltz
+beltz@quantlabusa.dev
+(770) 652-1282
+
+APPROVED BOILERPLATE
+QUANT LAB USA INC (quantlabusa.dev) is a Georgia-based custom software and cybersecurity firm founded by Bill Beltz in 2026. The company builds custom CRMs, SaaS platforms, payment integrations, and trading systems for SMB and SaaS clients, and performs penetration testing and security assessments for organizations preparing for SOC 2, PCI-DSS, and HIPAA compliance. Headquartered in Macon, Georgia, with service coverage across 14 U.S. cities.

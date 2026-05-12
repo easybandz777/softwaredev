@@ -24,6 +24,30 @@ export const metadata: Metadata = {
     },
 };
 
+const webPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: "Custom E-commerce Development",
+    url: "https://quantlabusa.dev/industries/e-commerce",
+    description:
+        "Headless commerce on Next.js, live wholesale catalog sync, custom quoting, ERP and inventory integrations, and full admin operations dashboards for brands that hit the Shopify ceiling.",
+    isPartOf: {
+        "@type": "WebSite",
+        url: "https://quantlabusa.dev",
+        name: "QuantLab USA",
+    },
+};
+
+const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://quantlabusa.dev" },
+        { "@type": "ListItem", position: 2, name: "Industries", item: "https://quantlabusa.dev/industries" },
+        { "@type": "ListItem", position: 3, name: "E-commerce", item: "https://quantlabusa.dev/industries/e-commerce" },
+    ],
+};
+
 const serviceSchema = {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -77,12 +101,52 @@ const faqSchema = {
                 text: "Yes. Source code lives in your GitHub organization, the database is your Neon or Postgres instance, and there is no per-transaction platform tax. Unlike Shopify Plus, exit cost is the cost of a server migration — not rebuilding from scratch.",
             },
         },
+        {
+            "@type": "Question",
+            name: "Why is e-commerce treated as a special case for software development?",
+            acceptedAnswer: {
+                "@type": "Answer",
+                text: "E-commerce sits at the intersection of consumer expectations and operational complexity that almost no other industry has at the same scale. The customer wants Amazon-grade speed and trust on a small brand's budget. The operator needs the storefront to fit a specific catalog model, a specific pricing model, and a specific fulfillment model — none of which the off-the-shelf platforms quite cover. And the integration surface (Stripe, distributor APIs, ERP, warehouse systems, sales tax, shipping carriers) is large enough that a single weak link breaks the customer experience.",
+            },
+        },
+        {
+            "@type": "Question",
+            name: "What does a $25,000 e-commerce build look like?",
+            acceptedAnswer: {
+                "@type": "Answer",
+                text: "A focused tool that does one e-commerce thing well — a Stripe-based quote-to-order flow for configurable products, a custom B2B catalog gated to net-30 customers, or a custom checkout that solves the tax or fulfillment problem Shopify will not solve. 4 to 8 weeks.",
+            },
+        },
+        {
+            "@type": "Question",
+            name: "How do you handle sales tax across states?",
+            acceptedAnswer: {
+                "@type": "Answer",
+                text: "Through Stripe Tax, TaxJar, or Avalara depending on volume and exemption handling needs. We wire destination-based rates, marketplace facilitator handling, exemption certificate capture, and nexus monitoring directly into the checkout and admin console.",
+            },
+        },
+        {
+            "@type": "Question",
+            name: "Can you integrate with our 3PL or warehouse?",
+            acceptedAnswer: {
+                "@type": "Answer",
+                text: "Yes. We integrate with ShipStation, ShipHero, Easyship, and direct 3PL APIs where they exist. Order routing, inventory reservation, label generation, and tracking webhook ingest all flow through the admin console so the team has one view of fulfillment status.",
+            },
+        },
     ],
 };
 
 export default function EcommerceIndustryPage() {
     return (
         <main className="min-h-screen bg-quant-bg text-quant-text pt-28 pb-24">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+            />
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
@@ -120,10 +184,22 @@ export default function EcommerceIndustryPage() {
                     <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">When Shopify limits hit, they hit hard</h2>
                     <div className="prose prose-invert max-w-none text-gray-400 space-y-4 leading-relaxed">
                         <p>
-                            Shopify and BigCommerce do the easy 70% of e-commerce well. The other 30% is where most growing brands live: custom quoting for configurable products, B2B wholesale with tiered pricing and net-terms invoicing, custom checkout and tax rules per jurisdiction, multi-currency with FX hedging, real-time inventory sync from a distributor API, and ERP or accounting integrations that go beyond what Shopify's app store can do.
+                            Shopify and BigCommerce do the easy 70% of e-commerce well. The other 30% is where most growing brands live: custom quoting for configurable products, B2B wholesale with tiered pricing and net-terms invoicing, custom checkout and tax rules per jurisdiction, multi-currency with FX hedging, real-time inventory sync from a distributor API, and ERP or accounting integrations that go beyond what Shopify&apos;s app store can do.
                         </p>
                         <p>
                             You end up stitching together five apps that almost work, each charging a per-transaction or per-month fee, and the seams show. Quote forms email a PDF that nobody opens. Inventory drifts because the distributor sync is on a six-hour cron. The Shopify checkout cannot do the tax logic your CPA insists on. And the customer experience suffers because the storefront cannot follow the actual purchase flow.
+                        </p>
+                    </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">Why e-commerce is a special case</h2>
+                    <div className="prose prose-invert max-w-none text-gray-400 space-y-4 leading-relaxed">
+                        <p>
+                            E-commerce sits at the intersection of consumer expectations and operational complexity at a scale almost no other industry faces. The customer wants Amazon-grade speed, trust, and visibility on a small brand&apos;s budget. The operator needs the storefront to fit a specific catalog model (simple, configurable, made-to-order, kit, subscription, digital), a specific pricing model (DTC, wholesale, tiered, contracted), and a specific fulfillment model (3PL, in-house warehouse, drop-ship, print-on-demand) — none of which the off-the-shelf platforms quite cover when stacked together.
+                        </p>
+                        <p>
+                            The integration surface compounds the problem. Stripe (or Shopify Payments or Adyen) for the money layer, a distributor API for wholesale catalog and inventory, an ERP for the system of record (NetSuite, Acumatica, QuickBooks for smaller brands), a warehouse or 3PL for fulfillment, a tax engine (Stripe Tax, TaxJar, Avalara), shipping carrier APIs for rates and labels (Shippo, ShipStation, EasyPost), a marketing stack (Klaviyo, Mailchimp, Customer.io), and a review or UGC layer (Yotpo, Stamped, Okendo). Each integration has its own failure mode. A single weak link — a six-hour distributor cron, a broken tax-engine fallback, a 3PL webhook that arrives twice — breaks the customer experience in a way the operator only sees through angry support tickets a week later.
                         </p>
                     </div>
                 </AnimatedSection>
@@ -149,6 +225,100 @@ export default function EcommerceIndustryPage() {
                             </li>
                         ))}
                     </ul>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">Common e-commerce projects we scope</h2>
+                    <ul className="space-y-3">
+                        {[
+                            { t: "Headless commerce migration from Shopify", d: "Lift the storefront onto Next.js with Stripe-direct checkout, port catalog and customers cleanly, and keep the Shopify back-office in place if useful for legacy workflows. Most brands hit this when per-transaction fees exceed engineering cost." },
+                            { t: "B2B wholesale storefront", d: "Tiered pricing, customer-specific catalogs, net-30 invoicing, quote-to-PO workflow, approval routing, and a buyer dashboard with reorder. Often paired with a DTC site in the same codebase." },
+                            { t: "Configurable product quote-to-order", d: "Multi-step configurator (size, color, decoration, artwork), live pricing, digital-proof workflow, and a structured cart that lands clean in Stripe Checkout or a custom Elements flow." },
+                            { t: "Distributor API integration", d: "Live S&S Activewear, SanMar, or AlphaBroder catalog sync — pricing, inventory, color-style search, full ingest of category and image data with diff-detection and webhook updates." },
+                            { t: "Custom artwork pipeline", d: "Background removal, OCR, raster-to-vector tracing, font matching, and digitizer queue management. The HobbsPeak pattern — turns customer artwork into production-ready embroidery and decoration files." },
+                            { t: "Multi-currency and tax engine", d: "Destination-based sales tax (Stripe Tax, TaxJar, or Avalara), VAT for EU, GST for AU/CA/NZ, exemption certificate capture, and nexus monitoring with quarterly threshold alerts." },
+                            { t: "Subscription and replenishment commerce", d: "Recurring orders with skip/swap, replenishment intervals tied to actual usage, custom dunning, and prepaid bundle handling. Stripe Billing under the hood." },
+                            { t: "Admin operations console", d: "Orders, customers, catalog, pricing, inventory, build sheets, returns, refunds, and analytics on one screen. Built for the operator who actually runs the store at 7 a.m." },
+                            { t: "Affiliate and ambassador program", d: "Tracked links, attributed sales, tiered payouts, ambassador dashboard, and tax-form collection (W-9, 1099-NEC) automated end-of-year." },
+                            { t: "3PL and warehouse integration", d: "ShipStation, ShipHero, or direct 3PL API. Order routing rules, inventory reservation, label generation, and tracking webhook ingest piped into customer notifications." },
+                        ].map((item) => (
+                            <li key={item.t} className="flex gap-3 text-gray-300">
+                                <Check className="w-5 h-5 text-pink-400 flex-shrink-0 mt-0.5" />
+                                <span><span className="text-white font-semibold">{item.t}.</span> {item.d}</span>
+                            </li>
+                        ))}
+                    </ul>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">Compliance and security considerations</h2>
+                    <div className="prose prose-invert max-w-none text-gray-400 space-y-4 leading-relaxed">
+                        <p>
+                            <span className="text-white font-semibold">PCI-DSS.</span> Default architecture tokenizes card data with Stripe Elements or Checkout so the merchant stays in SAQ A. We never store PANs. Higher-scope scenarios — saved card vaults on platform-managed accounts — get explicit boundary documentation so the QSA review is clean.
+                        </p>
+                        <p>
+                            <span className="text-white font-semibold">CCPA, CPRA, and state privacy law.</span> Privacy preference centers, do-not-sell mechanisms (GPC honoring), data subject access request workflows, and retention policy enforcement. Every e-commerce site collecting California, Virginia, Colorado, Connecticut, Utah, or any of the dozen-plus new-state-law identifiers needs these in 2026.
+                        </p>
+                        <p>
+                            <span className="text-white font-semibold">GDPR and ePrivacy for international sales.</span> Cookie consent (real consent, not a pre-checked box), lawful basis tracking for marketing, and DSAR fulfillment. We wire consent state through the data layer so analytics and marketing pixels do not fire on non-consenting traffic.
+                        </p>
+                        <p>
+                            <span className="text-white font-semibold">Sales tax nexus and marketplace facilitator rules.</span> Post-Wayfair, every state has economic nexus thresholds. Marketplace facilitator laws shift collection obligations onto platforms like Amazon and eBay but not always cleanly to direct sites. We instrument nexus monitoring so the operator knows when a new state goes hot.
+                        </p>
+                        <p>
+                            <span className="text-white font-semibold">SOC 2 for B2B and enterprise sales.</span> Brands selling into enterprise procurement get SOC 2 questions early. We build with Common Criteria controls in place — RBAC, audit logging, change management, encryption — so the answer to procurement is short.
+                        </p>
+                        <p>
+                            <span className="text-white font-semibold">FTC Endorsement Guides and Truth-in-Advertising.</span> Influencer programs, affiliate disclosures, and earned-media handling have new teeth as of the 2023 FTC updates. We build disclosure capture into the affiliate program so the operator can prove compliance.
+                        </p>
+                    </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">Tech stack we recommend for e-commerce</h2>
+                    <div className="prose prose-invert max-w-none text-gray-400 space-y-4 leading-relaxed">
+                        <p>
+                            Next.js 15 or 16 with React 19 and TypeScript for the storefront. The App Router&apos;s mix of server components, streaming, and route-level caching is genuinely excellent for product detail pages, category pages, and search results — and Lighthouse scores out of the box beat almost any Shopify Liquid theme. Postgres for the system of record on Neon or Supabase; Drizzle or Prisma as the ORM. Stripe for payments with Elements for inline checkout and Checkout for hosted flows; Stripe Tax or TaxJar for sales tax; Stripe Billing for subscriptions where applicable.
+                        </p>
+                        <p>
+                            For media, Cloudinary or imgix for transformation and delivery; AWS S3 or R2 for raw storage. Algolia or Typesense for search when the catalog passes a thousand SKUs. Klaviyo or Customer.io for marketing automation, with first-party events emitted from the data layer not from the client. Resend or Postmark for transactional email. Sentry for error reporting. Hosting on Vercel for the web tier; a serverless function tier on Cloud Run or AWS for heavy compute (artwork processing, distributor catalog ingest). See the <Link href="/services/stripe-integration" className="text-pink-400 hover:underline">custom Stripe integration</Link> and <Link href="/services/payments-invoicing-licensing" className="text-pink-400 hover:underline">payments, invoicing and licensing</Link> services for the patterns we use on the money side.
+                        </p>
+                    </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">Pricing transparency</h2>
+                    <div className="grid md:grid-cols-3 gap-4">
+                        {[
+                            { tier: "$25K", title: "Focused e-commerce tool", body: "A Stripe-based quote-to-order flow for configurable products, a custom B2B catalog gated to net-30 customers, or a checkout that solves the tax or fulfillment problem Shopify will not solve. 4 to 8 weeks." },
+                            { tier: "$60K", title: "Headless DTC or B2B storefront", body: "Full Next.js storefront with Stripe checkout, catalog and inventory model, admin console, ERP sync, and one major integration (distributor API, 3PL, or tax engine). 12 to 18 weeks." },
+                            { tier: "$150K+", title: "Multi-channel commerce platform", body: "DTC + wholesale in one codebase, full distributor API integration, custom artwork pipeline, multi-currency, multi-warehouse fulfillment, and the full HobbsPeak operations surface. 18 to 32 weeks." },
+                        ].map((band) => (
+                            <div key={band.tier} className="rounded-xl border border-white/5 bg-[#0d1526]/60 p-6">
+                                <div className="text-pink-400 font-mono text-sm mb-2">{band.tier}</div>
+                                <h3 className="text-white font-semibold mb-2">{band.title}</h3>
+                                <p className="text-gray-400 text-sm leading-relaxed">{band.body}</p>
+                            </div>
+                        ))}
+                    </div>
+                    <p className="text-sm text-gray-500 mt-4 leading-relaxed">
+                        Discovery is paid separately at $2,500 and creditable against any full engagement. <Link href="/contact" className="text-pink-400 hover:underline">Book a scope call</Link> to walk through your catalog, checkout, and ops flow.
+                    </p>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">Pitfalls we have seen</h2>
+                    <div className="prose prose-invert max-w-none text-gray-400 space-y-4 leading-relaxed">
+                        <p>
+                            Three patterns recur. First, brands migrate off Shopify before they need to. The economics of a custom build only beat Shopify Plus once volume crosses a threshold or once a critical workflow has been rejected by the platform. Below that, the right move is to stay on Shopify and use Shopify Functions or a headless front-end carefully. We will tell a brand that out loud if it is the right answer, even though it leaves us with less work.
+                        </p>
+                        <p>
+                            Second, the artwork pipeline gets underestimated on custom-product builds. Customer uploads come in 60 different formats, half of which need vectorization, OCR, font matching, or background removal before they hit production. Teams plan for a one-week feature and discover the real work is four to six weeks of imaging engineering and queue management. We scope that explicitly when the catalog includes any decoration, embroidery, or made-to-order flow.
+                        </p>
+                        <p>
+                            Third, brands skip the admin console and ship a customer-facing site without a real operator surface. Six months later the team is exporting CSVs from three places and manually reconciling, the same problem they had before the rebuild. The admin console is not a nice-to-have — it is the actual product on the operator side. We treat it as a peer of the storefront from day one.
+                        </p>
+                    </div>
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-16">
@@ -198,6 +368,22 @@ export default function EcommerceIndustryPage() {
                                 q: "Will I own the code and the data?",
                                 a: "Yes. Source code lives in your GitHub organization, the database is your Neon or Postgres instance, and there is no per-transaction platform tax. Unlike Shopify Plus, exit cost is the cost of a server migration — not rebuilding from scratch.",
                             },
+                            {
+                                q: "Why is e-commerce treated as a special case for software development?",
+                                a: "E-commerce sits at the intersection of consumer expectations and operational complexity. The customer wants Amazon-grade speed on a small brand's budget. The operator needs a specific catalog, pricing, and fulfillment model. And the integration surface (Stripe, distributors, ERP, 3PL, tax, shipping) is large enough that a single weak link breaks the customer experience.",
+                            },
+                            {
+                                q: "What does a $25,000 e-commerce build look like?",
+                                a: "A focused tool — a Stripe-based quote-to-order flow for configurable products, a custom B2B catalog gated to net-30 customers, or a custom checkout that solves the tax or fulfillment problem Shopify will not solve. 4 to 8 weeks.",
+                            },
+                            {
+                                q: "How do you handle sales tax across states?",
+                                a: "Through Stripe Tax, TaxJar, or Avalara depending on volume and exemption-certificate handling needs. We wire destination-based rates, marketplace facilitator handling, and nexus monitoring directly into the checkout and admin console.",
+                            },
+                            {
+                                q: "Can you integrate with our 3PL or warehouse?",
+                                a: "Yes. ShipStation, ShipHero, Easyship, and direct 3PL APIs where they exist. Order routing, inventory reservation, label generation, and tracking webhook ingest all flow through the admin console.",
+                            },
                         ].map((item) => (
                             <div key={item.q} className="rounded-xl border border-white/5 bg-[#0d1526]/60 p-6">
                                 <h3 className="text-white font-semibold mb-2">{item.q}</h3>
@@ -214,6 +400,9 @@ export default function EcommerceIndustryPage() {
                             { slug: "stripe-integration", title: "Custom Stripe Integration", desc: "Subscriptions, Connect, custom checkout, and QuickBooks/Xero sync." },
                             { slug: "payments-invoicing-licensing", title: "Payments & Invoicing", desc: "Licensing, entitlement, and billing for digital and physical products." },
                             { slug: "custom-business-software", title: "Custom Business Software", desc: "Admin consoles, ops dashboards, and ERP-adjacent internal tools." },
+                            { slug: "web-applications", title: "Web Applications", desc: "Headless storefronts, customer portals, and operator dashboards." },
+                            { slug: "subscription-billing", title: "Subscription Billing", desc: "Stripe Billing for recurring, replenishment, and prepaid bundles." },
+                            { slug: "penetration-testing", title: "Penetration Testing", desc: "PCI-scope assessment and SOC 2 readiness for enterprise sales." },
                         ].map((s) => (
                             <Link
                                 key={s.slug}
@@ -236,7 +425,7 @@ export default function EcommerceIndustryPage() {
                             Build the storefront Shopify cannot.
                         </h2>
                         <p className="text-gray-400 max-w-xl mx-auto mb-8 leading-relaxed">
-                            Call William Beltz directly at <a href="tel:+17706521282" className="inline-flex items-center min-h-[44px] text-current hover:text-indigo-400 underline-offset-2 hover:underline focus-visible:outline-2 focus-visible:outline-indigo-400">(770) 652-1282</a> or book a 20-minute scope call to walk through your catalog, checkout, and ops flow. Founder-led from the first call to the production deploy.
+                            Call William Beltz directly at <a href="tel:+17706521282" className="inline-flex items-center min-h-[44px] text-current hover:text-indigo-400 underline-offset-2 hover:underline focus-visible:outline-2 focus-visible:outline-indigo-400">(770) 652-1282</a> or <Link href="/contact" className="text-pink-400 hover:underline">book a 20-minute scope call</Link> to walk through your catalog, checkout, and ops flow. Founder-led from the first call to the production deploy.
                         </p>
                         <ConsultationCTA label="Book a Scope Call" />
                     </div>

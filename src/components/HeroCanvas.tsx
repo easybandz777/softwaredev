@@ -333,6 +333,8 @@ export function HeroCanvas() {
             ref={canvasRef}
             className="absolute inset-0 w-full h-full"
             style={{ opacity: 0.85 }}
+            role="presentation"
+            aria-hidden="true"
         />
     );
 }

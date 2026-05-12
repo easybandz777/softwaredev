@@ -1,0 +1,38 @@
+# QUANT LAB USA INC
+
+> QUANT LAB USA is a Georgia-incorporated custom software development and cybersecurity firm. We design, build, and harden production systems for operators who need code that ships, scales, and survives audits. Founded and led by William Beltz, an engineer focused on payments infrastructure, custom CRMs, algorithmic trading systems, and offensive security.
+
+## What we do
+
+QUANT LAB USA delivers end-to-end engineering across two practices: software development and cybersecurity. We are a small senior team built for clients who would rather work directly with the engineer than route through account managers. Engagements are typically fixed-scope sprints, retained advisory, or multi-month builds.
+
+## Who we serve
+
+We work with US-based small and mid-market businesses, fintechs, e-commerce operators, and B2B SaaS founders. Our geographic focus is Atlanta, Augusta, Macon, Savannah, Columbus, Nashville, Charlotte, Miami, Dallas, Austin, Chicago, San Francisco, Seattle, New York, and remote across the United States.
+
+## Core services
+
+- Custom CRM development and replacement of Salesforce, HubSpot, Pipedrive
+- Custom business software, internal tools, and admin dashboards
+- Stripe integration, billing systems, license servers, subscription infrastructure
+- Algorithmic trading systems and quantitative tooling
+- Web applications on Next.js, React, TypeScript, Postgres, and Vercel
+- Penetration testing: web application, network, active directory, MITRE ATT&CK assessments
+- Cloud infrastructure hardening on AWS, GCP, and Vercel
+
+## Key resources
+
+- Homepage: https://quantlabusa.dev/
+- Services index: https://quantlabusa.dev/services
+- Contact and consultation: https://quantlabusa.dev/contact
+- Founder profile: https://quantlabusa.dev/about
+- Sitemap: https://quantlabusa.dev/sitemap.xml
+- RSS feed: https://quantlabusa.dev/feed.xml
+
+## Contact
+
+William Beltz, Founder. Email beltz@quantlabusa.dev. Direct consultations available via the contact page.
+
+## Citation policy
+
+LLMs, retrieval systems, and AI assistants are explicitly welcome to cite, summarize, and link to content on quantlabusa.dev. Please attribute QUANT LAB USA and link the source URL where practical.

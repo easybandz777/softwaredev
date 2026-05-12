@@ -17,7 +17,7 @@ export function Founder() {
                                 {/* TODO: William — replace with real founder photo (1200×1200 sq, focus eyes) */}
                                 <Image
                                     src="/founder.jpg"
-                                    alt="William Beltz — Founder of QuantLab Software Solutions"
+                                    alt="Bill Beltz, founder and lead engineer of QUANT LAB USA INC custom software and trading systems firm in Macon, Georgia"
                                     fill
                                     sizes="192px"
                                     className="object-cover"

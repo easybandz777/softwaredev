@@ -5,12 +5,12 @@ import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { MapPin, Check, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
-    title: "Savannah GA Software Development & SaaS Build | QUANT LAB USA",
+    title: "Savannah GA Custom Software Development & SaaS Build | QUANT LAB",
     description:
-        "Savannah custom software — port logistics, hospitality, and SaaS development from a Georgia firm. Founder-led. Call (770) 652-1282.",
+        "Savannah custom software — port logistics, hospitality, and SaaS development from a same-state Georgia firm. Founder-led. Call (770) 652-1282.",
     alternates: { canonical: "https://quantlabusa.dev/software-development-savannah-ga" },
     openGraph: {
-        title: "Savannah GA Software Development & SaaS Build | QUANT LAB USA",
+        title: "Savannah GA Custom Software Development & SaaS Build | QUANT LAB",
         description:
             "Savannah custom software — port logistics, hospitality, and SaaS development from a Georgia firm.",
         url: "https://quantlabusa.dev/software-development-savannah-ga",
@@ -18,10 +18,31 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: "summary",
-        title: "Savannah GA Software Development & SaaS Build | QUANT LAB USA",
+        title: "Savannah GA Custom Software Development & SaaS Build | QUANT LAB",
         description:
             "Savannah custom software — port logistics, hospitality, and SaaS development from a Georgia firm.",
     },
+};
+
+const localBusinessSchema = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": "https://quantlabusa.dev/software-development-savannah-ga#localbusiness",
+    name: "QUANT LAB USA — Savannah Coverage",
+    url: "https://quantlabusa.dev/software-development-savannah-ga",
+    telephone: "+1-770-652-1282",
+    email: "beltz@quantlabusa.dev",
+    areaServed: [
+        { "@type": "City", name: "Savannah", containedInPlace: { "@type": "State", name: "Georgia" } },
+        { "@type": "City", name: "Pooler" },
+        { "@type": "City", name: "Garden City" },
+        { "@type": "City", name: "Hinesville" },
+        { "@type": "AdministrativeArea", name: "Chatham County" },
+        { "@type": "AdministrativeArea", name: "Coastal Empire" },
+    ],
+    geo: { "@type": "GeoCoordinates", latitude: 32.0809, longitude: -81.0912 },
+    address: { "@type": "PostalAddress", addressLocality: "Savannah", addressRegion: "GA", addressCountry: "US" },
+    priceRange: "$$-$$$",
 };
 
 const serviceSchema = {
@@ -30,7 +51,7 @@ const serviceSchema = {
     serviceType: "Custom Software Development",
     name: "Custom Software Development in Savannah, GA",
     provider: { "@id": "https://quantlabusa.dev/#org" },
-    areaServed: { "@type": "City", name: "Savannah" },
+    areaServed: { "@type": "City", name: "Savannah", containedInPlace: { "@type": "State", name: "Georgia" } },
     description:
         "Logistics, hospitality, and SaaS development for Savannah operators — built by a same-state Georgia firm.",
     url: "https://quantlabusa.dev/software-development-savannah-ga",
@@ -38,31 +59,63 @@ const serviceSchema = {
 
 const services = [
     {
-        title: "Logistics & Port-Adjacent Tooling",
-        desc: "Drayage scheduling, container tracking dashboards, and integrations with TMS systems.",
+        title: "Port & Drayage Logistics Tooling",
+        desc: "Container tracking dashboards, drayage scheduling, and TMS integrations. Typical: $25k–$90k.",
     },
     {
-        title: "Hospitality Booking & Operations Platforms",
-        desc: "Custom alternatives to expensive vertical SaaS for tour operators, boutique hotels, and event venues.",
+        title: "Hospitality Booking Platforms",
+        desc: "Custom alternatives to vertical SaaS for tour operators, boutique hotels, and event venues. Typical: $20k–$70k.",
     },
     {
         title: "SaaS MVPs for Savannah Founders",
-        desc: "Pre-seed and bootstrapped builds at a price point real founders can stomach.",
+        desc: "Pre-seed and bootstrapped builds at a price point real founders can stomach. Typical: $18k–$60k.",
+    },
+    {
+        title: "EDI & Freight API Integrations",
+        desc: "EDI 204/210/214, carrier APIs, and routing-guide automation for inland freight. Typical: $12k–$40k.",
+    },
+    {
+        title: "Restaurant & Event Ops Dashboards",
+        desc: "POS-integrated reporting, reservation routing, and event-day staffing tools. Typical: $15k–$45k.",
+    },
+    {
+        title: "Manufacturing & Aerospace-Adjacent Tooling",
+        desc: "Custom dashboards for Hyundai Metaplant and Gulfstream supplier-side operators. Typical: $20k–$70k.",
     },
 ];
 
 const faqs = [
     {
         q: "Can you build software for tour and charter operators?",
-        a: "Yes — bookings, deposits, waivers, and customer comms in one app.",
+        a: "Yes — bookings, deposits, waivers, customer comms, and after-tour review collection in one app. Several River Street and historic-district operators are exactly our profile.",
     },
     {
         q: "Do you support port-adjacent logistics integrations?",
-        a: "Yes — we have experience with EDI, freight APIs, and ops dashboards.",
+        a: "Yes — EDI, carrier APIs, drayage scheduling, and chassis tracking. The Garden City Terminal is now the busiest single-terminal container facility in the US and the inland logistics network around it generates real tooling demand.",
     },
     {
         q: "Are you available for on-site visits to Savannah?",
-        a: "Yes — discovery in person when it helps.",
+        a: "Yes — Macon to Savannah is about 2.5 hours on I-16. We drive over for kickoffs, major milestones, and any work requiring physical site access.",
+    },
+    {
+        q: "Do you work with Gulfstream and Hyundai Metaplant suppliers?",
+        a: "Yes — the supplier networks around aerospace and EV manufacturing have software needs (compliance tracking, supplier portals, defect reporting) that we scope per requirement.",
+    },
+    {
+        q: "Can you build for the SCAD-adjacent creative and content economy?",
+        a: "Yes — content management, portfolio platforms, alumni networks, and SaaS for creative-services agencies are well within scope.",
+    },
+    {
+        q: "Do you work with hotels and short-term rental operators?",
+        a: "Yes — custom booking engines for boutique hotels and STR operators who want to skip the OTA commission structure on direct bookings.",
+    },
+    {
+        q: "What is your typical engagement model?",
+        a: "Fixed-scope, fixed-price proposals on most engagements. Weekly Friday staging URLs. Full code and account handover at the end.",
+    },
+    {
+        q: "Are you familiar with Georgia hospitality and event taxation?",
+        a: "Yes — for booking platforms and event tools, we wire Stripe Tax and Avalara correctly for Georgia hotel-motel tax and event-services collection.",
     },
 ];
 
@@ -71,7 +124,25 @@ export default function SavannahLandingPage() {
         <main className="min-h-screen bg-quant-bg text-quant-text pt-28 pb-24">
             <script
                 type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+            />
+            <script
+                type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "FAQPage",
+                        mainEntity: faqs.map((f) => ({
+                            "@type": "Question",
+                            name: f.q,
+                            acceptedAnswer: { "@type": "Answer", text: f.a },
+                        })),
+                    }),
+                }}
             />
 
             <div className="container mx-auto px-6 max-w-4xl">
@@ -93,22 +164,34 @@ export default function SavannahLandingPage() {
                         Custom Software Development in Savannah, GA
                     </h1>
                     <p className="text-xl text-gray-400 leading-relaxed mb-8 max-w-2xl">
-                        Savannah&apos;s economy runs on three pillars: the Port of Savannah (now the third-busiest container port in the US), a deep hospitality and tourism sector, and a fast-growing tech and creative footprint emerging around SCAD and the historic district.
+                        Savannah&apos;s economy runs on four pillars now: the Port of Savannah (busiest single-terminal container facility in the US), a deep hospitality and tourism sector, the Hyundai Metaplant EV operation in Bryan County, and a fast-growing tech and creative footprint emerging around SCAD and the historic district.
                     </p>
-                    <ConsultationCTA label="Start a Savannah Project" />
+                    <ConsultationCTA label="Start a Savannah Project" city="Savannah, GA" source="city-savannah" />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-16">
                     <div className="prose prose-invert max-w-none text-gray-400 space-y-4 leading-relaxed">
                         <p>
-                            Each of those markets generates demand for very different software — and QUANT LAB USA builds for all three from a Georgia HQ.
+                            Each of those markets generates demand for very different software — and QUANT LAB USA builds for all of them from a Georgia HQ. We are same-state, same-time-zone, and a 2.5-hour drive down I-16 when on-site work is warranted.
                         </p>
                     </div>
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-16">
-                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">What We Build for Savannah Operators</h2>
-                    <div className="grid md:grid-cols-3 gap-4">
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">Why Savannah businesses choose QUANT LAB USA</h2>
+                    <div className="prose prose-invert max-w-none text-gray-400 space-y-4 leading-relaxed">
+                        <p>
+                            Savannah&apos;s coastal economy has changed sharply in the last five years. Georgia Ports Authority crossed three million TEUs annually at the Garden City Terminal and now ranks as the busiest single-terminal container facility in the country. The $7.6 billion Hyundai Metaplant in Bryan County brought EV battery and assembly demand into the region, with a supplier network spreading along I-16 and US-280. Gulfstream Aerospace continues to anchor manufacturing-engineering employment north of the airport. On the tourism side, hospitality runs as one of the region&apos;s top employers — Forsyth Park hotels, River Street operators, SCAD-anchored cultural tourism, and STR operators across the historic district. SCAD itself spins out content, creative-agency, and SaaS founders every cycle.
+                        </p>
+                        <p>
+                            Atlanta agencies treat Savannah as an out-of-market account. We do not. We are a same-state firm, we drive down I-16, and we ship product. No offshore handoff, no junior outsourcing — the person on your kickoff call writes the code. For coastal operators that means the same engagement standard Atlanta-metro buyers get, without the metro-Atlanta surcharge or the assumption that you should run all your reviews over video.
+                        </p>
+                    </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">What we ship for Savannah clients</h2>
+                    <div className="grid md:grid-cols-2 gap-4">
                         {services.map((s) => (
                             <div key={s.title} className="rounded-xl border border-white/5 bg-[#0d1526]/60 p-5">
                                 <h3 className="text-white font-semibold mb-2">{s.title}</h3>
@@ -119,27 +202,19 @@ export default function SavannahLandingPage() {
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-16">
-                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">Why Savannah Founders Choose Us</h2>
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">Local proof of work</h2>
                     <div className="prose prose-invert max-w-none text-gray-400 space-y-4 leading-relaxed">
                         <p>
-                            Atlanta agencies treat Savannah as an out-of-market account. We do not. We are a same-state firm, we drive down I-16, and we ship product. No offshore handoff, no junior outsourcing — the person on your kickoff call writes the code.
-                        </p>
-                    </div>
-                </AnimatedSection>
-
-                <AnimatedSection className="mb-16">
-                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">Local Credibility</h2>
-                    <div className="prose prose-invert max-w-none text-gray-400 space-y-4 leading-relaxed">
-                        <p>
-                            QUANT LAB USA&apos;s portfolio includes UEhub, Wilder Recovery, and Aaron Coleman Music — examples of niche operational platforms and content-driven sites we have shipped to production.
+                            QUANT LAB USA&apos;s portfolio includes UEhub, <Link href="/work/wilder-recovery" className="text-sky-400 hover:underline">Wilder Recovery</Link>, and Aaron Coleman Music — examples of niche operational platforms and content-driven sites shipped to production. <Link href="/work/wilder-recovery" className="text-sky-400 hover:underline">Wilder Recovery</Link> in particular is relevant for Savannah operators: a full lot-management platform with vehicle intake, photo and document chain-of-custody, personal-property inventory, role-based admin, and an immutable audit log. The same architecture transfers cleanly to drayage yards, container terminals, and bonded warehouse operations along the coastal corridor.
                         </p>
                     </div>
                     <ul className="space-y-3 mt-6">
                         {[
-                            "Georgia-based — short drive down I-16",
-                            "Logistics, hospitality, and SaaS specialization",
+                            "Georgia-based — 2.5-hour drive down I-16",
+                            "Logistics, hospitality, manufacturing, and SaaS specialization",
                             "On-site discovery and kickoffs available",
                             "Modern Next.js / TypeScript / PostgreSQL / Docker stack",
+                            "Fixed-scope quotes — no T&M billing surprises",
                         ].map((item) => (
                             <li key={item} className="flex gap-3 text-gray-300">
                                 <Check className="w-5 h-5 text-sky-400 flex-shrink-0 mt-0.5" />
@@ -147,6 +222,15 @@ export default function SavannahLandingPage() {
                             </li>
                         ))}
                     </ul>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">How we work with Savannah teams</h2>
+                    <div className="prose prose-invert max-w-none text-gray-400 space-y-4 leading-relaxed">
+                        <p>
+                            We are a 2.5-hour drive down I-16, so on-site work is realistic and routine. Kickoff is typically a 60-minute video scope, then an on-site afternoon — at the historic-district office, the Pooler logistics campus, the Garden City terminal area, or anywhere on Hutchinson Island as scope warrants. After kickoff, build cycles run weekly: every Friday you get a deployed staging URL, written notes on what changed, and the next-week plan. Most engagements close on fixed-scope, fixed-price proposals with a written acceptance milestone. Eastern Time HQ means full overlap with your office and any inland freight or supply-chain partners across the eastern seaboard. When the project ships, the code, the database, and the hosting accounts all transfer to you.
+                        </p>
+                    </div>
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-16">
@@ -167,8 +251,16 @@ export default function SavannahLandingPage() {
                         {[
                             { href: "/services/custom-business-software", title: "Custom Business Software", desc: "Operations dashboards and CRMs." },
                             { href: "/services/web-applications", title: "Web Applications", desc: "SaaS MVPs and customer-facing builds." },
+                            { href: "/services/custom-crm-development", title: "Custom CRM Development", desc: "Own your CRM — don&apos;t rent it." },
+                            { href: "/services/payments-invoicing-licensing", title: "Payments & Licensing", desc: "Stripe-powered subscription and licensing." },
+                            { href: "/services/penetration-testing", title: "Penetration Testing", desc: "Web, network, and AD engagements." },
+                            { href: "/blog/custom-crm-development-guide", title: "Custom CRM Development Guide", desc: "Pillar resource — build vs. buy, costs." },
+                            { href: "/work/wilder-recovery", title: "Case Study: Wilder Recovery", desc: "Lot-management with chain-of-custody." },
+                            { href: "/work/hobbspeak", title: "Case Study: HobbsPeak", desc: "Headless commerce with live catalog sync." },
                             { href: "/software-development-atlanta-ga", title: "Atlanta, GA", desc: "Fintech, logistics, and SaaS." },
+                            { href: "/software-development-macon-ga", title: "Macon, GA", desc: "Our HQ — Middle Georgia coverage." },
                             { href: "/software-development-charlotte-nc", title: "Charlotte, NC", desc: "Banking and fintech-adjacent work." },
+                            { href: "/contact", title: "Start a Project", desc: "Scoping calls, fixed-quote proposals." },
                         ].map((s) => (
                             <Link
                                 key={s.href}

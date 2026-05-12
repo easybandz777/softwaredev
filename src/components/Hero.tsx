@@ -49,7 +49,7 @@ export function Hero() {
                 >
                     <Image
                         src="/logo-optimized.webp"
-                        alt="QuantLab Software Solutions"
+                        alt="QUANT LAB USA INC custom software development and cybersecurity company logo"
                         width={288}
                         height={288}
                         priority

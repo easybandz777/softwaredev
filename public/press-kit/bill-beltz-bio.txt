@@ -1,0 +1,10 @@
+Bill Beltz
+Founder and CEO, QUANT LAB USA INC
+
+Bill Beltz is the founder and CEO of QUANT LAB USA INC, a Georgia-based custom software and cybersecurity firm headquartered in Macon. He founded the company in 2026 after years of building production software for small-and-mid-sized operators who were tired of off-the-shelf tools that did not fit how their teams actually worked.
+
+Bill leads QUANT LAB as a founder-engineer. Every system the company ships is one he has either built directly or signed off on at the code level. The portfolio spans custom CRMs, internal operations portals, Stripe and Stripe Connect payment integrations, multi-tenant SaaS, headless commerce, and trading systems built on Python orchestrators with Postgres event stores. On the security side, Bill runs offensive assessments and penetration tests for organizations preparing for SOC 2, PCI-DSS, and HIPAA reviews, with a custom red-team toolkit and MITRE ATT&CK-mapped reporting.
+
+His engineering philosophy is shaped by the operators he serves. Premium fencing contractors in Atlanta, family-owned headwear brands in West Georgia, regional medical billing teams, marine services operators, regional broadcasters, and solo prop traders share the same problem: they need software that respects how their business actually runs. Bill's approach is direct engagement, working hands-on, no account managers and no handoffs.
+
+QUANT LAB USA INC operates as a Georgia C-Corporation with service coverage across 14 U.S. cities. Bill is based in Macon, Georgia, and is available for press and speaking inquiries at beltz@quantlabusa.dev or (770) 652-1282.
