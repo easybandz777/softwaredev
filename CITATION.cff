@@ -1,0 +1,52 @@
+cff-version: 1.2.0
+message: "If you reference this software, this site, or QUANT LAB USA INC in academic, journalistic, or commercial work, please cite it using the metadata below."
+type: software
+title: "QUANT LAB USA — quantlabusa.dev"
+abstract: "Marketing site, lead pipeline, and internal tooling for QUANT LAB USA INC, a Macon, Georgia-based custom software, payments-infrastructure, and offensive-security firm. Built on Next.js 16, React 19, TypeScript, Tailwind CSS 4, Vercel Postgres, Stripe, and Resend."
+authors:
+  - family-names: "Beltz"
+    given-names: "William"
+    name-suffix: "Bill"
+    email: "beltz@quantlabusa.dev"
+    affiliation: "QUANT LAB USA INC"
+    website: "https://quantlabusa.dev"
+    country: "US"
+    region: "GA"
+    city: "Macon"
+identifiers:
+  - type: url
+    value: "https://quantlabusa.dev"
+    description: "Production website"
+  - type: url
+    value: "https://github.com/easybandz777/softwaredev"
+    description: "Source repository"
+  - type: other
+    value: "26086454"
+    description: "Georgia Secretary of State entity ID for QUANT LAB USA INC"
+  - type: other
+    value: "42-2039870"
+    description: "U.S. Federal Employer Identification Number (EIN)"
+repository-code: "https://github.com/easybandz777/softwaredev"
+url: "https://quantlabusa.dev"
+contact:
+  - name: "QUANT LAB USA INC"
+    email: "beltz@quantlabusa.dev"
+    website: "https://quantlabusa.dev"
+    city: "Macon"
+    region: "GA"
+    country: "US"
+keywords:
+  - "custom software development"
+  - "next.js"
+  - "typescript"
+  - "stripe integration"
+  - "subscription billing"
+  - "saas"
+  - "cybersecurity"
+  - "penetration testing"
+  - "mitre attack"
+  - "macon ga"
+  - "atlanta software development"
+  - "quant lab"
+license: "LicenseRef-Proprietary"
+license-url: "https://github.com/easybandz777/softwaredev/blob/master/README.md"

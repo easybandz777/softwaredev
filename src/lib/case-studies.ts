@@ -534,6 +534,204 @@ export const caseStudies: CaseStudy[] = [
             "Compliance audit passed on first attempt",
         ],
     },
+    {
+        slug: "regional-medical-billing",
+        title:
+            "Custom HIPAA-aware claim portal for a regional medical billing team",
+        metaTitle:
+            "Regional Medical Billing Case Study | HIPAA Claim Portal",
+        metaDescription:
+            "QuantLab built a HIPAA-aware Next.js claim portal for a regional medical billing team — clearinghouse ETL, audit log, role-based access, and PHI-safe document vault.",
+        client: "Regional Medical Billing Co.",
+        industry: "Healthcare / RCM",
+        year: "2026",
+        duration: "10 weeks",
+        summary:
+            "A HIPAA-aware internal claim portal with bi-directional clearinghouse ETL, immutable audit logging, role-based access, and an encrypted EOB document vault — built so a four-person billing team could stop answering claim-status calls and start working denials.",
+        situation:
+            "The client is a four-person revenue-cycle management team servicing roughly fifteen independent medical practices across the Southeast. The business had grown faster than the tooling — billers were drowning in claim-status phone calls from practice managers, manually reconciling 837/835 transactions across two separate clearinghouses, and keeping eligibility responses in shared Outlook folders. Every morning started with each biller pulling reports from two clearinghouse portals, copying claim statuses into a shared spreadsheet, and then re-keying anything that did not match. Practice managers called or emailed for status updates throughout the day, pulling billers off denial work. The owner knew the model was capped at fifteen practices unless the workflow stopped being manual.",
+        challenge:
+            "Healthcare data has hard regulatory edges. The portal had to enforce HIPAA-aligned access controls (role-based, least-privilege, full audit trail), keep PHI encrypted at rest and in transit, deduplicate claim records arriving from two separate clearinghouse feeds, and give each practice tenant a view that exposed only their own data. EOB attachments had to live in an encrypted document vault with downloadable links that expired. Every meaningful action — claim view, status change, document download — needed to be captured in an immutable audit log defensible to a HIPAA auditor.",
+        approach:
+            "QuantLab ran a two-week discovery covering claim lifecycle, clearinghouse feed shapes, practice-tenant boundaries, denial reason mapping, and the team's actual day-to-day workflow. We then designed a multi-tenant Postgres data model with row-level isolation per practice, built a Next.js 16 portal on top, and wrote a scheduled ETL job that pulls 837/835 transactions from both clearinghouse APIs, normalizes them into a shared claim schema, and deduplicates against a content-addressable hash. HIPAA baseline controls — encryption at rest, encrypted S3 vault for EOB attachments, audit-log middleware, role-based session checks, and timed-expiry document URLs — were wired in before the first practice was migrated onto the system.",
+        solution: [
+            "Multi-tenant Next.js 16 internal portal with per-practice row-level isolation",
+            "Scheduled ETL pulling 837/835 transactions from two clearinghouse APIs with content-hash deduplication",
+            "Immutable audit log capturing user, action, entity, timestamp, and before/after JSON",
+            "Role-based access (owner, biller, viewer) with least-privilege session checks",
+            "Encrypted S3 document vault for EOB attachments with expiring signed URLs",
+            "Practice-manager read-only view so status calls drop off without exposing PHI from other tenants",
+        ],
+        stack: [
+            "Next.js 16",
+            "PostgreSQL",
+            "Drizzle ORM",
+            "Vercel",
+            "Resend",
+            "AWS S3 (encrypted)",
+        ],
+        outcome:
+            "Claim-status phone calls dropped by roughly sixty percent within the first six weeks of rollout because practice managers could log in and see exactly where each claim stood. Each biller recovered around eight hours per week previously spent on manual reconciliation and re-keying, which was redirected to denial follow-up — the highest-margin work in the practice. The team passed its first HIPAA-aligned internal review with zero PHI-exposure findings, and the owner has since added two more practices without adding headcount.",
+        highlights: [
+            "60% reduction in claim-status calls",
+            "8 hours/week saved per biller",
+            "Zero PHI exposure incidents",
+            "$40K annual savings",
+        ],
+        relatedServices: [
+            { label: "Custom Business Software", href: "/services/custom-business-software" },
+            { label: "Cloud Infrastructure", href: "/services/cloud-infrastructure" },
+        ],
+    },
+    {
+        slug: "coastal-yacht-services",
+        title:
+            "Stripe Connect booking + crew assignment for a yacht charter ops team",
+        metaTitle:
+            "Coastal Yacht Services Case Study | Stripe Connect Booking",
+        metaDescription:
+            "QuantLab built a Stripe Connect booking platform with crew payouts, SMS notifications, and customer portal for Coastal Yacht Services — zero double-bookings post-launch.",
+        client: "Coastal Yacht Services",
+        industry: "E-commerce / Marine",
+        year: "2026",
+        duration: "8 weeks",
+        summary:
+            "A custom booking platform with Stripe Connect crew payouts, deposit-then-charge billing, Twilio SMS notifications, and a customer portal — built so a yacht-charter ops team could stop running its calendar on text messages and start protecting its bookings with deposits.",
+        situation:
+            "Coastal Yacht Services operates a fleet of charter yachts along the southeastern US coast, running half-day, full-day, and multi-day trips for private parties, corporate events, and weddings. Reservations had been booked by phone and text and tracked on a shared Google Calendar maintained by the office manager. Crews — captains, deckhands, and stewards — were assigned the night before by group text, with payouts handled in cash or Venmo at the end of each charter. The operation lost bookings because there was no deposit mechanism, double-booked dates because the calendar was edited from three different phones, and chronically underpaid crew because tracking who worked which trip lived in screenshots. Repeat customers had no way to rebook themselves; every reservation went through the same phone tree.",
+        challenge:
+            "The team needed a booking flow that captured a refundable deposit at reservation time and the balance on the day of the charter, a Stripe Connect arrangement so crew could be paid out to their own connected accounts the day after a trip cleared, an SMS notification layer so customers and crew got reminders without the office manager texting each one by hand, and a calendar UX that made double-booking structurally impossible. The platform also had to handle weather-related rescheduling without manual refund processing.",
+        approach:
+            "QuantLab spent the first week shadowing the office manager and one captain through a full booking lifecycle — from initial inquiry through crew assignment, customer arrival, and payout. We then designed the platform around a deposit-then-charge Stripe model with Standard Connect accounts for crew, a calendar built on Postgres exclusion constraints to prevent overlapping reservations at the database level, and a Twilio SMS pipeline triggered by booking, payment, and assignment events. The customer portal was kept intentionally narrow — book a charter, view your reservations, reschedule if weather cancels — so the office team stayed in control of edge cases.",
+        solution: [
+            "Custom booking platform with calendar UX and Postgres-level overlap protection",
+            "Stripe Connect Standard accounts for crew payouts cleared the day after each charter",
+            "Deposit-then-charge billing — refundable deposit at reservation, balance on charter day",
+            "Twilio SMS notifications for booking confirmations, crew assignments, and pre-charter reminders",
+            "Crew assignment workflow with per-trip role tagging (captain, deckhand, steward)",
+            "Customer portal for self-service rebooking and weather-related rescheduling",
+        ],
+        stack: [
+            "Next.js 16",
+            "Stripe Connect",
+            "Twilio SMS",
+            "PostgreSQL",
+            "Resend",
+            "Vercel",
+        ],
+        outcome:
+            "Booking conversions jumped about thirty-five percent in the first quarter post-launch, largely because the deposit step weeded out tire-kickers while the streamlined flow closed serious customers faster. Double-bookings went to zero — the database constraint made overlapping reservations structurally impossible. Crew payouts moved to next-day automatic disbursement, ending the cash-and-Venmo workflow. The office manager's admin time dropped by roughly sixty percent, and the operation booked an estimated $180K in incremental first-year revenue that would previously have been lost to slow callbacks and unsecured holds.",
+        highlights: [
+            "35% increase in booking conversions",
+            "Zero double-bookings post-launch",
+            "$180K incremental first-year revenue",
+            "Cut admin time by 60%",
+        ],
+        relatedServices: [
+            { label: "Stripe Integration", href: "/services/stripe-integration" },
+            { label: "Custom Business Software", href: "/services/custom-business-software" },
+            { label: "Subscription Billing", href: "/services/subscription-billing" },
+        ],
+    },
+    {
+        slug: "northstar-trading-desk",
+        title:
+            "Trading bot orchestration + risk dashboard for a solo prop trader",
+        metaTitle:
+            "Northstar Trading Desk Case Study | Bot Orchestration + Risk",
+        metaDescription:
+            "QuantLab built a Python bot orchestrator, Postgres event store, backtest engine, and real-time risk dashboard for a solo prop trader — sub-50ms order placement.",
+        client: "Northstar Trading Desk",
+        industry: "Financial Services / Trading",
+        year: "2026",
+        duration: "9 weeks",
+        summary:
+            "A Python bot orchestrator on a Postgres event store with Polygon market data, WebSocket broker adapters, a backtest harness, and a real-time risk dashboard — built so a solo prop trader could run four strategies in production without manually reconciling fills against spreadsheets.",
+        situation:
+            "Northstar Trading Desk is a solo proprietary trader running multiple equity and options strategies across two broker accounts. Strategy logic lived in a mix of Excel spreadsheets driven by add-in market data and Python Jupyter notebooks that the trader executed manually each morning. Order entry was a copy-paste exercise from notebook output into broker GUIs, and end-of-day reconciliation involved exporting fills from both brokers, importing into a spreadsheet, and hand-matching against intended trades. There was no central event store, no audit trail, and no way to run a strategy in shadow mode against live data without committing capital. As the trader added strategies, the manual workflow began to drop trades and miscount positions.",
+        challenge:
+            "The platform had to handle four overlapping problems: a bot orchestrator that could run multiple Python strategies in parallel against live market data and route orders to two different brokers, a Postgres event store recording every signal, intended order, broker acknowledgment, and fill in a single auditable timeline, a backtest harness that could replay the same strategy code against historical Polygon data without bespoke rewrites, and hard risk caps — per-strategy notional limits, per-account daily-loss circuit breakers, and a global kill switch — wired into the order path itself rather than the UI.",
+        approach:
+            "QuantLab designed the system as a Python 3.12 orchestrator running each strategy in its own asyncio task, with a thin abstraction layer over both broker WebSocket APIs so the same strategy code could target either account. Every event — market data tick consumed, signal generated, order intended, order acknowledged, fill received — was persisted to a Postgres event store with strict ordering. The backtest harness reuses the live orchestrator code paths by swapping a historical-data source in place of the WebSocket feed, so a passing backtest gives the trader real confidence the same code will behave the same way live. The Next.js dashboard reads the event store directly and renders position, P&L, and risk-cap state in real time.",
+        solution: [
+            "Python 3.12 bot orchestrator running multiple strategies in parallel async tasks",
+            "Postgres event store persisting every signal, order intent, acknowledgment, and fill with strict ordering",
+            "Backtest engine reusing live orchestrator code against historical Polygon data",
+            "Real-time Next.js risk dashboard showing positions, P&L, and per-strategy cap utilization",
+            "Polygon.io market data feed with reconnection and gap-fill handling",
+            "WebSocket adapters for two broker APIs with hard risk caps wired into the order path",
+        ],
+        stack: [
+            "Python 3.12",
+            "PostgreSQL",
+            "Next.js 16",
+            "Polygon.io API",
+            "WebSocket broker adapters",
+            "Vercel",
+        ],
+        outcome:
+            "The trader had four strategies in live production within the nine-week build window, up from two manually executed strategies pre-engagement. Manual reconciliation dropped by over eighty percent because every fill was already in the event store matched to its originating signal. Risk caps and the kill switch caught two would-be incidents in the first month — one runaway position from a parameter typo, one broker connection issue that auto-flattened positions. Order placement latency from signal to broker acknowledgment now sits consistently under fifty milliseconds.",
+        highlights: [
+            "4 strategies live in 9 weeks",
+            "80%+ reduction in manual reconciliation",
+            "Automated risk caps + circuit breakers",
+            "Sub-50ms order placement",
+        ],
+        relatedServices: [
+            { label: "Algorithmic Trading Systems", href: "/services/algorithmic-trading-systems" },
+            { label: "Custom Business Software", href: "/services/custom-business-software" },
+        ],
+    },
+    {
+        slug: "clear-channel-broadcast",
+        title:
+            "Multi-tenant ad inventory + invoicing SaaS for a regional broadcaster",
+        metaTitle:
+            "Clear Channel Broadcast Case Study | Multi-Tenant Ad SaaS",
+        metaDescription:
+            "QuantLab built a multi-tenant Next.js platform with Stripe invoicing, agency self-serve, and row-level security for a regional broadcaster — three stations live in 14 weeks.",
+        client: "Clear Channel Broadcast Group",
+        industry: "Media / Broadcasting",
+        year: "2026",
+        duration: "14 weeks",
+        summary:
+            "A multi-tenant ad inventory and invoicing SaaS with Stripe billing, an agency self-serve portal, role-based auth, and Postgres row-level security — built so a regional broadcaster could replace three stations' worth of disconnected spreadsheets with one shared platform.",
+        situation:
+            "Clear Channel Broadcast Group operates three regional radio stations under a single ownership group, each with its own sales team, traffic coordinator, and agency relationships. Ad inventory — spot availabilities, holds, confirmed buys, and run-history — was tracked in three separate Excel workbooks, one per station, with no shared view across the group. Invoicing went through QuickBooks Online manually at the end of each month, with traffic coordinators printing run logs and hand-keying line items. Agencies had no portal at all; they emailed insertion orders as PDFs and waited two to three days for confirmation. Month-end reconciliation took the controller four full working days, and the ownership group had no real-time visibility into group-level sell-through.",
+        challenge:
+            "The platform had to handle multi-tenancy correctly the first time — three station tenants today, with the ownership group planning to acquire a fourth. Each tenant needed its own inventory, its own agency relationships, and its own invoicing flow, but the controller and the owner needed a group-level view. Data isolation was the hard requirement: no cross-tenant leakage was tolerable, even by accident, because some agencies bought across stations and some did not. Stripe had to handle invoicing with line-item detail matching insertion orders, and agencies needed a self-serve portal where they could place orders, see run logs, and view their own invoices — but only their own.",
+        approach:
+            "QuantLab built the platform on Next.js 16 with PostgreSQL row-level security policies enforced at the database layer, not in application code, so a missed check in a route handler could not leak data across tenants. We migrated the three stations on a phased rollout — Station A in weeks 8-10 while B and C kept running on spreadsheets, Station B in weeks 11-12, Station C in weeks 13-14 — so the operations team was never trying to learn the new system across all three at once. Stripe invoicing was wired to mirror insertion-order line items, and the agency portal launched after Station A had a clean month of internal-only usage.",
+        solution: [
+            "Multi-tenant Next.js 16 platform with three station tenants and group-level admin view",
+            "PostgreSQL row-level security policies enforcing tenant isolation at the database layer",
+            "Stripe invoicing mirroring insertion-order line items with monthly billing cycles",
+            "Agency self-serve portal for insertion orders, run logs, and invoice access",
+            "Role-based Auth.js with station, group, and agency role separation",
+            "Immutable audit log and inventory dashboards covering sell-through, fill rate, and revenue per station",
+        ],
+        stack: [
+            "Next.js 16",
+            "PostgreSQL with row-level security",
+            "Stripe",
+            "Resend",
+            "Vercel",
+            "Auth.js",
+        ],
+        outcome:
+            "Month-end invoicing time dropped from four working days to just over one — about a seventy-percent cut — because line items now flow from the inventory side directly into Stripe rather than being re-keyed from printed run logs. The ownership group retired three separate Excel-and-email workflows and cancelled two third-party tools the stations had been carrying redundantly, saving roughly $25K per year in vendor licensing. All three stations were live in fourteen weeks, and the row-level security policies have caught zero cross-tenant access attempts in the audit log — exactly the result the design was aiming for.",
+        highlights: [
+            "Invoicing time cut 70%",
+            "$25K/year saved on canceled vendor tools",
+            "3 stations live in 14 weeks",
+            "Zero data leakage between tenants",
+        ],
+        relatedServices: [
+            { label: "SaaS Platform Development", href: "/services/saas-platform-development" },
+            { label: "Stripe Integration", href: "/services/stripe-integration" },
+            { label: "Subscription Billing", href: "/services/subscription-billing" },
+        ],
+    },
 ];
 
 export function getCaseStudyBySlug(slug: string): CaseStudy | undefined {
