@@ -2,7 +2,24 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
-import { Terminal, Check, ArrowRight } from "lucide-react";
+import { Terminal, Check, ArrowRight, MapPin } from "lucide-react";
+
+const crmCities: { slug: string; city: string; state: string }[] = [
+    { slug: "atlanta-ga", city: "Atlanta", state: "GA" },
+    { slug: "macon-ga", city: "Macon", state: "GA" },
+    { slug: "augusta-ga", city: "Augusta", state: "GA" },
+    { slug: "columbus-ga", city: "Columbus", state: "GA" },
+    { slug: "savannah-ga", city: "Savannah", state: "GA" },
+    { slug: "miami-fl", city: "Miami", state: "FL" },
+    { slug: "austin-tx", city: "Austin", state: "TX" },
+    { slug: "dallas-tx", city: "Dallas", state: "TX" },
+    { slug: "chicago-il", city: "Chicago", state: "IL" },
+    { slug: "seattle-wa", city: "Seattle", state: "WA" },
+    { slug: "new-york-ny", city: "New York", state: "NY" },
+    { slug: "charlotte-nc", city: "Charlotte", state: "NC" },
+    { slug: "nashville-tn", city: "Nashville", state: "TN" },
+    { slug: "san-francisco-ca", city: "San Francisco", state: "CA" },
+];
 
 export const metadata: Metadata = {
     title: "Custom CRM Development | Built for Your Workflow | QuantLab",
@@ -280,6 +297,33 @@ export default function CustomCRMDevelopmentPage() {
                                     <ArrowRight className="w-4 h-4 text-gray-500 group-hover:text-sky-400 group-hover:translate-x-0.5 transition-all" />
                                 </div>
                                 <p className="text-sm text-gray-400 leading-relaxed">{s.desc}</p>
+                            </Link>
+                        ))}
+                    </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <div className="flex items-center gap-3 mb-4">
+                        <MapPin className="w-6 h-6 text-sky-400" />
+                        <h2 className="text-2xl md:text-3xl font-bold text-white">Custom CRM Development — Where We Serve</h2>
+                    </div>
+                    <p className="text-gray-400 leading-relaxed mb-6 max-w-3xl">
+                        Georgia-based engineering team. Discovery and build run remotely by default; on-site working sessions are easy to schedule in Atlanta and the Southeast, and available in any of the metros below.
+                    </p>
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                        {crmCities.map((c) => (
+                            <Link
+                                key={c.slug}
+                                href={`/services/custom-crm-development/${c.slug}`}
+                                className="group flex items-center justify-between rounded-xl border border-white/5 bg-[#0d1526]/60 px-4 py-3 transition-all hover:border-sky-400/30 hover:bg-[#0d1526]"
+                            >
+                                <div className="flex items-center gap-2">
+                                    <MapPin className="w-4 h-4 text-sky-400 flex-shrink-0" />
+                                    <span className="text-sm text-gray-300 group-hover:text-white transition-colors">
+                                        {c.city}, {c.state}
+                                    </span>
+                                </div>
+                                <ArrowRight className="w-3.5 h-3.5 text-gray-600 group-hover:text-sky-400 group-hover:translate-x-0.5 transition-all" />
                             </Link>
                         ))}
                     </div>

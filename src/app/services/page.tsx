@@ -2,23 +2,33 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
-import { Terminal, Bot, Globe, CreditCard, Shield, Lock, ArrowRight } from "lucide-react";
+import { Terminal, Bot, Globe, CreditCard, Shield, Lock, ArrowRight, MapPin, Building2, GitCompare } from "lucide-react";
 
 export const metadata: Metadata = {
-    title: "Services | QuantLab Software Solutions",
+    title: "Software Development & Cybersecurity Services | QUANT LAB USA",
     description:
-        "Custom software development, algorithmic trading systems, web applications, cybersecurity, and cloud infrastructure services.",
+        "Custom CRMs, Stripe integrations, Next.js apps, penetration testing — built for businesses in Atlanta, Macon, and 12 more US cities.",
     alternates: { canonical: "https://quantlabusa.dev/services" },
     openGraph: {
-        title: "Services | QuantLab Software Solutions",
+        title: "Software Development & Cybersecurity Services | QUANT LAB USA",
         description:
-            "Custom software development, algorithmic trading systems, web applications, cybersecurity, and cloud infrastructure services.",
+            "Custom CRMs, Stripe integrations, Next.js apps, penetration testing — built for businesses in Atlanta, Macon, and 12 more US cities.",
         url: "https://quantlabusa.dev/services",
         type: "website",
     },
 };
 
-const services = [
+type ServiceCard = {
+    icon: typeof Terminal;
+    color: string;
+    title: string;
+    slug: string;
+    headline: string;
+    description: string;
+    tag: string;
+};
+
+const buildAndShip: ServiceCard[] = [
     {
         icon: Terminal,
         color: "from-blue-500 to-cyan-400",
@@ -30,44 +40,24 @@ const services = [
         tag: "In production across 4 industries",
     },
     {
-        icon: Bot,
-        color: "from-violet-500 to-blue-400",
-        title: "Algorithmic Trading Systems",
-        slug: "algorithmic-trading-systems",
-        headline: "Live trading bots running real money",
+        icon: Terminal,
+        color: "from-sky-500 to-cyan-400",
+        title: "Custom CRM Development",
+        slug: "custom-crm-development",
+        headline: "Pipeline software for the way you actually sell",
         description:
-            "MA Supertrend, VWAP, momentum, multi-strategy setups. Real-time market feeds, configurable risk, 24/7 uptime.",
-        tag: "5 live systems deployed",
+            "Custom CRMs built on Next.js + PostgreSQL. Pipeline, automation, reporting. You own the code — no per-seat tax.",
+        tag: "8 to 16 weeks to production",
     },
     {
         icon: Globe,
         color: "from-cyan-500 to-emerald-400",
-        title: "Web Applications & Portals",
+        title: "Next.js Web Applications",
         slug: "web-applications",
         headline: "SaaS apps, client portals, platforms",
         description:
             "Full-stack web applications built on Next.js and deployed on Vercel with global CDN. Built for real use, not demos.",
         tag: "Full-stack web apps in production",
-    },
-    {
-        icon: CreditCard,
-        color: "from-emerald-500 to-cyan-400",
-        title: "Payments, Invoicing & Licensing",
-        slug: "payments-invoicing-licensing",
-        headline: "Get paid. Manage access. Ship software.",
-        description:
-            "Stripe, ACH, auto-invoicing, revenue dashboards. License servers with JWT validation, usage tracking, and seat management.",
-        tag: "Live payment and licensing systems shipped",
-    },
-    {
-        icon: Shield,
-        color: "from-red-500 to-orange-400",
-        title: "Penetration Testing",
-        slug: "penetration-testing",
-        headline: "We break in so someone else doesn't.",
-        description:
-            "Network, wireless, web app, and Active Directory pentests. Real attacks mapped to MITRE ATT&CK with clear remediation.",
-        tag: "Custom red team toolkit with 11 attack modules",
     },
     {
         icon: Lock,
@@ -79,7 +69,179 @@ const services = [
             "Docker, Nginx, CI/CD, auto-scaling, Sentry monitoring on DigitalOcean, Fly.io, and Vercel. Zero unplanned outages.",
         tag: "Zero unplanned outages",
     },
+    {
+        icon: Bot,
+        color: "from-violet-500 to-blue-400",
+        title: "Algorithmic Trading Systems",
+        slug: "algorithmic-trading-systems",
+        headline: "Live trading bots running real money",
+        description:
+            "MA Supertrend, VWAP, momentum, multi-strategy setups. Real-time market feeds, configurable risk, 24/7 uptime.",
+        tag: "5 live systems deployed",
+    },
 ];
+
+const paymentsAndLicensing: ServiceCard[] = [
+    {
+        icon: CreditCard,
+        color: "from-emerald-500 to-cyan-400",
+        title: "Stripe Integration",
+        slug: "stripe-integration",
+        headline: "Production-grade Stripe Checkout, Billing, and webhooks",
+        description:
+            "Stripe Checkout, Stripe Billing, subscription lifecycle webhooks, customer portal, and tax handling — wired into Next.js the right way.",
+        tag: "Founder-led Stripe builds",
+    },
+    {
+        icon: CreditCard,
+        color: "from-emerald-500 to-teal-400",
+        title: "Subscription Billing",
+        slug: "subscription-billing",
+        headline: "Recurring revenue infrastructure that doesn't leak",
+        description:
+            "Plan tiers, metered usage, proration, dunning, churn recovery, revenue dashboards. Stripe Billing or custom — your call.",
+        tag: "Recurring revenue done right",
+    },
+    {
+        icon: Lock,
+        color: "from-amber-500 to-orange-400",
+        title: "Software Licensing System",
+        slug: "license-server",
+        headline: "License keys, JWT validation, seat management",
+        description:
+            "License servers with JWT validation, usage tracking, machine fingerprinting, and seat management for desktop, SaaS, and bot distribution.",
+        tag: "Licensed bot and SaaS distribution",
+    },
+    {
+        icon: CreditCard,
+        color: "from-emerald-500 to-cyan-400",
+        title: "Payments, Invoicing & Licensing",
+        slug: "payments-invoicing-licensing",
+        headline: "Get paid. Manage access. Ship software.",
+        description:
+            "The combined parent service — Stripe, ACH, auto-invoicing, revenue dashboards, license servers, and seat management.",
+        tag: "Live payment and licensing systems shipped",
+    },
+];
+
+const cyberAndPentest: ServiceCard[] = [
+    {
+        icon: Shield,
+        color: "from-red-500 to-orange-400",
+        title: "Penetration Testing",
+        slug: "penetration-testing",
+        headline: "We break in so someone else doesn't.",
+        description:
+            "Full-scope pentests across network, wireless, web app, and Active Directory. Custom 11-module red team toolkit, mapped to MITRE ATT&CK.",
+        tag: "Custom red team toolkit with 11 attack modules",
+    },
+    {
+        icon: Shield,
+        color: "from-rose-500 to-red-400",
+        title: "Web Application Pentest",
+        slug: "web-app-pentest",
+        headline: "Real exploits, not just Burp scan output",
+        description:
+            "OWASP Top 10, IDOR chains, broken auth, business-logic bugs, API security. Manual exploitation against staging or production.",
+        tag: "Manual exploitation, real payloads",
+    },
+    {
+        icon: Shield,
+        color: "from-red-500 to-pink-400",
+        title: "Network Pentest",
+        slug: "network-pentest",
+        headline: "Internal and external network attack simulation",
+        description:
+            "Perimeter assessment, internal pivot testing, lateral movement, credential abuse, and detection-evasion playbooks for your blue team.",
+        tag: "Internal + external scopes",
+    },
+    {
+        icon: Shield,
+        color: "from-red-500 to-amber-400",
+        title: "Active Directory Pentest",
+        slug: "active-directory-pentest",
+        headline: "Kerberoasting, ADCS abuse, Domain Admin path",
+        description:
+            "Full AD attack chain: Kerberoasting, AS-REP, ADCS (ESC1–ESC11), delegation abuse, credential dumping, and the path to Domain Admin.",
+        tag: "Standard user to Domain Admin",
+    },
+    {
+        icon: Shield,
+        color: "from-orange-500 to-red-400",
+        title: "MITRE ATT&CK Assessment",
+        slug: "mitre-attack-assessment",
+        headline: "Map your defenses to real adversary TTPs",
+        description:
+            "Threat-emulation engagements that exercise documented APT/ransomware TTPs and produce a defended/missed heatmap for your SOC.",
+        tag: "ATT&CK-mapped purple team",
+    },
+];
+
+const citySlugs: { slug: string; city: string; state: string }[] = [
+    { slug: "atlanta-ga", city: "Atlanta", state: "GA" },
+    { slug: "macon-ga", city: "Macon", state: "GA" },
+    { slug: "augusta-ga", city: "Augusta", state: "GA" },
+    { slug: "columbus-ga", city: "Columbus", state: "GA" },
+    { slug: "savannah-ga", city: "Savannah", state: "GA" },
+    { slug: "miami-fl", city: "Miami", state: "FL" },
+    { slug: "austin-tx", city: "Austin", state: "TX" },
+    { slug: "dallas-tx", city: "Dallas", state: "TX" },
+    { slug: "chicago-il", city: "Chicago", state: "IL" },
+    { slug: "seattle-wa", city: "Seattle", state: "WA" },
+    { slug: "new-york-ny", city: "New York", state: "NY" },
+    { slug: "charlotte-nc", city: "Charlotte", state: "NC" },
+    { slug: "nashville-tn", city: "Nashville", state: "TN" },
+    { slug: "san-francisco-ca", city: "San Francisco", state: "CA" },
+];
+
+const industries: { slug: string; name: string; blurb: string }[] = [
+    { slug: "fintech", name: "Fintech", blurb: "Trading systems, payments, brokerage integrations." },
+    { slug: "construction", name: "Construction", blurb: "Estimating, lead routing, project tracking." },
+    { slug: "insurance", name: "Insurance", blurb: "Policy management, claims, agent portals." },
+    { slug: "e-commerce", name: "E-Commerce", blurb: "Custom carts, subscription billing, Shopify alternatives." },
+    { slug: "healthcare", name: "Healthcare", blurb: "HIPAA-aware platforms, intake, scheduling, ops dashboards." },
+];
+
+function ServiceGrid({ items }: { items: ServiceCard[] }) {
+    return (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {items.map((service, idx) => {
+                const Icon = service.icon;
+                return (
+                    <AnimatedSection key={service.slug} delay={idx * 0.05}>
+                        <Link href={`/services/${service.slug}`} className="block h-full group">
+                            <div className="relative h-full rounded-2xl border border-white/5 bg-[#0d1526]/80 backdrop-blur-sm p-7 overflow-hidden transition-all duration-300 group-hover:border-sky-400/30 group-hover:bg-[#0d1526]">
+                                <div className="flex flex-col h-full">
+                                    <div
+                                        className={`inline-flex p-2.5 rounded-xl bg-gradient-to-br ${service.color} bg-opacity-10 mb-5 w-fit`}
+                                    >
+                                        <Icon className="w-5 h-5 text-white" />
+                                    </div>
+
+                                    <div className="mb-3">
+                                        <p className="text-xs font-semibold tracking-wider text-gray-500 uppercase mb-1">{service.title}</p>
+                                        <h3 className="text-lg font-bold text-white leading-snug">{service.headline}</h3>
+                                    </div>
+
+                                    <p className="text-gray-400 text-sm leading-relaxed mb-5 flex-grow">
+                                        {service.description}
+                                    </p>
+
+                                    <div className="mt-auto pt-4 border-t border-white/5 flex items-center justify-between">
+                                        <p className={`text-xs font-medium text-transparent bg-clip-text bg-gradient-to-r ${service.color}`}>
+                                            {service.tag}
+                                        </p>
+                                        <ArrowRight className="w-4 h-4 text-gray-500 group-hover:text-sky-400 group-hover:translate-x-0.5 transition-all" />
+                                    </div>
+                                </div>
+                            </div>
+                        </Link>
+                    </AnimatedSection>
+                );
+            })}
+        </div>
+    );
+}
 
 export default function ServicesIndexPage() {
     return (
@@ -97,49 +259,145 @@ export default function ServicesIndexPage() {
                         What We Offer
                     </span>
                     <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight text-white">
-                        Services
+                        Software Development &amp; Cybersecurity Services
                     </h1>
                     <p className="text-gray-400 text-lg md:text-xl leading-relaxed">
-                        What we build, end to end.
+                        What we build, end to end — custom CRMs, Stripe and licensing infrastructure, Next.js apps, and full-scope penetration testing.
                     </p>
                 </AnimatedSection>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
-                    {services.map((service, idx) => {
-                        const Icon = service.icon;
-                        return (
-                            <AnimatedSection key={service.slug} delay={idx * 0.06}>
-                                <Link href={`/services/${service.slug}`} className="block h-full group">
-                                    <div className="relative h-full rounded-2xl border border-white/5 bg-[#0d1526]/80 backdrop-blur-sm p-7 overflow-hidden transition-all duration-300 group-hover:border-sky-400/30 group-hover:bg-[#0d1526]">
-                                        <div className="flex flex-col h-full">
-                                            <div
-                                                className={`inline-flex p-2.5 rounded-xl bg-gradient-to-br ${service.color} bg-opacity-10 mb-5 w-fit`}
-                                            >
-                                                <Icon className="w-5 h-5 text-white" />
-                                            </div>
-
-                                            <div className="mb-3">
-                                                <p className="text-xs font-semibold tracking-wider text-gray-500 uppercase mb-1">{service.title}</p>
-                                                <h2 className="text-lg font-bold text-white leading-snug">{service.headline}</h2>
-                                            </div>
-
-                                            <p className="text-gray-400 text-sm leading-relaxed mb-5 flex-grow">
-                                                {service.description}
-                                            </p>
-
-                                            <div className="mt-auto pt-4 border-t border-white/5 flex items-center justify-between">
-                                                <p className={`text-xs font-medium text-transparent bg-clip-text bg-gradient-to-r ${service.color}`}>
-                                                    {service.tag}
-                                                </p>
-                                                <ArrowRight className="w-4 h-4 text-gray-500 group-hover:text-sky-400 group-hover:translate-x-0.5 transition-all" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </Link>
-                            </AnimatedSection>
-                        );
-                    })}
+                {/* Build & Ship */}
+                <AnimatedSection className="mb-12">
+                    <div className="mb-8 max-w-3xl">
+                        <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">Build &amp; Ship</h2>
+                        <p className="text-gray-400 leading-relaxed">
+                            Custom software, CRMs, Next.js apps, cloud infrastructure, and algorithmic trading systems — production-grade work shipped end to end.
+                        </p>
+                    </div>
+                </AnimatedSection>
+                <div className="mb-20">
+                    <ServiceGrid items={buildAndShip} />
                 </div>
+
+                {/* Payments, Subscriptions & Licensing */}
+                <AnimatedSection className="mb-12">
+                    <div className="mb-8 max-w-3xl">
+                        <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">Payments, Subscriptions &amp; Licensing</h2>
+                        <p className="text-gray-400 leading-relaxed">
+                            Stripe Checkout, Stripe Billing, subscription lifecycle, license keys, JWT validation, and seat management — wired into your product, not bolted onto it.
+                        </p>
+                    </div>
+                </AnimatedSection>
+                <div className="mb-20">
+                    <ServiceGrid items={paymentsAndLicensing} />
+                </div>
+
+                {/* Cybersecurity & Pentest */}
+                <AnimatedSection className="mb-12">
+                    <div className="mb-8 max-w-3xl">
+                        <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">Cybersecurity &amp; Pentest</h2>
+                        <p className="text-gray-400 leading-relaxed">
+                            Full-scope penetration testing — network, web app, Active Directory, and MITRE ATT&amp;CK-aligned engagements. Real attacks, real evidence, real remediation.
+                        </p>
+                    </div>
+                </AnimatedSection>
+                <div className="mb-24">
+                    <ServiceGrid items={cyberAndPentest} />
+                </div>
+
+                {/* Where We Serve */}
+                <AnimatedSection className="mb-24">
+                    <div className="border-t border-white/5 pt-16">
+                        <div className="flex items-center gap-3 mb-4">
+                            <MapPin className="w-6 h-6 text-sky-400" />
+                            <h2 className="text-3xl md:text-4xl font-bold text-white">Where We Serve</h2>
+                        </div>
+                        <p className="text-gray-400 leading-relaxed mb-8 max-w-3xl">
+                            Georgia-based, working with clients across 14 US metros. Engagements run remotely by default; in-person scoping and red-team work available in Atlanta and the Southeast.
+                        </p>
+                        <div className="flex flex-wrap gap-2">
+                            {citySlugs.map((c) => (
+                                <Link
+                                    key={c.slug}
+                                    href={`/software-development-${c.slug}`}
+                                    className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-[#0d1526]/60 px-4 py-2 text-sm text-gray-300 transition-all hover:border-sky-400/40 hover:bg-[#0d1526] hover:text-white"
+                                >
+                                    <MapPin className="w-3.5 h-3.5 text-sky-400" />
+                                    <span>
+                                        {c.city}, {c.state}
+                                    </span>
+                                </Link>
+                            ))}
+                        </div>
+                    </div>
+                </AnimatedSection>
+
+                {/* Industries */}
+                <AnimatedSection className="mb-24">
+                    <div className="border-t border-white/5 pt-16">
+                        <div className="flex items-center gap-3 mb-4">
+                            <Building2 className="w-6 h-6 text-emerald-400" />
+                            <h2 className="text-3xl md:text-4xl font-bold text-white">Industries We Build For</h2>
+                        </div>
+                        <p className="text-gray-400 leading-relaxed mb-8 max-w-3xl">
+                            Deeper context on how our software and security work shows up in specific verticals.
+                        </p>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            {industries.map((i) => (
+                                <Link
+                                    key={i.slug}
+                                    href={`/industries/${i.slug}`}
+                                    className="group rounded-xl border border-white/5 bg-[#0d1526]/60 p-5 transition-all hover:border-emerald-400/30"
+                                >
+                                    <div className="flex items-center justify-between mb-2">
+                                        <h3 className="text-white font-semibold">{i.name}</h3>
+                                        <ArrowRight className="w-4 h-4 text-gray-500 group-hover:text-emerald-400 group-hover:translate-x-0.5 transition-all" />
+                                    </div>
+                                    <p className="text-sm text-gray-400 leading-relaxed">{i.blurb}</p>
+                                </Link>
+                            ))}
+                        </div>
+                    </div>
+                </AnimatedSection>
+
+                {/* Compare */}
+                <AnimatedSection className="mb-20">
+                    <div className="border-t border-white/5 pt-16">
+                        <div className="flex items-center gap-3 mb-4">
+                            <GitCompare className="w-6 h-6 text-violet-400" />
+                            <h2 className="text-3xl md:text-4xl font-bold text-white">Compare</h2>
+                        </div>
+                        <p className="text-gray-400 leading-relaxed mb-8 max-w-3xl">
+                            Trying to decide between a SaaS platform and a custom build? Read the head-to-head.
+                        </p>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <Link
+                                href="/vs/salesforce"
+                                className="group rounded-xl border border-white/5 bg-[#0d1526]/60 p-6 transition-all hover:border-violet-400/30"
+                            >
+                                <div className="flex items-center justify-between mb-2">
+                                    <h3 className="text-white font-semibold text-lg">Custom CRM vs Salesforce</h3>
+                                    <ArrowRight className="w-4 h-4 text-gray-500 group-hover:text-violet-400 group-hover:translate-x-0.5 transition-all" />
+                                </div>
+                                <p className="text-sm text-gray-400 leading-relaxed">
+                                    What you pay, what you own, and when each one is the right call.
+                                </p>
+                            </Link>
+                            <Link
+                                href="/vs/shopify"
+                                className="group rounded-xl border border-white/5 bg-[#0d1526]/60 p-6 transition-all hover:border-violet-400/30"
+                            >
+                                <div className="flex items-center justify-between mb-2">
+                                    <h3 className="text-white font-semibold text-lg">Custom Storefront vs Shopify</h3>
+                                    <ArrowRight className="w-4 h-4 text-gray-500 group-hover:text-violet-400 group-hover:translate-x-0.5 transition-all" />
+                                </div>
+                                <p className="text-sm text-gray-400 leading-relaxed">
+                                    Where Shopify wins, where it caps your unit economics, and when to leave.
+                                </p>
+                            </Link>
+                        </div>
+                    </div>
+                </AnimatedSection>
 
                 <AnimatedSection className="text-center max-w-2xl mx-auto border-t border-white/5 pt-16">
                     <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">

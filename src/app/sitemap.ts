@@ -64,6 +64,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "penetration-testing",
     "mitre-attack-assessment",
     "algorithmic-trading-systems",
+    // Expanded standalone services
+    "stripe-integration",
+    "license-server",
+    "subscription-billing",
+    "web-app-pentest",
+    "network-pentest",
+    "active-directory-pentest",
   ];
 
   const servicePages: MetadataRoute.Sitemap = serviceSlugs.map((slug) => ({
@@ -92,6 +99,47 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const cityPages: MetadataRoute.Sitemap = citySlugs.map((slug) => ({
     url: `${baseUrl}/software-development-${slug}`,
+    lastModified,
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
+  // Service-by-city pages: penetration testing, custom CRM, and Stripe integration
+  // each get one page per city for local SEO targeting.
+  const cityScopedServices = [
+    "penetration-testing",
+    "custom-crm-development",
+    "stripe-integration",
+  ];
+
+  const cityScopedServicePages: MetadataRoute.Sitemap = cityScopedServices.flatMap((service) =>
+    citySlugs.map((city) => ({
+      url: `${baseUrl}/services/${service}/${city}`,
+      lastModified,
+      changeFrequency: "monthly" as const,
+      priority: 0.75,
+    }))
+  );
+
+  const industrySlugs = [
+    "fintech",
+    "construction",
+    "insurance",
+    "e-commerce",
+    "healthcare",
+  ];
+
+  const industryPages: MetadataRoute.Sitemap = industrySlugs.map((slug) => ({
+    url: `${baseUrl}/industries/${slug}`,
+    lastModified,
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
+  const versusSlugs = ["salesforce", "shopify", "big-4-pentest"];
+
+  const versusPages: MetadataRoute.Sitemap = versusSlugs.map((slug) => ({
+    url: `${baseUrl}/vs/${slug}`,
     lastModified,
     changeFrequency: "monthly",
     priority: 0.7,
@@ -126,6 +174,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...corePages,
     ...servicePages,
     ...cityPages,
+    ...cityScopedServicePages,
+    ...industryPages,
+    ...versusPages,
     ...caseStudyPages,
     ...calculatorPages,
   ];
