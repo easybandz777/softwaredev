@@ -227,6 +227,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "internal-tools-platform-engineering-guide",
     "hire-fractional-cto-vs-software-firm",
     "cybersecurity-services-for-saas-startups-2026",
+    "dedicated-development-team-vs-agency",
+    "what-is-a-pen-test-vs-vulnerability-scan",
+    "2026-state-of-custom-software-development",
   ];
 
   const aiAnswerSlugs = [
