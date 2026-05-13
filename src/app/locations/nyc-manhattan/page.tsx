@@ -47,7 +47,7 @@ const serviceSchema = {
     "@type": "Service",
     serviceType: "Custom Software Development",
     name: "Custom Software Development in Manhattan, NYC",
-    provider: { "@id": "https://quantlabusa.dev/#org" },
+    provider: { "@id": "https://quantlabusa.dev/#organization" },
     areaServed: { "@type": "Place", name: "Manhattan, New York, NY" },
     description:
         "Wall Street fintech, Midtown media SaaS, agency-side platforms, and SOC 2 pen tests for Manhattan-headquartered firms.",

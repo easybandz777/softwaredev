@@ -46,7 +46,7 @@ const serviceSchema = {
     "@type": "Service",
     serviceType: "Custom Software Development",
     name: "Custom Software Development in SoMa San Francisco",
-    provider: { "@id": "https://quantlabusa.dev/#org" },
+    provider: { "@id": "https://quantlabusa.dev/#organization" },
     areaServed: { "@type": "Place", name: "SoMa, San Francisco, CA" },
     description:
         "Venture-backed SaaS, AI infrastructure, Stripe Connect, and SOC 2 pen tests for SoMa-headquartered firms.",

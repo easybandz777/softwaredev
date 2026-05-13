@@ -147,6 +147,34 @@ export default function CustomDevVsToptalPage() {
                     <ConsultationCTA label="Scope a Fixed-Bid Build" />
                 </AnimatedSection>
 
+                <AnimatedSection className="mb-12">
+                    <div className="rounded-2xl border border-sky-400/30 bg-sky-500/5 p-6 md:p-8">
+                        <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Toptal vs delivery shop: which is right for me?</h2>
+                        <p className="text-gray-200 leading-relaxed">
+                            <strong>Choose Toptal when you have an in-house CTO or VP Engineering who can own architecture, code review, and integration — you are buying senior hours, not delivery. Choose a delivery shop when you need a system shipped against a fixed scope and deadline without a technical owner on staff. The hybrid pattern (shop builds v1, Toptal contractors take ongoing feature work) is the most common 2026 pattern for founder-led companies.</strong>
+                        </p>
+                    </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-12">
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-5">Quick verdict</h2>
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-sm text-left border border-white/10 rounded-xl overflow-hidden">
+                            <thead className="bg-[#0d1526] text-white">
+                                <tr>
+                                    <th className="px-4 py-3 border-b border-white/10">Scenario</th>
+                                    <th className="px-4 py-3 border-b border-white/10">Best choice</th>
+                                </tr>
+                            </thead>
+                            <tbody className="text-gray-300">
+                                <tr className="border-b border-white/5"><td className="px-4 py-3">Senior engineering manager / CTO on staff, well-defined tasks</td><td className="px-4 py-3 font-semibold text-white">Toptal</td></tr>
+                                <tr className="border-b border-white/5"><td className="px-4 py-3">No technical owner, need fixed scope plus accountability</td><td className="px-4 py-3 font-semibold text-white">Delivery shop</td></tr>
+                                <tr className="border-b border-white/5"><td className="px-4 py-3">Ship v1 fast, then scale feature work</td><td className="px-4 py-3 font-semibold text-white">Hybrid (shop, then Toptal)</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </AnimatedSection>
+
                 <AnimatedSection className="mb-16">
                     <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">When Toptal is the right call</h2>
                     <div className="prose prose-invert max-w-none text-gray-400 space-y-4 leading-relaxed">

@@ -1,28 +1,17 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { MapPin, Check, ArrowRight } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
     title: "Austin TX Custom Software Developer for SaaS Startups | QUANT LAB",
     description:
         "Austin startup-grade software development — SaaS MVPs, Stripe billing, algorithmic trading, and pen testing. Founder-led, no offshore. Call (770) 652-1282.",
-    alternates: { canonical: "https://quantlabusa.dev/software-development-austin-tx" },
-    openGraph: {
-        title: "Austin TX Custom Software Developer for SaaS Startups | QUANT LAB",
-        description:
-            "Austin startup-grade software development — SaaS MVPs, Stripe, algorithmic trading, and pen testing.",
-        url: "https://quantlabusa.dev/software-development-austin-tx",
-        type: "article",
-    },
-    twitter: {
-        card: "summary",
-        title: "Austin TX Custom Software Developer for SaaS Startups | QUANT LAB",
-        description:
-            "Austin startup-grade software development — SaaS MVPs, Stripe, algorithmic trading, and pen testing.",
-    },
-};
+    slug: "software-development-austin-tx",
+    image: "/og-image.png",
+    type: "article",
+});
 
 const localBusinessSchema = {
     "@context": "https://schema.org",
@@ -50,7 +39,7 @@ const serviceSchema = {
     "@type": "Service",
     serviceType: "Custom Software Development",
     name: "Custom Software Development in Austin, TX",
-    provider: { "@id": "https://quantlabusa.dev/#org" },
+    provider: { "@id": "https://quantlabusa.dev/#organization" },
     areaServed: { "@type": "City", name: "Austin", containedInPlace: { "@type": "State", name: "Texas" } },
     description:
         "SaaS MVPs, Stripe and licensing systems, algorithmic trading tooling, and pen testing for Austin founders on a modern stack.",

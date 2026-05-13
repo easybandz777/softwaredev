@@ -1,28 +1,17 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { Cloud, Check, ArrowRight } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
     title: "Custom SaaS Development | Stripe Billing & SOC 2 | QuantLab",
     description:
         "Custom SaaS development — Stripe Billing, subscription management, SOC 2 readiness, multi-tenant architecture, customer-facing dashboards. Founder-led, US-based.",
-    alternates: { canonical: "https://quantlabusa.dev/industries/saas" },
-    openGraph: {
-        title: "Custom SaaS Development — Subscription Billing & SOC 2 Ready",
-        description:
-            "Stripe Billing, multi-tenant architecture, customer dashboards, and SOC 2-mapped controls for SaaS founders and teams shipping production product.",
-        url: "https://quantlabusa.dev/industries/saas",
-        type: "article",
-    },
-    twitter: {
-        card: "summary_large_image",
-        title: "Custom SaaS Development | QuantLab",
-        description:
-            "Multi-tenant SaaS with Stripe Billing, customer dashboards, and SOC 2-aware architecture.",
-    },
-};
+    slug: "industries/saas",
+    image: "/og-services.png",
+    type: "article",
+});
 
 const webPageSchema = {
     "@context": "https://schema.org",
@@ -55,7 +44,7 @@ const serviceSchema = {
     name: "Custom SaaS Development",
     provider: {
         "@type": "Organization",
-        name: "QuantLab Software Solutions",
+        name: "QUANT LAB USA",
         url: "https://quantlabusa.dev",
         "@id": "https://quantlabusa.dev/#organization",
     },

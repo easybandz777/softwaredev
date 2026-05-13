@@ -1,28 +1,17 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { MapPin, Check, ArrowRight } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
     title: "San Francisco Custom Software, AI/SaaS & Pen Testing | QL USA",
     description:
         "San Francisco SaaS, AI, fintech, and quant software development plus penetration testing. Senior, founder-led engineering. Call (770) 652-1282.",
-    alternates: { canonical: "https://quantlabusa.dev/software-development-san-francisco-ca" },
-    openGraph: {
-        title: "San Francisco Custom Software, AI/SaaS & Pen Testing | QL USA",
-        description:
-            "San Francisco SaaS, AI, fintech, and quant software development plus penetration testing.",
-        url: "https://quantlabusa.dev/software-development-san-francisco-ca",
-        type: "article",
-    },
-    twitter: {
-        card: "summary",
-        title: "San Francisco Custom Software, AI/SaaS & Pen Testing | QL USA",
-        description:
-            "San Francisco SaaS, AI, fintech, and quant software development plus penetration testing.",
-    },
-};
+    slug: "software-development-san-francisco-ca",
+    image: "/og-image.png",
+    type: "article",
+});
 
 const localBusinessSchema = {
     "@context": "https://schema.org",
@@ -54,7 +43,7 @@ const serviceSchema = {
     "@type": "Service",
     serviceType: "Custom Software Development & Penetration Testing",
     name: "Custom Software Development & Penetration Testing in San Francisco, CA",
-    provider: { "@id": "https://quantlabusa.dev/#org" },
+    provider: { "@id": "https://quantlabusa.dev/#organization" },
     areaServed: { "@type": "City", name: "San Francisco", containedInPlace: { "@type": "State", name: "California" } },
     description:
         "Bay-standard SaaS builds, AI-backed product engineering, algorithmic trading and quant tooling, and MITRE-aligned penetration testing for San Francisco companies.",

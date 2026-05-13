@@ -1,28 +1,17 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { HardHat, Check, ArrowRight } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
     title: "Construction Industry Software Development | QuantLab",
     description:
         "Custom software for construction & trades — proposal portals, QuickBooks/Xero sync, customer portals, mobile field tools. Built by contractor-vertical specialists.",
-    alternates: { canonical: "https://quantlabusa.dev/industries/construction" },
-    openGraph: {
-        title: "Custom Software for Construction & Trades — Field-First, Office-Synced",
-        description:
-            "Contractor management software development — proposals, scheduling, QBO sync, and customer portals for residential and commercial trades.",
-        url: "https://quantlabusa.dev/industries/construction",
-        type: "article",
-    },
-    twitter: {
-        card: "summary_large_image",
-        title: "Custom Software for Construction & Trades | QuantLab",
-        description:
-            "Field-first, office-synced contractor software. Proposals, QBO sync, customer portals. Founder-led builds.",
-    },
-};
+    slug: "industries/construction",
+    image: "/og-services.png",
+    type: "article",
+});
 
 const webPageSchema = {
     "@context": "https://schema.org",
@@ -55,7 +44,7 @@ const serviceSchema = {
     name: "Custom Software Development for Construction & Trades",
     provider: {
         "@type": "Organization",
-        name: "QuantLab Software Solutions",
+        name: "QUANT LAB USA",
         url: "https://quantlabusa.dev",
         "@id": "https://quantlabusa.dev/#organization",
     },

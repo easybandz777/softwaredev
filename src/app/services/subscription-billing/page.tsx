@@ -1,28 +1,17 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { Repeat, Check, ArrowRight } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
     title: "Custom Subscription Billing Development | QuantLab",
     description:
         "Custom recurring billing for SaaS that outgrew Stripe Billing — usage-based hybrid, custom dunning, partial refunds, mid-cycle proration, MRR/ARR analytics.",
-    alternates: { canonical: "https://quantlabusa.dev/services/subscription-billing" },
-    openGraph: {
-        title: "Custom Subscription Billing Development for SaaS That Outgrew Stripe Billing",
-        description:
-            "Usage-based hybrid plans, custom dunning sequences, partial refunds and credits, prorated mid-cycle upgrades, MRR/ARR analytics. Built around your billing model.",
-        url: "https://quantlabusa.dev/services/subscription-billing",
-        type: "article",
-    },
-    twitter: {
-        card: "summary_large_image",
-        title: "Custom Subscription Billing Development",
-        description:
-            "Recurring billing for SaaS that outgrew Stripe Billing. Hybrid usage models, custom dunning, MRR analytics.",
-    },
-};
+    slug: "services/subscription-billing",
+    image: "/og-stripe.png",
+    type: "article",
+});
 
 const serviceSchema = {
     "@context": "https://schema.org",
@@ -31,9 +20,9 @@ const serviceSchema = {
     name: "Custom Subscription Billing & Recurring Revenue System Development",
     provider: {
         "@type": "Organization",
-        name: "QuantLab Software Solutions",
+        name: "QUANT LAB USA",
         url: "https://quantlabusa.dev",
-        "@id": "https://quantlabusa.dev/#org",
+        "@id": "https://quantlabusa.dev/#organization",
     },
     areaServed: [
         { "@type": "Country", name: "United States" },

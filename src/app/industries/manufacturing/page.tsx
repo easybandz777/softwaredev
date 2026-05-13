@@ -1,28 +1,17 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { Factory, Check, ArrowRight } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
     title: "Custom Manufacturing Software Development | QuantLab",
     description:
         "Custom manufacturing software — ERP integration, shop-floor tooling, quote configurators, ITAR-aware builds, OT/IT segmentation. Founder-led, US-based.",
-    alternates: { canonical: "https://quantlabusa.dev/industries/manufacturing" },
-    openGraph: {
-        title: "Custom Manufacturing Software — ERP, Shop Floor & Quote Configurators",
-        description:
-            "Custom-built software for fabricators, machine shops, and contract manufacturers. ERP integration, shop-floor data, ITAR-aware compliance.",
-        url: "https://quantlabusa.dev/industries/manufacturing",
-        type: "article",
-    },
-    twitter: {
-        card: "summary_large_image",
-        title: "Custom Manufacturing Software Development | QuantLab",
-        description:
-            "ERP-integrated shop-floor tooling, quote configurators, and ITAR-aware manufacturing software.",
-    },
-};
+    slug: "industries/manufacturing",
+    image: "/og-services.png",
+    type: "article",
+});
 
 const webPageSchema = {
     "@context": "https://schema.org",
@@ -55,7 +44,7 @@ const serviceSchema = {
     name: "Custom Manufacturing Software Development",
     provider: {
         "@type": "Organization",
-        name: "QuantLab Software Solutions",
+        name: "QUANT LAB USA",
         url: "https://quantlabusa.dev",
         "@id": "https://quantlabusa.dev/#organization",
     },

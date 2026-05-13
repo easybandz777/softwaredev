@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { Layers, Check, ArrowRight, MapPin } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
 const cities: { slug: string; city: string; state: string }[] = [
     { slug: "atlanta-ga", city: "Atlanta", state: "GA" },
@@ -21,19 +21,14 @@ const cities: { slug: string; city: string; state: string }[] = [
     { slug: "san-francisco-ca", city: "San Francisco", state: "CA" },
 ];
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
     title: "SaaS Platform Development | Multi-Tenant Builds | QuantLab",
     description:
         "Custom SaaS platform development on Next.js, PostgreSQL, and Stripe Billing. Multi-tenant architecture, auth, billing, admin tooling. Founder-led from MVP to scale.",
-    alternates: { canonical: "https://quantlabusa.dev/services/saas-platform-development" },
-    openGraph: {
-        title: "SaaS Platform Development for Founders Past the No-Code Stage",
-        description:
-            "Multi-tenant SaaS on Next.js, PostgreSQL, and Stripe Billing. Auth, RBAC, billing, admin tooling, and the operational backbone you need to scale past your first 100 customers.",
-        url: "https://quantlabusa.dev/services/saas-platform-development",
-        type: "article",
-    },
-};
+    slug: "services/saas-platform-development",
+    image: "/og-web-apps.png",
+    type: "article",
+});
 
 const serviceSchema = {
     "@context": "https://schema.org",
@@ -42,9 +37,9 @@ const serviceSchema = {
     name: "Custom SaaS Platform Development",
     provider: {
         "@type": "Organization",
-        name: "QuantLab Software Solutions",
+        name: "QUANT LAB USA",
         url: "https://quantlabusa.dev",
-        "@id": "https://quantlabusa.dev/#org",
+        "@id": "https://quantlabusa.dev/#organization",
     },
     areaServed: "United States",
     description:

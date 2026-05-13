@@ -85,7 +85,7 @@ export default function Page() {
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-10 prose prose-invert max-w-none text-gray-300 leading-relaxed space-y-4">
-                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">REST, GraphQL, RPC, and webhooks</h2>
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">What are the main types of APIs?</h2>
                     <p>
                         Most modern APIs fall into one of four paradigms. REST models the world
                         as resources at URLs (GET /users/42). GraphQL exposes a typed schema and
@@ -106,7 +106,7 @@ export default function Page() {
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-10 prose prose-invert max-w-none text-gray-300 leading-relaxed space-y-4">
-                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Why APIs matter for non-engineers</h2>
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Why do APIs matter for non-engineers?</h2>
                     <p>
                         Every "integration" your team relies on is an API call. Your CRM pulling
                         data from your billing system, your support tool surfacing the customer's

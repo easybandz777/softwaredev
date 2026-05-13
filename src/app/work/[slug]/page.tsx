@@ -70,7 +70,7 @@ export default async function CaseStudyPage({
         publisher: {
             "@type": "Organization",
             "@id": "https://quantlabusa.dev/#organization",
-            name: "QuantLab Software Solutions",
+            name: "QUANT LAB USA",
             url: "https://quantlabusa.dev",
             logo: {
                 "@type": "ImageObject",

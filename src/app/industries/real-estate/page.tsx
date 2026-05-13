@@ -1,28 +1,17 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { Home, Check, ArrowRight } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
     title: "Custom Real Estate Software Development | QuantLab",
     description:
         "Custom real estate software — brokerage CRMs, agent sites, property portals, transaction tools, MLS/IDX integration, RESPA-aware workflows. Founder-led.",
-    alternates: { canonical: "https://quantlabusa.dev/industries/real-estate" },
-    openGraph: {
-        title: "Custom Software for Real Estate — Brokerages, Agents & PropTech",
-        description:
-            "Brokerage CRMs, agent landing pages, property portals, transaction tooling, MLS/IDX integration, and RESPA-aware workflows.",
-        url: "https://quantlabusa.dev/industries/real-estate",
-        type: "article",
-    },
-    twitter: {
-        card: "summary_large_image",
-        title: "Custom Real Estate Software Development | QuantLab",
-        description:
-            "Brokerage CRMs, MLS/IDX integration, transaction tools, and RESPA-aware workflows.",
-    },
-};
+    slug: "industries/real-estate",
+    image: "/og-services.png",
+    type: "article",
+});
 
 const webPageSchema = {
     "@context": "https://schema.org",
@@ -55,7 +44,7 @@ const serviceSchema = {
     name: "Custom Real Estate Software Development",
     provider: {
         "@type": "Organization",
-        name: "QuantLab Software Solutions",
+        name: "QUANT LAB USA",
         url: "https://quantlabusa.dev",
         "@id": "https://quantlabusa.dev/#organization",
     },

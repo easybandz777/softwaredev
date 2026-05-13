@@ -1,28 +1,17 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { KeyRound, Check, ArrowRight } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
     title: "Custom Software License Server Development | QuantLab",
     description:
         "Custom software license server development — JWT licensing, offline activation, floating licenses, machine fingerprinting. Built for ISVs and desktop software.",
-    alternates: { canonical: "https://quantlabusa.dev/services/license-server" },
-    openGraph: {
-        title: "Custom Software License Server Development",
-        description:
-            "JWT-based licensing systems with offline activation, machine-locked and floating models, telemetry, and Stripe-tied entitlement. Built to your activation model.",
-        url: "https://quantlabusa.dev/services/license-server",
-        type: "article",
-    },
-    twitter: {
-        card: "summary_large_image",
-        title: "Custom Software License Server Development",
-        description:
-            "JWT licensing, offline activation, floating licenses, machine fingerprinting. Built to your activation model.",
-    },
-};
+    slug: "services/license-server",
+    image: "/og-stripe.png",
+    type: "article",
+});
 
 const serviceSchema = {
     "@context": "https://schema.org",
@@ -31,9 +20,9 @@ const serviceSchema = {
     name: "Custom Software License Server & JWT Licensing System Development",
     provider: {
         "@type": "Organization",
-        name: "QuantLab Software Solutions",
+        name: "QUANT LAB USA",
         url: "https://quantlabusa.dev",
-        "@id": "https://quantlabusa.dev/#org",
+        "@id": "https://quantlabusa.dev/#organization",
     },
     areaServed: [
         { "@type": "Country", name: "United States" },

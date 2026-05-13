@@ -7,6 +7,8 @@ import { FuturisticBackground } from "@/components/FuturisticBackground";
 import { PageTracker } from "@/components/PageTracker";
 import { AgentationWrapper } from "@/components/AgentationWrapper";
 import { Analytics } from "@/components/Analytics";
+import { ConsentBanner } from "@/components/ConsentBanner";
+import { SocialProofBar } from "@/components/SocialProofBar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -281,12 +283,14 @@ export default function RootLayout({
           Skip to main content
         </a>
         <FuturisticBackground />
+        <SocialProofBar />
         <Navbar />
         <PageTracker />
         <div id="main">{children}</div>
         <Footer />
         <AgentationWrapper />
         <Analytics />
+        <ConsentBanner />
       </body>
     </html>
   );

@@ -46,7 +46,7 @@ const serviceSchema = {
     "@type": "Service",
     serviceType: "Custom Software Development",
     name: "Custom Software Development in Bibb County, GA",
-    provider: { "@id": "https://quantlabusa.dev/#org" },
+    provider: { "@id": "https://quantlabusa.dev/#organization" },
     areaServed: { "@type": "AdministrativeArea", name: "Bibb County, GA" },
     description:
         "Custom software, manufacturing ops platforms, healthcare-adjacent tooling, and pen testing for Bibb County operators across Middle Georgia.",

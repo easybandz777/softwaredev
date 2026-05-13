@@ -147,6 +147,34 @@ export default function CustomWebVsWebflowPage() {
                     <ConsultationCTA label="Scope a Real Web App" />
                 </AnimatedSection>
 
+                <AnimatedSection className="mb-12">
+                    <div className="rounded-2xl border border-sky-400/30 bg-sky-500/5 p-6 md:p-8">
+                        <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Webflow vs custom code: when do I need real code?</h2>
+                        <p className="text-gray-200 leading-relaxed">
+                            <strong>Choose Webflow for marketing sites, landing pages, content-heavy blogs, and any project under roughly 1,000 pages where the deliverable is informational content with great visual design. Choose custom code when you need authenticated user accounts, custom data models, role-based access beyond three tiers, third-party API integrations beyond basic Zapier, or programmatic SEO at scale. The most common pattern: Webflow for the marketing site, custom Next.js for the application.</strong>
+                        </p>
+                    </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-12">
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-5">Quick verdict</h2>
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-sm text-left border border-white/10 rounded-xl overflow-hidden">
+                            <thead className="bg-[#0d1526] text-white">
+                                <tr>
+                                    <th className="px-4 py-3 border-b border-white/10">Scenario</th>
+                                    <th className="px-4 py-3 border-b border-white/10">Best choice</th>
+                                </tr>
+                            </thead>
+                            <tbody className="text-gray-300">
+                                <tr className="border-b border-white/5"><td className="px-4 py-3">Marketing site, landing pages, blog, portfolio</td><td className="px-4 py-3 font-semibold text-white">Webflow</td></tr>
+                                <tr className="border-b border-white/5"><td className="px-4 py-3">Auth, custom data, RBAC, payment, real-time, programmatic SEO</td><td className="px-4 py-3 font-semibold text-white">Custom code</td></tr>
+                                <tr className="border-b border-white/5"><td className="px-4 py-3">Want both — fast marketing site + real application</td><td className="px-4 py-3 font-semibold text-white">Hybrid (Webflow + Next.js)</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </AnimatedSection>
+
                 <AnimatedSection className="mb-16">
                     <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">When Webflow is the right call</h2>
                     <div className="prose prose-invert max-w-none text-gray-400 space-y-4 leading-relaxed">

@@ -1,28 +1,17 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { MapPin, Check, ArrowRight } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
     title: "Atlanta Software Development & Penetration Testing | QUANT LAB USA",
     description:
         "Atlanta custom software development for fintech, film, logistics, and SaaS — plus penetration testing. Georgia-based, founder-led. Call (770) 652-1282.",
-    alternates: { canonical: "https://quantlabusa.dev/software-development-atlanta-ga" },
-    openGraph: {
-        title: "Atlanta Software Development & Penetration Testing | QUANT LAB USA",
-        description:
-            "Atlanta custom software development for fintech, film, logistics, and SaaS — plus penetration testing.",
-        url: "https://quantlabusa.dev/software-development-atlanta-ga",
-        type: "article",
-    },
-    twitter: {
-        card: "summary",
-        title: "Atlanta Software Development & Penetration Testing | QUANT LAB USA",
-        description:
-            "Atlanta custom software development for fintech, film, logistics, and SaaS — plus penetration testing.",
-    },
-};
+    slug: "software-development-atlanta-ga",
+    image: "/og-image.png",
+    type: "article",
+});
 
 const localBusinessSchema = {
     "@context": "https://schema.org",
@@ -52,7 +41,11 @@ const serviceSchema = {
     "@type": "Service",
     serviceType: "Custom Software Development & Penetration Testing",
     name: "Custom Software Development & Penetration Testing in Atlanta, GA",
-    provider: { "@id": "https://quantlabusa.dev/#org" },
+    provider: {
+        "@id": "https://quantlabusa.dev/#organization",
+        "@type": "Organization",
+        name: "QUANT LAB USA",
+    },
     areaServed: { "@type": "City", name: "Atlanta", containedInPlace: { "@type": "State", name: "Georgia" } },
     description:
         "Fintech-grade Stripe, logistics and operations dashboards, film-and-media tooling, plus full-scope penetration testing for Atlanta clients.",

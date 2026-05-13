@@ -147,6 +147,34 @@ export default function CustomDevVsUpworkPage() {
                     <ConsultationCTA label="Scope a Real Build" />
                 </AnimatedSection>
 
+                <AnimatedSection className="mb-12">
+                    <div className="rounded-2xl border border-sky-400/30 bg-sky-500/5 p-6 md:p-8">
+                        <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Upwork vs delivery shop: which should I choose?</h2>
+                        <p className="text-gray-200 leading-relaxed">
+                            <strong>Choose Upwork for small, well-scoped, time-boxed tasks where the deliverable is obvious — a single component, a logo, a blog post, a typo fix. Choose a delivery shop for multi-month foundational builds where architectural decisions, documentation, and a single accountable signature matter — custom CRM, billing infrastructure, ERP integrations. The hybrid pattern (shop ships v1, Upwork freelancers handle long-tail support) is the most cost-effective configuration after launch.</strong>
+                        </p>
+                    </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-12">
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-5">Quick verdict</h2>
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-sm text-left border border-white/10 rounded-xl overflow-hidden">
+                            <thead className="bg-[#0d1526] text-white">
+                                <tr>
+                                    <th className="px-4 py-3 border-b border-white/10">Scenario</th>
+                                    <th className="px-4 py-3 border-b border-white/10">Best choice</th>
+                                </tr>
+                            </thead>
+                            <tbody className="text-gray-300">
+                                <tr className="border-b border-white/5"><td className="px-4 py-3">One-off micro task, obvious deliverable, low risk</td><td className="px-4 py-3 font-semibold text-white">Upwork</td></tr>
+                                <tr className="border-b border-white/5"><td className="px-4 py-3">System the business depends on for 3-5 years</td><td className="px-4 py-3 font-semibold text-white">Delivery shop</td></tr>
+                                <tr className="border-b border-white/5"><td className="px-4 py-3">After delivery shop ships, scaling support work</td><td className="px-4 py-3 font-semibold text-white">Hybrid</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </AnimatedSection>
+
                 <AnimatedSection className="mb-16">
                     <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">When Upwork is the right call</h2>
                     <div className="prose prose-invert max-w-none text-gray-400 space-y-4 leading-relaxed">

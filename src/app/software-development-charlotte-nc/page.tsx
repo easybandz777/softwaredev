@@ -1,28 +1,17 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { MapPin, Check, ArrowRight } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
     title: "Charlotte NC Software Development, Banking & Pen Test | QUANT LAB",
     description:
         "Charlotte custom software development and penetration testing for banking, fintech, and SaaS firms. Founder-led, Georgia-based. Call (770) 652-1282.",
-    alternates: { canonical: "https://quantlabusa.dev/software-development-charlotte-nc" },
-    openGraph: {
-        title: "Charlotte NC Software Development, Banking & Pen Test | QUANT LAB",
-        description:
-            "Charlotte custom software development and penetration testing for banking, fintech, and SaaS firms.",
-        url: "https://quantlabusa.dev/software-development-charlotte-nc",
-        type: "article",
-    },
-    twitter: {
-        card: "summary",
-        title: "Charlotte NC Software Development, Banking & Pen Test | QUANT LAB",
-        description:
-            "Charlotte custom software development and penetration testing for banking and fintech.",
-    },
-};
+    slug: "software-development-charlotte-nc",
+    image: "/og-image.png",
+    type: "article",
+});
 
 const localBusinessSchema = {
     "@context": "https://schema.org",
@@ -51,7 +40,7 @@ const serviceSchema = {
     "@type": "Service",
     serviceType: "Custom Software Development & Penetration Testing",
     name: "Custom Software Development & Penetration Testing in Charlotte, NC",
-    provider: { "@id": "https://quantlabusa.dev/#org" },
+    provider: { "@id": "https://quantlabusa.dev/#organization" },
     areaServed: { "@type": "City", name: "Charlotte", containedInPlace: { "@type": "State", name: "North Carolina" } },
     description:
         "Fintech-adjacent custom software, vendor-risk-ready penetration testing, and CRMs for Charlotte&apos;s banking sector.",

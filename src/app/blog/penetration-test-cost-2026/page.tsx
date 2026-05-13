@@ -32,7 +32,7 @@ const articleSchema = {
     publisher: {
         "@type": "Organization",
         "@id": "https://quantlabusa.dev/#organization",
-        name: "QUANT LAB USA INC",
+        name: "QUANT LAB USA",
         url: "https://quantlabusa.dev",
         logo: { "@type": "ImageObject", url: "https://quantlabusa.dev/logo-transparent.png" },
     },
@@ -63,6 +63,14 @@ const faqSchema = {
     mainEntity: [
         {
             "@type": "Question",
+            name: "How much does a penetration test cost in 2026?",
+            acceptedAnswer: {
+                "@type": "Answer",
+                text: "A web application penetration test costs $4,000 to $40,000 in 2026, depending on application complexity, number of user roles, and whether SOC 2 or PCI DSS attestation is required. Most SMB-tier web apps land at $10,000 to $18,000 for a grey-box manual test plus a one-page executive report and 30-day retest.",
+            },
+        },
+        {
+            "@type": "Question",
             name: "What is the average cost of a penetration test in 2026?",
             acceptedAnswer: {
                 "@type": "Answer",
@@ -91,6 +99,30 @@ const faqSchema = {
             acceptedAnswer: {
                 "@type": "Answer",
                 text: "Annually at minimum for any compliance program. After every major release that touches authentication, payment, or sensitive data. After every significant infrastructure change. SOC 2, HIPAA, and PCI all expect annual at minimum.",
+            },
+        },
+        {
+            "@type": "Question",
+            name: "Is a penetration test required for SOC 2?",
+            acceptedAnswer: {
+                "@type": "Answer",
+                text: "SOC 2 does not explicitly require a penetration test, but every reputable auditor will ask for one as evidence under CC4.1 and CC7.1. In practice, annual pentests are mandatory for SOC 2 Type II reports. Plan on $15K to $30K for a typical Series A SaaS scope.",
+            },
+        },
+        {
+            "@type": "Question",
+            name: "What is the difference between a vulnerability scan and a penetration test?",
+            acceptedAnswer: {
+                "@type": "Answer",
+                text: "A vulnerability scan is automated and costs $500 to $5,000. It identifies known CVEs but cannot chain findings or exploit business-logic flaws. A penetration test is human-driven, costs $8,000 to $40,000, and validates exploitability by actually compromising the target. Compliance frameworks like SOC 2 and PCI DSS require pentests, not scans.",
+            },
+        },
+        {
+            "@type": "Question",
+            name: "How long does a penetration test take?",
+            acceptedAnswer: {
+                "@type": "Answer",
+                text: "A typical web application pentest takes 1 to 3 weeks: 1 week of testing, 1 week of report writing, and 1 week reserved for retest after fixes. Larger environments (multi-app SaaS plus API plus internal AD) run 4 to 8 weeks. Red team engagements run 4 to 12 weeks.",
             },
         },
     ],
@@ -129,6 +161,15 @@ export default function PentestCost2026Page() {
                         By <Link href="/about" className="text-sky-400 hover:underline">William Beltz</Link>, founder of QUANT LAB USA INC · Published May 12, 2026
                     </p>
                     <ConsultationCTA label="Get a Real Pentest Quote" service="Penetration Testing" source="blog-pentest-cost" />
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-12">
+                    <div className="rounded-2xl border border-sky-400/30 bg-sky-500/5 p-6 md:p-8">
+                        <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">How much does a penetration test cost in 2026?</h2>
+                        <p className="text-gray-200 leading-relaxed">
+                            <strong>A web application penetration test costs $4,000 to $40,000 in 2026, depending on application complexity, number of user roles, and whether SOC 2 or PCI DSS attestation is required. Most SMB-tier web apps land at $10,000 to $18,000 for a grey-box manual test plus a one-page executive report and 30-day retest. External network pentests start at $7,000, internal network engagements run $12,000 to $50,000, and objective-based red teams run $40,000 to $200,000+.</strong>
+                        </p>
+                    </div>
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-12">
@@ -335,9 +376,37 @@ export default function PentestCost2026Page() {
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-12">
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-5">Is a penetration test required for SOC 2?</h2>
+                    <div className="prose prose-invert max-w-none text-gray-300 leading-relaxed space-y-3">
+                        <p>
+                            SOC 2 does not explicitly require a penetration test, but every reputable auditor will ask for one as evidence under CC4.1 and CC7.1. In practice, annual pentests are mandatory for SOC 2 Type II reports. Plan on $15K to $30K for a typical Series A SaaS scope.
+                        </p>
+                    </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-12">
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-5">What is the difference between a vulnerability scan and a penetration test?</h2>
+                    <div className="prose prose-invert max-w-none text-gray-300 leading-relaxed space-y-3">
+                        <p>
+                            A vulnerability scan is automated and costs $500 to $5,000. It identifies known CVEs but cannot chain findings or exploit business-logic flaws. A penetration test is human-driven, costs $8,000 to $40,000, and validates exploitability by actually compromising the target. Compliance frameworks like SOC 2 and PCI DSS require pentests, not scans.
+                        </p>
+                    </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-12">
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-5">How long does a penetration test take?</h2>
+                    <div className="prose prose-invert max-w-none text-gray-300 leading-relaxed space-y-3">
+                        <p>
+                            A typical web application pentest takes 1 to 3 weeks: 1 week of testing, 1 week of report writing, and 1 week reserved for retest after fixes. Larger environments (multi-app SaaS plus API plus internal AD) run 4 to 8 weeks. Red team engagements run 4 to 12 weeks.
+                        </p>
+                    </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-12">
                     <h2 className="text-2xl md:text-3xl font-bold text-white mb-5">FAQ</h2>
                     <div className="space-y-6">
                         {[
+                            { q: "How much does a penetration test cost in 2026?", a: "A web application penetration test costs $4,000 to $40,000 in 2026, depending on application complexity, number of user roles, and whether SOC 2 or PCI DSS attestation is required. Most SMB-tier web apps land at $10,000 to $18,000 for a grey-box manual test plus a one-page executive report and 30-day retest." },
                             { q: "What is the average cost of a penetration test in 2026?", a: "There is no single average because scope is everything. Realistic 2026 ranges: external network $7K to $25K, internal network $12K to $50K, single web app $10K to $40K, Active Directory $15K to $45K, wireless $6K to $20K, objective-based red team $40K to $200K. Sub-$5K quotes are almost always vulnerability scans." },
                             { q: "Why do pentest quotes vary 5x for the same scope?", a: "Three reasons: methodology depth (scanner vs human-driven), tester experience (junior vs senior), and reporting quality (template vs custom ATT&CK-mapped). The cheapest quote often is not the worst — it might just be a different deliverable. Read the sample report before judging the price." },
                             { q: "How can I lower the cost without lowering the value?", a: "Reduce scope intelligently: test critical apps and the production AD domain, skip pre-prod and dev environments unless they have unique attack surface. Provide accurate asset inventories up front. Allow grey-box testing instead of full black-box. Accept a remote-only engagement if you do not need physical or wireless components. Combined, these can cut 30 to 50% off a quote." },

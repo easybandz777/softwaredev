@@ -1,28 +1,17 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { MapPin, Check, ArrowRight } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
     title: "Seattle Custom Software, Cloud & SaaS Developer | QUANT LAB USA",
     description:
         "Seattle SaaS, dev-tools, and cloud-adjacent custom software development. Stripe billing, Docker-native, AWS-portable, pen testing. Call (770) 652-1282.",
-    alternates: { canonical: "https://quantlabusa.dev/software-development-seattle-wa" },
-    openGraph: {
-        title: "Seattle Custom Software, Cloud & SaaS Developer | QUANT LAB USA",
-        description:
-            "Seattle SaaS, dev-tools, and cloud-adjacent custom software development. Stripe billing and pen testing.",
-        url: "https://quantlabusa.dev/software-development-seattle-wa",
-        type: "article",
-    },
-    twitter: {
-        card: "summary",
-        title: "Seattle Custom Software, Cloud & SaaS Developer | QUANT LAB USA",
-        description:
-            "Seattle SaaS, dev-tools, and cloud-adjacent custom software development.",
-    },
-};
+    slug: "software-development-seattle-wa",
+    image: "/og-image.png",
+    type: "article",
+});
 
 const localBusinessSchema = {
     "@context": "https://schema.org",
@@ -51,7 +40,7 @@ const serviceSchema = {
     "@type": "Service",
     serviceType: "Custom Software Development",
     name: "Custom Software Development in Seattle, WA",
-    provider: { "@id": "https://quantlabusa.dev/#org" },
+    provider: { "@id": "https://quantlabusa.dev/#organization" },
     areaServed: { "@type": "City", name: "Seattle", containedInPlace: { "@type": "State", name: "Washington" } },
     description:
         "SaaS, dev-tools, Stripe-billed licensing infrastructure, and penetration testing for Seattle-area founders and companies.",

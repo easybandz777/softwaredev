@@ -105,83 +105,76 @@ The crawl audit (`crawl-audit-report.md`) flagged 4 URLs in the sitemap returnin
 
 ### Root cause
 
-These slugs are **not** in `src/lib/case-studies.ts`. The data file ships 10 case studies (northcrest-fence, hobbspeak, bridgepointe-painting, protectwithbri, j5-sales-os, wilder-recovery, multi-strategy-trading-system, motorcycle-shop-ops-platform, contractor-estimating-proposal-engine, active-directory-pentest). The 4 broken slugs come from a hardcoded array in `src/app/sitemap.ts:158–169` that drifted away from the case-studies array.
-
-The `/work/[slug]/page.tsx` route correctly calls `getCaseStudyBySlug()`, finds nothing for the 4 stale slugs, and returns `notFound()`. The `/work` index iterates `case-studies.ts` directly, so the 4 ghost slugs never render as links — they only appear as orphan sitemap entries.
+These slugs are **not** in `src/lib/case-studies.ts`. The data file ships 10 case studies. The 4 broken slugs come from a hardcoded array in `src/app/sitemap.ts:158–169` that drifted away from the case-studies array. `/work/[slug]/page.tsx` correctly calls `getCaseStudyBySlug()`, finds nothing, returns `notFound()`. `/work` iterates `case-studies.ts` directly, so the 4 ghosts never render as links — they only appear as orphan sitemap entries.
 
 ### Investigation steps (do not fix in this scorecard)
 
-1. Confirm the bug: open `src/app/sitemap.ts:158–169` and verify the hardcoded `caseStudySlugs` array contains the 4 ghost slugs in addition to the 6+ real ones.
-2. Confirm the source of truth: open `src/lib/case-studies.ts` and confirm the 4 ghost slugs are **not** present in the exported `caseStudies` array.
-3. Decide direction: either (a) **remove the 4 ghost slugs from the sitemap array** and rebuild `sitemap.ts` to iterate `case-studies.ts` directly (preferred — eliminates the drift mechanism), or (b) **add 4 real case-study entries** to `case-studies.ts` so the sitemap claims match reality.
-4. If choosing (a): delete the hardcoded list, import `caseStudies` from `@/lib/case-studies`, map to the sitemap shape inline. Then re-deploy and re-run the crawl audit to confirm 177/177 OK.
-5. If choosing (b): research/draft 4 new case studies, add entries to `case-studies.ts` with full content, deploy. (Higher effort; not recommended unless the 4 slugs map to real client engagements.)
+1. Confirm: open `src/app/sitemap.ts:158–169` and verify the hardcoded `caseStudySlugs` array contains the 4 ghost slugs.
+2. Confirm: open `src/lib/case-studies.ts` and verify the 4 are **not** in the exported `caseStudies` array.
+3. Pick direction: (a) **remove the hardcoded list and import `caseStudies` from `@/lib/case-studies`** (preferred — eliminates drift permanently, 10-min change, sitemap goes to 173/173 OK), or (b) add 4 real case-study entries to `case-studies.ts` (only if the slugs map to real engagements).
+4. Re-deploy + re-run crawl audit.
 
-**Recommended path: option (a).** It's a 10-minute change. It eliminates the drift mechanism permanently. Sitemap goes to 173 entries, all 200 OK.
+**Recommended: option (a).**
 
 ---
 
 ## 4. Next 30 days — P0 priorities
 
-These are the immediate, can't-skip items. Each is owner-Bill, none requires a hire, all are doable inside the next four weeks.
+Immediate, can't-skip, owner-Bill, doable in four weeks.
 
-1. **Verify and submit to Google Search Console.** Replace any remaining `REPLACE_WITH_VERIFICATION_TOKEN` in `src/app/layout.tsx`. Add property at `https://search.google.com/search-console`. Submit `sitemap.xml`. Use URL Inspection to request indexing on the top 25 pages: homepage, all 5 city pages (Macon, Atlanta, Augusta, Charlotte, Columbus), top 8 services (custom-crm, penetration-testing, stripe-integration, web-app-pentest, custom-business-software, mobile-app-development, ai-integration-services, saas-platform-development), top 5 industries (fintech, healthcare, e-commerce, saas, real-estate), the pillar `/blog/custom-crm-development-guide`, the 4 highest-intent `/vs/*` (salesforce, hubspot, toptal, big-4-pentest), and `/pricing` + `/work` + `/about`. (`sitemap-ping-report.md` §4.)
-2. **Verify and submit to Bing Webmaster Tools.** Import directly from Search Console once that's verified. Submit `sitemap.xml`. Submit the same top 25 URLs to the URL Submission tool (10k/day allowance). This also feeds Yahoo and DuckDuckGo. (`sitemap-ping-report.md` §4.)
-3. **Fix the 4 case-study 404s.** Per Section 3, option (a): refactor `src/app/sitemap.ts` to iterate `case-studies.ts` directly. 10-minute commit, removes 4 sitemap errors, restores 100% sitemap health.
-4. **Fix the 3 schema critical issues from `audit-04-schema-validation.md`.** Change `#org` to `#organization` in 3 Service blocks (pentest-atlanta-ga, sd-atlanta-ga, vs/salesforce). Standardize all inline `provider`/`publisher` names from "QuantLab Software Solutions" to "QUANT LAB USA" so the entity graph stitches cleanly. Re-validate.
-5. **Submit the 10 quick-win citations.** From `13-citations-directories.md` §1.1–1.10: Bing Places, Apple Business Connect, LinkedIn Company Page (if not already up), Facebook Business, Yelp, BBB, Crunchbase, Yellow Pages, Foursquare, Wellfound. ~15 minutes each, all free. Use the canonical NAP block from `13-citations-directories.md` line 13. Avg DA 87 added in two weeks.
-6. **Request reviews from 3 priority clients.** Per `18-review-request.md` cadence: Northcrest Fence (SMS), ProtectWithBri (personal text), HobbsPeak (SMS). Use the templated copy. Drive to `https://g.page/r/CbkSyF5E2JFtEBM/review`. Goal: 3 5-star Google reviews live by week 4. This unlocks Clutch, GoodFirms, and DesignRush which all require client review proof.
-7. **Triage Lighthouse-flagged issues from `audit-06-performance.md`.** Two changes carry 80% of the perf delta: (a) gate the `HeroCanvas` per-frame gradient compute behind `prefers-reduced-motion: no-preference` and reduce node-edge count from 13/19 to 8/12; (b) move the Navbar logo to the optimized 18KB png with explicit `width`/`height` and `priority` only on the homepage. Aim for mobile perf 80+, LCP <2.5 s on homepage.
-8. **Wire GA4 + GSC verification confirmation.** If `NEXT_PUBLIC_GA_MEASUREMENT_ID` isn't set in Vercel prod env, set it. Add a `<meta name="google-site-verification">` for GSC if not already routed. (Per `audit-10-gap-plan.md` Section B row "Google Analytics 4" and "Google Search Console".)
+1. **GSC verification + sitemap submit + top-25 URL inspection.** Replace any remaining `REPLACE_WITH_VERIFICATION_TOKEN` in `src/app/layout.tsx`. Add property, submit sitemap, request indexing on: homepage, 5 city pages (Macon, Atlanta, Augusta, Charlotte, Columbus), 8 services (custom-crm, penetration-testing, stripe-integration, web-app-pentest, custom-business-software, mobile-app-development, ai-integration-services, saas-platform-development), 5 industries (fintech, healthcare, e-commerce, saas, real-estate), the CRM pillar, 4 high-intent `/vs/*` (salesforce, hubspot, toptal, big-4-pentest), plus `/pricing`, `/work`, `/about`. (`sitemap-ping-report.md` §4.)
+2. **Bing Webmaster Tools verify + sitemap + same 25 URL submissions.** Import from GSC. Feeds Yahoo + DuckDuckGo too.
+3. **Fix the 4 case-study 404s** (Section 3, option a). 10-min commit.
+4. **Fix the 3 schema critical issues from `audit-04-schema-validation.md`.** `#org` → `#organization` in 3 Service blocks (pentest-atlanta-ga, sd-atlanta-ga, vs/salesforce). Standardize inline `provider`/`publisher` names to canonical "QUANT LAB USA". Re-validate.
+5. **Submit the 10 quick-win citations** from `13-citations-directories.md` §1.1–1.10: Bing Places, Apple Business Connect, LinkedIn Company Page, Facebook Business, Yelp, BBB, Crunchbase, Yellow Pages, Foursquare, Wellfound. ~15 min each, free. Use the canonical NAP from line 13.
+6. **Request 3 Google reviews** per `18-review-request.md`: Northcrest (SMS), ProtectWithBri (personal text), HobbsPeak (SMS). Drive to the GBP review URL. Unlocks Clutch/GoodFirms/DesignRush eligibility.
+7. **Triage Lighthouse issues from `audit-06-performance.md`.** Two changes carry 80% of delta: gate `HeroCanvas` behind `prefers-reduced-motion: no-preference` + drop node count 13→8; move Navbar logo to 18KB png with explicit `width`/`height`, `priority` on homepage only. Target: mobile perf 80+, LCP <2.5s.
+8. **Wire GA4 + GSC token.** Set `NEXT_PUBLIC_GA_MEASUREMENT_ID` in Vercel prod. Verify `<meta name="google-site-verification">` is routed.
 
-Hard exit criterion for day 30: all 177 (or 173 post-cleanup) URLs in `Coverage → Indexed` in GSC, at least 5 Google reviews live, at least 8 of the 10 quick-win citations submitted, Lighthouse mobile ≥80 on homepage.
+Exit criterion D30: all healthy URLs in GSC `Indexed`, ≥5 Google reviews, ≥8 citations submitted, Lighthouse mobile ≥80.
 
 ---
 
 ## 5. Next 60–90 days — P1 priorities
 
-These are the items that move the needle on traffic, leads, and rank. Each is a multi-week effort.
+Multi-week efforts. These move traffic, leads, and rank.
 
-1. **Backlink outreach against `04-backlink-opportunities.md`.** The 42-target list is sorted by DA × ease. Run two parallel tracks:
-   - **Track A (low-effort, high-DA):** Clutch.co listing with 3 client reviews seeded, GoodFirms profile, DesignRush. Each requires the 3 Google reviews from §4 item 6 to be live first.
-   - **Track B (medium-effort guest posts):** Pitch dev.to a flagship technical post (the J5 Sales OS architecture teardown or the Wilder Recovery role-based auth pattern), Hashnode (same), one HARO/Qwoted reply per weekday using the queries that match our services (CRM, pentest, Stripe, Next.js). Goal: 8 acquired backlinks across DA 50+ properties by day 90.
-2. **PR outreach against `14-pr-outreach.md` Top 5.** Hypepotamus (Atlanta startup angle), Indie Hackers podcast (bootstrapped solo-to-team), Dark Reading commentary (MITRE for SMB pentest), Atlanta Inno / Atlanta Business Chronicle (J5 AI sales OS feature), The New Stack (Wilder Recovery teardown). Pitch one per week, in that order. The Hypepotamus pitch is the closest to a guaranteed land — Atlanta-local angle + named clients + bootstrapped story.
-3. **LinkedIn outreach sequences against `17-linkedin-outreach.md`.** Stand up Sales Navigator ($99/mo), pick 2 of the 6 ICP tracks (Track 2: Pre-Series-A B2B SaaS founder, Track 5: Quant prop trader CTO — these match our highest-margin work), send 50–75 connection requests per week per track. Target floor: 1–3 qualified conversations per week per track at week 4 onward.
-4. **Email drip activation per `16-email-drip.md`.** The 5-email sequence (Day 1, 3, 5, 8, 14) is written but not wired. Two requirements: a queue/scheduler (cron or Vercel Cron + a `drip_state` table), and at least one functioning lead magnet to trigger from. The Build vs Buy decision guide PDF is the recommended first magnet — gate it behind `/api/leads` with `source=lead-magnet:build-vs-buy`, then enroll into the drip on submit.
-5. **E-E-A-T expansion.** Three concrete moves: (a) write an expanded `/about` page with founder narrative — years building, languages, biggest failure, signature engagement style (per `audit-10-gap-plan.md` Section C "About page enhancement"); (b) add author bylines + bios to every blog post and the pillar guide; (c) publish 2 dev.to or Hashnode posts in my name within the first 60 days so Google has off-site author corroboration for the Person schema. The point of E-E-A-T is corroboration, not declaration.
-6. **Content cadence: 2 blog posts per week minimum.** The 30-post backlog from `08-blog-topics.md` is the source list. Sequence: 50/50 TOFU/BOFU, prioritize the 10 we already drafted in Wave 2 (now live) and write the next 8 against the BOFU end of the funnel (any "best X company in Atlanta", "X cost in 2026", or "how to choose Y" posts). At 2/week, we land 24+ new posts in the 90-day window. Each post must contextually link to ≥3 service or city pages.
-7. **Fix the conversion-path gaps from `audit-09-conversion-paths.md`.** Three items: (a) pre-fill the modal with `service`/`city`/`source` query params on every CTA (the props exist as of `d1aff61` — wire them through every Link); (b) add a primary "Book a call" CTA pointing to a `/book` route with Cal.com embedded (don't make Cal.com a secondary post-submit surprise — it's a higher-intent action); (c) fire a `gtag('event', 'form_submit', {form_id, source})` on `/api/leads` success so we can measure CR by funnel in GA4.
+1. **Backlink outreach** against `04-backlink-opportunities.md`. Two parallel tracks:
+   - **Track A (low-effort, high-DA):** Clutch.co with 3 seeded client reviews, GoodFirms, DesignRush. Requires the 3 reviews from §4-item-6 first.
+   - **Track B (guest posts + HARO):** dev.to flagship technical post (J5 architecture teardown or Wilder role-based auth), Hashnode (same), one HARO/Qwoted reply per weekday on CRM/pentest/Stripe/Next.js queries.
+   - Goal: 8 acquired backlinks DA 50+ by day 90.
+2. **PR Top 5 from `14-pr-outreach.md`**: Hypepotamus (Atlanta startup), Indie Hackers podcast (bootstrapped), Dark Reading commentary (MITRE for SMB), Atlanta Inno (J5 feature), The New Stack (Wilder teardown). Pitch one per week. Hypepotamus is the closest-to-guaranteed land.
+3. **LinkedIn outreach per `17-linkedin-outreach.md`.** Sales Navigator ($99/mo). Pick 2 ICP tracks (Track 2: pre-Series-A SaaS founder; Track 5: quant prop trader CTO). 50–75 connection requests/week/track. Floor: 1–3 qualified convos/week/track from week 4.
+4. **Email drip activation per `16-email-drip.md`.** 5-email sequence is written. Need: (a) scheduler (Vercel Cron + `drip_state` table), (b) one working lead magnet (start with Build vs Buy decision guide PDF gated behind `/api/leads` with `source=lead-magnet:build-vs-buy`).
+5. **E-E-A-T expansion.** Three moves: (a) expanded `/about` with founder narrative (years building, biggest failure, engagement style); (b) author bylines + bios on every post and the pillar; (c) 2 dev.to/Hashnode posts in my name in 60 days for off-site Person-schema corroboration.
+6. **Content cadence: 2 blog posts/week.** 30-post backlog in `08-blog-topics.md`. Sequence: 50/50 TOFU/BOFU. Prioritize BOFU ("best X in Atlanta", "X cost in 2026", "how to choose Y"). Each post links to ≥3 services/cities contextually.
+7. **Conversion-path gaps from `audit-09`.** (a) wire `service`/`city`/`source` query params through every CTA Link (props exist as of `d1aff61`); (b) add a primary "Book a call" CTA → `/book` with Cal.com embedded; (c) fire `gtag('event', 'form_submit', {form_id, source})` on `/api/leads` success.
 
-Hard exit criterion for day 90: 30+ ranking keywords in Search Console, 8+ acquired backlinks, 1 landed PR placement, 5+ Google reviews, 1 functioning lead magnet flow with email drip enrolled, 2 blog posts per week shipping consistently for the prior 6 weeks.
+Exit criterion D90: 30+ ranking keywords, 8+ backlinks, 1 PR placement, 5+ reviews, 1 working lead-magnet+drip flow, 2 posts/week sustained for 6 weeks.
 
 ---
 
 ## 6. 90-day expected outcomes — honest projection
 
-This is what I actually expect, not what I'd put on a pitch deck.
+What I actually expect, not what I'd put on a pitch deck.
 
 ### Day 30
-- Indexing: all 173 healthy URLs in Search Console `Indexed`. The 4 case-study 404s either fixed or removed.
-- Ranking keywords: 5–15 keywords in the top 100 in Search Console. Most will be long-tail, low-volume queries — "next.js development atlanta", "stripe integration cost", "custom crm small business macon", "mitre attack framework explained" type queries.
-- Inbound organic leads: **2–4** from `/api/consultations` submits. Most will come from direct + GBP + the niche long-tails landing on the case studies and pricing page. Organic search will not yet be the dominant lead source.
-- Reviews: 3–5 Google reviews live.
-- Citations: 8–10 of the 10 quick-win citations submitted.
+- Indexing: 173 healthy URLs in GSC `Indexed`. 4 ghost 404s fixed.
+- Ranking keywords: 5–15 in top 100. Mostly long-tail low-volume — "next.js development atlanta", "stripe integration cost", "custom crm small business macon", "mitre attack framework explained".
+- Inbound organic leads: **2–4**. Most via direct + GBP, not organic search yet.
+- Reviews: 3–5 live. Citations: 8–10 submitted.
 
 ### Day 60
-- Ranking keywords: 30–60 in the top 100. A handful (3–10) start poking into the top 30 — most likely the city × service combos that have low competitor density, e.g. "penetration testing macon ga", "custom software macon", "custom crm savannah ga".
-- Organic leads: **4–8 / month** if the first PR placement lands and one of the LinkedIn tracks hits its floor target.
-- GBP impressions: 200–500 / month. Phone-call clicks: 5–15.
-- Backlinks: 3–5 acquired (Clutch, GoodFirms, dev.to, Hashnode, plus one chamber-of-commerce listing).
-- Blog cadence: 16+ posts shipped from the 30-post backlog.
+- Ranking keywords: 30–60 in top 100. 3–10 in top 30 — likely city × service combos with low competitor density ("penetration testing macon ga", "custom software macon", "custom crm savannah ga").
+- Organic leads: **4–8 / month** if first PR lands and one LinkedIn track hits floor.
+- GBP: 200–500 impressions/month, 5–15 phone-call clicks. Backlinks: 3–5. Blog: 16+ posts shipped.
 
 ### Day 90
-- Ranking keywords: 60–120 in the top 100. Several long-tail commercial keywords in the top 10 — realistically: "custom crm development macon", "penetration testing macon ga", "stripe integration consultant atlanta", "next.js development company georgia", "custom software development savannah". The five money keywords from `00-MASTER-INDEX.md` (`custom software development atlanta`, `atlanta penetration testing services`, `hire next.js developer`, `custom crm development atlanta`, `saas development company atlanta`) will likely sit on pages 2–5 unless we land 5+ DA-40+ backlinks pointing at the right anchors.
+- Ranking keywords: 60–120 in top 100. Some long-tail commercial keywords in top 10 — realistically "custom crm development macon", "penetration testing macon ga", "stripe integration consultant atlanta", "next.js development company georgia", "custom software development savannah". The 5 money keywords from `00-MASTER-INDEX.md` will likely sit on pages 2–5 unless we land 5+ DA-40+ backlinks pointing at the right anchors.
 - Organic leads: **8–15 / month** combined organic + GBP + direct.
-- Reviews: 7–12 Google reviews. At least one Clutch profile with 3+ reviews live.
-- Backlinks: 8–15 acquired.
-- PR: 1–2 landed placements (Hypepotamus or Atlanta Inno most likely; Dark Reading and Indie Hackers podcast are higher-effort, longer-cycle).
+- Reviews: 7–12. Backlinks: 8–15. PR: 1–2 landed (Hypepotamus or Atlanta Inno most likely).
 
-What I do **not** expect at 90 days: top-3 for any of the 5 money keywords. Those are 6–12 month plays competing against agencies with 10+ years of domain authority. We will compete on the long-tail, on the local + vertical combo, and on the founder-led trust signal — not on raw rank for unmodified commercial heads.
+What I do **not** expect at 90 days: top-3 for any money keyword. Those are 6–12 month plays against agencies with 10+ years of domain authority. We compete on long-tail, local + vertical combo, and founder-led trust — not on raw commercial heads.
 
 ---
 
@@ -236,54 +229,54 @@ Group C — informational queries (feed E-E-A-T and ToFu):
 | Citation count | manual sheet | 10 | 25 | 40 |
 
 ### Tools
-- **Free, mandatory:** Search Console, Bing Webmaster Tools, GBP Insights, GA4. Plausible if I want a lighter privacy-respecting alternative for marketing-only traffic.
-- **Free, recommended:** Moz Free (DA + 10 backlinks/day check), Ahrefs Webmaster Tools (free for verified site owners — gives backlink and rank data without paying the $99/mo).
-- **Paid worth it:** LinkedIn Sales Navigator ($99/mo, required for §5 item 3), Resend (already in use, $20/mo at our volume).
-- **Paid, defer:** Ahrefs Lite ($129/mo) and SEMrush ($139/mo) are not yet justified — Ahrefs Webmaster Tools free tier covers us until day 90.
+- **Free, mandatory:** GSC, Bing Webmaster Tools, GBP Insights, GA4.
+- **Free, recommended:** Moz Free (DA + 10 backlinks/day), Ahrefs Webmaster Tools (free for verified owners).
+- **Paid worth it:** Sales Navigator ($99/mo, required for §5-3), Resend (already in use).
+- **Paid, defer:** Ahrefs Lite ($129/mo) and SEMrush ($139/mo) — free tiers cover us to day 90.
 
-### Quarterly check (day 90 review)
-Pull: backlink count delta, DA delta, citation count, GSC ranking-keyword count, total organic leads, top 10 ranking pages by clicks, top 10 highest-CTR queries. Compare against this scorecard.
+### Quarterly check (day 90)
+Pull backlink delta, DA delta, citations, GSC keyword count, organic leads, top-10 pages by clicks, top-10 queries by CTR. Compare to this scorecard.
 
 ---
 
 ## 8. When to fire this strategy
 
-I am not going to pretend the strategy can't fail. Here are the honest indicators that something isn't working.
+Honest indicators it isn't working.
 
-### 90-day kill criteria — any one of these triggers a re-plan
+### 90-day kill criteria — any one triggers a re-plan
 
-- **Fewer than 50 ranking keywords in Search Console by day 90.** That would mean either Googlebot isn't crawling (technical fault — check `Coverage` + `Crawl Stats`), or our pages aren't competitive even on long-tails (content depth fault).
-- **Fewer than 3 organic inbound leads per month at day 90.** At our keyword distribution, 3 leads/month is the floor I'd expect from pure direct + GBP alone — so failing this means organic isn't contributing and we have a conversion-path problem (forms broken? no calendar embed? wrong audience?) or a fundamental targeting problem.
-- **Zero rich snippets earned at day 90.** With FAQPage, BreadcrumbList, Article, Service, and WebApplication schema shipping on the relevant pages, at least a few queries should be earning FAQ accordions or breadcrumb trails in SERP. If zero, the schema is being rejected (validation issue not caught by our tests) or the content isn't matching the intent expected by the schema type.
-- **GSC `Coverage → Indexed` plateaus below 60% of submitted URLs.** Hard ceiling — Google is actively deciding our content isn't worth indexing. Either we're publishing thin/duplicate content or we have a canonicalization fault.
-- **Zero acquired backlinks from the 42-target list.** If we executed §5 items 1–2 and landed zero in 90 days, either the outreach is hitting the wrong angle or the underlying offer isn't compelling.
+- **<50 ranking keywords in GSC at D90.** Either Googlebot isn't crawling (check `Coverage` + `Crawl Stats`) or our pages aren't competitive even on long-tails.
+- **<3 organic inbound leads/month at D90.** 3/mo is the floor I'd expect from direct + GBP alone — failing this means organic isn't contributing and we have a conversion-path or targeting problem.
+- **Zero rich snippets earned at D90.** With FAQPage, BreadcrumbList, Article, Service, WebApplication all live, some FAQ accordions/breadcrumbs should be earning SERP real estate. Zero = schema rejected or content/intent mismatch.
+- **GSC `Coverage → Indexed` plateaus <60% of submitted URLs.** Google is actively de-prioritizing. Either thin/duplicate content or a canonicalization fault.
+- **Zero acquired backlinks** from the 42-target list. Either outreach angle is wrong or the underlying offer isn't compelling.
 
 ### If we hit any kill criterion: pivot moves
 
-1. **Pivot to paid first** before changing strategy. Google Ads on the 5 money keywords. Budget $1.5–3K/month. If paid clicks convert at >2% to inbound leads, the page is fine — Google just hasn't trusted us yet, and time will fix it. If paid clicks don't convert either, the offer/page is broken.
-2. **Add paid placements** in the few directories that drive real B2B leads — sponsored Clutch listing, sponsored DesignRush placement, BetaList for any product launches.
-3. **Re-evaluate ICP.** If the long-tails aren't ranking and outreach isn't converting, the issue may be that we're chasing markets that don't have inbound search demand — pivot toward verticals where word-of-mouth + outbound is the dominant acquisition channel (legal SaaS, regulated finance, healthcare ops).
-4. **Consider a domain-authority sponsor / partner deal.** Quietly arrange to author content for an established Atlanta dev-shop brand or an industry publication in exchange for byline and Person-schema corroboration. Time-bounded, 6 months max.
-5. **As a last resort, change services.** If the foundation is solid and the market simply doesn't search our way, the lever isn't more SEO — it's a different service mix. Examples: shift away from "custom software" toward a specific productized service ("Stripe Connect Marketplace setup, fixed-price"), where the search intent is more concrete and the buyer journey is shorter.
+1. **Paid first.** Google Ads on the 5 money keywords, $1.5–3K/mo. If paid clicks convert >2% to leads, page is fine — Google just hasn't trusted us yet. If paid doesn't convert either, the offer is broken.
+2. **Paid placements** in B2B directories that actually drive leads — sponsored Clutch, sponsored DesignRush, BetaList for product launches.
+3. **Re-evaluate ICP.** Pivot toward verticals where word-of-mouth + outbound dominates (legal SaaS, regulated finance, healthcare ops).
+4. **Domain-authority partner deal.** Author content for an established Atlanta dev-shop or industry pub in exchange for byline + Person-schema corroboration. 6-month max.
+5. **Change services.** If the market doesn't search our way, the lever is a different service mix — e.g. productized fixed-price "Stripe Connect Marketplace setup" with concrete search intent.
 
-The kill criteria exist to keep me honest. If we hit day 90 and the metrics are inside the projection bands in Section 6, we double down. If we miss them by more than 30%, we re-plan.
+If D90 metrics land in the bands in Section 6, we double down. If we miss by >30%, we re-plan.
 
 ---
 
 ## Closing note
 
-I built this scorecard because I want a number I can come back to in 30, 60, and 90 days. Not a vibe.
+I built this so I have a number to come back to in 30, 60, and 90 days. Not a vibe.
 
-The site is in better shape today than it was 24 hours ago — that much is observable. 173 URLs return 200. 100% of the top-20 have schema, h1, title, description, and substantive content. We have a usable conversion path. We have a verified GBP. We have an IndexNow key live.
+Site is in better shape than 24 hours ago. 173 URLs return 200. Top-20 have schema + h1 + title + description + substantive content. We have a working conversion path, verified GBP, and a live IndexNow key.
 
-What we don't have, and what matters most over the next 90 days, is **off-page corroboration** (citations, backlinks, reviews, PR) and **conversion measurement** (form-submit events, drip enrolment, lead-source attribution). Those are the only two columns that can plausibly move the needle from "foundation built" to "leads coming in." Everything else is downstream.
+What we don't have — and what bounds the 90-day ceiling — is **off-page corroboration** (citations, backlinks, reviews, PR) and **conversion measurement** (form-submit events, drip enrolment, lead-source attribution). Everything else is downstream.
 
-The fastest path is:
-- Week 1: submit GSC + Bing + 10 citations + fix 4 case-study 404s + fix 3 schema critical issues + replace GSC token.
-- Week 2: request reviews from Northcrest + ProtectWithBri + HobbsPeak.
-- Weeks 3–6: backlink track A (Clutch + GoodFirms + DesignRush) + first PR pitch + first 4 blog posts of the cadence.
-- Weeks 7–12: backlink track B + LinkedIn tracks + lead-magnet wire-up + email-drip activation + second/third PR pitch.
+Fastest path:
+- Week 1: GSC + Bing + 10 citations + 4 case-study 404 fix + 3 schema fix + GSC token.
+- Week 2: reviews from Northcrest + ProtectWithBri + HobbsPeak.
+- Weeks 3–6: backlink track A (Clutch + GoodFirms + DesignRush) + first PR pitch + 4 blog posts.
+- Weeks 7–12: backlink track B + LinkedIn tracks + lead-magnet wire-up + email drip + PR pitches 2 and 3.
 
-I'll re-open this file on 2026-06-12 (day 30), 2026-07-12 (day 60), and 2026-08-12 (day 90) and grade against Section 6 and Section 7.
+Re-grade against Sections 6 and 7 on 2026-06-12, 2026-07-12, 2026-08-12.
 
 — Bill

@@ -31,9 +31,9 @@ const serviceSchema = {
     name: "Custom CRM Development (Salesforce Alternative Build)",
     provider: {
         "@type": "Organization",
-        name: "QuantLab Software Solutions",
+        name: "QUANT LAB USA",
         url: "https://quantlabusa.dev",
-        "@id": "https://quantlabusa.dev/#org",
+        "@id": "https://quantlabusa.dev/#organization",
     },
     areaServed: "United States",
     description:
@@ -45,6 +45,14 @@ const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     mainEntity: [
+        {
+            "@type": "Question",
+            name: "When is custom CRM development cheaper than Salesforce?",
+            acceptedAnswer: {
+                "@type": "Answer",
+                text: "Custom CRM development is cheaper than Salesforce starting at roughly 25 to 35 paid seats on Sales Cloud Enterprise (around $150 per seat per month). At that scale the per-seat ratchet plus AppExchange integration tax plus the part-time admin exceed the amortized cost of a one-time custom build inside 18 to 24 months.",
+            },
+        },
         {
             "@type": "Question",
             name: "Can you migrate us FROM Salesforce to a custom CRM?",
@@ -75,6 +83,14 @@ const faqSchema = {
             acceptedAnswer: {
                 "@type": "Answer",
                 text: "30-day post-launch support is included. After that, you can retain us monthly for ongoing feature work or take it in-house — the codebase is documented for either path.",
+            },
+        },
+        {
+            "@type": "Question",
+            name: "Can I keep Salesforce and build custom on top of it?",
+            acceptedAnswer: {
+                "@type": "Answer",
+                text: "Yes. The hybrid pattern keeps Salesforce as the system of record but builds the rep-facing workflow UI, the reporting layer, or the customer portal in custom code against the Salesforce REST API. This works when AppExchange is the only reason to stay on the platform and you want to fix the workflow tax separately.",
             },
         },
     ],
@@ -130,6 +146,34 @@ export default function CustomCrmVsSalesforcePage() {
                         Salesforce is the right answer for a lot of companies. For SMB and mid-market teams with vertical workflows that the Salesforce object model does not fit, custom CRM development usually wins on total cost of ownership, fit, and speed of change. Here is the honest comparison.
                     </p>
                     <ConsultationCTA label="Scope a Salesforce Replacement" />
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-12">
+                    <div className="rounded-2xl border border-sky-400/30 bg-sky-500/5 p-6 md:p-8">
+                        <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Custom CRM vs Salesforce: which should I choose?</h2>
+                        <p className="text-gray-200 leading-relaxed">
+                            <strong>Choose Salesforce when you have 200+ reps, operate in a regulated industry that requires platform attestation, or rely on AppExchange integrations no other vendor offers. Choose a custom CRM when you have 15 to 200 seats with vertical workflows that the Account-Opportunity-Lead-Contact model does not fit cleanly, or when seat costs have compounded past $100,000 per year. The TCO break-even is roughly 25 to 35 paid seats.</strong>
+                        </p>
+                    </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-12">
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-5">Quick verdict</h2>
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-sm text-left border border-white/10 rounded-xl overflow-hidden">
+                            <thead className="bg-[#0d1526] text-white">
+                                <tr>
+                                    <th className="px-4 py-3 border-b border-white/10">Scenario</th>
+                                    <th className="px-4 py-3 border-b border-white/10">Best choice</th>
+                                </tr>
+                            </thead>
+                            <tbody className="text-gray-300">
+                                <tr className="border-b border-white/5"><td className="px-4 py-3">Enterprise sales motion, 200+ reps, regulated industry</td><td className="px-4 py-3 font-semibold text-white">Salesforce</td></tr>
+                                <tr className="border-b border-white/5"><td className="px-4 py-3">SMB/mid-market (15-200 seats) with vertical workflow</td><td className="px-4 py-3 font-semibold text-white">Custom CRM</td></tr>
+                                <tr className="border-b border-white/5"><td className="px-4 py-3">Keep Salesforce for core data, build custom UI on top</td><td className="px-4 py-3 font-semibold text-white">Hybrid</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-16">

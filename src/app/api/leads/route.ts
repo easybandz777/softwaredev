@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { sql, ensureMigrated } from "@/lib/db";
+import { enqueueDripSeries } from "@/lib/drip";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 const NOTIFICATION_EMAIL = "beltz@quantlabusa.dev";
@@ -251,6 +252,12 @@ export async function POST(request: NextRequest) {
         await Promise.allSettled([
             sendNotificationEmail(data, leadId),
             postToSlack(data, leadId),
+            enqueueDripSeries({
+                leadId,
+                leadEmail: data.email,
+                leadName: data.name,
+                source: data.source || data.magnet || null,
+            }),
         ]);
 
         return NextResponse.json({ ok: true, id: leadId }, { status: 200 });

@@ -39,9 +39,9 @@ const collectionSchema = {
     },
     publisher: {
         "@type": "Organization",
-        name: "QUANT LAB USA INC",
+        name: "QUANT LAB USA",
         url: "https://quantlabusa.dev",
-        "@id": "https://quantlabusa.dev/#org",
+        "@id": "https://quantlabusa.dev/#organization",
     },
     mainEntity: {
         "@type": "ItemList",
@@ -199,6 +199,15 @@ export default function ResourcesPage() {
                         <div className="flex items-center gap-2"><Download className="w-4 h-4 text-sky-400" /><span>One-click PDF download</span></div>
                         <div className="flex items-center gap-2"><Clock className="w-4 h-4 text-emerald-400" /><span>15-90 minute reads</span></div>
                         <div className="flex items-center gap-2"><FileText className="w-4 h-4 text-amber-400" /><span>No paywall, just an email</span></div>
+                    </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-12">
+                    <div className="rounded-2xl border border-sky-400/30 bg-sky-500/5 p-6 md:p-8">
+                        <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">What free resources does QUANT LAB USA publish?</h2>
+                        <p className="text-gray-200 leading-relaxed">
+                            <strong>QUANT LAB USA publishes six free downloadable resources: the Build-vs-Buy Decision Playbook (25 pages), the OWASP-aligned Web App Pentest Checklist (80 items), the 6-Week Custom CRM Rollout Playbook (30 pages plus templates), MVP to Production Tech Playbook (35 pages), the Stripe Integration Checklist, and the MITRE ATT&amp;CK Maturity Worksheet. Each targets a specific decision-maker (CTO, COO, Security Lead, Founder) and a specific decision. One-click PDF download, no paywall, just an email.</strong>
+                        </p>
                     </div>
                 </AnimatedSection>
 

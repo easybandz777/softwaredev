@@ -113,6 +113,13 @@ export default function Page() {
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-10 prose prose-invert max-w-none text-gray-300 leading-relaxed space-y-4">
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">What does CRM stand for?</h2>
+                    <p>
+                        CRM stands for <strong>Customer Relationship Management</strong>. It refers both to the business strategy of managing customer interactions and to the software that supports it. The term entered mainstream business vocabulary in the mid-1990s, was popularized by Siebel Systems and Salesforce, and is now the umbrella name for any database that holds your contacts, deals, activities, documents, and revenue events.
+                    </p>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-10 prose prose-invert max-w-none text-gray-300 leading-relaxed space-y-4">
                     <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Where the term came from</h2>
                     <p>
                         The phrase "Customer Relationship Management" entered mainstream business

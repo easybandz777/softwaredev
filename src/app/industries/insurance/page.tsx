@@ -1,28 +1,17 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { ShieldCheck, Check, ArrowRight } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
     title: "Insurance Industry Software Development | QuantLab",
     description:
         "Custom software for insurance agencies and advisors — advisor landing pages, agency CRMs, lead-capture funnels, compliance-aware document workflows. Founder-led.",
-    alternates: { canonical: "https://quantlabusa.dev/industries/insurance" },
-    openGraph: {
-        title: "Custom Software for Insurance Agencies & Advisors",
-        description:
-            "Personal-advisor sites that convert, agency CRMs that fit how you actually sell, and document workflows that respect compliance.",
-        url: "https://quantlabusa.dev/industries/insurance",
-        type: "article",
-    },
-    twitter: {
-        card: "summary_large_image",
-        title: "Custom Software for Insurance Agencies & Advisors | QuantLab",
-        description:
-            "Advisor landing pages, agency CRMs, and compliance-aware document workflows. Founder-led builds.",
-    },
-};
+    slug: "industries/insurance",
+    image: "/og-services.png",
+    type: "article",
+});
 
 const webPageSchema = {
     "@context": "https://schema.org",
@@ -55,7 +44,7 @@ const serviceSchema = {
     name: "Custom Software Development for Insurance Agencies & Advisors",
     provider: {
         "@type": "Organization",
-        name: "QuantLab Software Solutions",
+        name: "QUANT LAB USA",
         url: "https://quantlabusa.dev",
         "@id": "https://quantlabusa.dev/#organization",
     },

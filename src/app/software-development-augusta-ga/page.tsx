@@ -1,28 +1,17 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { MapPin, Check, ArrowRight } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
     title: "Augusta GA Software Dev & Penetration Testing | QUANT LAB USA",
     description:
         "Augusta-area custom software and penetration testing built for the cyber corridor around Fort Eisenhower and Army Cyber Command. Founder-led. Call (770) 652-1282.",
-    alternates: { canonical: "https://quantlabusa.dev/software-development-augusta-ga" },
-    openGraph: {
-        title: "Augusta GA Software Dev & Penetration Testing | QUANT LAB USA",
-        description:
-            "Augusta-area custom software and penetration testing built for the cyber corridor around Fort Eisenhower.",
-        url: "https://quantlabusa.dev/software-development-augusta-ga",
-        type: "article",
-    },
-    twitter: {
-        card: "summary",
-        title: "Augusta GA Software Dev & Penetration Testing | QUANT LAB USA",
-        description:
-            "Augusta-area custom software and penetration testing built for the cyber corridor around Fort Eisenhower.",
-    },
-};
+    slug: "software-development-augusta-ga",
+    image: "/og-image.png",
+    type: "article",
+});
 
 const localBusinessSchema = {
     "@context": "https://schema.org",
@@ -51,7 +40,7 @@ const serviceSchema = {
     "@type": "Service",
     serviceType: "Custom Software Development & Cybersecurity",
     name: "Custom Software Development & Cybersecurity in Augusta, GA",
-    provider: { "@id": "https://quantlabusa.dev/#org" },
+    provider: { "@id": "https://quantlabusa.dev/#organization" },
     areaServed: { "@type": "City", name: "Augusta", containedInPlace: { "@type": "State", name: "Georgia" } },
     description:
         "Penetration testing and custom software engineering for the Augusta cyber corridor, rooted in MITRE ATT&CK methodology.",

@@ -1,28 +1,17 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { MapPin, Check, ArrowRight } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
     title: "Columbus GA Custom Software Developer & Pen Testing | QUANT LAB",
     description:
         "Columbus GA software development — CRMs, dashboards, Stripe, and pen testing for businesses around Fort Moore and the Chattahoochee Valley. Call (770) 652-1282.",
-    alternates: { canonical: "https://quantlabusa.dev/software-development-columbus-ga" },
-    openGraph: {
-        title: "Columbus GA Custom Software Developer & Pen Testing | QUANT LAB",
-        description:
-            "Columbus GA software development — CRMs, dashboards, Stripe, and pen testing around Fort Moore.",
-        url: "https://quantlabusa.dev/software-development-columbus-ga",
-        type: "article",
-    },
-    twitter: {
-        card: "summary",
-        title: "Columbus GA Custom Software Developer & Pen Testing | QUANT LAB",
-        description:
-            "Columbus GA software development — CRMs, dashboards, Stripe, and pen testing around Fort Moore.",
-    },
-};
+    slug: "software-development-columbus-ga",
+    image: "/og-image.png",
+    type: "article",
+});
 
 const localBusinessSchema = {
     "@context": "https://schema.org",
@@ -49,7 +38,7 @@ const serviceSchema = {
     "@type": "Service",
     serviceType: "Custom Software Development",
     name: "Custom Software Development in Columbus, GA",
-    provider: { "@id": "https://quantlabusa.dev/#org" },
+    provider: { "@id": "https://quantlabusa.dev/#organization" },
     areaServed: { "@type": "City", name: "Columbus", containedInPlace: { "@type": "State", name: "Georgia" } },
     description:
         "Founder-led custom CRMs, Stripe billing, operations dashboards, and pen testing for Chattahoochee Valley businesses.",

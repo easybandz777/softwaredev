@@ -31,9 +31,9 @@ const serviceSchema = {
     name: "Custom E-commerce Development (Shopify Alternative Build)",
     provider: {
         "@type": "Organization",
-        name: "QuantLab Software Solutions",
+        name: "QUANT LAB USA",
         url: "https://quantlabusa.dev",
-        "@id": "https://quantlabusa.dev/#org",
+        "@id": "https://quantlabusa.dev/#organization",
     },
     areaServed: "United States",
     description:
@@ -130,6 +130,34 @@ export default function CustomEcommerceVsShopifyPage() {
                         Shopify is the right answer for a lot of stores. For B2B wholesale, complex catalog work, custom checkout flows, and ERP-tied operations, custom e-commerce development usually wins on cost, fit, and speed of change. Here is the honest comparison.
                     </p>
                     <ConsultationCTA label="Scope a Custom E-com Build" />
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-12">
+                    <div className="rounded-2xl border border-sky-400/30 bg-sky-500/5 p-6 md:p-8">
+                        <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Shopify vs custom e-commerce: which should I choose?</h2>
+                        <p className="text-gray-200 leading-relaxed">
+                            <strong>Choose Shopify for drop-ship, simple product catalogs, brands under roughly $1M annual revenue, and any B2C with a clean order-to-shipping flow. Choose custom e-commerce for B2B wholesale with tiered pricing and quotes, ERP-tied operations requiring bidirectional sync, complex jurisdictional tax, or supplier-API integrations. The break-even moment is usually when Shopify Plus plus 3-5 essential apps exceeds $3,000 per month and the apps are fighting each other.</strong>
+                        </p>
+                    </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-12">
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-5">Quick verdict</h2>
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-sm text-left border border-white/10 rounded-xl overflow-hidden">
+                            <thead className="bg-[#0d1526] text-white">
+                                <tr>
+                                    <th className="px-4 py-3 border-b border-white/10">Scenario</th>
+                                    <th className="px-4 py-3 border-b border-white/10">Best choice</th>
+                                </tr>
+                            </thead>
+                            <tbody className="text-gray-300">
+                                <tr className="border-b border-white/5"><td className="px-4 py-3">Drop-ship, simple B2C, &lt; $1M revenue, fast launch</td><td className="px-4 py-3 font-semibold text-white">Shopify</td></tr>
+                                <tr className="border-b border-white/5"><td className="px-4 py-3">B2B wholesale, ERP-tied, supplier APIs, multi-currency tax</td><td className="px-4 py-3 font-semibold text-white">Custom e-commerce</td></tr>
+                                <tr className="border-b border-white/5"><td className="px-4 py-3">Keep Shopify checkout, build custom B2B layer on top</td><td className="px-4 py-3 font-semibold text-white">Hybrid (Hydrogen + custom)</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-16">

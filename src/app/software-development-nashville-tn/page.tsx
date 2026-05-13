@@ -1,28 +1,17 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { MapPin, Check, ArrowRight } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
     title: "Nashville Custom Software, Healthcare & Music-Tech Dev | QL USA",
     description:
         "Nashville custom software for healthcare admin, music-tech, and SaaS founders. CRMs, Stripe, royalty tooling, pen testing. Call (770) 652-1282.",
-    alternates: { canonical: "https://quantlabusa.dev/software-development-nashville-tn" },
-    openGraph: {
-        title: "Nashville Custom Software, Healthcare & Music-Tech Dev | QL USA",
-        description:
-            "Nashville custom software for healthcare admin, music-tech, and SaaS founders.",
-        url: "https://quantlabusa.dev/software-development-nashville-tn",
-        type: "article",
-    },
-    twitter: {
-        card: "summary",
-        title: "Nashville Custom Software, Healthcare & Music-Tech Dev | QL USA",
-        description:
-            "Nashville custom software for healthcare admin, music-tech, and SaaS founders.",
-    },
-};
+    slug: "software-development-nashville-tn",
+    image: "/og-image.png",
+    type: "article",
+});
 
 const localBusinessSchema = {
     "@context": "https://schema.org",
@@ -51,7 +40,7 @@ const serviceSchema = {
     "@type": "Service",
     serviceType: "Custom Software Development",
     name: "Custom Software Development in Nashville, TN",
-    provider: { "@id": "https://quantlabusa.dev/#org" },
+    provider: { "@id": "https://quantlabusa.dev/#organization" },
     areaServed: { "@type": "City", name: "Nashville", containedInPlace: { "@type": "State", name: "Tennessee" } },
     description:
         "Healthcare-adjacent custom tools, music-tech and royalty tooling, and Stripe-powered SaaS for Nashville operators.",

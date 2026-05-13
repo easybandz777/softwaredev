@@ -1,22 +1,17 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { Shield, Check, ArrowRight } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
     title: "MITRE ATT&CK Assessment | ATT&CK-Aligned Pentest | QuantLab",
     description:
         "MITRE ATT&CK assessment and ATT&CK-aligned pentest mapping your defenses to real adversary TTPs. Call (770) 652-1282 to scope an ATT&CK-aligned engagement.",
-    alternates: { canonical: "https://quantlabusa.dev/services/mitre-attack-assessment" },
-    openGraph: {
-        title: "MITRE ATT&CK Assessment — Map Your Defenses to Real Adversary Behavior",
-        description:
-            "Threat-profile-driven red team and purple team engagements. ATT&CK heatmap of techniques tested, succeeded, detected, blocked. Audit-ready.",
-        url: "https://quantlabusa.dev/services/mitre-attack-assessment",
-        type: "article",
-    },
-};
+    slug: "services/mitre-attack-assessment",
+    image: "/og-pentest.png",
+    type: "article",
+});
 
 const serviceSchema = {
     "@context": "https://schema.org",
@@ -25,9 +20,9 @@ const serviceSchema = {
     name: "MITRE ATT&CK Assessment & ATT&CK-Aligned Pentest",
     provider: {
         "@type": "Organization",
-        name: "QuantLab Software Solutions",
+        name: "QUANT LAB USA",
         url: "https://quantlabusa.dev",
-        "@id": "https://quantlabusa.dev/#org",
+        "@id": "https://quantlabusa.dev/#organization",
     },
     areaServed: "United States",
     description:

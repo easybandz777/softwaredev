@@ -1,22 +1,17 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { Globe, Check, ArrowRight } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
     title: "Next.js Web App & SaaS Development — Vercel-Ready | QuantLab",
     description:
         "Custom Next.js, React, and TypeScript web apps and SaaS products. Client portals, contractor tools, and platforms shipped to production on Vercel — not just demos.",
-    alternates: { canonical: "https://quantlabusa.dev/services/web-applications" },
-    openGraph: {
-        title: "Next.js Development Company — Custom Next.js Apps Built for Production",
-        description:
-            "Full-stack Next.js and TypeScript web applications and SaaS products. Deployed to Vercel CDN. Client portals, contractor platforms, artist sites.",
-        url: "https://quantlabusa.dev/services/web-applications",
-        type: "article",
-    },
-};
+    slug: "services/web-applications",
+    image: "/og-web-apps.png",
+    type: "article",
+});
 
 const serviceSchema = {
     "@context": "https://schema.org",
@@ -25,7 +20,7 @@ const serviceSchema = {
     name: "Next.js Custom Software & Web App Development",
     provider: {
         "@type": "Organization",
-        name: "QuantLab Software Solutions",
+        name: "QUANT LAB USA",
         url: "https://quantlabusa.dev",
         "@id": "https://quantlabusa.dev/#organization",
     },

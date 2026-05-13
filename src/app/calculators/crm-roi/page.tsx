@@ -37,7 +37,7 @@ const calculatorSchema = {
         "Interactive calculator that models a 3-year TCO comparison between Salesforce or HubSpot and a custom-built CRM, including payback period, productivity hours saved, and recovered revenue from reduced deal leakage.",
     provider: {
         "@type": "Organization",
-        name: "QuantLab Software Solutions",
+        name: "QUANT LAB USA",
         url: "https://quantlabusa.dev",
         "@id": "https://quantlabusa.dev/#organization",
     },

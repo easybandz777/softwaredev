@@ -1,28 +1,17 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { MapPin, Check, ArrowRight } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
     title: "Dallas Custom Software, Legacy Modernization & Pen Test | QL USA",
     description:
         "Dallas enterprise-grade software development, legacy tool modernization, and penetration testing for corporate IT, logistics, and SaaS. Call (770) 652-1282.",
-    alternates: { canonical: "https://quantlabusa.dev/software-development-dallas-tx" },
-    openGraph: {
-        title: "Dallas Custom Software, Legacy Modernization & Pen Test | QL USA",
-        description:
-            "Dallas enterprise-grade software development and pen testing for corporate IT, logistics, and SaaS.",
-        url: "https://quantlabusa.dev/software-development-dallas-tx",
-        type: "article",
-    },
-    twitter: {
-        card: "summary",
-        title: "Dallas Custom Software, Legacy Modernization & Pen Test | QL USA",
-        description:
-            "Dallas enterprise-grade software development and pen testing for corporate IT and logistics.",
-    },
-};
+    slug: "software-development-dallas-tx",
+    image: "/og-image.png",
+    type: "article",
+});
 
 const localBusinessSchema = {
     "@context": "https://schema.org",
@@ -54,7 +43,7 @@ const serviceSchema = {
     "@type": "Service",
     serviceType: "Custom Software Development & Penetration Testing",
     name: "Custom Software Development & Penetration Testing in Dallas, TX",
-    provider: { "@id": "https://quantlabusa.dev/#org" },
+    provider: { "@id": "https://quantlabusa.dev/#organization" },
     areaServed: { "@type": "City", name: "Dallas", containedInPlace: { "@type": "State", name: "Texas" } },
     description:
         "Legacy internal tool modernization, corporate IT penetration testing, and ops dashboards for the DFW metroplex.",

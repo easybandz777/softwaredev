@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { CreditCard, Check, ArrowRight } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
 export const dynamicParams = false;
 
@@ -633,19 +634,13 @@ export async function generateMetadata({
 
     const title = `Stripe Integration in ${cfg.city}, ${cfg.state} | QUANT LAB USA`;
 
-    return {
+    return pageMetadata({
         title,
         description: cfg.metaDescription,
-        alternates: {
-            canonical: `https://quantlabusa.dev/services/stripe-integration/${cfg.slug}`,
-        },
-        openGraph: {
-            title,
-            description: cfg.metaDescription,
-            url: `https://quantlabusa.dev/services/stripe-integration/${cfg.slug}`,
-            type: "article",
-        },
-    };
+        slug: `services/stripe-integration/${cfg.slug}`,
+        image: "/og-stripe.png",
+        type: "article",
+    });
 }
 
 export default async function StripeIntegrationCityPage({
@@ -664,7 +659,7 @@ export default async function StripeIntegrationCityPage({
         name: `Custom Stripe Integration in ${cfg.city}, ${cfg.state}`,
         provider: {
             "@type": "Organization",
-            name: "QuantLab Software Solutions",
+            name: "QUANT LAB USA",
             url: "https://quantlabusa.dev",
             "@id": "https://quantlabusa.dev/#organization",
         },

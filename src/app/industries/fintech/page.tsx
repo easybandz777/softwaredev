@@ -1,28 +1,17 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { Landmark, Check, ArrowRight } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
     title: "Custom Software for Fintech | QuantLab USA",
     description:
         "Custom fintech development — PCI-DSS, SOC 2, SOX, KYC/AML aware. Trading dashboards, Stripe Connect marketplaces, advisor CRMs, MITRE ATT&CK pentests. Founder-led.",
-    alternates: { canonical: "https://quantlabusa.dev/industries/fintech" },
-    openGraph: {
-        title: "Custom Software for Fintech — Built Compliant, Built Secure, Built to Ship",
-        description:
-            "Fintech development company building custom CRMs, marketplaces, and trading systems with compliance and pentesting baked in.",
-        url: "https://quantlabusa.dev/industries/fintech",
-        type: "article",
-    },
-    twitter: {
-        card: "summary_large_image",
-        title: "Custom Software for Fintech | QuantLab USA",
-        description:
-            "PCI-DSS, SOC 2, SOX, and KYC/AML-aware fintech builds. Founder-led, no offshore IP risk.",
-    },
-};
+    slug: "industries/fintech",
+    image: "/og-services.png",
+    type: "article",
+});
 
 const webPageSchema = {
     "@context": "https://schema.org",
@@ -55,7 +44,7 @@ const serviceSchema = {
     name: "Custom Software Development for Fintech",
     provider: {
         "@type": "Organization",
-        name: "QuantLab Software Solutions",
+        name: "QUANT LAB USA",
         url: "https://quantlabusa.dev",
         "@id": "https://quantlabusa.dev/#organization",
     },

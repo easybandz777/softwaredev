@@ -88,6 +88,22 @@ const faqSchema = {
                 text: "That is the breakeven moment. HubSpot ratchets pricing by marketing contact count and seat count. A custom CRM does not — your costs scale with infrastructure, not with the size of your list. Most clients who move at this point save 50 to 70 percent in year two onward.",
             },
         },
+        {
+            "@type": "Question",
+            name: "At what team size does a custom CRM beat HubSpot on cost?",
+            acceptedAnswer: {
+                "@type": "Answer",
+                text: "Roughly 25 seats on HubSpot Sales Pro, or any team where marketing contact count has pushed you to the next pricing tier. At that point the per-seat plus per-contact ratchet compounds faster than the amortized cost of a custom build over three years.",
+            },
+        },
+        {
+            "@type": "Question",
+            name: "Can I keep HubSpot for marketing and build a custom sales CRM?",
+            acceptedAnswer: {
+                "@type": "Answer",
+                text: "Yes — and that is the hybrid pattern we recommend most often in 2026. Keep HubSpot at the Starter tier ($50 a month) for transactional email, forms, and inbound capture. Push contacts and events into a custom CRM that owns the sales record. This pulls the per-seat ratchet out of your sales workflow entirely.",
+            },
+        },
     ],
 };
 
@@ -145,6 +161,34 @@ export default function CustomCrmVsHubSpotPage() {
                         HubSpot is genuinely the right answer for early-stage teams who need a CRM running by lunchtime. Once you cross the contact tiers, the seat ratchet, and the Operations Hub markup, a <Link href="/services/custom-crm-development" className="text-sky-400 hover:underline">custom CRM</Link> usually wins on cost and fit. Here is the honest comparison.
                     </p>
                     <ConsultationCTA label="Scope a HubSpot Replacement" />
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-12">
+                    <div className="rounded-2xl border border-sky-400/30 bg-sky-500/5 p-6 md:p-8">
+                        <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Custom CRM vs HubSpot: which should I choose?</h2>
+                        <p className="text-gray-200 leading-relaxed">
+                            <strong>Choose HubSpot when you have fewer than 25 employees, want CRM plus marketing automation in a single bill, and your contact list is comfortably under the next pricing tier. Choose a custom CRM when contact counts cross HubSpot's marketing tier ratchet, when your sales motion is RFP-heavy or services-billed, or when more than 30% of your workflow lives in HubSpot custom properties. The hybrid pattern (HubSpot Starter for forms, custom for the sales record) often wins for teams in between.</strong>
+                        </p>
+                    </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-12">
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-5">Quick verdict</h2>
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-sm text-left border border-white/10 rounded-xl overflow-hidden">
+                            <thead className="bg-[#0d1526] text-white">
+                                <tr>
+                                    <th className="px-4 py-3 border-b border-white/10">Scenario</th>
+                                    <th className="px-4 py-3 border-b border-white/10">Best choice</th>
+                                </tr>
+                            </thead>
+                            <tbody className="text-gray-300">
+                                <tr className="border-b border-white/5"><td className="px-4 py-3">Early-stage team (under 25 people), inbound-led motion</td><td className="px-4 py-3 font-semibold text-white">HubSpot</td></tr>
+                                <tr className="border-b border-white/5"><td className="px-4 py-3">Mid-market with vertical workflow, contact list past tier limit</td><td className="px-4 py-3 font-semibold text-white">Custom CRM</td></tr>
+                                <tr className="border-b border-white/5"><td className="px-4 py-3">Want marketing automation but custom sales workflow</td><td className="px-4 py-3 font-semibold text-white">Hybrid (HubSpot Starter + custom)</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-16">

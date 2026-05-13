@@ -85,7 +85,7 @@ const blogSchema = {
     url: "https://quantlabusa.dev/blog",
     publisher: {
         "@type": "Organization",
-        name: "QUANT LAB USA INC",
+        name: "QUANT LAB USA",
         "@id": "https://quantlabusa.dev/#organization",
     },
     blogPost: posts.map((p) => ({

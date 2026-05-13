@@ -58,7 +58,7 @@ const securityStructuredData = {
         {
             "@type": "Organization",
             "@id": "https://quantlabusa.dev/#organization",
-            name: "QUANT LAB USA INC",
+            name: "QUANT LAB USA",
             url: "https://quantlabusa.dev",
             telephone: "+17706521282",
             email: "beltz@quantlabusa.dev",

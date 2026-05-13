@@ -1,8 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
+import dynamic from "next/dynamic";
 import { Button } from "./ui/Button";
-import { ConsultationModal } from "./ConsultationModal";
+
+const ConsultationModal = dynamic(
+    () => import("./ConsultationModal").then((m) => m.ConsultationModal),
+    { ssr: false }
+);
 
 interface Props {
     label?: string;

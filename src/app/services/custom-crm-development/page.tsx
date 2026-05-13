@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { Terminal, Check, ArrowRight, MapPin } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
 const crmCities: { slug: string; city: string; state: string }[] = [
     { slug: "atlanta-ga", city: "Atlanta", state: "GA" },
@@ -21,19 +21,14 @@ const crmCities: { slug: string; city: string; state: string }[] = [
     { slug: "san-francisco-ca", city: "San Francisco", state: "CA" },
 ];
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
     title: "Custom CRM Development | Built for Your Workflow | QuantLab",
     description:
         "Custom CRM development that fits how you actually sell. Next.js + PostgreSQL builds, founder-led, no SaaS lock-in. Call (770) 652-1282 for a free scope call.",
-    alternates: { canonical: "https://quantlabusa.dev/services/custom-crm-development" },
-    openGraph: {
-        title: "Custom CRM Development for Companies That Outgrew the Templates",
-        description:
-            "Pipeline, lead capture, automations, and reporting that mirror your actual sales motion. Next.js + PostgreSQL. You own the code.",
-        url: "https://quantlabusa.dev/services/custom-crm-development",
-        type: "article",
-    },
-};
+    slug: "services/custom-crm-development",
+    image: "/og-crm.png",
+    type: "article",
+});
 
 const serviceSchema = {
     "@context": "https://schema.org",
@@ -42,9 +37,9 @@ const serviceSchema = {
     name: "Custom CRM Development",
     provider: {
         "@type": "Organization",
-        name: "QuantLab Software Solutions",
+        name: "QUANT LAB USA",
         url: "https://quantlabusa.dev",
-        "@id": "https://quantlabusa.dev/#org",
+        "@id": "https://quantlabusa.dev/#organization",
     },
     areaServed: "United States",
     description:

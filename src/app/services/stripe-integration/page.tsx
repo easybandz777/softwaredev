@@ -1,28 +1,17 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { CreditCard, Check, ArrowRight } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
     title: "Custom Stripe Integration Consulting | QuantLab",
     description:
         "Custom Stripe development beyond hosted Checkout — Connect marketplaces, complex subscriptions, custom webhooks, ERP/QBO sync. Founder-led. Free scoping call.",
-    alternates: { canonical: "https://quantlabusa.dev/services/stripe-integration" },
-    openGraph: {
-        title: "Custom Stripe Integration That Goes Beyond Hosted Checkout",
-        description:
-            "Stripe Connect, multi-currency, custom subscription proration, tax handling, idempotent webhooks, and QuickBooks/ERP sync. Built around your business model.",
-        url: "https://quantlabusa.dev/services/stripe-integration",
-        type: "article",
-    },
-    twitter: {
-        card: "summary_large_image",
-        title: "Custom Stripe Integration That Goes Beyond Hosted Checkout",
-        description:
-            "Stripe Connect, multi-currency, custom subscription proration, idempotent webhooks, QuickBooks/ERP sync. Founder-led builds.",
-    },
-};
+    slug: "services/stripe-integration",
+    image: "/og-stripe.png",
+    type: "article",
+});
 
 const serviceSchema = {
     "@context": "https://schema.org",
@@ -31,9 +20,9 @@ const serviceSchema = {
     name: "Custom Stripe Integration & Development",
     provider: {
         "@type": "Organization",
-        name: "QuantLab Software Solutions",
+        name: "QUANT LAB USA",
         url: "https://quantlabusa.dev",
-        "@id": "https://quantlabusa.dev/#org",
+        "@id": "https://quantlabusa.dev/#organization",
     },
     areaServed: [
         { "@type": "Country", name: "United States" },

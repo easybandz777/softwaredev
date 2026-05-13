@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { Terminal, Check, ArrowRight, MapPin } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
 export const dynamicParams = false;
 
@@ -391,24 +392,14 @@ export async function generateMetadata({
 
     const title = `Custom CRM Development in ${config.city}, ${config.state} | QUANT LAB USA`;
     const description = `Custom CRM software built for ${config.city} businesses tired of Salesforce/HubSpot bloat. From discovery to launch in 8-16 weeks. Founder-led.`;
-    const url = `https://quantlabusa.dev/services/custom-crm-development/${config.slug}`;
 
-    return {
+    return pageMetadata({
         title,
         description,
-        alternates: { canonical: url },
-        openGraph: {
-            title,
-            description,
-            url,
-            type: "article",
-        },
-        twitter: {
-            card: "summary",
-            title,
-            description,
-        },
-    };
+        slug: `services/custom-crm-development/${config.slug}`,
+        image: "/og-crm.png",
+        type: "article",
+    });
 }
 
 export default async function CustomCRMCityPage({
@@ -427,7 +418,7 @@ export default async function CustomCRMCityPage({
         "@type": "Service",
         serviceType: "Custom CRM Development",
         name: `Custom CRM Development in ${config.city}, ${config.state}`,
-        provider: { "@id": "https://quantlabusa.dev/#org" },
+        provider: { "@id": "https://quantlabusa.dev/#organization" },
         areaServed: {
             "@type": "City",
             name: config.city,

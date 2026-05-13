@@ -1,22 +1,17 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { Terminal, Check, ArrowRight } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
     title: "Custom CRM, ERP & Internal Tools — Built to Fit | QuantLab",
     description:
         "Custom CRMs, dashboards, and work order systems built around your workflow — not Salesforce's. Shipped across 4 industries. Free scoping call in 24 hours.",
-    alternates: { canonical: "https://quantlabusa.dev/services/custom-business-software" },
-    openGraph: {
-        title: "Stop Reshaping Your Business Around Salesforce",
-        description:
-            "Custom CRMs, ERPs, and internal tools designed around how your business actually runs. Working v1 in 4–8 weeks. You own the code.",
-        url: "https://quantlabusa.dev/services/custom-business-software",
-        type: "article",
-    },
-};
+    slug: "services/custom-business-software",
+    image: "/og-services.png",
+    type: "article",
+});
 
 const serviceSchema = {
     "@context": "https://schema.org",
@@ -25,7 +20,7 @@ const serviceSchema = {
     name: "Custom Business Software",
     provider: {
         "@type": "Organization",
-        name: "QuantLab Software Solutions",
+        name: "QUANT LAB USA",
         url: "https://quantlabusa.dev",
         "@id": "https://quantlabusa.dev/#organization",
     },

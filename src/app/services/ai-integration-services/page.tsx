@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { Sparkles, Check, ArrowRight, MapPin } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
 const cities: { slug: string; city: string; state: string }[] = [
     { slug: "atlanta-ga", city: "Atlanta", state: "GA" },
@@ -21,19 +21,14 @@ const cities: { slug: string; city: string; state: string }[] = [
     { slug: "san-francisco-ca", city: "San Francisco", state: "CA" },
 ];
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
     title: "AI Integration Services | Claude, OpenAI, RAG, Agents | QuantLab",
     description:
         "AI integration services on Claude, OpenAI, and open-source models. RAG pipelines, agentic systems, evals. Founder-led. Call (770) 652-1282 for a scope call.",
-    alternates: { canonical: "https://quantlabusa.dev/services/ai-integration-services" },
-    openGraph: {
-        title: "AI Integration Services That Actually Ship to Production",
-        description:
-            "Claude, OpenAI, and open-source model integration. RAG pipelines, agentic systems, evals, and the guardrails your product needs to stay correct under load.",
-        url: "https://quantlabusa.dev/services/ai-integration-services",
-        type: "article",
-    },
-};
+    slug: "services/ai-integration-services",
+    image: "/og-services.png",
+    type: "article",
+});
 
 const serviceSchema = {
     "@context": "https://schema.org",
@@ -42,9 +37,9 @@ const serviceSchema = {
     name: "AI Integration Services — Claude, OpenAI, RAG, and Agentic Systems",
     provider: {
         "@type": "Organization",
-        name: "QuantLab Software Solutions",
+        name: "QUANT LAB USA",
         url: "https://quantlabusa.dev",
-        "@id": "https://quantlabusa.dev/#org",
+        "@id": "https://quantlabusa.dev/#organization",
     },
     areaServed: "United States",
     description:

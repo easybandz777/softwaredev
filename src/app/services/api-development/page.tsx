@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { Code2, Check, ArrowRight, MapPin } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
 const cities: { slug: string; city: string; state: string }[] = [
     { slug: "atlanta-ga", city: "Atlanta", state: "GA" },
@@ -21,19 +21,14 @@ const cities: { slug: string; city: string; state: string }[] = [
     { slug: "san-francisco-ca", city: "San Francisco", state: "CA" },
 ];
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
     title: "API Development | REST, GraphQL, Integrations | QuantLab USA",
     description:
         "Custom API development on Node, TypeScript, and PostgreSQL. REST and GraphQL APIs, third-party integrations, webhooks. Founder-led. Call (770) 652-1282.",
-    alternates: { canonical: "https://quantlabusa.dev/services/api-development" },
-    openGraph: {
-        title: "Custom API Development for Companies That Need More Than Zapier",
-        description:
-            "REST and GraphQL API development, third-party integration, webhook architecture, and the documentation your engineering team will actually use.",
-        url: "https://quantlabusa.dev/services/api-development",
-        type: "article",
-    },
-};
+    slug: "services/api-development",
+    image: "/og-services.png",
+    type: "article",
+});
 
 const serviceSchema = {
     "@context": "https://schema.org",
@@ -42,9 +37,9 @@ const serviceSchema = {
     name: "REST and GraphQL API Development and Integration",
     provider: {
         "@type": "Organization",
-        name: "QuantLab Software Solutions",
+        name: "QUANT LAB USA",
         url: "https://quantlabusa.dev",
-        "@id": "https://quantlabusa.dev/#org",
+        "@id": "https://quantlabusa.dev/#organization",
     },
     areaServed: "United States",
     description:

@@ -33,7 +33,7 @@ const articleSchema = {
     publisher: {
         "@type": "Organization",
         "@id": "https://quantlabusa.dev/#organization",
-        name: "QUANT LAB USA INC",
+        name: "QUANT LAB USA",
         url: "https://quantlabusa.dev",
         logo: { "@type": "ImageObject", url: "https://quantlabusa.dev/logo-transparent.png" },
     },
@@ -94,6 +94,22 @@ const faqSchema = {
                 text: "A vulnerability scan runs Nessus or Qualys against your network and produces a CSV of CVEs. A pentest is a human adversary chaining findings into actual impact: credential spray to lateral movement to domain admin. For SOC 2 and most compliance frameworks, you need a real pentest. For internal hygiene, a scan is fine.",
             },
         },
+        {
+            "@type": "Question",
+            name: "What questions should I ask a Georgia pentest company?",
+            acceptedAnswer: {
+                "@type": "Answer",
+                text: "Six filters: (1) Show me a redacted sample report with ATT&CK technique IDs. (2) Who is testing — junior, senior, or partner? (3) Is the engagement scoped fixed-fee or T&M with a cap? (4) Is a 30-day retest included? (5) Does the methodology map to ATT&CK, OWASP, and PTES? (6) Are you Georgia-based or sub-contracting on-site work? These six filters eliminate the bottom 70% of pentest vendors.",
+            },
+        },
+        {
+            "@type": "Question",
+            name: "How long does a Georgia pentest engagement take?",
+            acceptedAnswer: {
+                "@type": "Answer",
+                text: "Typical timelines from Georgia-based shops: 1 to 2 weeks of testing, 1 week of report writing, and a 30-day retest window after fixes ship. End-to-end calendar time from kickoff to final report is 4 to 6 weeks for most SOC 2 web app or external network engagements. Red teams run 4 to 12 weeks total.",
+            },
+        },
     ],
 };
 
@@ -130,6 +146,15 @@ export default function BestGeorgiaPentestCompaniesPage() {
                         By <Link href="/about" className="text-sky-400 hover:underline">William Beltz</Link>, founder of QUANT LAB USA INC · Published May 12, 2026
                     </p>
                     <ConsultationCTA label="Get a GA Pentest Scope" service="Penetration Testing" city="Atlanta, GA" source="blog-ga-pentest-best" />
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-12">
+                    <div className="rounded-2xl border border-sky-400/30 bg-sky-500/5 p-6 md:p-8">
+                        <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">What is the best penetration testing company in Georgia?</h2>
+                        <p className="text-gray-200 leading-relaxed">
+                            <strong>The best Georgia-based penetration testing companies in 2026 are senior-led boutiques (QUANT LAB USA INC and a handful of independent shops) that map findings to MITRE ATT&amp;CK, follow OWASP Top 10 and PTES methodology, ship custom reports, and can perform on-site engagements in Atlanta, Macon, Savannah, and Augusta without travel padding. Realistic 2026 ranges from local shops: external network $7K-$18K, web app $10K-$28K, internal/AD $12K-$35K, full red team $40K-$120K.</strong>
+                        </p>
+                    </div>
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-12">

@@ -77,7 +77,7 @@ const teamStructuredData = {
         {
             "@type": "Organization",
             "@id": "https://quantlabusa.dev/#organization",
-            name: "QUANT LAB USA INC",
+            name: "QUANT LAB USA",
             legalName: "QUANT LAB USA INC",
             url: "https://quantlabusa.dev",
             founder: { "@id": "https://quantlabusa.dev/#william-beltz" },

@@ -46,7 +46,7 @@ const serviceSchema = {
     "@type": "Service",
     serviceType: "Custom Software Development",
     name: "Custom Software Development in Brickell Miami",
-    provider: { "@id": "https://quantlabusa.dev/#org" },
+    provider: { "@id": "https://quantlabusa.dev/#organization" },
     areaServed: { "@type": "Place", name: "Brickell, Miami, FL" },
     description:
         "LATAM-facing fintech, crypto infrastructure, banking-adjacent SaaS, and SOC 2 pen tests for Brickell-headquartered firms.",

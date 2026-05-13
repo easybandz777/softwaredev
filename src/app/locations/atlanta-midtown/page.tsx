@@ -46,7 +46,7 @@ const serviceSchema = {
     "@type": "Service",
     serviceType: "Custom Software Development",
     name: "Custom Software Development in Midtown Atlanta",
-    provider: { "@id": "https://quantlabusa.dev/#org" },
+    provider: { "@id": "https://quantlabusa.dev/#organization" },
     areaServed: { "@type": "Place", name: "Midtown, Atlanta, GA" },
     description:
         "Venture-backed SaaS builds, Stripe Connect, fintech infrastructure, and SOC 2 pen tests for Midtown Atlanta and the Georgia Tech / Tech Square corridor.",

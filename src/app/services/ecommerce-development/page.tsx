@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { ShoppingCart, Check, ArrowRight, MapPin } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
 const cities: { slug: string; city: string; state: string }[] = [
     { slug: "atlanta-ga", city: "Atlanta", state: "GA" },
@@ -21,19 +21,14 @@ const cities: { slug: string; city: string; state: string }[] = [
     { slug: "san-francisco-ca", city: "San Francisco", state: "CA" },
 ];
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
     title: "Ecommerce Development | Custom Storefronts, Headless | QuantLab",
     description:
         "Custom ecommerce development — headless commerce on Next.js, Shopify Hydrogen, Medusa. Storefronts, checkout, OMS. Founder-led. Call (770) 652-1282.",
-    alternates: { canonical: "https://quantlabusa.dev/services/ecommerce-development" },
-    openGraph: {
-        title: "Custom Ecommerce Development for Brands Past the Shopify Theme",
-        description:
-            "Headless commerce on Next.js, Shopify Hydrogen, and Medusa. Storefronts, checkout, OMS, subscription, and the operational layer Shopify themes cannot deliver.",
-        url: "https://quantlabusa.dev/services/ecommerce-development",
-        type: "article",
-    },
-};
+    slug: "services/ecommerce-development",
+    image: "/og-services.png",
+    type: "article",
+});
 
 const serviceSchema = {
     "@context": "https://schema.org",
@@ -42,9 +37,9 @@ const serviceSchema = {
     name: "Custom Ecommerce Development and Headless Commerce",
     provider: {
         "@type": "Organization",
-        name: "QuantLab Software Solutions",
+        name: "QUANT LAB USA",
         url: "https://quantlabusa.dev",
-        "@id": "https://quantlabusa.dev/#org",
+        "@id": "https://quantlabusa.dev/#organization",
     },
     areaServed: "United States",
     description:

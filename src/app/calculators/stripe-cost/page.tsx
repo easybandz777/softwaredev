@@ -37,7 +37,7 @@ const calculatorSchema = {
         "Interactive calculator that estimates custom Stripe integration cost and timeline based on volume, features, and complexity.",
     provider: {
         "@type": "Organization",
-        name: "QuantLab Software Solutions",
+        name: "QUANT LAB USA",
         url: "https://quantlabusa.dev",
         "@id": "https://quantlabusa.dev/#organization",
     },

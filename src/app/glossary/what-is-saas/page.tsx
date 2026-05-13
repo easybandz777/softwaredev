@@ -89,6 +89,13 @@ export default function Page() {
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-10 prose prose-invert max-w-none text-gray-300 leading-relaxed space-y-4">
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">What does SaaS stand for?</h2>
+                    <p>
+                        SaaS stands for <strong>Software as a Service</strong>. It refers to software you access through a browser on a recurring subscription instead of installing locally. Real SaaS has four traits: multi-tenancy (one app instance, many customers), stateful user data, recurring subscription billing, and continuous delivery to all customers simultaneously without scheduling upgrade windows.
+                    </p>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-10 prose prose-invert max-w-none text-gray-300 leading-relaxed space-y-4">
                     <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">A brief history</h2>
                     <p>
                         Before SaaS, business software was something you bought on a CD, installed

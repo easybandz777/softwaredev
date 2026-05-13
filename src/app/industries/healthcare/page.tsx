@@ -1,28 +1,17 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { Activity, Check, ArrowRight } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
     title: "Custom Healthcare Software Development | QuantLab",
     description:
         "HIPAA-aware healthcare software development — patient portals, provider scheduling, telehealth back-ends, billing integrations. Secure by default. MITRE ATT&CK ready.",
-    alternates: { canonical: "https://quantlabusa.dev/industries/healthcare" },
-    openGraph: {
-        title: "Custom Healthcare Software — HIPAA-Aware, Secure by Default",
-        description:
-            "HIPAA-aware patient portals, provider scheduling, telehealth back-ends, and billing — paired with MITRE ATT&CK pentests and AD assessments.",
-        url: "https://quantlabusa.dev/industries/healthcare",
-        type: "article",
-    },
-    twitter: {
-        card: "summary_large_image",
-        title: "Custom Healthcare Software Development | QuantLab",
-        description:
-            "HIPAA-aware, secure-by-default healthcare builds. Encryption, RBAC, audit logging. Pentest-ready.",
-    },
-};
+    slug: "industries/healthcare",
+    image: "/og-services.png",
+    type: "article",
+});
 
 const webPageSchema = {
     "@context": "https://schema.org",
@@ -55,7 +44,7 @@ const serviceSchema = {
     name: "Custom Healthcare Software Development",
     provider: {
         "@type": "Organization",
-        name: "QuantLab Software Solutions",
+        name: "QUANT LAB USA",
         url: "https://quantlabusa.dev",
         "@id": "https://quantlabusa.dev/#organization",
     },

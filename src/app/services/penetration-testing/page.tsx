@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { Shield, Check, ArrowRight, MapPin } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
 const pentestCities: { slug: string; city: string; state: string }[] = [
     { slug: "atlanta-ga", city: "Atlanta", state: "GA" },
@@ -21,19 +21,14 @@ const pentestCities: { slug: string; city: string; state: string }[] = [
     { slug: "san-francisco-ca", city: "San Francisco", state: "CA" },
 ];
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
     title: "Penetration Testing Georgia — 11-Module Red Team | QuantLab",
     description:
         "Full-scope pentests: network, wireless, web app, and Active Directory. 11-module red team toolkit mapped to MITRE ATT&CK. Georgia-based, serving the US. Get a scope.",
-    alternates: { canonical: "https://quantlabusa.dev/services/penetration-testing" },
-    openGraph: {
-        title: "We Break In So Someone Else Doesn't.",
-        description:
-            "Network, wireless, web app, and Active Directory pentests with a custom 11-module red team toolkit. Every finding mapped to MITRE ATT&CK.",
-        url: "https://quantlabusa.dev/services/penetration-testing",
-        type: "article",
-    },
-};
+    slug: "services/penetration-testing",
+    image: "/og-pentest.png",
+    type: "article",
+});
 
 const serviceSchema = {
     "@context": "https://schema.org",
@@ -42,7 +37,7 @@ const serviceSchema = {
     name: "Penetration Testing & Red Team Services",
     provider: {
         "@type": "Organization",
-        name: "QuantLab Software Solutions",
+        name: "QUANT LAB USA",
         url: "https://quantlabusa.dev",
         "@id": "https://quantlabusa.dev/#organization",
     },

@@ -147,6 +147,34 @@ export default function CustomWebVsWordPressPage() {
                     <ConsultationCTA label="Scope a WordPress Replacement" />
                 </AnimatedSection>
 
+                <AnimatedSection className="mb-12">
+                    <div className="rounded-2xl border border-sky-400/30 bg-sky-500/5 p-6 md:p-8">
+                        <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">WordPress vs custom code: which should I choose?</h2>
+                        <p className="text-gray-200 leading-relaxed">
+                            <strong>Choose WordPress for content sites, blogs, brochure sites, publications, and small WooCommerce stores edited primarily by non-developers. Choose custom code when the project needs authenticated workflows, custom application logic, performance-critical Core Web Vitals, or programmatic SEO at thousands of pages. The most expensive 2026 mistake is running a real application on WordPress through 20+ plugins — plugin debt and supply-chain risk usually exceed the cost of a rebuild.</strong>
+                        </p>
+                    </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-12">
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-5">Quick verdict</h2>
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-sm text-left border border-white/10 rounded-xl overflow-hidden">
+                            <thead className="bg-[#0d1526] text-white">
+                                <tr>
+                                    <th className="px-4 py-3 border-b border-white/10">Scenario</th>
+                                    <th className="px-4 py-3 border-b border-white/10">Best choice</th>
+                                </tr>
+                            </thead>
+                            <tbody className="text-gray-300">
+                                <tr className="border-b border-white/5"><td className="px-4 py-3">Blog, magazine, brochure site, simple WooCommerce</td><td className="px-4 py-3 font-semibold text-white">WordPress</td></tr>
+                                <tr className="border-b border-white/5"><td className="px-4 py-3">Custom application, real workflows, programmatic SEO at scale</td><td className="px-4 py-3 font-semibold text-white">Custom code (Next.js)</td></tr>
+                                <tr className="border-b border-white/5"><td className="px-4 py-3">Headless: WP as CMS, Next.js front-end</td><td className="px-4 py-3 font-semibold text-white">Hybrid (Headless WP)</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </AnimatedSection>
+
                 <AnimatedSection className="mb-16">
                     <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">When WordPress is the right call</h2>
                     <div className="prose prose-invert max-w-none text-gray-400 space-y-4 leading-relaxed">

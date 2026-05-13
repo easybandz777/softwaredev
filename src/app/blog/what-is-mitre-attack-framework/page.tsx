@@ -40,7 +40,7 @@ const articleSchema = {
     },
     publisher: {
         "@type": "Organization",
-        name: "QUANT LAB USA INC",
+        name: "QUANT LAB USA",
         "@id": "https://quantlabusa.dev/#organization",
         logo: {
             "@type": "ImageObject",
@@ -73,6 +73,53 @@ const breadcrumbSchema = {
     ],
 };
 
+const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+        {
+            "@type": "Question",
+            name: "What is the MITRE ATT&CK framework?",
+            acceptedAnswer: {
+                "@type": "Answer",
+                text: "MITRE ATT&CK is a publicly available knowledge base that catalogs the tactics, techniques, and procedures real-world adversaries use to attack computer systems. Published by MITRE Corporation, it has become the common vocabulary every modern security team uses to describe how attackers operate, with 14 tactics and over 200 techniques in the enterprise matrix.",
+            },
+        },
+        {
+            "@type": "Question",
+            name: "What is the difference between tactics, techniques, and sub-techniques in MITRE ATT&CK?",
+            acceptedAnswer: {
+                "@type": "Answer",
+                text: "Tactics are the columns of the matrix and represent the attacker's goal at that stage (e.g., Initial Access, Persistence, Exfiltration). Techniques are the boxes inside each column, describing how the attacker achieves that goal (e.g., T1566 Phishing). Sub-techniques narrow further (T1566.001 Spearphishing Attachment).",
+            },
+        },
+        {
+            "@type": "Question",
+            name: "What is the difference between MITRE ATT&CK and the Cyber Kill Chain?",
+            acceptedAnswer: {
+                "@type": "Answer",
+                text: "The Cyber Kill Chain is a 7-stage linear model from Lockheed Martin (Reconnaissance, Weaponization, Delivery, Exploitation, Installation, C2, Actions). MITRE ATT&CK is a non-linear, exhaustive catalog with 14 tactics and over 200 techniques. Kill Chain is a strategic narrative. ATT&CK is the operational reference.",
+            },
+        },
+        {
+            "@type": "Question",
+            name: "How is MITRE ATT&CK used in penetration testing?",
+            acceptedAnswer: {
+                "@type": "Answer",
+                text: "ATT&CK is used by red teams to plan attack chains and by blue teams to measure detection coverage. A good pentest report maps every finding to a specific ATT&CK technique ID so the defender can immediately translate a finding into a SIEM rule, an EDR alert, or a SOC playbook update.",
+            },
+        },
+        {
+            "@type": "Question",
+            name: "How many tactics are in the MITRE ATT&CK matrix?",
+            acceptedAnswer: {
+                "@type": "Answer",
+                text: "The MITRE ATT&CK enterprise matrix has 14 tactics: Reconnaissance, Resource Development, Initial Access, Execution, Persistence, Privilege Escalation, Defense Evasion, Credential Access, Discovery, Lateral Movement, Collection, Command and Control, Exfiltration, and Impact. Mobile and ICS matrices have their own tactic sets.",
+            },
+        },
+    ],
+};
+
 export default function MitreAttackPage() {
     return (
         <main className="min-h-screen bg-quant-bg text-quant-text pt-28 pb-24">
@@ -83,6 +130,10 @@ export default function MitreAttackPage() {
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
             />
 
             <article className="container mx-auto px-6 max-w-3xl">
@@ -135,6 +186,15 @@ export default function MitreAttackPage() {
                         &quot;mapped to ATT&amp;CK&quot; in pentest proposals and wants to know what
                         that actually means before they sign.
                     </p>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-12">
+                    <div className="rounded-2xl border border-sky-400/30 bg-sky-500/5 p-6 md:p-8">
+                        <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">What is the MITRE ATT&amp;CK framework?</h2>
+                        <p className="text-gray-200 leading-relaxed">
+                            <strong>MITRE ATT&amp;CK is a publicly available knowledge base that catalogs the tactics, techniques, and procedures real-world adversaries use to attack computer systems. Published by MITRE Corporation, it has become the common vocabulary every modern security team uses to describe how attackers operate. The enterprise matrix has 14 tactics and over 200 techniques, each with a unique identifier like T1566 (Phishing) or T1078 (Valid Accounts).</strong>
+                        </p>
+                    </div>
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-12">
@@ -587,6 +647,22 @@ export default function MitreAttackPage() {
                             for readers who want to see the deliverable shape before
                             scoping.
                         </p>
+                    </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-12">
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-5">FAQ</h2>
+                    <div className="space-y-6">
+                        {[
+                            { q: "What is the difference between MITRE ATT&CK and the Cyber Kill Chain?", a: "The Cyber Kill Chain is a 7-stage linear model from Lockheed Martin (Reconnaissance, Weaponization, Delivery, Exploitation, Installation, C2, Actions). MITRE ATT&CK is a non-linear, exhaustive catalog with 14 tactics and over 200 techniques. Kill Chain is a strategic narrative. ATT&CK is the operational reference." },
+                            { q: "How is MITRE ATT&CK used in penetration testing?", a: "ATT&CK is used by red teams to plan attack chains and by blue teams to measure detection coverage. A good pentest report maps every finding to a specific ATT&CK technique ID so the defender can immediately translate a finding into a SIEM rule, an EDR alert, or a SOC playbook update." },
+                            { q: "How many tactics are in the MITRE ATT&CK matrix?", a: "The MITRE ATT&CK enterprise matrix has 14 tactics: Reconnaissance, Resource Development, Initial Access, Execution, Persistence, Privilege Escalation, Defense Evasion, Credential Access, Discovery, Lateral Movement, Collection, Command and Control, Exfiltration, and Impact." },
+                        ].map((item) => (
+                            <div key={item.q} className="rounded-xl border border-white/5 bg-[#0d1526]/60 p-6">
+                                <h3 className="text-white font-semibold mb-2">{item.q}</h3>
+                                <p className="text-gray-300 leading-relaxed">{item.a}</p>
+                            </div>
+                        ))}
                     </div>
                 </AnimatedSection>
 

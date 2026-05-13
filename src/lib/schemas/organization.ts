@@ -1,6 +1,9 @@
 export const SITE_URL = "https://quantlabusa.dev";
 export const ORGANIZATION_ID = `${SITE_URL}/#organization`;
+export const ORGANIZATION_NAME = "QUANT LAB USA";
 export const PERSON_ID = `${SITE_URL}/#william-beltz`;
+export const PERSON_NAME = "Bill Beltz";
+export const PERSON_LEGAL_NAME = "William Beltz";
 export const WEBSITE_ID = `${SITE_URL}/#website`;
 
 export const SAME_AS = [

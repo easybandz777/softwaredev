@@ -83,7 +83,7 @@ export default function Page() {
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-10 prose prose-invert max-w-none text-gray-300 leading-relaxed space-y-4">
-                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Tactics, techniques, and procedures</h2>
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">What are tactics, techniques, and procedures (TTPs)?</h2>
                     <p>
                         ATT&amp;CK organizes adversary behavior into a hierarchy. Tactics are
                         the high-level "why" — Initial Access, Execution, Persistence,
@@ -113,7 +113,7 @@ export default function Page() {
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-10 prose prose-invert max-w-none text-gray-300 leading-relaxed space-y-4">
-                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">ATT&amp;CK vs OWASP</h2>
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">What is the difference between MITRE ATT&amp;CK and OWASP?</h2>
                     <p>
                         Both are taxonomies, but they cover different ground.{" "}
                         <Link href="/glossary/what-is-owasp-top-10" className="text-sky-400 hover:underline">OWASP Top 10</Link>{" "}

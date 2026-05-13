@@ -46,7 +46,7 @@ const serviceSchema = {
     "@type": "Service",
     serviceType: "Custom Software Development",
     name: "Custom Software Development in South Lake Union Seattle",
-    provider: { "@id": "https://quantlabusa.dev/#org" },
+    provider: { "@id": "https://quantlabusa.dev/#organization" },
     areaServed: { "@type": "Place", name: "South Lake Union, Seattle, WA" },
     description:
         "Cloud platforms, biotech-adjacent SaaS, custom CRMs, and SOC 2 pen tests for South Lake Union-headquartered firms.",

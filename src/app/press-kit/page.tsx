@@ -44,7 +44,7 @@ const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
     "@id": "https://quantlabusa.dev/#organization",
-    name: "QUANT LAB USA INC",
+    name: "QUANT LAB USA",
     url: "https://quantlabusa.dev",
     logo: "https://quantlabusa.dev/logo-optimized.png",
     email: "beltz@quantlabusa.dev",

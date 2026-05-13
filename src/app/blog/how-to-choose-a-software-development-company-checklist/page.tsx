@@ -32,7 +32,7 @@ const articleSchema = {
     publisher: {
         "@type": "Organization",
         "@id": "https://quantlabusa.dev/#organization",
-        name: "QUANT LAB USA INC",
+        name: "QUANT LAB USA",
         url: "https://quantlabusa.dev",
         logo: { "@type": "ImageObject", url: "https://quantlabusa.dev/logo-transparent.png" },
     },
@@ -129,6 +129,15 @@ export default function HowToChooseSoftwareDevCompanyPage() {
                         By <Link href="/about" className="text-sky-400 hover:underline">William Beltz</Link>, founder of QUANT LAB USA INC · Published May 12, 2026
                     </p>
                     <ConsultationCTA label="Get on a Scoping Call" service="Custom Software" source="blog-27-point" />
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-12">
+                    <div className="rounded-2xl border border-sky-400/30 bg-sky-500/5 p-6 md:p-8">
+                        <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">How do I choose a software development company?</h2>
+                        <p className="text-gray-200 leading-relaxed">
+                            <strong>Choose a software development company by evaluating six categories before signing: references (3 live URLs, 1 callable client), contract terms (source code ownership, milestone payments, kill-fee cap), communication cadence (weekly written reports, named primary plus secondary contact), security posture (1Password Business, MFA, vetted subs), pricing model (fixed-fee per phase, not pure T&amp;M), and stack discipline (Next.js, TypeScript, PostgreSQL in 2026). If a vendor cannot answer 22 of these 27 checklist points clearly inside two calls, walk.</strong>
+                        </p>
+                    </div>
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-12">

@@ -87,6 +87,17 @@ export default function FAQPage() {
                 </div>
             </section>
 
+            <section className="pb-8 relative">
+                <div className="container mx-auto px-6 max-w-4xl">
+                    <div className="rounded-2xl border border-sky-400/30 bg-sky-500/5 p-6 md:p-8">
+                        <h2 className="text-2xl md:text-3xl font-bold text-white mb-4 text-center">What is QUANT LAB USA and how does it work?</h2>
+                        <p className="text-gray-200 leading-relaxed text-center max-w-3xl mx-auto">
+                            <strong>QUANT LAB USA INC is a Macon, Georgia-based custom software and cybersecurity firm. Engagements are fixed-fee per phase, range from $4,000 to $200,000+, and ship in 6 to 20 weeks. The founder (Bill Beltz) is on every call and writes code on every project. You own the source code and the PostgreSQL schema at delivery. Three engagement models: fixed-fee project, monthly retainer, or one-shot audit / pentest.</strong>
+                        </p>
+                    </div>
+                </div>
+            </section>
+
             {/* Accordion */}
             <section className="pb-24 relative">
                 <div className="container mx-auto px-6 max-w-4xl">

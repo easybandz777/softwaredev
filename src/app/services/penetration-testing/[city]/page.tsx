@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { Shield, Check, ArrowRight } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
 type FAQ = { q: string; a: string };
 type NearbyService = { href: string; title: string; desc: string };
@@ -632,24 +633,13 @@ export async function generateMetadata({
     const { city } = await params;
     const data = CITIES[city];
     if (!data) return {};
-    return {
+    return pageMetadata({
         title: data.metaTitle,
         description: data.metaDescription,
-        alternates: {
-            canonical: `https://quantlabusa.dev/services/penetration-testing/${data.slug}`,
-        },
-        openGraph: {
-            title: data.metaTitle,
-            description: data.metaDescription,
-            url: `https://quantlabusa.dev/services/penetration-testing/${data.slug}`,
-            type: "article",
-        },
-        twitter: {
-            card: "summary",
-            title: data.metaTitle,
-            description: data.metaDescription,
-        },
-    };
+        slug: `services/penetration-testing/${data.slug}`,
+        image: "/og-pentest.png",
+        type: "article",
+    });
 }
 
 export default async function CityPentestPage({
@@ -668,7 +658,7 @@ export default async function CityPentestPage({
         "@type": "Service",
         serviceType: "Penetration Testing",
         name: `Penetration Testing Services in ${data.displayName}, ${data.state}`,
-        provider: { "@id": "https://quantlabusa.dev/#org" },
+        provider: { "@id": "https://quantlabusa.dev/#organization" },
         areaServed: { "@type": "City", name: data.displayName },
         description: data.metaDescription,
         url: canonical,

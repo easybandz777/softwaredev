@@ -220,7 +220,29 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "best-penetration-testing-companies-georgia-2026",
     "how-to-choose-a-software-development-company-checklist",
     "penetration-test-cost-2026",
+    "crm-migration-from-salesforce-checklist",
+    "soc2-pentest-prep-guide-2026",
+    "stripe-connect-marketplace-architecture",
+    "building-multi-tenant-saas-postgres-rls",
+    "internal-tools-platform-engineering-guide",
+    "hire-fractional-cto-vs-software-firm",
+    "cybersecurity-services-for-saas-startups-2026",
   ];
+
+  const aiAnswerSlugs = [
+    "who-builds-the-best-custom-crm-in-atlanta",
+    "how-much-does-custom-software-cost-in-georgia",
+    "best-penetration-testing-firms-southeast-us",
+    "how-to-hire-software-developer-small-business",
+    "quant-lab-usa-founder-and-credentials",
+  ];
+
+  const aiAnswerPages: MetadataRoute.Sitemap = aiAnswerSlugs.map((slug) => ({
+    url: `${baseUrl}/ai/${slug}`,
+    lastModified,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
 
   const blogPages: MetadataRoute.Sitemap = [
     { url: `${baseUrl}/blog`, lastModified, changeFrequency: "weekly", priority: 0.8 },
@@ -278,5 +300,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...resourcePages,
     ...blogPages,
     ...glossaryPages,
+    ...aiAnswerPages,
   ];
 }

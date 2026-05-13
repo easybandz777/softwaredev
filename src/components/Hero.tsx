@@ -5,12 +5,14 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { Button } from "./ui/Button";
-import { ConsultationModal } from "./ConsultationModal";
 
-// Dynamically load HeroCanvas client-side only — keeps it out of the
-// SSR/LCP critical path and reduces initial JS for first paint.
 const HeroCanvas = dynamic(
     () => import("./HeroCanvas").then((m) => m.HeroCanvas),
+    { ssr: false }
+);
+
+const ConsultationModal = dynamic(
+    () => import("./ConsultationModal").then((m) => m.ConsultationModal),
     { ssr: false }
 );
 

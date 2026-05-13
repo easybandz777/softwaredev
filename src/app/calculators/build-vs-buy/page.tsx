@@ -37,7 +37,7 @@ const calculatorSchema = {
         "Interactive decision calculator that scores a custom-software build vs SaaS situation across six factors, returning a 0-100 score, 3-year TCO comparison, and a build/hybrid/buy recommendation.",
     provider: {
         "@type": "Organization",
-        name: "QuantLab Software Solutions",
+        name: "QUANT LAB USA",
         url: "https://quantlabusa.dev",
         "@id": "https://quantlabusa.dev/#organization",
     },

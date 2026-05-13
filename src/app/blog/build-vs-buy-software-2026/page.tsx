@@ -38,7 +38,7 @@ const articleSchema = {
     },
     publisher: {
         "@type": "Organization",
-        name: "QUANT LAB USA INC",
+        name: "QUANT LAB USA",
         "@id": "https://quantlabusa.dev/#organization",
         logo: {
             "@type": "ImageObject",
@@ -66,6 +66,53 @@ const breadcrumbSchema = {
     ],
 };
 
+const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+        {
+            "@type": "Question",
+            name: "Should I build or buy software in 2026?",
+            acceptedAnswer: {
+                "@type": "Answer",
+                text: "Build custom software when SaaS covers less than 70% of your workflow, your process is stable, and your company is above roughly $2M in revenue. Buy SaaS when the platform covers 80% or more of your needs and the gaps are manageable in spreadsheets. The 50/50 case (half platform, half glue) is the worst position and the most common trigger for moving custom.",
+            },
+        },
+        {
+            "@type": "Question",
+            name: "How much does custom software cost compared to SaaS?",
+            acceptedAnswer: {
+                "@type": "Answer",
+                text: "A three-year TCO comparison for a 40-person ops team: SaaS CRM at $150 per seat per month plus admin overhead totals roughly $510,000 over three years. A custom build with a $85,000 fixed fee plus retainer totals roughly $205,000 over the same period. Custom amortizes; SaaS compounds at 8 to 9% per year.",
+            },
+        },
+        {
+            "@type": "Question",
+            name: "When does building software make more sense than buying?",
+            acceptedAnswer: {
+                "@type": "Answer",
+                text: "Building wins when more than 30% of your workflow lives in custom fields or external glue, when the differentiated layer is customer-facing, when SaaS pricing has compounded past $100,000 a year, and when your process is stable enough that the build will not age out before launch. Five categories almost always justify building: custom CRM, estimating, ops dashboards, customer portals, and billing infrastructure.",
+            },
+        },
+        {
+            "@type": "Question",
+            name: "What is the hybrid build-vs-buy model?",
+            acceptedAnswer: {
+                "@type": "Answer",
+                text: "The hybrid model keeps commodity SaaS underneath (Stripe for payments, transactional email for delivery, sometimes HubSpot for CRM data) and builds the differentiated layer on top. Use the SaaS API as a commodity contract and build the workflow UI, reporting, or customer portal your team and customers actually touch. Best of both worlds when the underlying API is a real commodity.",
+            },
+        },
+        {
+            "@type": "Question",
+            name: "What are red flags that mean I should NOT build software yet?",
+            acceptedAnswer: {
+                "@type": "Answer",
+                text: "Three red flags: your process is still in flux and will look different in six months, your team will not adopt a new system (they already ignore your current SaaS), or you do not have the internal attention budget to own the build. Custom software amortizes well when the process is stable. It amortizes terribly when the process is a moving target.",
+            },
+        },
+    ],
+};
+
 export default function BuildVsBuyPage() {
     return (
         <main className="min-h-screen bg-quant-bg text-quant-text pt-28 pb-24">
@@ -76,6 +123,10 @@ export default function BuildVsBuyPage() {
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
             />
 
             <article className="container mx-auto px-6 max-w-3xl">
@@ -128,6 +179,15 @@ export default function BuildVsBuyPage() {
                         fits? This is the framework I use when clients ask me to answer that
                         question honestly — even when the honest answer costs me the deal.
                     </p>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-12">
+                    <div className="rounded-2xl border border-sky-400/30 bg-sky-500/5 p-6 md:p-8">
+                        <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Should I build or buy software in 2026?</h2>
+                        <p className="text-gray-200 leading-relaxed">
+                            <strong>Build custom software when SaaS covers less than 70% of your workflow, your process is stable, and your company is above roughly $2M in revenue. Buy SaaS when the platform covers 80% or more of your needs and the gaps are manageable in spreadsheets. The 50/50 case (half platform, half glue) is the worst position and the most common trigger for moving custom.</strong>
+                        </p>
+                    </div>
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-12">
@@ -206,6 +266,24 @@ export default function BuildVsBuyPage() {
                             for industry-specific platforms — but the structure is always the
                             same: SaaS pricing compounds, custom builds amortize.
                         </p>
+                    </div>
+                    <div className="overflow-x-auto mt-6">
+                        <table className="w-full text-sm text-left border border-white/10 rounded-xl overflow-hidden">
+                            <thead className="bg-[#0d1526] text-white">
+                                <tr>
+                                    <th className="px-4 py-3 border-b border-white/10">Cost component</th>
+                                    <th className="px-4 py-3 border-b border-white/10">SaaS (40-seat CRM)</th>
+                                    <th className="px-4 py-3 border-b border-white/10">Custom build</th>
+                                </tr>
+                            </thead>
+                            <tbody className="text-gray-300">
+                                <tr className="border-b border-white/5"><td className="px-4 py-3">Year 1 platform / build cost</td><td className="px-4 py-3">$72,000 (seats)</td><td className="px-4 py-3">$85,000 (fixed fee)</td></tr>
+                                <tr className="border-b border-white/5"><td className="px-4 py-3">Year 1 ops / retainer</td><td className="px-4 py-3">$77,000 (admin + integrations)</td><td className="px-4 py-3">$48,000 (retainer)</td></tr>
+                                <tr className="border-b border-white/5"><td className="px-4 py-3">Year 1 total</td><td className="px-4 py-3">$149,000</td><td className="px-4 py-3">$133,000</td></tr>
+                                <tr className="border-b border-white/5"><td className="px-4 py-3">3-year total (8% compounding, hiring)</td><td className="px-4 py-3">~$510,000</td><td className="px-4 py-3">~$205,000</td></tr>
+                                <tr className="border-b border-white/5"><td className="px-4 py-3">Own the source code?</td><td className="px-4 py-3">No</td><td className="px-4 py-3">Yes</td></tr>
+                            </tbody>
+                        </table>
                     </div>
                 </AnimatedSection>
 
@@ -534,6 +612,22 @@ export default function BuildVsBuyPage() {
                             reading and just walk through your situation with an engineer who
                             does this for a living, we&apos;re a 20-minute call away.
                         </p>
+                    </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-12">
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-5">FAQ</h2>
+                    <div className="space-y-6">
+                        {[
+                            { q: "How much does custom software cost compared to SaaS?", a: "A three-year TCO comparison for a 40-person ops team: SaaS CRM at $150 per seat per month plus admin overhead totals roughly $510,000 over three years. A custom build with a $85,000 fixed fee plus retainer totals roughly $205,000 over the same period. Custom amortizes; SaaS compounds at 8 to 9% per year." },
+                            { q: "When does building software make more sense than buying?", a: "Building wins when more than 30% of your workflow lives in custom fields or external glue, when the differentiated layer is customer-facing, when SaaS pricing has compounded past $100K a year, and when your process is stable enough that the build will not age out before launch." },
+                            { q: "What is the hybrid build-vs-buy model?", a: "Keep commodity SaaS underneath (Stripe for payments, transactional email for delivery) and build the differentiated layer on top. Use the SaaS API as a commodity contract and build the workflow UI, reporting, or customer portal your team and customers actually touch." },
+                        ].map((item) => (
+                            <div key={item.q} className="rounded-xl border border-white/5 bg-[#0d1526]/60 p-6">
+                                <h3 className="text-white font-semibold mb-2">{item.q}</h3>
+                                <p className="text-gray-300 leading-relaxed">{item.a}</p>
+                            </div>
+                        ))}
                     </div>
                 </AnimatedSection>
 

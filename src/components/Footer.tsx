@@ -247,7 +247,7 @@ export function Footer() {
                                 </div>
                             ))}
                         </div>
-                        <p className="text-xs text-gray-500 mt-3">
+                        <p className="text-xs text-gray-400 mt-3">
                             Serving {citySlugs.length} cities across the U.S.
                         </p>
                     </nav>

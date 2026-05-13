@@ -171,7 +171,7 @@ const webPageSchema = {
     url: "https://quantlabusa.dev/glossary",
     publisher: {
         "@type": "Organization",
-        name: "QUANT LAB USA INC",
+        name: "QUANT LAB USA",
         "@id": "https://quantlabusa.dev/#organization",
     },
     mainEntity: {

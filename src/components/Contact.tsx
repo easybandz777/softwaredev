@@ -1,12 +1,17 @@
 "use client";
 
 import React, { useState } from "react";
+import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { AnimatedSection } from "./ui/AnimatedSection";
-import { ConsultationModal } from "./ConsultationModal";
 import {
     ArrowRight, CheckCircle, Phone, Mail, Clock, Shield
 } from "lucide-react";
+
+const ConsultationModal = dynamic(
+    () => import("./ConsultationModal").then((m) => m.ConsultationModal),
+    { ssr: false }
+);
 
 const TRUST_ITEMS = [
     { icon: Clock, text: "Response within 24 hours" },

@@ -1,28 +1,17 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { MapPin, Check, ArrowRight } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
     title: "Miami Custom Software, SaaS & LATAM Fintech Dev | QUANT LAB USA",
     description:
         "Miami software development for fintech, hospitality, and LATAM-facing SaaS. Multi-currency Stripe, custom dashboards, pen testing. Call (770) 652-1282.",
-    alternates: { canonical: "https://quantlabusa.dev/software-development-miami-fl" },
-    openGraph: {
-        title: "Miami Custom Software, SaaS & LATAM Fintech Dev | QUANT LAB USA",
-        description:
-            "Miami software development for fintech, hospitality, and LATAM-facing SaaS. Multi-currency Stripe and custom dashboards.",
-        url: "https://quantlabusa.dev/software-development-miami-fl",
-        type: "article",
-    },
-    twitter: {
-        card: "summary",
-        title: "Miami Custom Software, SaaS & LATAM Fintech Dev | QUANT LAB USA",
-        description:
-            "Miami software development for fintech, hospitality, and LATAM-facing SaaS.",
-    },
-};
+    slug: "software-development-miami-fl",
+    image: "/og-image.png",
+    type: "article",
+});
 
 const localBusinessSchema = {
     "@context": "https://schema.org",
@@ -51,7 +40,7 @@ const serviceSchema = {
     "@type": "Service",
     serviceType: "Custom Software Development",
     name: "Custom Software Development in Miami, FL",
-    provider: { "@id": "https://quantlabusa.dev/#org" },
+    provider: { "@id": "https://quantlabusa.dev/#organization" },
     areaServed: { "@type": "City", name: "Miami", containedInPlace: { "@type": "State", name: "Florida" } },
     description:
         "Multi-currency Stripe, hospitality and booking platforms, LATAM-ready SaaS, and penetration testing for Miami fintech and cross-border companies.",

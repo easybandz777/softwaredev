@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { GitBranch, Check, ArrowRight, MapPin } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
 const cities: { slug: string; city: string; state: string }[] = [
     { slug: "atlanta-ga", city: "Atlanta", state: "GA" },
@@ -21,19 +21,14 @@ const cities: { slug: string; city: string; state: string }[] = [
     { slug: "san-francisco-ca", city: "San Francisco", state: "CA" },
 ];
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
     title: "DevOps Engineering | CI/CD, Infrastructure, Observability | QuantLab",
     description:
         "DevOps engineering and consulting — CI/CD pipelines, Terraform, Kubernetes, Sentry observability. Founder-led. Stop fighting deploys. Call (770) 652-1282.",
-    alternates: { canonical: "https://quantlabusa.dev/services/devops-engineering" },
-    openGraph: {
-        title: "DevOps Engineering for Teams Tired of 3am Pages",
-        description:
-            "CI/CD pipelines, Terraform, Kubernetes, observability, and the runbooks your on-call rotation can actually follow. Founder-led DevOps consulting.",
-        url: "https://quantlabusa.dev/services/devops-engineering",
-        type: "article",
-    },
-};
+    slug: "services/devops-engineering",
+    image: "/og-services.png",
+    type: "article",
+});
 
 const serviceSchema = {
     "@context": "https://schema.org",
@@ -42,9 +37,9 @@ const serviceSchema = {
     name: "DevOps Engineering and CI/CD Consulting",
     provider: {
         "@type": "Organization",
-        name: "QuantLab Software Solutions",
+        name: "QUANT LAB USA",
         url: "https://quantlabusa.dev",
-        "@id": "https://quantlabusa.dev/#org",
+        "@id": "https://quantlabusa.dev/#organization",
     },
     areaServed: "United States",
     description:

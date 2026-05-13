@@ -37,7 +37,7 @@ const articleSchema = {
     publisher: {
         "@type": "Organization",
         "@id": "https://quantlabusa.dev/#organization",
-        name: "QUANT LAB USA INC",
+        name: "QUANT LAB USA",
         url: "https://quantlabusa.dev",
         logo: {
             "@type": "ImageObject",
@@ -149,6 +149,15 @@ export default function CustomCrmVsSalesforceVsHubspotPage() {
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-12">
+                    <div className="rounded-2xl border border-sky-400/30 bg-sky-500/5 p-6 md:p-8">
+                        <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Custom CRM vs Salesforce vs HubSpot: which is cheaper in 2026?</h2>
+                        <p className="text-gray-200 leading-relaxed">
+                            <strong>For a 30-seat sales team, the 3-year total cost of ownership is roughly $472,000 for Salesforce Sales Cloud Enterprise, $302,000 for HubSpot Sales Pro, and $104,000 for a custom CRM build. Salesforce wins on ecosystem; HubSpot wins on speed-to-launch; custom wins on workflow fit, data ownership, and cost at scale. The break-even line is roughly 25 to 35 paid seats.</strong>
+                        </p>
+                    </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-12">
                     <div className="prose prose-invert max-w-none text-gray-300 leading-relaxed space-y-5">
                         <p>
                             I have built or migrated six production CRMs in the past four years. Three replaced Salesforce. Two replaced HubSpot. One started on a custom build because the workflow had no off-the-shelf shape to bend into. The pattern in every single project: the off-the-shelf CRM did not lose because it was bad. It lost because the seat math, the integration tax, and the workflow drift compounded faster than anyone modeled at the contract signing.
@@ -156,6 +165,38 @@ export default function CustomCrmVsSalesforceVsHubspotPage() {
                         <p>
                             This guide is the 3-year decision matrix I wish a vendor had given me before I scoped the first one. No marketing copy. No platform shilling. Hard numbers, real workflow tradeoffs, and a rubric that has decided every CRM call I have run since.
                         </p>
+                    </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-12">
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-5">Quick verdict: when each option wins</h2>
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-sm text-left border border-white/10 rounded-xl overflow-hidden">
+                            <thead className="bg-[#0d1526] text-white">
+                                <tr>
+                                    <th className="px-4 py-3 border-b border-white/10">Choose this</th>
+                                    <th className="px-4 py-3 border-b border-white/10">When it wins</th>
+                                </tr>
+                            </thead>
+                            <tbody className="text-gray-300">
+                                <tr className="border-b border-white/5">
+                                    <td className="px-4 py-3 font-semibold text-white">Salesforce</td>
+                                    <td className="px-4 py-3">100+ reps, industry cloud requirement (FinServ, Health), procurement demands brand recognition, existing Salesforce-trained ops team.</td>
+                                </tr>
+                                <tr className="border-b border-white/5">
+                                    <td className="px-4 py-3 font-semibold text-white">HubSpot</td>
+                                    <td className="px-4 py-3">Under 15 seats, inbound-marketing-fed motion, non-technical reps, need to ship this quarter, deal complexity covered by custom properties.</td>
+                                </tr>
+                                <tr className="border-b border-white/5">
+                                    <td className="px-4 py-3 font-semibold text-white">Custom CRM</td>
+                                    <td className="px-4 py-3">15 to 200 seats, differentiation lives in the workflow, unique data model, reporting feeds engineering or finance pipelines.</td>
+                                </tr>
+                                <tr className="border-b border-white/5">
+                                    <td className="px-4 py-3 font-semibold text-white">Hybrid (HubSpot Starter + custom)</td>
+                                    <td className="px-4 py-3">Want marketing automation handled but need sales workflow ownership. HubSpot at $50/mo handles inbound; custom owns the sales record.</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </AnimatedSection>
 

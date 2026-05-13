@@ -1,22 +1,17 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { CreditCard, Check, ArrowRight } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
     title: "Stripe Integration, ACH Billing & License Servers | QuantLab",
     description:
         "Custom Stripe integration consulting, ACH billing, auto-invoicing, subscription billing, and JWT-validated license servers with seat management. Free scoping call.",
-    alternates: { canonical: "https://quantlabusa.dev/services/payments-invoicing-licensing" },
-    openGraph: {
-        title: "Get Paid. Manage Access. Ship Software.",
-        description:
-            "Stripe, ACH, auto-invoicing, subscription billing, and custom license servers with JWT validation, usage tracking, and seat management.",
-        url: "https://quantlabusa.dev/services/payments-invoicing-licensing",
-        type: "article",
-    },
-};
+    slug: "services/payments-invoicing-licensing",
+    image: "/og-stripe.png",
+    type: "article",
+});
 
 const serviceSchema = {
     "@context": "https://schema.org",
@@ -25,7 +20,7 @@ const serviceSchema = {
     name: "Payments, Invoicing & Licensing",
     provider: {
         "@type": "Organization",
-        name: "QuantLab Software Solutions",
+        name: "QUANT LAB USA",
         url: "https://quantlabusa.dev",
         "@id": "https://quantlabusa.dev/#organization",
     },

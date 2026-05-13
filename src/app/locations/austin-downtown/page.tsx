@@ -46,7 +46,7 @@ const serviceSchema = {
     "@type": "Service",
     serviceType: "Custom Software Development",
     name: "Custom Software Development in Downtown Austin, TX",
-    provider: { "@id": "https://quantlabusa.dev/#org" },
+    provider: { "@id": "https://quantlabusa.dev/#organization" },
     areaServed: { "@type": "Place", name: "Downtown Austin, TX" },
     description:
         "Venture-backed SaaS builds, Stripe Connect, fintech infrastructure, and SOC 2 pen tests for Downtown Austin and the Second Street / Rainey corridors.",

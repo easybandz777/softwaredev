@@ -181,8 +181,8 @@ const buildOffersSchema = () =>
         availability: "https://schema.org/InStock",
         seller: {
             "@type": "Organization",
-            name: "QuantLab Software Solutions",
-            "@id": "https://quantlabusa.dev/#org",
+            name: "QUANT LAB USA",
+            "@id": "https://quantlabusa.dev/#organization",
         },
     }));
 
@@ -194,8 +194,8 @@ const productSchema = {
         "Custom software development, security assessments, and platform engineering for B2B and regulated industries. Published price ranges from $4K (one-shot pentest) to $200K+ (enterprise builds). Project, retainer, and audit engagement models.",
     brand: {
         "@type": "Organization",
-        name: "QuantLab Software Solutions",
-        "@id": "https://quantlabusa.dev/#org",
+        name: "QUANT LAB USA",
+        "@id": "https://quantlabusa.dev/#organization",
     },
     image: "https://quantlabusa.dev/og-image.png",
     url: "https://quantlabusa.dev/pricing",
@@ -300,6 +300,43 @@ export default function PricingPage() {
                         Custom software, security work, and platform engineering at published price ranges. Three engagement models, eleven priced services, and a payment schedule you can plan around.
                     </p>
                     <ConsultationCTA label="Scope a Project" service="Pricing" source="pricing" />
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-12">
+                    <div className="rounded-2xl border border-sky-400/30 bg-sky-500/5 p-6 md:p-8">
+                        <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">How much does custom software development cost in 2026?</h2>
+                        <p className="text-gray-200 leading-relaxed">
+                            <strong>Custom software development at QUANT LAB USA INC costs $4,000 to $200,000+ depending on engagement type. Median price ranges in 2026: web app pentest $4K to $25K, Stripe integration $8K to $40K, custom CRM build $20K to $120K, MITRE ATT&amp;CK assessment $8K to $30K, algorithmic trading systems $30K to $150K+. Three engagement models: fixed-fee project ($15K-$200K+), monthly retainer ($8K-$30K/mo), one-shot audit ($4K-$25K).</strong>
+                        </p>
+                    </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-12">
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-5">Quick pricing reference</h2>
+                    <div className="overflow-x-auto rounded-xl border border-white/10">
+                        <table className="w-full text-sm text-left">
+                            <thead className="bg-[#0d1526] text-white">
+                                <tr>
+                                    <th className="px-4 py-3 border-b border-white/10">Service</th>
+                                    <th className="px-4 py-3 border-b border-white/10">Median range</th>
+                                    <th className="px-4 py-3 border-b border-white/10">Typical timeline</th>
+                                </tr>
+                            </thead>
+                            <tbody className="text-gray-300">
+                                <tr className="border-b border-white/5"><td className="px-4 py-3">Web app pentest</td><td className="px-4 py-3">$4K – $25K</td><td className="px-4 py-3">1 to 3 weeks</td></tr>
+                                <tr className="border-b border-white/5"><td className="px-4 py-3">Network pentest</td><td className="px-4 py-3">$5K – $20K</td><td className="px-4 py-3">1 to 2 weeks</td></tr>
+                                <tr className="border-b border-white/5"><td className="px-4 py-3">Active Directory pentest</td><td className="px-4 py-3">$6K – $15K</td><td className="px-4 py-3">1 to 2 weeks</td></tr>
+                                <tr className="border-b border-white/5"><td className="px-4 py-3">MITRE ATT&amp;CK assessment</td><td className="px-4 py-3">$8K – $30K</td><td className="px-4 py-3">2 to 4 weeks</td></tr>
+                                <tr className="border-b border-white/5"><td className="px-4 py-3">Stripe integration</td><td className="px-4 py-3">$8K – $40K</td><td className="px-4 py-3">2 to 6 weeks</td></tr>
+                                <tr className="border-b border-white/5"><td className="px-4 py-3">Custom CRM build</td><td className="px-4 py-3">$20K – $120K</td><td className="px-4 py-3">6 to 14 weeks</td></tr>
+                                <tr className="border-b border-white/5"><td className="px-4 py-3">License server</td><td className="px-4 py-3">$12K – $35K</td><td className="px-4 py-3">3 to 6 weeks</td></tr>
+                                <tr className="border-b border-white/5"><td className="px-4 py-3">Subscription billing</td><td className="px-4 py-3">$15K – $50K</td><td className="px-4 py-3">4 to 8 weeks</td></tr>
+                                <tr className="border-b border-white/5"><td className="px-4 py-3">Cloud infrastructure</td><td className="px-4 py-3">$5K – $60K</td><td className="px-4 py-3">2 to 8 weeks</td></tr>
+                                <tr className="border-b border-white/5"><td className="px-4 py-3">Algorithmic trading systems</td><td className="px-4 py-3">$30K – $150K+</td><td className="px-4 py-3">8 to 20 weeks</td></tr>
+                                <tr className="border-b border-white/5"><td className="px-4 py-3">Custom business software</td><td className="px-4 py-3">$15K – $250K</td><td className="px-4 py-3">Quote</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-16">

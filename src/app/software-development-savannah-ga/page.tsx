@@ -1,28 +1,17 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { MapPin, Check, ArrowRight } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
     title: "Savannah GA Custom Software Development & SaaS Build | QUANT LAB",
     description:
         "Savannah custom software — port logistics, hospitality, and SaaS development from a same-state Georgia firm. Founder-led. Call (770) 652-1282.",
-    alternates: { canonical: "https://quantlabusa.dev/software-development-savannah-ga" },
-    openGraph: {
-        title: "Savannah GA Custom Software Development & SaaS Build | QUANT LAB",
-        description:
-            "Savannah custom software — port logistics, hospitality, and SaaS development from a Georgia firm.",
-        url: "https://quantlabusa.dev/software-development-savannah-ga",
-        type: "article",
-    },
-    twitter: {
-        card: "summary",
-        title: "Savannah GA Custom Software Development & SaaS Build | QUANT LAB",
-        description:
-            "Savannah custom software — port logistics, hospitality, and SaaS development from a Georgia firm.",
-    },
-};
+    slug: "software-development-savannah-ga",
+    image: "/og-image.png",
+    type: "article",
+});
 
 const localBusinessSchema = {
     "@context": "https://schema.org",
@@ -50,7 +39,7 @@ const serviceSchema = {
     "@type": "Service",
     serviceType: "Custom Software Development",
     name: "Custom Software Development in Savannah, GA",
-    provider: { "@id": "https://quantlabusa.dev/#org" },
+    provider: { "@id": "https://quantlabusa.dev/#organization" },
     areaServed: { "@type": "City", name: "Savannah", containedInPlace: { "@type": "State", name: "Georgia" } },
     description:
         "Logistics, hospitality, and SaaS development for Savannah operators — built by a same-state Georgia firm.",

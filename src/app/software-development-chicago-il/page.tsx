@@ -1,28 +1,17 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { MapPin, Check, ArrowRight } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
     title: "Chicago Custom Software, Quant Trading & Pen Test | QUANT LAB USA",
     description:
         "Chicago software development for finance, logistics, and manufacturing — algorithmic trading systems, ops dashboards, and penetration testing. Call (770) 652-1282.",
-    alternates: { canonical: "https://quantlabusa.dev/software-development-chicago-il" },
-    openGraph: {
-        title: "Chicago Custom Software, Quant Trading & Pen Test | QUANT LAB USA",
-        description:
-            "Chicago software development for finance, logistics, and manufacturing — trading systems, ops dashboards, and pen testing.",
-        url: "https://quantlabusa.dev/software-development-chicago-il",
-        type: "article",
-    },
-    twitter: {
-        card: "summary",
-        title: "Chicago Custom Software, Quant Trading & Pen Test | QUANT LAB USA",
-        description:
-            "Chicago software development for finance, logistics, and manufacturing.",
-    },
-};
+    slug: "software-development-chicago-il",
+    image: "/og-image.png",
+    type: "article",
+});
 
 const localBusinessSchema = {
     "@context": "https://schema.org",
@@ -52,7 +41,7 @@ const serviceSchema = {
     "@type": "Service",
     serviceType: "Custom Software Development",
     name: "Custom Software Development in Chicago, IL",
-    provider: { "@id": "https://quantlabusa.dev/#org" },
+    provider: { "@id": "https://quantlabusa.dev/#organization" },
     areaServed: { "@type": "City", name: "Chicago", containedInPlace: { "@type": "State", name: "Illinois" } },
     description:
         "Algorithmic trading tooling, logistics and manufacturing ops dashboards, and penetration testing for Chicago operators.",

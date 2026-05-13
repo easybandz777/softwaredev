@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { Smartphone, Check, ArrowRight, MapPin } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
 const cities: { slug: string; city: string; state: string }[] = [
     { slug: "atlanta-ga", city: "Atlanta", state: "GA" },
@@ -21,19 +21,14 @@ const cities: { slug: string; city: string; state: string }[] = [
     { slug: "san-francisco-ca", city: "San Francisco", state: "CA" },
 ];
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
     title: "Mobile App Development | iOS, Android, React Native | QuantLab",
     description:
         "Custom mobile app development on React Native, Swift, and Kotlin. Founder-led iOS and Android builds with backend, App Store handling, and no agency overhead.",
-    alternates: { canonical: "https://quantlabusa.dev/services/mobile-app-development" },
-    openGraph: {
-        title: "Mobile App Development for Companies Past the MVP Stage",
-        description:
-            "iOS, Android, and React Native apps with the backend, App Store, and Play Console handled. Founder-led from scope to launch — no agency markup.",
-        url: "https://quantlabusa.dev/services/mobile-app-development",
-        type: "article",
-    },
-};
+    slug: "services/mobile-app-development",
+    image: "/og-services.png",
+    type: "article",
+});
 
 const serviceSchema = {
     "@context": "https://schema.org",
@@ -42,9 +37,9 @@ const serviceSchema = {
     name: "iOS, Android, and React Native Mobile App Development",
     provider: {
         "@type": "Organization",
-        name: "QuantLab Software Solutions",
+        name: "QUANT LAB USA",
         url: "https://quantlabusa.dev",
-        "@id": "https://quantlabusa.dev/#org",
+        "@id": "https://quantlabusa.dev/#organization",
     },
     areaServed: "United States",
     description:

@@ -47,7 +47,7 @@ const serviceSchema = {
     "@type": "Service",
     serviceType: "Custom Software Development",
     name: "Custom Software Development in Alpharetta, GA",
-    provider: { "@id": "https://quantlabusa.dev/#org" },
+    provider: { "@id": "https://quantlabusa.dev/#organization" },
     areaServed: { "@type": "City", name: "Alpharetta, GA" },
     description:
         "Fintech-grade Stripe, custom CRMs, ops platforms, and SOC 2 penetration tests for Alpharetta and the North Point corridor.",

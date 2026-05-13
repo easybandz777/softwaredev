@@ -1,28 +1,17 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { Scale, Check, ArrowRight } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
     title: "Custom Legal Services Software Development | QuantLab",
     description:
         "Custom legal software — matter management, intake automation, e-signature, conflict checks, IOLTA-aware billing, document automation. Founder-led, US-based.",
-    alternates: { canonical: "https://quantlabusa.dev/industries/legal-services" },
-    openGraph: {
-        title: "Custom Software for Law Firms & Legal Operations",
-        description:
-            "Intake automation, matter management, document workflows, and IOLTA-aware billing for solo firms, boutiques, and mid-market practices.",
-        url: "https://quantlabusa.dev/industries/legal-services",
-        type: "article",
-    },
-    twitter: {
-        card: "summary_large_image",
-        title: "Custom Legal Services Software Development | QuantLab",
-        description:
-            "Matter management, intake automation, document workflows. Founder-led builds.",
-    },
-};
+    slug: "industries/legal-services",
+    image: "/og-services.png",
+    type: "article",
+});
 
 const webPageSchema = {
     "@context": "https://schema.org",
@@ -55,7 +44,7 @@ const serviceSchema = {
     name: "Custom Software Development for Law Firms and Legal Operations",
     provider: {
         "@type": "Organization",
-        name: "QuantLab Software Solutions",
+        name: "QUANT LAB USA",
         url: "https://quantlabusa.dev",
         "@id": "https://quantlabusa.dev/#organization",
     },

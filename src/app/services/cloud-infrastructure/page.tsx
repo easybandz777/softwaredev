@@ -1,22 +1,17 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { Lock, Check, ArrowRight } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
     title: "DevOps & CI/CD Consulting — Zero Outages | QuantLab",
     description:
         "Docker, Nginx, CI/CD, auto-scaling, and Sentry monitoring on DigitalOcean, Fly.io, and Vercel. Zero unplanned outages across active deployments. Free scoping call.",
-    alternates: { canonical: "https://quantlabusa.dev/services/cloud-infrastructure" },
-    openGraph: {
-        title: "Deploy, Monitor, Scale — Without the 3am Pages",
-        description:
-            "Docker, Nginx, CI/CD, auto-scaling, and monitoring across DigitalOcean, Fly.io, and Vercel. Zero unplanned outages in production.",
-        url: "https://quantlabusa.dev/services/cloud-infrastructure",
-        type: "article",
-    },
-};
+    slug: "services/cloud-infrastructure",
+    image: "/og-services.png",
+    type: "article",
+});
 
 const serviceSchema = {
     "@context": "https://schema.org",
@@ -25,7 +20,7 @@ const serviceSchema = {
     name: "Cloud Infrastructure & DevOps",
     provider: {
         "@type": "Organization",
-        name: "QuantLab Software Solutions",
+        name: "QUANT LAB USA",
         url: "https://quantlabusa.dev",
         "@id": "https://quantlabusa.dev/#organization",
     },

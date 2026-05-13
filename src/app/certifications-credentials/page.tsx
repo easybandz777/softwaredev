@@ -93,7 +93,7 @@ const credentialsStructuredData = {
         {
             "@type": "Organization",
             "@id": "https://quantlabusa.dev/#organization",
-            name: "QUANT LAB USA INC",
+            name: "QUANT LAB USA",
             legalName: "QUANT LAB USA INC",
             taxID: "42-2039870",
             identifier: [

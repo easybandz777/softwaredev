@@ -100,13 +100,14 @@ const articleSchema = {
     dateModified: PUBLISHED_ISO,
     author: {
         "@type": "Person",
+        "@id": "https://quantlabusa.dev/#william-beltz",
         name: "Bill Beltz",
         url: "https://quantlabusa.dev/about",
         jobTitle: "Founder, QUANT LAB USA INC",
     },
     publisher: {
         "@type": "Organization",
-        name: "QUANT LAB USA INC",
+        name: "QUANT LAB USA",
         url: "https://quantlabusa.dev",
         logo: {
             "@type": "ImageObject",
@@ -276,6 +277,15 @@ export default function CustomCRMDevelopmentGuidePage() {
                             </Link>
                             , Founder, QUANT LAB USA INC
                         </span>
+                    </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-12">
+                    <div className="rounded-2xl border border-sky-400/30 bg-sky-500/5 p-6 md:p-8">
+                        <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">What is custom CRM development?</h2>
+                        <p className="text-gray-200 leading-relaxed">
+                            <strong>Custom CRM development is the engineering process of building a sales and customer management system shaped around your actual workflow instead of bending your workflow around a SaaS platform like Salesforce or HubSpot. A typical custom CRM ships in 6 to 14 weeks, costs $35,000 to $150,000 for v1, and pays back inside 18 to 24 months for teams spending more than $800 a month on stacked CRM SaaS subscriptions.</strong>
+                        </p>
                     </div>
                 </AnimatedSection>
 

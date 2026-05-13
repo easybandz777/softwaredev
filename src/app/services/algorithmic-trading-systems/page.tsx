@@ -1,22 +1,17 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { Bot, Check, ArrowRight } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
     title: "Algorithmic Trading Bot Development — 5 Live Systems | QuantLab",
     description:
         "Custom trading bot development for MA Supertrend, VWAP, and momentum strategies. 5 live systems running real money with <12ms latency and 24/7 uptime. Get a build quote.",
-    alternates: { canonical: "https://quantlabusa.dev/services/algorithmic-trading-systems" },
-    openGraph: {
-        title: "5 Live Trading Bots. <12ms Latency. Real Money.",
-        description:
-            "Custom-built algorithmic trading systems running MA Supertrend, VWAP, and multi-strategy setups on real capital. Risk controls baked into the order path.",
-        url: "https://quantlabusa.dev/services/algorithmic-trading-systems",
-        type: "article",
-    },
-};
+    slug: "services/algorithmic-trading-systems",
+    image: "/og-trading.png",
+    type: "article",
+});
 
 const serviceSchema = {
     "@context": "https://schema.org",
@@ -25,7 +20,7 @@ const serviceSchema = {
     name: "Algorithmic Trading Systems",
     provider: {
         "@type": "Organization",
-        name: "QuantLab Software Solutions",
+        name: "QUANT LAB USA",
         url: "https://quantlabusa.dev",
         "@id": "https://quantlabusa.dev/#organization",
     },

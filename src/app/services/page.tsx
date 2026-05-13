@@ -1,22 +1,17 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { Terminal, Bot, Globe, CreditCard, Shield, Lock, ArrowRight, MapPin, Building2, GitCompare } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
     title: "Software Development & Cybersecurity Services | QUANT LAB USA",
     description:
         "Custom CRMs, Stripe integrations, Next.js apps, penetration testing — built for businesses in Atlanta, Macon, and 12 more US cities.",
-    alternates: { canonical: "https://quantlabusa.dev/services" },
-    openGraph: {
-        title: "Software Development & Cybersecurity Services | QUANT LAB USA",
-        description:
-            "Custom CRMs, Stripe integrations, Next.js apps, penetration testing — built for businesses in Atlanta, Macon, and 12 more US cities.",
-        url: "https://quantlabusa.dev/services",
-        type: "website",
-    },
-};
+    slug: "services",
+    image: "/og-services.png",
+    type: "website",
+});
 
 type ServiceCard = {
     icon: typeof Terminal;

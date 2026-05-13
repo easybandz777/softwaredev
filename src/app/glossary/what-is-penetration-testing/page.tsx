@@ -89,7 +89,7 @@ export default function Page() {
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-10 prose prose-invert max-w-none text-gray-300 leading-relaxed space-y-4">
-                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">The five types you can buy</h2>
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">What are the main types of penetration tests?</h2>
                     <p>
                         Web application pentesting targets your customer-facing apps and APIs.
                         Network pentesting targets your perimeter (external) or internal
@@ -107,7 +107,7 @@ export default function Page() {
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-10 prose prose-invert max-w-none text-gray-300 leading-relaxed space-y-4">
-                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Black-box, grey-box, and white-box</h2>
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">What is the difference between black-box, grey-box, and white-box pentesting?</h2>
                     <p>
                         Engagements are also categorized by how much the testers know
                         going in. Black-box: testers start with nothing but the public
@@ -123,7 +123,7 @@ export default function Page() {
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-10 prose prose-invert max-w-none text-gray-300 leading-relaxed space-y-4">
-                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">When you actually need one</h2>
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">When do I need a penetration test?</h2>
                     <p>
                         Four common triggers. Compliance: SOC 2, PCI-DSS, HIPAA, and most
                         enterprise procurement processes require an annual pentest from a
@@ -154,7 +154,7 @@ export default function Page() {
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-10 prose prose-invert max-w-none text-gray-300 leading-relaxed space-y-4">
-                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">What a real pentest report looks like</h2>
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">What is included in a penetration test report?</h2>
                     <p>
                         A real report runs 30 to 80 pages. The structure is
                         consistent across reputable firms: an executive summary

@@ -1,28 +1,17 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { MapPin, Check, ArrowRight } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
     title: "NYC Custom Software Development, Fintech & Pen Test | QUANT LAB",
     description:
         "New York custom software and penetration testing for fintech, ad-tech, agencies, and SaaS. Senior, founder-led engineering. Call (770) 652-1282.",
-    alternates: { canonical: "https://quantlabusa.dev/software-development-new-york-ny" },
-    openGraph: {
-        title: "NYC Custom Software Development, Fintech & Pen Test | QUANT LAB",
-        description:
-            "New York custom software and penetration testing for fintech, ad-tech, agencies, and SaaS. Founder-led engineering.",
-        url: "https://quantlabusa.dev/software-development-new-york-ny",
-        type: "article",
-    },
-    twitter: {
-        card: "summary",
-        title: "NYC Custom Software Development, Fintech & Pen Test | QUANT LAB",
-        description:
-            "New York custom software and penetration testing for fintech, ad-tech, agencies, and SaaS.",
-    },
-};
+    slug: "software-development-new-york-ny",
+    image: "/og-image.png",
+    type: "article",
+});
 
 const localBusinessSchema = {
     "@context": "https://schema.org",
@@ -50,7 +39,7 @@ const serviceSchema = {
     "@type": "Service",
     serviceType: "Custom Software Development & Penetration Testing",
     name: "Custom Software Development & Penetration Testing in New York, NY",
-    provider: { "@id": "https://quantlabusa.dev/#org" },
+    provider: { "@id": "https://quantlabusa.dev/#organization" },
     areaServed: { "@type": "City", name: "New York", containedInPlace: { "@type": "State", name: "New York" } },
     description:
         "Fintech and brokerage-adjacent tooling, pre-procurement pen testing, and high-stakes custom web apps for New York clients.",

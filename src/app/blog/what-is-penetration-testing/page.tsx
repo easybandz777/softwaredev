@@ -40,7 +40,7 @@ const articleSchema = {
     },
     publisher: {
         "@type": "Organization",
-        name: "QUANT LAB USA INC",
+        name: "QUANT LAB USA",
         "@id": "https://quantlabusa.dev/#organization",
         logo: {
             "@type": "ImageObject",
@@ -73,6 +73,53 @@ const breadcrumbSchema = {
     ],
 };
 
+const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+        {
+            "@type": "Question",
+            name: "What is penetration testing?",
+            acceptedAnswer: {
+                "@type": "Answer",
+                text: "Penetration testing is a time-boxed, authorized, human-driven attempt to compromise the security of your systems by chaining vulnerabilities together the way a real attacker would, then documenting exactly what worked so you can fix it. It is not a vulnerability scan, not a compliance checkbox, and not a one-time guarantee of security.",
+            },
+        },
+        {
+            "@type": "Question",
+            name: "What are the main types of penetration tests?",
+            acceptedAnswer: {
+                "@type": "Answer",
+                text: "Five engagement types: web application pentests, network pentests (external and internal), Active Directory pentests, wireless and physical pentests, and social engineering / phishing campaigns. Red team is a separate category that combines multiple types into a single objective-based engagement. Most SaaS founders need a web app pentest first.",
+            },
+        },
+        {
+            "@type": "Question",
+            name: "What is the difference between black-box, grey-box, and white-box pentesting?",
+            acceptedAnswer: {
+                "@type": "Answer",
+                text: "Black-box pentesting starts with zero credentials or information, like an external attacker. White-box provides full source code and admin credentials. Grey-box is the middle ground: low-privilege credentials plus an architecture diagram. Grey-box is the most cost-effective default for compliance pentests because it skips the recon overhead without sacrificing depth.",
+            },
+        },
+        {
+            "@type": "Question",
+            name: "How long does a penetration test take?",
+            acceptedAnswer: {
+                "@type": "Answer",
+                text: "A typical web app or network pentest takes 1 to 3 weeks: 1 week of testing, 1 week of report writing, and a 30-day retest window after fixes ship. Active Directory and multi-app engagements run 2 to 4 weeks. Red teams run 4 to 12 weeks. Plan for 6 weeks between kickoff and final report for most SOC 2 engagements.",
+            },
+        },
+        {
+            "@type": "Question",
+            name: "How often should I get a penetration test?",
+            acceptedAnswer: {
+                "@type": "Answer",
+                text: "Annually at minimum for any compliance program (SOC 2, HIPAA, PCI DSS, ISO 27001 all expect annual). Additionally, after every major release that touches authentication, payment processing, or sensitive data, and after every significant infrastructure change like a cloud migration or new VPN.",
+            },
+        },
+    ],
+};
+
 export default function WhatIsPentestPage() {
     return (
         <main className="min-h-screen bg-quant-bg text-quant-text pt-28 pb-24">
@@ -83,6 +130,10 @@ export default function WhatIsPentestPage() {
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
             />
 
             <article className="container mx-auto px-6 max-w-3xl">
@@ -135,6 +186,15 @@ export default function WhatIsPentestPage() {
                         what you are buying, what to scope, what a real report looks like,
                         and roughly what one should cost in 2026.
                     </p>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-12">
+                    <div className="rounded-2xl border border-sky-400/30 bg-sky-500/5 p-6 md:p-8">
+                        <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">What is penetration testing?</h2>
+                        <p className="text-gray-200 leading-relaxed">
+                            <strong>Penetration testing is a time-boxed, authorized, human-driven attempt to compromise the security of your systems by chaining vulnerabilities together the way a real attacker would, then documenting exactly what worked so you can fix it. It is not a vulnerability scan, not a compliance checkbox, and not a one-time guarantee of security — it is a snapshot of your security posture against a defined threat model.</strong>
+                        </p>
+                    </div>
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-12">
@@ -537,6 +597,24 @@ export default function WhatIsPentestPage() {
                             </Link>{" "}
                             with a focus on what local methodology and engagement experience
                             actually buy you over an East-Coast remote vendor.
+                        </p>
+                    </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-12">
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-5">What is the difference between black-box, grey-box, and white-box pentesting?</h2>
+                    <div className="prose prose-invert max-w-none text-gray-300 leading-relaxed space-y-3">
+                        <p>
+                            Black-box pentesting starts with zero credentials or information, like an external attacker. White-box provides full source code and admin credentials. Grey-box is the middle ground: low-privilege credentials plus an architecture diagram. Grey-box is the most cost-effective default for compliance pentests because it skips the recon overhead without sacrificing depth.
+                        </p>
+                    </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-12">
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-5">How often should I get a penetration test?</h2>
+                    <div className="prose prose-invert max-w-none text-gray-300 leading-relaxed space-y-3">
+                        <p>
+                            Annually at minimum for any compliance program (SOC 2, HIPAA, PCI DSS, ISO 27001 all expect annual). Additionally, after every major release that touches authentication, payment processing, or sensitive data, and after every significant infrastructure change like a cloud migration or new VPN.
                         </p>
                     </div>
                 </AnimatedSection>

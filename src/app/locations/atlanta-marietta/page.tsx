@@ -47,7 +47,7 @@ const serviceSchema = {
     "@type": "Service",
     serviceType: "Custom Software Development",
     name: "Custom Software Development in Marietta, GA",
-    provider: { "@id": "https://quantlabusa.dev/#org" },
+    provider: { "@id": "https://quantlabusa.dev/#organization" },
     areaServed: { "@type": "City", name: "Marietta, GA" },
     description:
         "Custom CRMs, operations platforms, contractor estimating systems, and penetration tests for Marietta and Cobb County operators.",

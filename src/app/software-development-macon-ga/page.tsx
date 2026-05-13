@@ -1,28 +1,17 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { MapPin, Check, ArrowRight } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
     title: "Custom Software Development in Macon, GA | QUANT LAB USA",
     description:
         "Macon-based, founder-led software developer building CRMs, web apps, Stripe billing, and trading systems for Middle Georgia businesses. Call (770) 652-1282.",
-    alternates: { canonical: "https://quantlabusa.dev/software-development-macon-ga" },
-    openGraph: {
-        title: "Custom Software Development in Macon, GA | QUANT LAB USA",
-        description:
-            "Macon-based, founder-led software developer building CRMs, web apps, Stripe billing, and trading systems for Middle Georgia businesses.",
-        url: "https://quantlabusa.dev/software-development-macon-ga",
-        type: "article",
-    },
-    twitter: {
-        card: "summary",
-        title: "Custom Software Development in Macon, GA | QUANT LAB USA",
-        description:
-            "Macon-based, founder-led software developer building CRMs, web apps, Stripe billing, and trading systems for Middle Georgia businesses.",
-    },
-};
+    slug: "software-development-macon-ga",
+    image: "/og-image.png",
+    type: "article",
+});
 
 const localBusinessSchema = {
     "@context": "https://schema.org",
@@ -49,7 +38,11 @@ const serviceSchema = {
     "@type": "Service",
     serviceType: "Custom Software Development",
     name: "Custom Software Development in Macon, GA",
-    provider: { "@id": "https://quantlabusa.dev/#org" },
+    provider: {
+        "@id": "https://quantlabusa.dev/#organization",
+        "@type": "Organization",
+        name: "QUANT LAB USA",
+    },
     areaServed: { "@type": "City", name: "Macon", containedInPlace: { "@type": "State", name: "Georgia" } },
     description:
         "Founder-led custom software development for Middle Georgia: web apps, CRMs, Stripe integrations, licensing systems, and quant tooling on a modern stack.",

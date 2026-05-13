@@ -1,28 +1,17 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { ShoppingCart, Check, ArrowRight } from "lucide-react";
+import { pageMetadata } from "@/lib/seoMeta";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
     title: "Custom E-commerce Development | QuantLab USA",
     description:
         "Custom e-commerce development beyond Shopify — B2B wholesale, custom quoting, ERP/inventory sync, S&S Activewear API, custom checkout, admin dashboards.",
-    alternates: { canonical: "https://quantlabusa.dev/industries/e-commerce" },
-    openGraph: {
-        title: "Custom E-commerce Development — Beyond What Shopify Can Do",
-        description:
-            "Headless commerce, custom storefronts, B2B wholesale, ERP/inventory syncs, and quote-to-cart workflows. Built when Shopify's limits hit.",
-        url: "https://quantlabusa.dev/industries/e-commerce",
-        type: "article",
-    },
-    twitter: {
-        card: "summary_large_image",
-        title: "Custom E-commerce Development | QuantLab USA",
-        description:
-            "Custom Shopify alternatives — headless commerce, wholesale catalog sync, custom quoting, and admin dashboards.",
-    },
-};
+    slug: "industries/e-commerce",
+    image: "/og-services.png",
+    type: "article",
+});
 
 const webPageSchema = {
     "@context": "https://schema.org",
@@ -55,7 +44,7 @@ const serviceSchema = {
     name: "Custom E-commerce Development",
     provider: {
         "@type": "Organization",
-        name: "QuantLab Software Solutions",
+        name: "QUANT LAB USA",
         url: "https://quantlabusa.dev",
         "@id": "https://quantlabusa.dev/#organization",
     },
