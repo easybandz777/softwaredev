@@ -6,7 +6,15 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "monitor:indexing": "node scripts/check-indexing-status.ts",
+    "monitor:links": "node scripts/check-broken-links.ts",
+    "monitor:cache-warm": "node scripts/warm-cache.ts",
+    "monitor:diff": "node scripts/diff-sitemap.ts",
+    "monitor:freshness": "node scripts/content-freshness-audit.ts",
+    "monitor:lighthouse": "node scripts/lighthouse-batch.ts",
+    "monitor:schema": "node scripts/check-schema.ts",
+    "monitor:all": "bash scripts/run-all-audits.sh"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.80.0",

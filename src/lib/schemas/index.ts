@@ -27,3 +27,5 @@ export type { AggregateRatingInput } from "./aggregateRating";
 export { websiteSchema } from "./website";
 export { reviewSchema } from "./review";
 export type { ReviewInput } from "./review";
+export { videoObjectSchema } from "./videoObject";
+export type { VideoObjectSchemaInput } from "./videoObject";

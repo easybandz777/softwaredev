@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Linkedin, Twitter, Mail, Phone, MapPin } from "lucide-react";
+import { NewsletterInlineSignup } from "@/components/NewsletterInlineSignup";
 
 const citySlugs = [
     "macon-ga",
@@ -168,6 +169,13 @@ export function Footer() {
 
     return (
         <footer className="border-t border-white/10 bg-quant-bg" role="contentinfo" itemScope itemType="https://schema.org/WPFooter">
+            <div className="container mx-auto px-6 pt-10">
+                <NewsletterInlineSignup
+                    source="footer-sitewide"
+                    headline="Get one frank email every other Tuesday."
+                    cta="Subscribe"
+                />
+            </div>
             <div className="container mx-auto px-6 py-12">
                 <div className="md:hidden mb-10 pb-8 border-b border-white/10">
                     <p className="text-white font-bold text-lg mb-1">QuantLab USA</p>

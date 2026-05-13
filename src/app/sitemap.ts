@@ -18,6 +18,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/reviews`, lastModified, changeFrequency: "monthly", priority: 0.6 },
     { url: `${baseUrl}/press`, lastModified, changeFrequency: "monthly", priority: 0.5 },
     { url: `${baseUrl}/press-kit`, lastModified, changeFrequency: "monthly", priority: 0.4 },
+    { url: `${baseUrl}/newsletter`, lastModified, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${baseUrl}/newsroom`, lastModified, changeFrequency: "weekly", priority: 0.6 },
+    { url: `${baseUrl}/tools`, lastModified, changeFrequency: "monthly", priority: 0.7 },
     { url: `${baseUrl}/faq`, lastModified, changeFrequency: "monthly", priority: 0.6 },
     { url: `${baseUrl}/contact`, lastModified, changeFrequency: "monthly", priority: 0.7 },
     { url: `${baseUrl}/privacy`, lastModified, changeFrequency: "yearly", priority: 0.3 },
@@ -82,6 +85,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "penetration-testing",
     "custom-crm-development",
     "stripe-integration",
+    "mobile-app-development",
+    "saas-platform-development",
+    "ai-integration-services",
+    "web-app-pentest",
+    "devops-engineering",
   ];
 
   const cityScopedServicePages: MetadataRoute.Sitemap = cityScopedServices.flatMap((service) =>
@@ -146,6 +154,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "upwork",
     "webflow",
     "wordpress",
+    "zoho",
+    "pipedrive",
+    "netsuite",
+    "monday-com",
+    "bubble-io",
   ];
 
   const versusPages: MetadataRoute.Sitemap = versusSlugs.map((slug) => ({
@@ -196,6 +209,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "mvp-to-prod-playbook",
     "stripe-integration-checklist",
     "mitre-attack-worksheet",
+    "llc-vs-c-corp-decision-checklist",
+    "stripe-connect-marketplace-onboarding-template",
+    "mitre-attack-maturity-self-assessment-v2",
+    "custom-crm-rfp-template-2026",
+    "internal-tools-build-vs-buy-worksheet",
+    "technical-due-diligence-checklist",
   ];
 
   const resourcePages: MetadataRoute.Sitemap = [
@@ -230,6 +249,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "dedicated-development-team-vs-agency",
     "what-is-a-pen-test-vs-vulnerability-scan",
     "2026-state-of-custom-software-development",
+    "nextjs-vs-remix-vs-sveltekit-2026",
+    "custom-internal-tools-vs-retool-2026",
+    "pci-dss-compliance-saas-checklist",
+    "hipaa-compliant-saas-architecture",
+    "red-team-vs-pen-test-vs-audit",
+    "stripe-webhook-security-best-practices",
+    "custom-software-rfp-template-2026",
+    "software-development-contract-redlines",
+    "crm-data-migration-from-spreadsheets",
+    "vcs-vcio-vs-software-development-firm",
   ];
 
   const aiAnswerSlugs = [
@@ -238,6 +267,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "best-penetration-testing-firms-southeast-us",
     "how-to-hire-software-developer-small-business",
     "quant-lab-usa-founder-and-credentials",
+    "best-stripe-integration-developer-2026",
+    "custom-crm-vs-airtable-vs-notion",
+    "how-long-does-it-take-to-build-a-saas-mvp",
+    "what-is-a-fair-rate-for-a-software-engineer-in-georgia",
+    "who-can-do-a-soc-2-pentest-in-atlanta",
+    "is-it-cheaper-to-hire-a-fractional-cto-or-a-firm",
+    "how-do-i-find-a-trustworthy-software-developer",
+    "what-does-a-pentester-actually-do-day-to-day",
+    "can-a-solo-engineer-really-ship-production-software",
+    "best-software-companies-for-fintech-startups-2026",
   ];
 
   const aiAnswerPages: MetadataRoute.Sitemap = aiAnswerSlugs.map((slug) => ({
@@ -245,6 +284,36 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified,
     changeFrequency: "monthly" as const,
     priority: 0.7,
+  }));
+
+  const toolSlugs = [
+    "stripe-webhook-tester",
+    "schema-generator",
+    "owasp-checklist-app",
+    "cron-expression-builder",
+    "uuid-and-id-generator",
+  ];
+
+  const toolsPages: MetadataRoute.Sitemap = toolSlugs.map((slug) => ({
+    url: `${baseUrl}/tools/${slug}`,
+    lastModified,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  const pressReleaseSlugs = [
+    "quant-lab-usa-launches-custom-software-and-cybersecurity-firm-in-macon-ga",
+    "quant-lab-usa-publishes-2026-software-development-cost-guide",
+    "quant-lab-usa-completes-14-client-engagements-2026",
+    "quant-lab-usa-now-serving-14-us-cities-with-remote-software-development",
+    "quant-lab-usa-releases-free-developer-tools-suite-for-stripe-owasp-schema",
+  ];
+
+  const newsroomPages: MetadataRoute.Sitemap = pressReleaseSlugs.map((slug) => ({
+    url: `${baseUrl}/newsroom/${slug}`,
+    lastModified,
+    changeFrequency: "monthly" as const,
+    priority: 0.55,
   }));
 
   const blogPages: MetadataRoute.Sitemap = [
@@ -278,6 +347,26 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "what-is-a-red-team",
     "what-is-zero-trust",
     "what-is-a-web-app-firewall",
+    "what-is-a-tech-stack",
+    "what-is-product-led-growth",
+    "what-is-a-data-warehouse",
+    "what-is-event-sourcing",
+    "what-is-cqrs",
+    "what-is-domain-driven-design",
+    "what-is-microservices-architecture",
+    "what-is-a-monorepo",
+    "what-is-feature-flagging",
+    "what-is-blue-green-deployment",
+    "what-is-zero-knowledge-architecture",
+    "what-is-an-soc-2-report",
+    "what-is-fido2",
+    "what-is-passkey-authentication",
+    "what-is-an-iam",
+    "what-is-saml-sso",
+    "what-is-oauth2",
+    "what-is-an-jwt",
+    "what-is-zero-trust-network-access",
+    "what-is-secrets-management",
   ];
 
   const glossaryPages: MetadataRoute.Sitemap = [
@@ -304,5 +393,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...blogPages,
     ...glossaryPages,
     ...aiAnswerPages,
+    ...toolsPages,
+    ...newsroomPages,
   ];
 }
