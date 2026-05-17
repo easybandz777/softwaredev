@@ -10,12 +10,12 @@ const TITLE = "Stripe Connect Marketplace Onboarding Template";
 const PDF_FILENAME = "stripe-connect-marketplace-onboarding-template.pdf";
 
 export const metadata: Metadata = {
-    title: "Stripe Connect Marketplace Onboarding Template (Free PDF) | QUANT LAB",
+    title: "Stripe Connect Marketplace Onboarding Template | QUANT LAB USA",
     description:
-        "A 25-page founder and COO checklist for launching a Stripe Connect marketplace — KYC, payout, dispute, escrow, and reserve patterns from real production builds.",
+        "25-page founder + COO checklist for launching a Stripe Connect marketplace — KYC, payout, dispute, escrow, and reserve patterns from real production builds.",
     alternates: { canonical: `https://quantlabusa.dev/resources/${SLUG}` },
     openGraph: {
-        title: "Stripe Connect Marketplace Onboarding Template (Free PDF) | QUANT LAB",
+        title: "Stripe Connect Marketplace Onboarding Template (Free PDF) | QUANT LAB USA",
         description:
             "25-page founder + COO checklist for launching a Stripe Connect marketplace, with KYC, payout, dispute, escrow, and reserve patterns.",
         url: `https://quantlabusa.dev/resources/${SLUG}`,
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: "summary_large_image",
-        title: "Stripe Connect Marketplace Onboarding Template (Free PDF) | QUANT LAB",
+        title: "Stripe Connect Marketplace Onboarding Template (Free PDF) | QUANT LAB USA",
         description:
             "25-page checklist for launching Stripe Connect with KYC, payouts, disputes, and escrow patterns.",
     },

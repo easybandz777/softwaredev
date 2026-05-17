@@ -2,16 +2,17 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { Calculator, ArrowRight, Check, Zap, Shield, Clock } from "lucide-react";
 import { CrmRoiCalculator } from "./CrmRoiCalculator";
 
 export const metadata: Metadata = {
-    title: "Custom CRM ROI Calculator | Salesforce vs Build | QUANT LAB",
+    title: "Custom CRM ROI Calculator (Salesforce vs Build) | QUANT LAB USA",
     description:
-        "Model a custom CRM vs Salesforce or HubSpot over 3 years. Payback, savings, productivity hours, recovered revenue — calculated live.",
+        "Model a custom CRM vs Salesforce or HubSpot over 3 years. Get payback, savings, productivity hours, and recovered revenue — calculated live. Free, in-browser.",
     alternates: { canonical: "https://quantlabusa.dev/calculators/crm-roi" },
     openGraph: {
-        title: "Custom CRM ROI Calculator | Salesforce vs Build | QUANT LAB",
+        title: "Custom CRM ROI Calculator | Salesforce vs Build | QUANT LAB USA",
         description:
             "Model a custom CRM vs Salesforce or HubSpot over 3 years. Payback, savings, productivity hours, recovered revenue.",
         url: "https://quantlabusa.dev/calculators/crm-roi",
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: "summary_large_image",
-        title: "Custom CRM ROI Calculator | Salesforce vs Build | QUANT LAB",
+        title: "Custom CRM ROI Calculator | Salesforce vs Build | QUANT LAB USA",
         description:
             "Model a custom CRM vs Salesforce or HubSpot over 3 years. Payback, savings, productivity hours, recovered revenue.",
     },
@@ -57,7 +58,7 @@ const faqSchema = {
             name: "Where do the build cost assumptions come from?",
             acceptedAnswer: {
                 "@type": "Answer",
-                text: "We use a per-seat build complexity model anchored at $1,800-$3,200 per active seat with a $45,000 floor for the smallest builds. That range covers a production-grade pipeline UI, custom data model, role-based access, reporting dashboards, and email/calendar/integration glue. It's tuned from a decade of CRM builds at QuantLab USA. The final scope is always validated in a 20-minute call.",
+                text: "We use a per-seat build complexity model anchored at $1,800-$3,200 per active seat with a $45,000 floor for the smallest builds. That range covers a production-grade pipeline UI, custom data model, role-based access, reporting dashboards, and email/calendar/integration glue. It's tuned from a decade of CRM builds at QUANT LAB USA. The final scope is always validated in a 20-minute call.",
             },
         },
         {
@@ -252,7 +253,7 @@ export default function CrmRoiCalculatorPage() {
                     <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">FAQs</h2>
                     <div className="space-y-6">
                         {[
-                            { q: "Where do the build cost assumptions come from?", a: "We use a per-seat build complexity model anchored at $1,800-$3,200 per active seat with a $45,000 floor for the smallest builds. That range covers a production-grade pipeline UI, custom data model, role-based access, reporting dashboards, and email/calendar/integration glue. It's tuned from a decade of CRM builds at QuantLab USA. The final scope is always validated in a 20-minute call." },
+                            { q: "Where do the build cost assumptions come from?", a: "We use a per-seat build complexity model anchored at $1,800-$3,200 per active seat with a $45,000 floor for the smallest builds. That range covers a production-grade pipeline UI, custom data model, role-based access, reporting dashboards, and email/calendar/integration glue. It's tuned from a decade of CRM builds at QUANT LAB USA. The final scope is always validated in a 20-minute call." },
                             { q: "Why do you assume 9% annual license inflation on the SaaS side?", a: "Salesforce list pricing has risen roughly 9% annually over the last several years, with HubSpot Sales Hub Professional and Enterprise tracking similar increases. We use 9% as a defensible mid-point so your model isn't unfairly biased toward custom. Your renewal quote will tell you whether your specific seat tier runs higher or lower." },
                             { q: "How is the productivity hours saved calculated?", a: "We assume a fit-to-purpose CRM saves about 50% of the hours your reps spend over a 3-hour-per-week baseline of necessary CRM work. The valuation per saved hour uses $65/hr — a blended sales/ops fully-loaded rate that's conservative compared to most rep total comp." },
                             { q: "Is the recovered revenue number defensible?", a: "We assume a custom CRM tuned to your sales motion recovers 40% of the deals currently leaking from pipeline friction. That's grounded in pipeline-leakage research from RAIN Group and Forrester, which puts typical poor-process leakage at 10-20% of pipeline value." },
@@ -267,6 +268,14 @@ export default function CrmRoiCalculatorPage() {
                             </details>
                         ))}
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["crm","build-vs-buy"]}
+                        heading="Companion reading for the CRM ROI calculator"
+                        pinned={["custom-crm-development-guide","custom-crm-vs-salesforce-vs-hubspot-2026","crm-migration-from-salesforce-checklist"]}
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection>

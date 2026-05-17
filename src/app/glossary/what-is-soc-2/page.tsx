@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 
 export const metadata: Metadata = {
-    title: "What is SOC 2 Compliance? Definition & Examples | QUANT LAB",
+    title: "What is SOC 2? Plain-English Compliance Guide | QUANT LAB USA",
     description:
-        "SOC 2 is the AICPA audit framework most B2B SaaS buyers ask for. Type 1 vs Type 2, the five trust services criteria, scope, timeline, and what it actually costs.",
+        "SOC 2 is the AICPA audit framework for service org security controls. Plain-English definition, Type 1 vs Type 2, 2026 cost. By QUANT LAB USA.",
     alternates: { canonical: "https://quantlabusa.dev/glossary/what-is-soc-2" },
 };
 
@@ -158,6 +159,13 @@ export default function Page() {
                         for early stage: start with SOC 2 Type 1, then layer in ISO
                         27001 only when European deals demand it.
                     </p>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-10">
+                    <RelatedPosts
+                        topics={["compliance","pentest"]}
+                        heading="Long-form deep-dives that use this term"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-10">

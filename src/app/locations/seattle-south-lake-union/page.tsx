@@ -5,19 +5,19 @@ import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { MapPin, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
-    title: "Custom Software Development in South Lake Union Seattle | QUANT LAB",
+    title: "South Lake Union Seattle Software Development | QUANT LAB USA",
     description:
-        "Custom software development in South Lake Union Seattle — cloud, biotech-adjacent SaaS, and SOC 2 pen testing. Founder-led, fixed-quote delivery.",
+        "Custom software development & penetration testing for South Lake Union and downtown Seattle companies. Founder-led US firm. Call (770) 652-1282.",
     alternates: { canonical: "https://quantlabusa.dev/locations/seattle-south-lake-union" },
     openGraph: {
-        title: "Custom Software Development in South Lake Union Seattle | QUANT LAB",
+        title: "Custom Software Development in South Lake Union Seattle | QUANT LAB USA",
         description: "SLU-focused SaaS, cloud, and biotech-adjacent builds plus pen testing. Founder-led delivery.",
         url: "https://quantlabusa.dev/locations/seattle-south-lake-union",
         type: "article",
     },
     twitter: {
         card: "summary",
-        title: "Custom Software Development in South Lake Union Seattle | QUANT LAB",
+        title: "Custom Software Development in South Lake Union Seattle | QUANT LAB USA",
         description: "SLU SaaS, cloud, and biotech-adjacent builds.",
     },
 };

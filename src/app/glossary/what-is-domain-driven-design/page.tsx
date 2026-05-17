@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { pageMetadata } from "@/lib/seoMeta";
 
 export const metadata: Metadata = pageMetadata({
-    title: "What is Domain-Driven Design (DDD)? | QUANT LAB",
+    title: "What is Domain-Driven Design (DDD)? | QUANT LAB USA",
     description:
-        "Domain-driven design is the practice of building software around the language and shape of the business it serves. What Eric Evans actually meant, and how QUANT LAB applies it.",
+        "DDD aligns software design with the business domain. Plain-English definition, bounded contexts, when DDD is worth the upfront cost. By QUANT LAB USA.",
     slug: "/glossary/what-is-domain-driven-design",
 });
 
@@ -105,6 +106,13 @@ export default function Page() {
                     <p>
                         DDD pairs especially well with <Link href="/glossary/what-is-event-sourcing" className="text-sky-400 hover:underline">event sourcing</Link> and <Link href="/glossary/what-is-cqrs" className="text-sky-400 hover:underline">CQRS</Link> in domains where the audit trail matters — <Link href="/industries/insurance" className="text-sky-400 hover:underline">insurance</Link>, <Link href="/industries/fintech" className="text-sky-400 hover:underline">fintech</Link>, healthcare. For simpler domains we keep the strategic ideas and the language discipline and skip the heavier tactical patterns. <Link href="/contact" className="text-sky-400 hover:underline">Book a call</Link> if you have a complex business domain and want a clean model to start from.
                     </p>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-10">
+                    <RelatedPosts
+                        topics={["stack"]}
+                        heading="Long-form deep-dives that use this term"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-10">

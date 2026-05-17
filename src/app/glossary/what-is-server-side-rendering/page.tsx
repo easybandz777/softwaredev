@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 
 export const metadata: Metadata = {
-    title: "What is Server-Side Rendering (SSR)? | QUANT LAB",
+    title: "What is Server-Side Rendering (SSR)? | QUANT LAB USA",
     description:
-        "Server-side rendering generates HTML on the server for every request. Why it matters for SEO and performance, the tradeoffs, and how QUANT LAB ships SSR apps.",
+        "SSR renders HTML on the server for each request, then hydrates on the client. Plain-English definition, when SSR vs SSG vs ISR. By QUANT LAB USA.",
     alternates: { canonical: "https://quantlabusa.dev/glossary/what-is-server-side-rendering" },
 };
 
@@ -165,6 +166,13 @@ export default function Page() {
                         smaller runtime APIs. The decision is per-route, not
                         per-app, and the right answer usually mixes both.
                     </p>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-10">
+                    <RelatedPosts
+                        topics={["stack"]}
+                        heading="Long-form deep-dives that use this term"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-10">

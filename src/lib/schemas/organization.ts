@@ -6,10 +6,23 @@ export const PERSON_NAME = "Bill Beltz";
 export const PERSON_LEGAL_NAME = "William Beltz";
 export const WEBSITE_ID = `${SITE_URL}/#website`;
 
+/**
+ * Organization-scope `sameAs` URLs emitted in Organization JSON-LD.
+ *
+ * Must point to profiles that represent the QUANT LAB USA firm — NOT
+ * the founder personally. Person-scope URLs (linkedin.com/in/williambeltz,
+ * github.com/williambeltz) belong in Person JSON-LD and live in
+ * `src/lib/schemas/person.ts`.
+ *
+ * Add URLs ONLY after the profile is claimed, verified, and links back
+ * to https://quantlabusa.dev. See:
+ *   - seo-deliverables/brand-entity/SOCIAL-PROFILES-MASTER.md
+ *   - seo-deliverables/brand-entity/ENTITY-BUILDING.md
+ */
 export const SAME_AS = [
-  "https://linkedin.com/in/williambeltz",
+  "https://linkedin.com/company/quantlabusa",
   "https://x.com/quantlabusa",
-  "https://github.com/williambeltz",
+  "https://github.com/quantlabusa",
   "https://g.page/r/CbkSyF5E2JFtEBM",
 ];
 
@@ -53,7 +66,11 @@ export function organizationSchema() {
       "@id": PERSON_ID,
       name: "William Beltz",
       url: `${SITE_URL}/about`,
-      sameAs: ["https://linkedin.com/in/williambeltz"],
+      // Person-scope sameAs — full Person `sameAs` lives in personSchema().
+      sameAs: [
+        "https://linkedin.com/in/williambeltz",
+        "https://github.com/williambeltz",
+      ],
     },
     description:
       "QUANT LAB USA is a Macon, Georgia-based custom software and cybersecurity firm. We build production-grade web and SaaS applications, CRMs, operations dashboards, Stripe integrations, licensing systems, and algorithmic trading bots and harden them with professional penetration testing aligned to MITRE ATT&CK.",

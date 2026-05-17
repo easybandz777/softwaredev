@@ -14,6 +14,12 @@
     "monitor:freshness": "node scripts/content-freshness-audit.ts",
     "monitor:lighthouse": "node scripts/lighthouse-batch.ts",
     "monitor:schema": "node scripts/check-schema.ts",
+    "monitor:rank": "node scripts/seo-rank-check.ts",
+    "monitor:canonical": "node scripts/check-canonical-consistency.ts",
+    "monitor:meta-dupes": "node scripts/check-meta-duplicates.ts",
+    "monitor:gsc": "node scripts/gsc-api-snapshot.ts",
+    "monitor:link-graph": "node scripts/check-internal-link-graph.ts",
+    "monitor:weekly": "node scripts/seo-weekly-report.ts",
     "monitor:all": "bash scripts/run-all-audits.sh"
   },
   "dependencies": {

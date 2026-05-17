@@ -14,9 +14,9 @@ const SLUG = "quant-lab-usa-completes-14-client-engagements-2026";
 const PUBLISHED = "2026-05-12";
 
 export const metadata: Metadata = articleMetadata({
-    title: "QUANT LAB USA Completes 14 Client Engagements in First Five Months of 2026",
+    title: "QUANT LAB USA Completes 14 Client Engagements in 2026",
     description:
-        "QUANT LAB USA INC reports 14 completed client engagements through May 2026, covering custom CRM, Stripe Connect, HIPAA-aware portals, and penetration testing across 14 US cities.",
+        "QUANT LAB USA wraps Q1+Q2 2026 with 14 completed client engagements across CRM builds, Stripe integrations, and penetration tests — covering 4 US cities.",
     slug: `newsroom/${SLUG}`,
     image: "/og-image.png",
     publishedTime: PUBLISHED,

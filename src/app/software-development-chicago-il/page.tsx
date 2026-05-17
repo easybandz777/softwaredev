@@ -1,13 +1,15 @@
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
+import { RelatedIndustries } from "@/components/RelatedIndustries";
 import { MapPin, Check, ArrowRight } from "lucide-react";
 import { pageMetadata } from "@/lib/seoMeta";
 
 export const metadata = pageMetadata({
-    title: "Chicago Custom Software, Quant Trading & Pen Test | QUANT LAB USA",
+    title: "Chicago Software Development & Pen Testing | QUANT LAB USA",
     description:
-        "Chicago software development for finance, logistics, and manufacturing — algorithmic trading systems, ops dashboards, and penetration testing. Call (770) 652-1282.",
+        "Chicago software development for finance, logistics, and manufacturing — algorithmic trading systems, ops dashboards, and pen testing. Call (770) 652-1282.",
     slug: "software-development-chicago-il",
     image: "/og-image.png",
     type: "article",
@@ -110,6 +112,16 @@ const faqs = [
     },
 ];
 
+const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://quantlabusa.dev/" },
+        { "@type": "ListItem", position: 2, name: "Locations", item: "https://quantlabusa.dev/locations" },
+        { "@type": "ListItem", position: 3, name: "Software Development Chicago, IL", item: "https://quantlabusa.dev/software-development-chicago-il" },
+    ],
+};
+
 export default function ChicagoLandingPage() {
     return (
         <main className="min-h-screen bg-quant-bg text-quant-text pt-28 pb-24">
@@ -135,6 +147,12 @@ export default function ChicagoLandingPage() {
                     }),
                 }}
             />
+
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+            />
+
 
             <div className="container mx-auto px-6 max-w-4xl">
                 <nav aria-label="Breadcrumb" className="mb-8">
@@ -234,6 +252,21 @@ export default function ChicagoLandingPage() {
                             </div>
                         ))}
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedIndustries
+                        industries={["fintech","manufacturing","healthcare","insurance"]}
+                        heading="Industries we serve in Chicago"
+                    />
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["build-vs-buy","stack","pentest"]}
+                        pinned={["build-vs-buy-software-2026","what-is-penetration-testing","building-multi-tenant-saas-postgres-rls"]}
+                        heading="Reading for Chicago founders"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-16">

@@ -29,13 +29,16 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://quantlabusa.dev"),
-  title: "QUANT LAB USA",
+  title: {
+    default: "QUANT LAB USA — Custom Software Development & Cybersecurity",
+    template: "%s",
+  },
   description:
-    "Custom software development and cybersecurity services. CRM systems, trading bots, web applications, and penetration testing.",
+    "USA-based custom software, CRMs, Stripe integrations, and penetration testing. Founder-led, no offshore handoff — serving 14 US cities in 2026.",
   openGraph: {
-    title: "QUANT LAB USA",
+    title: "QUANT LAB USA — Custom Software Development & Cybersecurity",
     description:
-      "Custom software development and cybersecurity services. CRM systems, trading bots, web applications, and penetration testing.",
+      "USA-based custom software, CRMs, Stripe integrations, and penetration testing. Founder-led, no offshore handoff — serving 14 US cities in 2026.",
     url: "https://quantlabusa.dev",
     siteName: "QUANT LAB USA",
     images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "QUANT LAB USA — Custom Software & Cybersecurity" }],
@@ -43,9 +46,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "QUANT LAB USA",
+    title: "QUANT LAB USA — Custom Software & Cybersecurity",
     description:
-      "Custom software development and cybersecurity services.",
+      "USA-based custom software, CRMs, Stripe, and pen testing. Founder-led, no offshore handoff — 14 US cities, 2026.",
     images: ["/og-image.png"],
   },
   robots: { index: true, follow: true },
@@ -57,7 +60,7 @@ const organizationSchema = {
   "@type": ["Organization", "LocalBusiness", "ProfessionalService"],
   "@id": "https://quantlabusa.dev/#organization",
   name: "QUANT LAB USA",
-  alternateName: ["Quant Lab USA", "QuantLab USA", "Quant Lab"],
+  alternateName: ["Quant Lab USA", "QUANT LAB USA", "Quant Lab"],
   url: "https://quantlabusa.dev",
   logo: {
     "@type": "ImageObject",

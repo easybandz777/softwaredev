@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { GitBranch, Check, ArrowRight, MapPin } from "lucide-react";
 import { pageMetadata } from "@/lib/seoMeta";
 
@@ -22,9 +23,9 @@ const cities: { slug: string; city: string; state: string }[] = [
 ];
 
 export const metadata = pageMetadata({
-    title: "DevOps Engineering | CI/CD, Infrastructure, Observability | QuantLab",
+    title: "DevOps Engineering: CI/CD & Observability | QUANT LAB USA",
     description:
-        "DevOps engineering and consulting — CI/CD pipelines, Terraform, Kubernetes, Sentry observability. Founder-led. Stop fighting deploys. Call (770) 652-1282.",
+        "DevOps engineering services: CI/CD pipelines, infrastructure-as-code, observability, secrets management, on-call playbooks. Founder-led, USA. Free quote.",
     slug: "services/devops-engineering",
     image: "/og-services.png",
     type: "article",
@@ -325,6 +326,13 @@ export default function DevOpsEngineeringPage() {
                             </div>
                         ))}
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["stack"]}
+                        heading="DevOps & stack reading"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-16">

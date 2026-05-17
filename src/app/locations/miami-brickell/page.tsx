@@ -5,19 +5,19 @@ import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { MapPin, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
-    title: "Custom Software Development in Brickell Miami | QUANT LAB",
+    title: "Software Development in Brickell Miami FL | QUANT LAB USA",
     description:
-        "Custom software development in Brickell Miami — LATAM-facing fintech, crypto, and banking-adjacent platform builds. Founder-led, fixed-quote delivery.",
+        "Custom software development & pen testing for Brickell fintech and LATAM-facing SaaS firms. Multi-currency Stripe ready. Call (770) 652-1282.",
     alternates: { canonical: "https://quantlabusa.dev/locations/miami-brickell" },
     openGraph: {
-        title: "Custom Software Development in Brickell Miami | QUANT LAB",
+        title: "Custom Software Development in Brickell Miami | QUANT LAB USA",
         description: "Brickell-focused fintech, crypto, and LATAM-facing platform builds plus SOC 2 pen testing.",
         url: "https://quantlabusa.dev/locations/miami-brickell",
         type: "article",
     },
     twitter: {
         card: "summary",
-        title: "Custom Software Development in Brickell Miami | QUANT LAB",
+        title: "Custom Software Development in Brickell Miami | QUANT LAB USA",
         description: "Brickell fintech and crypto platform builds.",
     },
 };

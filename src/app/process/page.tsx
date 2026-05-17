@@ -15,9 +15,9 @@ import {
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 
 export const metadata: Metadata = {
-    title: "Our Process | QUANT LAB USA — From Lead to Launch",
+    title: "Our 5-Step Engagement Process (2026) | QUANT LAB USA",
     description:
-        "What working with QUANT LAB USA actually looks like. Intro call, discovery, proposal, kickoff, sprints, launch, and ongoing support — with pricing transparency.",
+        "How QUANT LAB USA runs a project: discovery, fixed-scope proposal, weekly staging URLs, code review, and post-launch support. Founder-led, predictable. 2026.",
     openGraph: {
         title: "Our Process | QUANT LAB USA — From Lead to Launch",
         description:

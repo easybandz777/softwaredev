@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 
 export const metadata: Metadata = {
-    title: "What is MITRE ATT&CK? Definition & Examples | QUANT LAB",
+    title: "What is MITRE ATT&CK? Plain-English Guide | QUANT LAB USA",
     description:
-        "MITRE ATT&CK is the standard taxonomy of attacker tactics, techniques, and procedures. What it covers, how teams use it, and how QUANT LAB applies it.",
+        "MITRE ATT&CK is the global catalog of adversary tactics and techniques. Plain-English definition, how pentesters use it, 2026 examples. By QUANT LAB USA.",
     alternates: { canonical: "https://quantlabusa.dev/glossary/what-is-mitre-attack" },
 };
 
@@ -160,6 +161,13 @@ export default function Page() {
                         That portability is part of why ATT&amp;CK has outpaced
                         every previous attempt at an industry-standard taxonomy.
                     </p>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-10">
+                    <RelatedPosts
+                        topics={["pentest"]}
+                        heading="Long-form deep-dives that use this term"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-10">

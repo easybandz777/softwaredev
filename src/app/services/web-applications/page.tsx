@@ -1,11 +1,13 @@
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
+import { RelatedCities } from "@/components/RelatedCities";
 import { Globe, Check, ArrowRight } from "lucide-react";
 import { pageMetadata } from "@/lib/seoMeta";
 
 export const metadata = pageMetadata({
-    title: "Next.js Web App & SaaS Development — Vercel-Ready | QuantLab",
+    title: "Next.js Web App & SaaS Development — Vercel-Ready | QUANT LAB USA",
     description:
         "Custom Next.js, React, and TypeScript web apps and SaaS products. Client portals, contractor tools, and platforms shipped to production on Vercel — not just demos.",
     slug: "services/web-applications",
@@ -77,6 +79,16 @@ const faqSchema = {
     ],
 };
 
+const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://quantlabusa.dev/" },
+        { "@type": "ListItem", position: 2, name: "Services", item: "https://quantlabusa.dev/services" },
+        { "@type": "ListItem", position: 3, name: "Next.js Web Applications", item: "https://quantlabusa.dev/services/web-applications" },
+    ],
+};
+
 export default function WebApplicationsPage() {
     return (
         <main className="min-h-screen bg-quant-bg text-quant-text pt-28 pb-24">
@@ -87,6 +99,10 @@ export default function WebApplicationsPage() {
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
             />
 
             <div className="container mx-auto px-6 max-w-4xl">
@@ -255,6 +271,14 @@ export default function WebApplicationsPage() {
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["stack","saas"]}
+                        heading="Next.js engineering reading"
+                        pinned={["nextjs-vs-remix-vs-sveltekit-2026","building-multi-tenant-saas-postgres-rls","internal-tools-platform-engineering-guide"]}
+                    />
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
                     <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">Related services</h2>
                     <div className="grid md:grid-cols-3 gap-4">
                         {[
@@ -275,6 +299,10 @@ export default function WebApplicationsPage() {
                             </Link>
                         ))}
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedCities heading="Next.js client metros — where we work" max={8} />
                 </AnimatedSection>
 
                 <AnimatedSection>

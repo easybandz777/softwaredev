@@ -1,13 +1,15 @@
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
+import { RelatedIndustries } from "@/components/RelatedIndustries";
 import { MapPin, Check, ArrowRight } from "lucide-react";
 import { pageMetadata } from "@/lib/seoMeta";
 
 export const metadata = pageMetadata({
-    title: "Columbus GA Custom Software Developer & Pen Testing | QUANT LAB",
+    title: "Columbus GA Software Development & Pen Testing | QUANT LAB USA",
     description:
-        "Columbus GA software development — CRMs, dashboards, Stripe, and pen testing for businesses around Fort Moore and the Chattahoochee Valley. Call (770) 652-1282.",
+        "Columbus GA custom CRMs, dashboards, Stripe, and pen testing for businesses around Fort Moore and the Chattahoochee Valley. Same-state firm. Call (770) 652-1282.",
     slug: "software-development-columbus-ga",
     image: "/og-image.png",
     type: "article",
@@ -107,6 +109,16 @@ const faqs = [
     },
 ];
 
+const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://quantlabusa.dev/" },
+        { "@type": "ListItem", position: 2, name: "Locations", item: "https://quantlabusa.dev/locations" },
+        { "@type": "ListItem", position: 3, name: "Software Development Columbus, GA", item: "https://quantlabusa.dev/software-development-columbus-ga" },
+    ],
+};
+
 export default function ColumbusLandingPage() {
     return (
         <main className="min-h-screen bg-quant-bg text-quant-text pt-28 pb-24">
@@ -132,6 +144,12 @@ export default function ColumbusLandingPage() {
                     }),
                 }}
             />
+
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+            />
+
 
             <div className="container mx-auto px-6 max-w-4xl">
                 <nav aria-label="Breadcrumb" className="mb-8">
@@ -231,6 +249,21 @@ export default function ColumbusLandingPage() {
                             </div>
                         ))}
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedIndustries
+                        industries={["manufacturing","fintech","healthcare","saas"]}
+                        heading="Industries we serve in Columbus"
+                    />
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["atlanta","build-vs-buy"]}
+                        pinned={["atlanta-software-development-guide-2026","build-vs-buy-software-2026","best-penetration-testing-companies-georgia-2026"]}
+                        heading="Reading for Columbus founders"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-16">

@@ -132,7 +132,7 @@ export default function SalesLoginPage() {
                     </form>
                 </div>
 
-                <p className="text-center text-gray-700 text-xs mt-4">QuantLab Software Solutions · Sales Portal</p>
+                <p className="text-center text-gray-700 text-xs mt-4">QUANT LAB USA · Sales Portal</p>
             </div>
         </div>
     );

@@ -42,19 +42,43 @@ STATUS_DIFF=0
 STATUS_FRESH=0
 STATUS_LH=0
 STATUS_SCHEMA=0
+STATUS_CANO=0
+STATUS_META=0
+STATUS_GRAPH=0
+STATUS_GSC=0
+STATUS_RANK=0
+STATUS_WEEKLY=0
 
-run_step "diff-sitemap"             "$SCRIPTS/diff-sitemap.ts"             || STATUS_DIFF=$?
-run_step "check-indexing-status"    "$SCRIPTS/check-indexing-status.ts"    || STATUS_INDEX=$?
-run_step "check-broken-links"       "$SCRIPTS/check-broken-links.ts"       || STATUS_LINKS=$?
-run_step "warm-cache"               "$SCRIPTS/warm-cache.ts"               || STATUS_CACHE=$?
-run_step "content-freshness-audit"  "$SCRIPTS/content-freshness-audit.ts"  || STATUS_FRESH=$?
-run_step "check-schema"             "$SCRIPTS/check-schema.ts"             || STATUS_SCHEMA=$?
+run_step "diff-sitemap"             "$SCRIPTS/diff-sitemap.ts"                || STATUS_DIFF=$?
+run_step "check-indexing-status"    "$SCRIPTS/check-indexing-status.ts"       || STATUS_INDEX=$?
+run_step "check-broken-links"       "$SCRIPTS/check-broken-links.ts"          || STATUS_LINKS=$?
+run_step "warm-cache"               "$SCRIPTS/warm-cache.ts"                  || STATUS_CACHE=$?
+run_step "content-freshness-audit"  "$SCRIPTS/content-freshness-audit.ts"     || STATUS_FRESH=$?
+run_step "check-schema"             "$SCRIPTS/check-schema.ts"                || STATUS_SCHEMA=$?
+run_step "check-canonical"          "$SCRIPTS/check-canonical-consistency.ts" || STATUS_CANO=$?
+run_step "check-meta-duplicates"    "$SCRIPTS/check-meta-duplicates.ts"       || STATUS_META=$?
+run_step "check-link-graph"         "$SCRIPTS/check-internal-link-graph.ts"   || STATUS_GRAPH=$?
+
+if [ "${SKIP_GSC:-0}" = "1" ]; then
+  echo "[$(date -u +%H:%M:%S)] SKIP  gsc-api-snapshot (SKIP_GSC=1)" | tee -a "$LOG"
+else
+  run_step "gsc-api-snapshot"       "$SCRIPTS/gsc-api-snapshot.ts"            || STATUS_GSC=$?
+fi
+
+if [ "${SKIP_RANK:-0}" = "1" ]; then
+  echo "[$(date -u +%H:%M:%S)] SKIP  seo-rank-check (SKIP_RANK=1)" | tee -a "$LOG"
+else
+  run_step "seo-rank-check"         "$SCRIPTS/seo-rank-check.ts"              || STATUS_RANK=$?
+fi
 
 if [ "${SKIP_LIGHTHOUSE:-0}" = "1" ]; then
   echo "[$(date -u +%H:%M:%S)] SKIP  lighthouse-batch (SKIP_LIGHTHOUSE=1)" | tee -a "$LOG"
 else
-  run_step "lighthouse-batch"       "$SCRIPTS/lighthouse-batch.ts"         || STATUS_LH=$?
+  run_step "lighthouse-batch"       "$SCRIPTS/lighthouse-batch.ts"            || STATUS_LH=$?
 fi
+
+# Always run the aggregator last so it picks up everything from this run
+run_step "seo-weekly-report"        "$SCRIPTS/seo-weekly-report.ts"           || STATUS_WEEKLY=$?
 
 {
   echo "# Weekly SEO Audit Report — $DATE"
@@ -69,7 +93,13 @@ fi
   echo "| warm-cache | $STATUS_CACHE |"
   echo "| content-freshness-audit | $STATUS_FRESH |"
   echo "| check-schema | $STATUS_SCHEMA |"
+  echo "| check-canonical-consistency | $STATUS_CANO |"
+  echo "| check-meta-duplicates | $STATUS_META |"
+  echo "| check-internal-link-graph | $STATUS_GRAPH |"
+  echo "| gsc-api-snapshot | $STATUS_GSC |"
+  echo "| seo-rank-check | $STATUS_RANK |"
   echo "| lighthouse-batch | $STATUS_LH |"
+  echo "| seo-weekly-report | $STATUS_WEEKLY |"
   echo
   echo "## Detail reports written"
   echo
@@ -80,7 +110,13 @@ fi
     "cache-warm-$DATE.md" \
     "freshness-audit-$DATE.md" \
     "schema-validation-$DATE.md" \
-    "lighthouse-trend-$DATE.md"
+    "canonical-check-$DATE.md" \
+    "meta-duplicates-$DATE.md" \
+    "link-graph-$DATE.md" \
+    "gsc-snapshot-$DATE.md" \
+    "rank-check-$DATE.md" \
+    "lighthouse-trend-$DATE.md" \
+    "weekly-report-$DATE.md"
   do
     if [ -f "$MON/$f" ]; then
       echo "- [$f]($f)"
@@ -98,6 +134,11 @@ fi
     "cache-warm-$DATE.md" \
     "freshness-audit-$DATE.md" \
     "schema-validation-$DATE.md" \
+    "canonical-check-$DATE.md" \
+    "meta-duplicates-$DATE.md" \
+    "link-graph-$DATE.md" \
+    "gsc-snapshot-$DATE.md" \
+    "rank-check-$DATE.md" \
     "lighthouse-trend-$DATE.md"
   do
     if [ -f "$MON/$f" ]; then
@@ -116,4 +157,5 @@ fi
 
 echo ""
 echo "Weekly report: $REPORT"
+echo "Aggregated one-pager: $MON/weekly-report-$DATE.md"
 echo "Log: $LOG"

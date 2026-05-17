@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { pageMetadata } from "@/lib/seoMeta";
 
 export const metadata: Metadata = pageMetadata({
-    title: "What is Blue-Green Deployment? | QUANT LAB",
+    title: "What is Blue-Green Deployment? Plain-English | QUANT LAB USA",
     description:
-        "Blue-green deployment runs two identical production environments so releases and rollbacks are switchovers, not redeploys. How it works, where it fits, and what QUANT LAB does.",
+        "Blue-green deployment ships new code with zero downtime by running two identical environments. Plain-English definition, tradeoffs, examples. By QUANT LAB USA.",
     slug: "/glossary/what-is-blue-green-deployment",
 });
 
@@ -105,6 +106,13 @@ export default function Page() {
                     <p>
                         For clients on AWS, GCP, or Azure, our <Link href="/services/devops-engineering" className="text-sky-400 hover:underline">DevOps engineering</Link> practice builds blue-green into the deployment pipeline directly — ECS or Kubernetes services behind a load balancer that flips between target groups, with smoke tests and automated rollback gates. Read our <Link href="/blog/internal-tools-platform-engineering-guide" className="text-sky-400 hover:underline">platform engineering guide</Link> for the broader picture, or <Link href="/contact" className="text-sky-400 hover:underline">book a call</Link> for a one-hour review of your release process.
                     </p>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-10">
+                    <RelatedPosts
+                        topics={["stack"]}
+                        heading="Long-form deep-dives that use this term"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-10">

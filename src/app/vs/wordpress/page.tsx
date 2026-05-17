@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { FileCode, Check, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -421,6 +422,13 @@ export default function CustomWebVsWordPressPage() {
                             <p className="text-sm text-gray-400 leading-relaxed">The other no-code comparison — same lesson with a different platform.</p>
                         </Link>
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["stack","build-vs-buy"]}
+                        heading="Related platform comparison reading"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection>

@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 
 export const metadata: Metadata = {
-    title: "What is a Web Application Firewall (WAF)? | QUANT LAB",
+    title: "What is a Web Application Firewall (WAF)? | QUANT LAB USA",
     description:
-        "A WAF inspects HTTP traffic and blocks common attacks before they reach your app. How WAFs work, their limits, why they are not a substitute for secure code.",
+        "A WAF filters HTTP traffic to block OWASP Top 10 attacks like SQLi and XSS. Plain-English definition, vendor choices, and when you need one. By QUANT LAB USA.",
     alternates: { canonical: "https://quantlabusa.dev/glossary/what-is-a-web-app-firewall" },
 };
 
@@ -161,6 +162,13 @@ export default function Page() {
                         — a WAF you never tune is a WAF that will eventually block
                         your most important customer.
                     </p>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-10">
+                    <RelatedPosts
+                        topics={["pentest","compliance"]}
+                        heading="Long-form deep-dives that use this term"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-10">

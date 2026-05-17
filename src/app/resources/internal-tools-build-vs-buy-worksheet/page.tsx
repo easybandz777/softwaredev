@@ -10,12 +10,12 @@ const TITLE = "Internal Tools: Build vs Buy Decision Worksheet";
 const PDF_FILENAME = "internal-tools-build-vs-buy-worksheet.pdf";
 
 export const metadata: Metadata = {
-    title: "Internal Tools Build vs Buy Worksheet (Free PDF) | QUANT LAB",
+    title: "Internal Tools Build-vs-Buy Worksheet (Free) | QUANT LAB USA",
     description:
-        "A 20-page worksheet for ops teams evaluating Retool, Internal.io, Airplane, or build-from-scratch — with a 10-factor scoring matrix and 5-year TCO comparison.",
+        "20-page worksheet for ops teams evaluating Retool, Internal.io, Airplane, or build-from-scratch — with a 10-factor scoring matrix and 5-year TCO comparison.",
     alternates: { canonical: `https://quantlabusa.dev/resources/${SLUG}` },
     openGraph: {
-        title: "Internal Tools Build vs Buy Worksheet (Free PDF) | QUANT LAB",
+        title: "Internal Tools Build vs Buy Worksheet (Free PDF) | QUANT LAB USA",
         description:
             "20-page worksheet for ops teams evaluating Retool, Internal.io, Airplane, or build-from-scratch with scoring matrix and TCO.",
         url: `https://quantlabusa.dev/resources/${SLUG}`,
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: "summary_large_image",
-        title: "Internal Tools Build vs Buy Worksheet (Free PDF) | QUANT LAB",
+        title: "Internal Tools Build vs Buy Worksheet (Free PDF) | QUANT LAB USA",
         description:
             "20-page worksheet for evaluating internal-tools platforms vs build-from-scratch.",
     },

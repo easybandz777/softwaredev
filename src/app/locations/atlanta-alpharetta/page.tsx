@@ -5,19 +5,19 @@ import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { MapPin, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
-    title: "Custom Software Development in Alpharetta GA | QUANT LAB",
+    title: "Software Development in Alpharetta GA | QUANT LAB USA",
     description:
-        "Custom software development in Alpharetta GA — fintech, North Point corridor SaaS, and SOC 2 penetration tests. Founder-led, fixed-quote engagements.",
+        "Custom software development & pen testing for North Atlanta and Alpharetta companies. Founder-led, same-state Georgia firm. Call (770) 652-1282.",
     alternates: { canonical: "https://quantlabusa.dev/locations/atlanta-alpharetta" },
     openGraph: {
-        title: "Custom Software Development in Alpharetta GA | QUANT LAB",
+        title: "Custom Software Development in Alpharetta GA | QUANT LAB USA",
         description: "Alpharetta-focused fintech and SaaS builds plus penetration testing along the North Point corridor.",
         url: "https://quantlabusa.dev/locations/atlanta-alpharetta",
         type: "article",
     },
     twitter: {
         card: "summary",
-        title: "Custom Software Development in Alpharetta GA | QUANT LAB",
+        title: "Custom Software Development in Alpharetta GA | QUANT LAB USA",
         description: "Alpharetta-focused fintech and SaaS builds plus penetration testing.",
     },
 };

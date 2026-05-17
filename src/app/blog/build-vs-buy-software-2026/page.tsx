@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { Calendar, User, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -687,6 +688,14 @@ export default function BuildVsBuyPage() {
                         ))}
                     </div>
                 </AnimatedSection>
+                <AnimatedSection className="mt-16 mb-12">
+                    <RelatedPosts
+                        currentSlug="build-vs-buy-software-2026"
+                        topics={["build-vs-buy","saas"]}
+                        heading="Related build vs buy reading"
+                    />
+                </AnimatedSection>
+
             </article>
         </main>
     );

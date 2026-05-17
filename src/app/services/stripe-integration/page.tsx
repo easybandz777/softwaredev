@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { CreditCard, Check, ArrowRight } from "lucide-react";
 import { pageMetadata } from "@/lib/seoMeta";
 
 export const metadata = pageMetadata({
-    title: "Custom Stripe Integration Consulting | QuantLab",
+    title: "Custom Stripe Integration Services (2026) | QUANT LAB USA",
     description:
-        "Custom Stripe development beyond hosted Checkout — Connect marketplaces, complex subscriptions, custom webhooks, ERP/QBO sync. Founder-led. Free scoping call.",
+        "Custom Stripe integration consulting — Checkout, Subscriptions, Connect, Tax, Invoicing, dispute workflows, webhook reliability. Founder-led. Free quote.",
     slug: "services/stripe-integration",
     image: "/og-stripe.png",
     type: "article",
@@ -99,6 +100,16 @@ const faqSchema = {
     ],
 };
 
+const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://quantlabusa.dev/" },
+        { "@type": "ListItem", position: 2, name: "Services", item: "https://quantlabusa.dev/services" },
+        { "@type": "ListItem", position: 3, name: "Stripe Integration", item: "https://quantlabusa.dev/services/stripe-integration" },
+    ],
+};
+
 export default function StripeIntegrationPage() {
     return (
         <main className="min-h-screen bg-quant-bg text-quant-text pt-28 pb-24">
@@ -109,6 +120,10 @@ export default function StripeIntegrationPage() {
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
             />
 
             <div className="container mx-auto px-6 max-w-4xl">
@@ -252,6 +267,14 @@ export default function StripeIntegrationPage() {
                             </div>
                         ))}
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["stripe","stack"]}
+                        heading="Stripe engineering reading"
+                        pinned={["nextjs-stripe-integration-guide","stripe-webhook-security-best-practices","pci-dss-compliance-saas-checklist"]}
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-16">

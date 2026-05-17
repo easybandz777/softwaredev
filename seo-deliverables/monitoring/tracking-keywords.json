@@ -1,0 +1,5 @@
+{
+  "$schema": "../keyword-strategy/tracking-keywords.schema",
+  "_comment": "This is a thin pointer to the canonical keyword list at ../keyword-strategy/tracking-keywords.json. Some scripts (seo-rank-check.ts, seo-weekly-report.ts) look in either location; we keep this so monitoring-only consumers do not need to cross directories. Update the canonical file; this one will follow once the project formalizes a single source of truth.",
+  "see": "../keyword-strategy/tracking-keywords.json"
+}

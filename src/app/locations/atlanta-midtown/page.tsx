@@ -5,19 +5,19 @@ import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { MapPin, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
-    title: "Custom Software Development in Midtown Atlanta | QUANT LAB",
+    title: "Software Development in Midtown Atlanta | QUANT LAB USA",
     description:
-        "Custom software development in Midtown Atlanta — Tech Square, Georgia Tech corridor, and venture-backed SaaS builds. Founder-led, fixed-quote engagements.",
+        "Custom software development & pen testing for Midtown Atlanta tech and creative firms. Founder-led, same-state Georgia firm. Call (770) 652-1282.",
     alternates: { canonical: "https://quantlabusa.dev/locations/atlanta-midtown" },
     openGraph: {
-        title: "Custom Software Development in Midtown Atlanta | QUANT LAB",
+        title: "Custom Software Development in Midtown Atlanta | QUANT LAB USA",
         description: "Tech Square-focused custom software and pen testing for Midtown SaaS and startup operators.",
         url: "https://quantlabusa.dev/locations/atlanta-midtown",
         type: "article",
     },
     twitter: {
         card: "summary",
-        title: "Custom Software Development in Midtown Atlanta | QUANT LAB",
+        title: "Custom Software Development in Midtown Atlanta | QUANT LAB USA",
         description: "Tech Square-focused custom software and pen testing for Midtown SaaS operators.",
     },
 };

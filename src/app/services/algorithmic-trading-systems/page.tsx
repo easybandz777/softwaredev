@@ -1,13 +1,15 @@
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
+import { RelatedCities } from "@/components/RelatedCities";
 import { Bot, Check, ArrowRight } from "lucide-react";
 import { pageMetadata } from "@/lib/seoMeta";
 
 export const metadata = pageMetadata({
-    title: "Algorithmic Trading Bot Development — 5 Live Systems | QuantLab",
+    title: "Algorithmic Trading System Development | QUANT LAB USA",
     description:
-        "Custom trading bot development for MA Supertrend, VWAP, and momentum strategies. 5 live systems running real money with <12ms latency and 24/7 uptime. Get a build quote.",
+        "Production algorithmic trading systems with hard risk controls, broker API integration, sub-12ms order latency, and audit-grade backtesting. By QUANT LAB USA.",
     slug: "services/algorithmic-trading-systems",
     image: "/og-trading.png",
     type: "article",
@@ -77,6 +79,16 @@ const faqSchema = {
     ],
 };
 
+const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://quantlabusa.dev/" },
+        { "@type": "ListItem", position: 2, name: "Services", item: "https://quantlabusa.dev/services" },
+        { "@type": "ListItem", position: 3, name: "Algorithmic Trading Systems", item: "https://quantlabusa.dev/services/algorithmic-trading-systems" },
+    ],
+};
+
 export default function AlgorithmicTradingPage() {
     return (
         <main className="min-h-screen bg-quant-bg text-quant-text pt-28 pb-24">
@@ -87,6 +99,10 @@ export default function AlgorithmicTradingPage() {
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
             />
 
             <div className="container mx-auto px-6 max-w-4xl">
@@ -240,6 +256,13 @@ export default function AlgorithmicTradingPage() {
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["stack","build-vs-buy"]}
+                        heading="Engineering & build-vs-buy reading"
+                    />
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
                     <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">Related services</h2>
                     <div className="grid md:grid-cols-3 gap-4">
                         {[
@@ -260,6 +283,10 @@ export default function AlgorithmicTradingPage() {
                             </Link>
                         ))}
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedCities heading="Algorithmic trading clients — where we work" max={8} />
                 </AnimatedSection>
 
                 <AnimatedSection>

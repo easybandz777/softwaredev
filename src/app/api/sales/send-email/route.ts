@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
 
         const sessionUser = getSessionUser(req);
 
-        let senderName = "QuantLab USA";
+        let senderName = "QUANT LAB USA";
         let senderEmailAddr = "";
 
         if (sessionUser) {

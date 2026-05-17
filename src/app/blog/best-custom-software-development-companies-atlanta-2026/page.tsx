@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { ArrowRight, Check, MapPin, Building2 } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -385,6 +386,15 @@ export default function BestAtlantaSoftwareCompaniesPage() {
                             Or call William directly at <a href="tel:+17706521282" className="text-sky-400 hover:underline">(770) 652-1282</a>
                         </div>
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mt-16 mb-12">
+                    <RelatedPosts
+                        currentSlug="best-custom-software-development-companies-atlanta-2026"
+                        topics={["atlanta","build-vs-buy"]}
+                        heading="More Atlanta software intel"
+                        pinned={["atlanta-software-development-guide-2026","best-penetration-testing-companies-georgia-2026","how-to-choose-a-software-development-company-checklist"]}
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mt-12">

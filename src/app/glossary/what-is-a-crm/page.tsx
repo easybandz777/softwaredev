@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 
 export const metadata: Metadata = {
-    title: "What is a CRM? Definition & Examples | QUANT LAB",
+    title: "What is a CRM? Definition + Examples | QUANT LAB USA",
     description:
-        "A CRM is the system of record for every customer relationship. Plain-English definition, history, what it does, when you actually need one, and how QUANT LAB builds custom ones.",
+        "A CRM is the system of record for every customer relationship. Plain-English definition, history, and when you actually need one — by QUANT LAB USA.",
     alternates: { canonical: "https://quantlabusa.dev/glossary/what-is-a-crm" },
 };
 
@@ -198,6 +199,13 @@ export default function Page() {
                         <Link href="/blog/custom-crm-vs-salesforce-vs-hubspot-2026" className="text-sky-400 hover:underline">custom CRM vs Salesforce vs HubSpot</Link> comparison
                         before deciding which path you are on.
                     </p>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-10">
+                    <RelatedPosts
+                        topics={["crm"]}
+                        heading="Long-form deep-dives that use this term"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-10">

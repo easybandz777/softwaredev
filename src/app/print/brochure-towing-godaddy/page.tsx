@@ -155,7 +155,7 @@ export default function BrochureTowingGodaddyPage() {
                 }}>
                     <img src="/logo-transparent.png" alt="QuantLab" style={{ width: "160px", height: "160px", objectFit: "contain", marginBottom: "0.15rem" }} className="logo-glow" />
 
-                    <p style={{ fontSize: "0.62rem", fontWeight: 900, color: "#ffffff", marginBottom: "0.04rem" }}>QuantLab Software Solutions</p>
+                    <p style={{ fontSize: "0.62rem", fontWeight: 900, color: "#ffffff", marginBottom: "0.04rem" }}>QUANT LAB USA</p>
                     <p style={{ fontSize: "0.42rem", color: ORANGE, fontWeight: 600, marginBottom: "0.06rem", letterSpacing: "0.06em" }}>Operations Software. CRM Included. No Extra Cost.</p>
                     <p style={{ fontSize: "0.35rem", color: "#6B7280", marginBottom: "0.2rem", maxWidth: "2.6in", lineHeight: 1.4 }}>
                         We build the platforms that run towing &amp; repo operations — dispatch, CRM, fleet tracking, invoicing, client portals, and analytics — all in one system. No separate CRM subscription. Ever.
@@ -196,7 +196,7 @@ export default function BrochureTowingGodaddyPage() {
                         ))}
                     </div>
 
-                    <p style={{ fontSize: "0.28rem", color: "#374151", marginTop: "auto" }}>© 2026 QuantLab Software Solutions LLC</p>
+                    <p style={{ fontSize: "0.28rem", color: "#374151", marginTop: "auto" }}>© 2026 QUANT LAB USA LLC</p>
                 </div>
 
                 {/* ─── PANEL 1 (RIGHT): Front Cover ─── */}

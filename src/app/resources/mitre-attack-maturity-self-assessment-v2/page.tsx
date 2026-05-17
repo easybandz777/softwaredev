@@ -10,12 +10,12 @@ const TITLE = "MITRE ATT&CK Maturity Self-Assessment v2 (2026)";
 const PDF_FILENAME = "mitre-attack-maturity-self-assessment-v2.pdf";
 
 export const metadata: Metadata = {
-    title: "MITRE ATT&CK Maturity Self-Assessment v2 2026 (Free PDF) | QUANT LAB",
+    title: "MITRE ATT&CK Maturity Self-Assessment v2 | QUANT LAB USA",
     description:
-        "The expanded 2026 edition: 40-question self-assessment across all 14 ATT&CK Enterprise tactics with tier scoring, board-ready summary, and 30-60-90 remediation plan.",
+        "Expanded 40-question MITRE ATT&CK self-assessment across all 14 Enterprise tactics with tier scoring, board-ready summary, 30-60-90 remediation plan. Free.",
     alternates: { canonical: `https://quantlabusa.dev/resources/${SLUG}` },
     openGraph: {
-        title: "MITRE ATT&CK Maturity Self-Assessment v2 2026 (Free PDF) | QUANT LAB",
+        title: "MITRE ATT&CK Maturity Self-Assessment v2 2026 (Free PDF) | QUANT LAB USA",
         description:
             "Expanded 40-question MITRE ATT&CK self-assessment for 2026 with tier scoring, board summary, and 30-60-90 remediation plan.",
         url: `https://quantlabusa.dev/resources/${SLUG}`,
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: "summary_large_image",
-        title: "MITRE ATT&CK Maturity Self-Assessment v2 2026 (Free PDF) | QUANT LAB",
+        title: "MITRE ATT&CK Maturity Self-Assessment v2 2026 (Free PDF) | QUANT LAB USA",
         description:
             "40-question MITRE ATT&CK self-assessment with tier scoring and a 30-60-90 remediation plan.",
     },

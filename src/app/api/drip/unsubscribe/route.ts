@@ -22,7 +22,7 @@ a { color:#4f46e5; }
 </head>
 <body>
 <div class="card">
-<div class="brand">QuantLab USA</div>
+<div class="brand">QUANT LAB USA</div>
 <h1>${opts.heading}</h1>
 <p>${opts.message}</p>
 <p><a href="https://quantlabusa.dev">Return to quantlabusa.dev</a></p>
@@ -37,7 +37,7 @@ async function handle(request: NextRequest): Promise<NextResponse> {
 
     if (!verified) {
         const html = pageHtml({
-            title: "Invalid unsubscribe link — QuantLab USA",
+            title: "Invalid unsubscribe link — QUANT LAB USA",
             heading: "This unsubscribe link is invalid or expired",
             message: "If you want to be removed from the list, reply to any email with the word \"stop\" and you will be removed within one business day.",
         });
@@ -50,10 +50,10 @@ async function handle(request: NextRequest): Promise<NextResponse> {
     try {
         const updated = await unsubscribeByEmail(verified.email);
         const html = pageHtml({
-            title: "Unsubscribed — QuantLab USA",
+            title: "Unsubscribed — QUANT LAB USA",
             heading: "You are unsubscribed",
             message: updated > 0
-                ? `We removed ${verified.email} from the QuantLab USA nurture sequence. You will not receive further drip emails. Transactional emails (proposals, invoices, account messages) are unaffected.`
+                ? `We removed ${verified.email} from the QUANT LAB USA nurture sequence. You will not receive further drip emails. Transactional emails (proposals, invoices, account messages) are unaffected.`
                 : `We have ${verified.email} marked as unsubscribed. No further drip emails will be sent.`,
         });
         return new NextResponse(html, {
@@ -63,7 +63,7 @@ async function handle(request: NextRequest): Promise<NextResponse> {
     } catch (err) {
         console.error("[drip:unsubscribe] failed:", err);
         const html = pageHtml({
-            title: "Unsubscribe error — QuantLab USA",
+            title: "Unsubscribe error — QUANT LAB USA",
             heading: "Something went wrong",
             message: "We could not process this unsubscribe automatically. Reply to any email with the word \"stop\" and you will be removed within one business day.",
         });

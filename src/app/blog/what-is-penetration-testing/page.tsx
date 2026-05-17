@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { Calendar, User, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
-    title: "What Is Penetration Testing? A 2026 Buyer Guide | QUANT LAB",
+    title: "What Is Penetration Testing? 2026 Buyer Guide | QUANT LAB USA",
     description:
-        "What a pentest is, the 5 types to know, black/grey/white-box, what a real report contains, compliance triggers, pentest vs vuln scan, and 2026 pricing.",
+        "Plain-English 2026 buyer guide for penetration testing: scope tiers, what's in the report, MITRE ATT&CK alignment, cost ranges, and how to vet a vendor.",
     alternates: {
         canonical: "https://quantlabusa.dev/blog/what-is-penetration-testing",
     },
@@ -712,6 +713,14 @@ export default function WhatIsPentestPage() {
                         ))}
                     </div>
                 </AnimatedSection>
+                <AnimatedSection className="mt-16 mb-12">
+                    <RelatedPosts
+                        currentSlug="what-is-penetration-testing"
+                        topics={["pentest"]}
+                        heading="More pentest reading"
+                    />
+                </AnimatedSection>
+
             </article>
         </main>
     );

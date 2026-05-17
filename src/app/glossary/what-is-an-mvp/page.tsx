@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 
 export const metadata: Metadata = {
-    title: "What is an MVP? Definition & Examples | QUANT LAB",
+    title: "What is an MVP? Definition + Examples (2026) | QUANT LAB USA",
     description:
-        "An MVP (Minimum Viable Product) is the smallest version of a product that delivers real value and lets you learn from paying customers. Definition, examples, scoping rules.",
+        "An MVP is the smallest software product that delivers real value. Plain-English definition, 2026 examples, and what to cut. By QUANT LAB USA.",
     alternates: { canonical: "https://quantlabusa.dev/glossary/what-is-an-mvp" },
 };
 
@@ -161,6 +162,13 @@ export default function Page() {
                         this phase end up building v2.0 from the same speculative
                         list of features they had before launch.
                     </p>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-10">
+                    <RelatedPosts
+                        topics={["build-vs-buy","saas"]}
+                        heading="Long-form deep-dives that use this term"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-10">

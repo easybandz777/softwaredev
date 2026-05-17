@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { Shield, Check, ArrowRight, MapPin } from "lucide-react";
 import { pageMetadata } from "@/lib/seoMeta";
 
@@ -22,7 +23,7 @@ const pentestCities: { slug: string; city: string; state: string }[] = [
 ];
 
 export const metadata = pageMetadata({
-    title: "Penetration Testing Georgia — 11-Module Red Team | QuantLab",
+    title: "Penetration Testing Georgia — 11-Module Red Team | QUANT LAB USA",
     description:
         "Full-scope pentests: network, wireless, web app, and Active Directory. 11-module red team toolkit mapped to MITRE ATT&CK. Georgia-based, serving the US. Get a scope.",
     slug: "services/penetration-testing",
@@ -94,6 +95,16 @@ const faqSchema = {
     ],
 };
 
+const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://quantlabusa.dev/" },
+        { "@type": "ListItem", position: 2, name: "Services", item: "https://quantlabusa.dev/services" },
+        { "@type": "ListItem", position: 3, name: "Penetration Testing", item: "https://quantlabusa.dev/services/penetration-testing" },
+    ],
+};
+
 export default function PenetrationTestingPage() {
     return (
         <main className="min-h-screen bg-quant-bg text-quant-text pt-28 pb-24">
@@ -104,6 +115,10 @@ export default function PenetrationTestingPage() {
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
             />
 
             <div className="container mx-auto px-6 max-w-4xl">
@@ -287,6 +302,14 @@ export default function PenetrationTestingPage() {
                             </div>
                         ))}
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["pentest"]}
+                        heading="Pentest buyer reading"
+                        pinned={["what-is-penetration-testing","penetration-test-cost-2026","soc2-pentest-prep-guide-2026"]}
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-16">

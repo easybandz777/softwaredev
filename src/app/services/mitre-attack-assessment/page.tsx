@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { Shield, Check, ArrowRight } from "lucide-react";
 import { pageMetadata } from "@/lib/seoMeta";
 
 export const metadata = pageMetadata({
-    title: "MITRE ATT&CK Assessment | ATT&CK-Aligned Pentest | QuantLab",
+    title: "MITRE ATT&CK Assessment | ATT&CK-Aligned Pentest | QUANT LAB USA",
     description:
         "MITRE ATT&CK assessment and ATT&CK-aligned pentest mapping your defenses to real adversary TTPs. Call (770) 652-1282 to scope an ATT&CK-aligned engagement.",
     slug: "services/mitre-attack-assessment",
@@ -77,6 +78,16 @@ const faqSchema = {
     ],
 };
 
+const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://quantlabusa.dev/" },
+        { "@type": "ListItem", position: 2, name: "Services", item: "https://quantlabusa.dev/services" },
+        { "@type": "ListItem", position: 3, name: "MITRE ATT&CK Assessment", item: "https://quantlabusa.dev/services/mitre-attack-assessment" },
+    ],
+};
+
 export default function MitreAttackAssessmentPage() {
     return (
         <main className="min-h-screen bg-quant-bg text-quant-text pt-28 pb-24">
@@ -87,6 +98,10 @@ export default function MitreAttackAssessmentPage() {
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
             />
 
             <div className="container mx-auto px-6 max-w-4xl">
@@ -239,6 +254,14 @@ export default function MitreAttackAssessmentPage() {
                             </div>
                         ))}
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["pentest"]}
+                        heading="Red team reading"
+                        pinned={["what-is-mitre-attack-framework","red-team-vs-pen-test-vs-audit","what-is-penetration-testing"]}
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-16">

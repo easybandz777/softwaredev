@@ -5,19 +5,19 @@ import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { MapPin, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
-    title: "Custom Software Development in Bibb County GA | QUANT LAB",
+    title: "Software Development in Bibb County GA | QUANT LAB USA",
     description:
-        "Custom software development in Bibb County GA — manufacturing, healthcare, and I-75 corridor operators. Founder-led, local Middle Georgia delivery.",
+        "Custom software development & pen testing for Macon and Bibb County businesses. Same-state Georgia firm, founder-led. Call (770) 652-1282 for a free quote.",
     alternates: { canonical: "https://quantlabusa.dev/locations/macon-bibb-county" },
     openGraph: {
-        title: "Custom Software Development in Bibb County GA | QUANT LAB",
+        title: "Custom Software Development in Bibb County GA | QUANT LAB USA",
         description: "Bibb County software builds for manufacturing, healthcare, and I-75 corridor operators in Middle Georgia.",
         url: "https://quantlabusa.dev/locations/macon-bibb-county",
         type: "article",
     },
     twitter: {
         card: "summary",
-        title: "Custom Software Development in Bibb County GA | QUANT LAB",
+        title: "Custom Software Development in Bibb County GA | QUANT LAB USA",
         description: "Bibb County software builds for Middle Georgia manufacturers and healthcare operators.",
     },
 };

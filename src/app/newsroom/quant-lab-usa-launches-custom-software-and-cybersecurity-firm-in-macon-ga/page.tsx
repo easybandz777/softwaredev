@@ -15,9 +15,9 @@ const SLUG =
 const PUBLISHED = "2024-11-09";
 
 export const metadata: Metadata = articleMetadata({
-    title: "QUANT LAB USA Launches Custom Software & Cybersecurity Firm in Macon, GA",
+    title: "QUANT LAB USA Launches Custom Software Firm in Macon, GA",
     description:
-        "Founder Bill Beltz announces QUANT LAB USA INC — a Macon-based custom software and penetration testing firm built for founders who outgrew off-the-shelf SaaS.",
+        "Macon-based founder-led custom software and cybersecurity firm QUANT LAB USA launches with services across the US Southeast and beyond. Press release.",
     slug: `newsroom/${SLUG}`,
     image: "/og-image.png",
     publishedTime: PUBLISHED,

@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { Landmark, Check, ArrowRight } from "lucide-react";
 import { pageMetadata } from "@/lib/seoMeta";
 
 export const metadata = pageMetadata({
-    title: "Custom Software for Fintech | QuantLab USA",
+    title: "Custom Software for Fintech (2026) | QUANT LAB USA",
     description:
-        "Custom fintech development — PCI-DSS, SOC 2, SOX, KYC/AML aware. Trading dashboards, Stripe Connect marketplaces, advisor CRMs, MITRE ATT&CK pentests. Founder-led.",
+        "Custom fintech development — PCI-DSS, SOC 2, SOX, KYC/AML aware. Trading dashboards, Stripe Connect marketplaces, advisor CRMs, MITRE pentests. Founder-led.",
     slug: "industries/fintech",
     image: "/og-services.png",
     type: "article",
@@ -23,7 +24,7 @@ const webPageSchema = {
     isPartOf: {
         "@type": "WebSite",
         url: "https://quantlabusa.dev",
-        name: "QuantLab USA",
+        name: "QUANT LAB USA",
     },
 };
 
@@ -415,6 +416,14 @@ export default function FintechIndustryPage() {
                             </Link>
                         ))}
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["stripe","compliance","build-vs-buy"]}
+                        heading="Fintech engineering & compliance reading"
+                        pinned={["nextjs-stripe-integration-guide","soc2-pentest-prep-guide-2026","stripe-connect-marketplace-architecture"]}
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection>

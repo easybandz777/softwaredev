@@ -6,9 +6,9 @@ type SearchPageProps = {
 };
 
 export const metadata: Metadata = {
-  title: "Search | QUANT LAB USA",
+  title: "Search QUANT LAB USA — Find Guides & Services",
   description:
-    "Search QUANT LAB USA for software development, custom CRM, Stripe integration, penetration testing, and algorithmic trading resources.",
+    "Search QUANT LAB USA's full library of engineering guides, glossary terms, service pages, and case studies. Find the right answer in seconds.",
   alternates: {
     canonical: "https://quantlabusa.dev/search",
   },

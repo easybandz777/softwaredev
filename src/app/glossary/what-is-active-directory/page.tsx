@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 
 export const metadata: Metadata = {
-    title: "What is Active Directory? Definition & Examples | QUANT LAB",
+    title: "What is Active Directory? Plain-English Guide | QUANT LAB USA",
     description:
-        "Active Directory is Microsoft's identity directory and the backbone of most enterprise networks. How it works, why attackers target it, and how QUANT LAB tests it.",
+        "Active Directory is Microsoft's identity directory for Windows networks. Plain-English definition, what it controls, why pentesters target it. By QUANT LAB USA.",
     alternates: { canonical: "https://quantlabusa.dev/glossary/what-is-active-directory" },
 };
 
@@ -162,6 +163,13 @@ export default function Page() {
                         BloodHound-analyzed has a paths-to-domain-admin problem
                         nobody has measured.
                     </p>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-10">
+                    <RelatedPosts
+                        topics={["pentest"]}
+                        heading="Long-form deep-dives that use this term"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-10">

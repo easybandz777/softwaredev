@@ -197,7 +197,7 @@ export default function BrochureGodaddyPage() {
                 }}>
                     <img src="/logo-transparent.png" alt="QuantLab" style={{ width: "165px", height: "165px", objectFit: "contain", marginBottom: "0.15rem" }} className="logo-glow" />
 
-                    <p style={{ fontSize: "0.65rem", fontWeight: 900, color: "#ffffff", marginBottom: "0.04rem" }}>QuantLab Software Solutions</p>
+                    <p style={{ fontSize: "0.65rem", fontWeight: 900, color: "#ffffff", marginBottom: "0.04rem" }}>QUANT LAB USA</p>
                     <p style={{ fontSize: "0.44rem", color: BLUE, fontWeight: 600, marginBottom: "0.06rem", letterSpacing: "0.06em" }}>Built by Engineers. Owned by You.</p>
                     <p style={{ fontSize: "0.36rem", color: "#6B7280", marginBottom: "0.22rem", maxWidth: "2.6in", lineHeight: 1.4 }}>
                         Stop wrestling with DIY platforms that were never designed to run your business. Get a system that works as hard as you do.
@@ -239,7 +239,7 @@ export default function BrochureGodaddyPage() {
                         ))}
                     </div>
 
-                    <p style={{ fontSize: "0.3rem", color: "#374151", marginTop: "auto" }}>© 2026 QuantLab Software Solutions LLC</p>
+                    <p style={{ fontSize: "0.3rem", color: "#374151", marginTop: "auto" }}>© 2026 QUANT LAB USA LLC</p>
                 </div>
 
                 {/* ─── PANEL 1 (RIGHT): Front Cover ─── */}

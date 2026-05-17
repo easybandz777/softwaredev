@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Page Not Found | QUANT LAB USA",
+  title: "404 Page Not Found | QUANT LAB USA",
   description:
-    "The page you requested could not be found. Browse our software development, cybersecurity, custom CRM, and Stripe integration services or contact William Beltz directly.",
+    "The page you're looking for isn't here. Browse our services, glossary, blog, or 14 US city coverage areas to find what you need. By QUANT LAB USA.",
   robots: { index: false, follow: true },
   alternates: {
     canonical: "https://quantlabusa.dev/404",

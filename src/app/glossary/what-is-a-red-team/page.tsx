@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 
 export const metadata: Metadata = {
-    title: "What is a Red Team? Definition & Examples | QUANT LAB",
+    title: "What is a Red Team? Definition & Examples | QUANT LAB USA",
     description:
-        "A red team is goal-driven adversary simulation against your people, processes, and tech. Red team vs pentest, when you need one, and how QUANT LAB approaches it.",
+        "A red team simulates a real adversary against your defenses. Plain-English definition, scope vs pentest, who needs one, 2026 cost ranges. By QUANT LAB USA.",
     alternates: { canonical: "https://quantlabusa.dev/glossary/what-is-a-red-team" },
 };
 
@@ -164,6 +165,13 @@ export default function Page() {
                         physical pretexting attempt goes wrong. Without this
                         paperwork no professional red team will run the engagement.
                     </p>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-10">
+                    <RelatedPosts
+                        topics={["pentest"]}
+                        heading="Long-form deep-dives that use this term"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-10">

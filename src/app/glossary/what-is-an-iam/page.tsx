@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { pageMetadata } from "@/lib/seoMeta";
 
 export const metadata: Metadata = pageMetadata({
-    title: "What is an IAM (Identity and Access Management)? | QUANT LAB",
+    title: "What is IAM (Identity & Access Management)? | QUANT LAB USA",
     description:
-        "IAM is the system that decides who can do what in your stack. The cloud meaning vs the workforce meaning, the principles that matter, and how QUANT LAB designs it.",
+        "IAM controls who accesses what across cloud and SaaS. Plain-English definition, AWS/GCP/Okta examples, why it is the #1 cloud risk in 2026. By QUANT LAB USA.",
     slug: "/glossary/what-is-an-iam",
 });
 
@@ -105,6 +106,13 @@ export default function Page() {
                     <p>
                         For SaaS products, our <Link href="/services/saas-platform-development" className="text-sky-400 hover:underline">SaaS platform builds</Link> include a typed authorization layer from day one — Postgres row-level security plus a policy engine — so the question "is this user allowed to see this resource" has one consistent answer across every endpoint. Read our piece on <Link href="/blog/building-multi-tenant-saas-postgres-rls" className="text-sky-400 hover:underline">multi-tenant SaaS with Postgres RLS</Link> for the data-layer pattern, or <Link href="/contact" className="text-sky-400 hover:underline">book a call</Link> if your IAM has been accreting since the early days.
                     </p>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-10">
+                    <RelatedPosts
+                        topics={["compliance","pentest"]}
+                        heading="Long-form deep-dives that use this term"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-10">

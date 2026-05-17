@@ -6,9 +6,9 @@ import { NewsletterCTA } from "@/components/NewsletterCTA";
 import { breadcrumbSchema, organizationSchema, personSchema } from "@/lib/schemas";
 
 export const metadata: Metadata = pageMetadata({
-    title: "QUANT LAB USA Newsroom — Press Releases & Company Updates",
+    title: "QUANT LAB USA Newsroom — Press, News & Announcements",
     description:
-        "The QUANT LAB USA newsroom — press releases, company milestones, product launches, and the newsletter archive. News from a working Macon, Georgia custom software firm.",
+        "Official press releases, news, and milestones from QUANT LAB USA — Macon, Georgia-based custom software and cybersecurity firm. 2026 updates.",
     slug: "newsroom",
     image: "/og-image.png",
     keywords: [

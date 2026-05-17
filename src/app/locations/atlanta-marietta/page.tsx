@@ -5,19 +5,19 @@ import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { MapPin, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
-    title: "Custom Software Development in Marietta GA | QUANT LAB",
+    title: "Software Development in Marietta GA | QUANT LAB USA",
     description:
-        "Custom software development in Marietta GA — Cobb County operations platforms, contractor CRMs, and pen testing. Founder-led, fixed-quote engagements.",
+        "Custom software development & pen testing for Marietta and Cobb County companies. Founder-led, same-state Georgia firm. Call (770) 652-1282.",
     alternates: { canonical: "https://quantlabusa.dev/locations/atlanta-marietta" },
     openGraph: {
-        title: "Custom Software Development in Marietta GA | QUANT LAB",
+        title: "Custom Software Development in Marietta GA | QUANT LAB USA",
         description: "Cobb County software builds, contractor CRMs, and SOC 2 pen testing for Marietta-area operators.",
         url: "https://quantlabusa.dev/locations/atlanta-marietta",
         type: "article",
     },
     twitter: {
         card: "summary",
-        title: "Custom Software Development in Marietta GA | QUANT LAB",
+        title: "Custom Software Development in Marietta GA | QUANT LAB USA",
         description: "Cobb County software builds and SOC 2 pen testing for Marietta-area operators.",
     },
 };

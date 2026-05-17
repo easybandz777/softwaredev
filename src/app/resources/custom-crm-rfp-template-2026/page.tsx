@@ -10,12 +10,12 @@ const TITLE = "Custom CRM RFP Template (2026 Edition)";
 const PDF_FILENAME = "custom-crm-rfp-template-2026.pdf";
 
 export const metadata: Metadata = {
-    title: "Custom CRM RFP Template 2026 (Free PDF) | QUANT LAB",
+    title: "Custom CRM RFP Template 2026 (Free PDF) | QUANT LAB USA",
     description:
-        "A ready-to-fill 15-section RFP template plus weighted scoring rubric for buying a custom CRM build — copy, fill, and send to three to five vendors.",
+        "A ready-to-fill 15-section RFP template + weighted scoring rubric for buying a custom CRM build — copy, fill, and send to three to five vendors. Free.",
     alternates: { canonical: `https://quantlabusa.dev/resources/${SLUG}` },
     openGraph: {
-        title: "Custom CRM RFP Template 2026 (Free PDF) | QUANT LAB",
+        title: "Custom CRM RFP Template 2026 (Free PDF) | QUANT LAB USA",
         description:
             "15-section RFP template with weighted scoring rubric for buying a custom CRM build. Copy, fill, send to vendors.",
         url: `https://quantlabusa.dev/resources/${SLUG}`,
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: "summary_large_image",
-        title: "Custom CRM RFP Template 2026 (Free PDF) | QUANT LAB",
+        title: "Custom CRM RFP Template 2026 (Free PDF) | QUANT LAB USA",
         description:
             "15-section RFP template plus weighted scoring rubric for custom CRM vendor selection.",
     },

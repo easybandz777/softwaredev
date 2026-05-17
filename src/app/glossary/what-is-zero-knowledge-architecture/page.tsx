@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { pageMetadata } from "@/lib/seoMeta";
 
 export const metadata: Metadata = pageMetadata({
-    title: "What is Zero-Knowledge Architecture? | QUANT LAB",
+    title: "What is Zero-Knowledge Architecture? | QUANT LAB USA",
     description:
-        "Zero-knowledge architecture means the service provider cannot see the user's data even when subpoenaed. How it works, why it matters, and where QUANT LAB applies it.",
+        "Zero-knowledge architecture means the server never sees user data unencrypted. Plain-English definition, examples (1Password), tradeoffs. By QUANT LAB USA.",
     slug: "/glossary/what-is-zero-knowledge-architecture",
 });
 
@@ -105,6 +106,13 @@ export default function Page() {
                     <p>
                         For most <Link href="/services/saas-platform-development" className="text-sky-400 hover:underline">SaaS platforms</Link> the architecture is overkill — and the limitations on search, analytics, and support are real product costs. We are deliberate about which slices of a system genuinely need it and which can live with strong encryption-at-rest plus a clean <Link href="/glossary/what-is-soc-2" className="text-sky-400 hover:underline">SOC 2</Link> posture. <Link href="/services/penetration-testing" className="text-sky-400 hover:underline">Our pen testers</Link> see the most common implementation flaws and can audit a zero-knowledge implementation end to end. <Link href="/contact" className="text-sky-400 hover:underline">Book a call</Link> to talk through whether you need this property at all.
                     </p>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-10">
+                    <RelatedPosts
+                        topics={["compliance","stack"]}
+                        heading="Long-form deep-dives that use this term"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-10">

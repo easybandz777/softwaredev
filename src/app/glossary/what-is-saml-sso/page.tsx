@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { pageMetadata } from "@/lib/seoMeta";
 
 export const metadata: Metadata = pageMetadata({
-    title: "What is SAML SSO? Definition & How It Works | QUANT LAB",
+    title: "What is SAML SSO? Plain-English Guide | QUANT LAB USA",
     description:
-        "SAML SSO is the XML-based single sign-on protocol that runs most enterprise IT. How the SP-IdP dance works, where it bites, and how QUANT LAB ships it.",
+        "SAML is the XML protocol enterprises use for single sign-on. Plain-English definition, how it works, the SAML vs OIDC choice. By QUANT LAB USA.",
     slug: "/glossary/what-is-saml-sso",
 });
 
@@ -105,6 +106,13 @@ export default function Page() {
                     <p>
                         For internal apps and admin consoles, we federate to whatever IdP the client already runs — typically Google Workspace or Microsoft Entra. The wire protocol is sometimes SAML, sometimes OIDC, but the user experience is identical and the access is centrally governed. Read our <Link href="/glossary/what-is-an-iam" className="text-sky-400 hover:underline">IAM glossary entry</Link> for the broader picture, or <Link href="/contact" className="text-sky-400 hover:underline">book a call</Link> if you have an enterprise deal blocked on SSO.
                     </p>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-10">
+                    <RelatedPosts
+                        topics={["compliance"]}
+                        heading="Long-form deep-dives that use this term"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-10">

@@ -131,7 +131,7 @@ export function Footer() {
                 <a
                     href="tel:+17706521282"
                     className="min-h-[44px] inline-flex items-center gap-2 text-base font-semibold text-white hover:text-indigo-300 transition-colors rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2 focus-visible:ring-offset-quant-bg"
-                    aria-label="Call QuantLab USA at (770) 652-1282"
+                    aria-label="Call QUANT LAB USA at (770) 652-1282"
                 >
                     <Phone className="w-5 h-5" aria-hidden="true" />
                     (770) 652-1282
@@ -178,7 +178,7 @@ export function Footer() {
             </div>
             <div className="container mx-auto px-6 py-12">
                 <div className="md:hidden mb-10 pb-8 border-b border-white/10">
-                    <p className="text-white font-bold text-lg mb-1">QuantLab USA</p>
+                    <p className="text-white font-bold text-lg mb-1">QUANT LAB USA</p>
                     <p className="text-gray-400 text-sm mb-4 leading-relaxed">
                         Custom software development and cybersecurity services.
                     </p>

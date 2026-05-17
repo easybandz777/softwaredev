@@ -10,12 +10,12 @@ const TITLE = "LLC vs C-Corp: The Founder's Entity Decision Checklist";
 const PDF_FILENAME = "llc-vs-c-corp-decision-checklist.pdf";
 
 export const metadata: Metadata = {
-    title: "LLC vs C-Corp Decision Checklist for Founders (Free PDF) | QUANT LAB",
+    title: "LLC vs C-Corp Decision Checklist for Founders | QUANT LAB USA",
     description:
-        "A 30-page founder's checklist with tax, funding, and equity comparisons across LLC, S-Corp, and C-Corp — plus a real case study from a Georgia-incorporated technology C-Corp.",
+        "30-page founder's checklist with tax, funding, and equity comparisons across LLC, S-Corp, and C-Corp — plus a real Georgia-incorporated C-Corp case study.",
     alternates: { canonical: `https://quantlabusa.dev/resources/${SLUG}` },
     openGraph: {
-        title: "LLC vs C-Corp Decision Checklist for Founders (Free PDF) | QUANT LAB",
+        title: "LLC vs C-Corp Decision Checklist for Founders (Free PDF) | QUANT LAB USA",
         description:
             "30-page entity decision checklist with tax, funding, and equity comparisons across LLC, S-Corp, and C-Corp — with a real C-Corp case study.",
         url: `https://quantlabusa.dev/resources/${SLUG}`,
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: "summary_large_image",
-        title: "LLC vs C-Corp Decision Checklist for Founders (Free PDF) | QUANT LAB",
+        title: "LLC vs C-Corp Decision Checklist for Founders (Free PDF) | QUANT LAB USA",
         description:
             "30-page checklist with tax, funding, and equity comparisons across entity types.",
     },

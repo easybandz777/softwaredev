@@ -5,19 +5,19 @@ import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { MapPin, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
-    title: "Custom Software Development in Uptown Dallas TX | QUANT LAB",
+    title: "Software Development in Uptown Dallas TX | QUANT LAB USA",
     description:
-        "Custom software development in Uptown Dallas TX — McKinney Avenue corridor, fintech, and enterprise SaaS builds. Founder-led, fixed-quote delivery.",
+        "Custom software development & pen testing for Uptown Dallas corporate IT, logistics, and SaaS firms. Founder-led, US-based. Call (770) 652-1282.",
     alternates: { canonical: "https://quantlabusa.dev/locations/dallas-uptown" },
     openGraph: {
-        title: "Custom Software Development in Uptown Dallas TX | QUANT LAB",
+        title: "Custom Software Development in Uptown Dallas TX | QUANT LAB USA",
         description: "Uptown Dallas software builds and SOC 2 pen testing along the McKinney Avenue corridor.",
         url: "https://quantlabusa.dev/locations/dallas-uptown",
         type: "article",
     },
     twitter: {
         card: "summary",
-        title: "Custom Software Development in Uptown Dallas TX | QUANT LAB",
+        title: "Custom Software Development in Uptown Dallas TX | QUANT LAB USA",
         description: "Uptown Dallas software builds and pen testing.",
     },
 };

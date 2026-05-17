@@ -1,6 +1,6 @@
 export const metadata = {
-    title: "Privacy Policy | QuantLab Software Solutions",
-    description: "Privacy policy for QuantLab Software Solutions.",
+    title: "Privacy Policy 2026 | QUANT LAB USA",
+    description: "QUANT LAB USA privacy policy: what consultation data we collect, how we use it, who we share with (no one, by default), and your rights under US privacy law.",
 };
 
 export default function PrivacyPage() {

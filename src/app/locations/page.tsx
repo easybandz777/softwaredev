@@ -5,9 +5,9 @@ import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { MapPin, ArrowRight, Compass } from "lucide-react";
 
 export const metadata: Metadata = {
-    title: "Service Areas & Neighborhoods | QUANT LAB USA",
+    title: "USA Service Areas & Local Coverage 2026 | QUANT LAB USA",
     description:
-        "QUANT LAB USA service areas — 14 metro cities and 12 neighborhood submarkets across the Southeast, Central US, West Coast, and Northeast.",
+        "QUANT LAB USA serves 14 US cities including Atlanta, Macon, Augusta, Austin, Dallas, NYC, SF, Seattle. See neighborhood and county coverage by region.",
     alternates: { canonical: "https://quantlabusa.dev/locations" },
     openGraph: {
         title: "Service Areas & Neighborhoods | QUANT LAB USA",

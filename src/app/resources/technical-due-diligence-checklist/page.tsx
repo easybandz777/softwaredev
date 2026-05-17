@@ -10,12 +10,12 @@ const TITLE = "Technical Due Diligence Checklist for SMB Acquirers";
 const PDF_FILENAME = "technical-due-diligence-checklist.pdf";
 
 export const metadata: Metadata = {
-    title: "Technical Due Diligence Checklist for SMB Acquirers (Free PDF) | QUANT LAB",
+    title: "Technical Due Diligence Checklist (Free PDF) | QUANT LAB USA",
     description:
-        "A 50-item TDD checklist plus interview script for acquirers and investors evaluating SMB tech-enabled businesses — code, security, infrastructure, and team risk.",
+        "50-item tech due-diligence checklist + interview script for SMB acquirers/investors. Code, security, infrastructure, and team risk. Free PDF. By QUANT LAB USA.",
     alternates: { canonical: `https://quantlabusa.dev/resources/${SLUG}` },
     openGraph: {
-        title: "Technical Due Diligence Checklist for SMB Acquirers (Free PDF) | QUANT LAB",
+        title: "Technical Due Diligence Checklist for SMB Acquirers (Free PDF) | QUANT LAB USA",
         description:
             "50-item TDD checklist plus interview script for evaluating SMB tech-enabled businesses on code, security, infrastructure, and team risk.",
         url: `https://quantlabusa.dev/resources/${SLUG}`,
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: "summary_large_image",
-        title: "Technical Due Diligence Checklist for SMB Acquirers (Free PDF) | QUANT LAB",
+        title: "Technical Due Diligence Checklist for SMB Acquirers (Free PDF) | QUANT LAB USA",
         description:
             "50-item TDD checklist plus interview script for SMB acquirers and investors.",
     },

@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { Factory, Check, ArrowRight } from "lucide-react";
 import { pageMetadata } from "@/lib/seoMeta";
 
 export const metadata = pageMetadata({
-    title: "Custom Manufacturing Software Development | QuantLab",
+    title: "Manufacturing Software Development (2026) | QUANT LAB USA",
     description:
-        "Custom manufacturing software — ERP integration, shop-floor tooling, quote configurators, ITAR-aware builds, OT/IT segmentation. Founder-led, US-based.",
+        "Custom manufacturing software — ERP integration, shop-floor tooling, quote configurators, ITAR-aware builds, OT/IT segmentation. By QUANT LAB USA.",
     slug: "industries/manufacturing",
     image: "/og-services.png",
     type: "article",
@@ -23,7 +24,7 @@ const webPageSchema = {
     isPartOf: {
         "@type": "WebSite",
         url: "https://quantlabusa.dev",
-        name: "QuantLab USA",
+        name: "QUANT LAB USA",
     },
 };
 
@@ -344,6 +345,13 @@ export default function ManufacturingIndustryPage() {
                             </Link>
                         ))}
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["internal-tools","build-vs-buy"]}
+                        heading="Manufacturing software reading"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection>

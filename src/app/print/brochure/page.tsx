@@ -97,7 +97,7 @@ export default function BrochurePage() {
                 }}>
                     <img src="/logo-transparent.png" alt="QuantLab" style={{ width: "180px", height: "180px", objectFit: "contain", marginBottom: "0.2rem" }} className="logo-glow" />
 
-                    <p style={{ fontSize: "0.7rem", fontWeight: 900, color: "#ffffff", marginBottom: "0.04rem" }}>QuantLab Software Solutions</p>
+                    <p style={{ fontSize: "0.7rem", fontWeight: 900, color: "#ffffff", marginBottom: "0.04rem" }}>QUANT LAB USA</p>
                     <p style={{ fontSize: "0.48rem", color: "#3B82F6", fontWeight: 600, marginBottom: "0.3rem", letterSpacing: "0.06em" }}>Engineering the Next Level</p>
 
                     <div style={{ margin: "0 auto 0.3rem auto" }}>
@@ -134,7 +134,7 @@ export default function BrochurePage() {
                         ))}
                     </div>
 
-                    <p style={{ fontSize: "0.34rem", color: "#4B5563", marginTop: "auto" }}>© 2026 QuantLab Software Solutions LLC</p>
+                    <p style={{ fontSize: "0.34rem", color: "#4B5563", marginTop: "auto" }}>© 2026 QUANT LAB USA LLC</p>
                 </div>
 
                 {/* ─── PANEL 1: Front Cover ─── */}

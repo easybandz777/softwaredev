@@ -1,13 +1,15 @@
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
+import { RelatedIndustries } from "@/components/RelatedIndustries";
 import { MapPin, Check, ArrowRight } from "lucide-react";
 import { pageMetadata } from "@/lib/seoMeta";
 
 export const metadata = pageMetadata({
-    title: "Seattle Custom Software, Cloud & SaaS Developer | QUANT LAB USA",
+    title: "Seattle Software Development & Pen Testing | QUANT LAB USA",
     description:
-        "Seattle SaaS, dev-tools, and cloud-adjacent custom software development. Stripe billing, Docker-native, AWS-portable, pen testing. Call (770) 652-1282.",
+        "Seattle WA SaaS, dev-tools, and cloud-adjacent custom software. Stripe billing, Docker-native, AWS-portable, and pen testing. Call (770) 652-1282.",
     slug: "software-development-seattle-wa",
     image: "/og-image.png",
     type: "article",
@@ -109,6 +111,16 @@ const faqs = [
     },
 ];
 
+const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://quantlabusa.dev/" },
+        { "@type": "ListItem", position: 2, name: "Locations", item: "https://quantlabusa.dev/locations" },
+        { "@type": "ListItem", position: 3, name: "Software Development Seattle, WA", item: "https://quantlabusa.dev/software-development-seattle-wa" },
+    ],
+};
+
 export default function SeattleLandingPage() {
     return (
         <main className="min-h-screen bg-quant-bg text-quant-text pt-28 pb-24">
@@ -134,6 +146,12 @@ export default function SeattleLandingPage() {
                     }),
                 }}
             />
+
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+            />
+
 
             <div className="container mx-auto px-6 max-w-4xl">
                 <nav aria-label="Breadcrumb" className="mb-8">
@@ -233,6 +251,21 @@ export default function SeattleLandingPage() {
                             </div>
                         ))}
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedIndustries
+                        industries={["saas","fintech","healthcare","e-commerce"]}
+                        heading="Industries we serve in Seattle"
+                    />
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["saas","stack","build-vs-buy"]}
+                        pinned={["building-multi-tenant-saas-postgres-rls","nextjs-vs-remix-vs-sveltekit-2026","build-vs-buy-software-2026"]}
+                        heading="Reading for Seattle founders"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-16">

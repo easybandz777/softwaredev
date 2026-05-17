@@ -1,6 +1,6 @@
 import React from "react";
 
-export const metadata = { title: "QuantLab Admin" };
+export const metadata = { title: "Admin | QUANT LAB USA", robots: { index: false, follow: false } };
 
 // Admin area has its own isolated layout — no navbar, no animated background
 export default function AdminLayout({ children }: { children: React.ReactNode }) {

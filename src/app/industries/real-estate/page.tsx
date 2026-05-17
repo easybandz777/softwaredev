@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { Home, Check, ArrowRight } from "lucide-react";
 import { pageMetadata } from "@/lib/seoMeta";
 
 export const metadata = pageMetadata({
-    title: "Custom Real Estate Software Development | QuantLab",
+    title: "Real Estate Software Development (2026) | QUANT LAB USA",
     description:
-        "Custom real estate software — brokerage CRMs, agent sites, property portals, transaction tools, MLS/IDX integration, RESPA-aware workflows. Founder-led.",
+        "Custom real estate software — brokerage CRMs, agent sites, property portals, transaction tools, MLS/IDX integration, RESPA-aware. By QUANT LAB USA.",
     slug: "industries/real-estate",
     image: "/og-services.png",
     type: "article",
@@ -23,7 +24,7 @@ const webPageSchema = {
     isPartOf: {
         "@type": "WebSite",
         url: "https://quantlabusa.dev",
-        name: "QuantLab USA",
+        name: "QUANT LAB USA",
     },
 };
 
@@ -349,6 +350,13 @@ export default function RealEstateIndustryPage() {
                             </Link>
                         ))}
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["crm","build-vs-buy"]}
+                        heading="Real-estate software reading"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection>

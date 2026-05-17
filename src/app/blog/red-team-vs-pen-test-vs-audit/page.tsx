@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { articleMetadata } from "@/lib/seoMeta";
 import { articleSchema, breadcrumbSchema, faqSchema } from "@/lib/schemas";
 import { ArrowRight, Check, Target } from "lucide-react";
@@ -387,6 +388,14 @@ export default function RedTeamVsPentestVsAuditPage() {
                             Or call Bill at <a href="tel:+17706521282" className="text-sky-400 hover:underline">(770) 652-1282</a>
                         </div>
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mt-16 mb-12">
+                    <RelatedPosts
+                        currentSlug="red-team-vs-pen-test-vs-audit"
+                        topics={["pentest","compliance"]}
+                        heading="More red team + pentest reading"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mt-12">

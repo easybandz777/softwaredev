@@ -367,7 +367,7 @@ export function Navbar() {
                     <a
                         href={`tel:${PHONE_E164}`}
                         className={`hidden lg:inline-flex items-center gap-2 text-sm font-medium text-gray-300 hover:text-white transition-colors min-h-[44px] px-2 ${focusRing}`}
-                        aria-label={`Call QuantLab at ${PHONE_DISPLAY}`}
+                        aria-label={`Call QUANT LAB USA at ${PHONE_DISPLAY}`}
                     >
                         <Phone className="w-4 h-4" aria-hidden="true" />
                         <span>{PHONE_DISPLAY}</span>

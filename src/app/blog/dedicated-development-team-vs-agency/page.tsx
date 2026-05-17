@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { ArrowRight, Check, Users2 } from "lucide-react";
 import { articleMetadata } from "@/lib/seoMeta";
 import { articleSchema, breadcrumbSchema, faqSchema } from "@/lib/schemas";
@@ -268,6 +269,14 @@ export default function DedicatedTeamVsAgencyPage() {
                             Or call Bill directly at <a href="tel:+17706521282" className="text-sky-400 hover:underline">(770) 652-1282</a>
                         </div>
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mt-16 mb-12">
+                    <RelatedPosts
+                        currentSlug="dedicated-development-team-vs-agency"
+                        topics={["build-vs-buy"]}
+                        heading="More engagement-model reading"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mt-12">

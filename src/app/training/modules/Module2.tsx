@@ -132,7 +132,7 @@ We build systems for businesses like yours that automate exactly that flow — a
 Worth a quick 10-minute call this week?
 
 [Your Name]
-QuantLab Software Solutions`,
+QUANT LAB USA`,
     },
     {
         label: `The Loom Video Teardown Email`,

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { Terminal, Check, ArrowRight, MapPin } from "lucide-react";
 import { pageMetadata } from "@/lib/seoMeta";
 
@@ -22,7 +23,7 @@ const crmCities: { slug: string; city: string; state: string }[] = [
 ];
 
 export const metadata = pageMetadata({
-    title: "Custom CRM Development | Built for Your Workflow | QuantLab",
+    title: "Custom CRM Development | Built for Your Workflow | QUANT LAB USA",
     description:
         "Custom CRM development that fits how you actually sell. Next.js + PostgreSQL builds, founder-led, no SaaS lock-in. Call (770) 652-1282 for a free scope call.",
     slug: "services/custom-crm-development",
@@ -94,6 +95,16 @@ const faqSchema = {
     ],
 };
 
+const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://quantlabusa.dev/" },
+        { "@type": "ListItem", position: 2, name: "Services", item: "https://quantlabusa.dev/services" },
+        { "@type": "ListItem", position: 3, name: "Custom CRM Development", item: "https://quantlabusa.dev/services/custom-crm-development" },
+    ],
+};
+
 export default function CustomCRMDevelopmentPage() {
     return (
         <main className="min-h-screen bg-quant-bg text-quant-text pt-28 pb-24">
@@ -104,6 +115,10 @@ export default function CustomCRMDevelopmentPage() {
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
             />
 
             <div className="container mx-auto px-6 max-w-4xl">
@@ -272,6 +287,14 @@ export default function CustomCRMDevelopmentPage() {
                             </div>
                         ))}
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["crm","build-vs-buy"]}
+                        heading="Custom CRM deep-dives"
+                        pinned={["custom-crm-development-guide","custom-crm-vs-salesforce-vs-hubspot-2026","crm-migration-from-salesforce-checklist"]}
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-16">

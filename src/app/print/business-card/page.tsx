@@ -3,7 +3,7 @@
 import BrochureQR from "../BrochureQR";
 
 /*
-  QuantLab Software Solutions — Elite Business Card v2
+  QUANT LAB USA — Elite Business Card v2
   William Beltz · Software Engineer
   Print-ready: 3.5 × 2 in (front + back)
 */

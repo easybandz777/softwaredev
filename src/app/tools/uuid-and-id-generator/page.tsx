@@ -2,14 +2,15 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { Hash, ArrowRight, Lock, Database, Download } from "lucide-react";
 import { pageMetadata } from "@/lib/seoMeta";
 import { UuidGenerator } from "./UuidGenerator";
 
 export const metadata: Metadata = pageMetadata({
-    title: "UUID & ID Generator (v4, v7, nanoid, ULID, CUID) | Free | QUANT LAB USA",
+    title: "Free UUID & ID Generator (v4, v7, ULID, CUID) | QUANT LAB USA",
     description:
-        "Generate UUID v4, UUID v7, nanoid, ULID, CUID, and short slugs in your browser. Cryptographically secure. Download as JSON, CSV, or TXT. Free.",
+        "Generate UUID v4, v7, nanoid, ULID, CUID, and short slugs in your browser — cryptographically secure. Download as JSON, CSV, or TXT. 100% free, no signup.",
     slug: "/tools/uuid-and-id-generator",
     keywords: [
         "uuid generator",
@@ -280,6 +281,13 @@ export default function UuidGeneratorPage() {
                             </Link>
                         ))}
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["stack"]}
+                        heading="Related engineering reading"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection>

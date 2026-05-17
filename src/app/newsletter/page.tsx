@@ -11,9 +11,9 @@ import {
 } from "@/lib/schemas";
 
 export const metadata: Metadata = pageMetadata({
-    title: "The QUANT LAB Newsletter — One frank email every other Tuesday",
+    title: "QUANT LAB USA Newsletter — Founder Notes & Playbooks",
     description:
-        "Join the QUANT LAB USA newsletter — case study deep dives, technical playbooks, founder hot takes, and real pricing intel from a working Macon software firm. One email every other Tuesday. No fluff.",
+        "Weekly founder-written notes from QUANT LAB USA on custom software, CRMs, Stripe, Next.js, and pen testing. Real engineering, no fluff. Free to subscribe.",
     slug: "newsletter",
     image: "/og-image.png",
     keywords: [

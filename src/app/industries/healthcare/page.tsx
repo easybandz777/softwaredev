@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { Activity, Check, ArrowRight } from "lucide-react";
 import { pageMetadata } from "@/lib/seoMeta";
 
 export const metadata = pageMetadata({
-    title: "Custom Healthcare Software Development | QuantLab",
+    title: "Healthcare Software Development (HIPAA) | QUANT LAB USA",
     description:
-        "HIPAA-aware healthcare software development — patient portals, provider scheduling, telehealth back-ends, billing integrations. Secure by default. MITRE ATT&CK ready.",
+        "HIPAA-aware healthcare software — patient portals, provider scheduling, telehealth back-ends, billing integrations. Secure by default. By QUANT LAB USA.",
     slug: "industries/healthcare",
     image: "/og-services.png",
     type: "article",
@@ -23,7 +24,7 @@ const webPageSchema = {
     isPartOf: {
         "@type": "WebSite",
         url: "https://quantlabusa.dev",
-        name: "QuantLab USA",
+        name: "QUANT LAB USA",
     },
 };
 
@@ -336,7 +337,7 @@ export default function HealthcareIndustryPage() {
                     <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">A note on case studies</h2>
                     <div className="prose prose-invert max-w-none text-gray-400 space-y-4 leading-relaxed">
                         <p>
-                            QuantLab USA does not yet have a published healthcare case study. We are saying that plainly. What we have is the security and compliance architecture pattern that other regulated industries — financial services, towing/repossession with auditable chain-of-custody, contractor platforms with bookkeeping parity — already run on in production. We will not fabricate a healthcare client to fill a page.
+                            QUANT LAB USA does not yet have a published healthcare case study. We are saying that plainly. What we have is the security and compliance architecture pattern that other regulated industries — financial services, towing/repossession with auditable chain-of-custody, contractor platforms with bookkeeping parity — already run on in production. We will not fabricate a healthcare client to fill a page.
                         </p>
                         <p>
                             For a discovery engagement, we start with a compliance gap review — your HIPAA risk analysis, your current technical safeguards, your BAA chain — and produce a phased build plan with explicit architectural decisions tied to specific Security Rule requirements. You come out with a wireframed UI, a data model with PHI boundaries marked, and a phased estimate — useful even if you take it to another developer.
@@ -413,6 +414,14 @@ export default function HealthcareIndustryPage() {
                             </Link>
                         ))}
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["compliance","saas"]}
+                        heading="Healthcare SaaS reading"
+                        pinned={["hipaa-compliant-saas-architecture","soc2-pentest-prep-guide-2026","building-multi-tenant-saas-postgres-rls"]}
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection>

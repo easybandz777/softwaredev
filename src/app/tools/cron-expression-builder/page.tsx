@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { Clock, ArrowRight, Calendar, Settings, Zap } from "lucide-react";
 import { pageMetadata } from "@/lib/seoMeta";
 import { CronBuilder } from "./CronBuilder";
@@ -285,6 +286,13 @@ export default function CronBuilderPage() {
                             </Link>
                         ))}
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["stack"]}
+                        heading="Related engineering reading"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection>

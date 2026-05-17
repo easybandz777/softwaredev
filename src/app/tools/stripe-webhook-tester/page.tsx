@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { Shield, ArrowRight, Lock, Wifi, Clock } from "lucide-react";
 import { pageMetadata } from "@/lib/seoMeta";
 import { StripeWebhookTester } from "./StripeWebhookTester";
@@ -368,6 +369,13 @@ export default function StripeWebhookTesterPage() {
                             </Link>
                         ))}
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["stripe","stack"]}
+                        heading="Related Stripe engineering reading"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection>

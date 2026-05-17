@@ -32,11 +32,11 @@ const CITIES: Record<string, CityData> = {
         displayName: "Macon",
         state: "GA",
         stateName: "Georgia",
-        metaTitle: "Penetration Testing Services in Macon, GA | QuantLab",
+        metaTitle: "Penetration Testing Services in Macon, GA | QUANT LAB USA",
         metaDescription:
             "MITRE ATT&CK-aligned web app, network, and Active Directory pentest for Macon, GA businesses. Founder-led, no offshore. Get a scoping call.",
         hook: "Macon-area businesses get cybersecurity attention from one of two extremes: Atlanta consultancies pricing for Fortune 500 budgets, or out-of-state vendors who treat Middle Georgia as an after-hours account. Neither one picks up the phone when something breaks.",
-        intro: "QuantLab USA is headquartered right here in Macon — same time zone, same area code. We run the same web app, network, and Active Directory pentests for Middle Georgia clients that we run for Atlanta and Charlotte buyers. The methodology does not change. The relationship does.",
+        intro: "QUANT LAB USA is headquartered right here in Macon — same time zone, same area code. We run the same web app, network, and Active Directory pentests for Middle Georgia clients that we run for Atlanta and Charlotte buyers. The methodology does not change. The relationship does.",
         methodologyNote: "Local pentest engagements for Macon healthcare practices, manufacturers, and trades businesses typically combine an external perimeter scan with internal AD review and a focused web application test on the customer-facing portal.",
         keywords: [
             "penetration testing macon ga",
@@ -47,7 +47,7 @@ const CITIES: Record<string, CityData> = {
         faqs: [
             {
                 q: "Are you actually based in Macon?",
-                a: "Yes. QuantLab USA is headquartered in Macon. William Beltz lives and works here. We are not an out-of-state agency claiming a satellite office for SEO reasons.",
+                a: "Yes. QUANT LAB USA is headquartered in Macon. William Beltz lives and works here. We are not an out-of-state agency claiming a satellite office for SEO reasons.",
             },
             {
                 q: "Can you meet with us on-site in Bibb County?",
@@ -74,11 +74,11 @@ const CITIES: Record<string, CityData> = {
         displayName: "Atlanta",
         state: "GA",
         stateName: "Georgia",
-        metaTitle: "Penetration Testing Services in Atlanta, GA | QuantLab",
+        metaTitle: "Penetration Testing Services in Atlanta, GA | QUANT LAB USA",
         metaDescription:
             "MITRE ATT&CK-aligned web app, network, and Active Directory pentest for Atlanta fintech and SaaS. Founder-led, no offshore. Get a scoping call.",
         hook: "Atlanta is Transaction Alley — over 70% of US card payments route through metro Atlanta processors. Fintech buyers, SaaS founders selling into Buckhead enterprises, and the Fortune 500 vendor ecosystem all share one need: a pentest report that survives a SOC 2 audit and an enterprise procurement review without footnotes.",
-        intro: "QuantLab USA runs full-scope pentests for Atlanta companies preparing for SOC 2 Type II attestation, PCI assessment, or enterprise customer security reviews. Web application, network, wireless, and Active Directory engagements with every finding mapped to MITRE ATT&CK technique IDs — the format your buyer's CISO and your audit partner both expect.",
+        intro: "QUANT LAB USA runs full-scope pentests for Atlanta companies preparing for SOC 2 Type II attestation, PCI assessment, or enterprise customer security reviews. Web application, network, wireless, and Active Directory engagements with every finding mapped to MITRE ATT&CK technique IDs — the format your buyer's CISO and your audit partner both expect.",
         methodologyNote: "For Atlanta fintech and payments clients, we typically scope a credentialed web app test against the production application plus an internal AD assessment to surface lateral movement paths before the SOC 2 auditor does.",
         keywords: [
             "penetration testing atlanta",
@@ -116,11 +116,11 @@ const CITIES: Record<string, CityData> = {
         displayName: "Augusta",
         state: "GA",
         stateName: "Georgia",
-        metaTitle: "Penetration Testing Services in Augusta, GA | QuantLab",
+        metaTitle: "Penetration Testing Services in Augusta, GA | QUANT LAB USA",
         metaDescription:
             "NIST/CMMC-aware web app, network, and AD pentest for the Fort Eisenhower cyber corridor. Founder-led, no offshore. Get a scoping call.",
         hook: "Augusta sits at the center of the southeast's cyber corridor — Fort Eisenhower, Army Cyber Command, and a growing private-sector defense supplier base along Reynolds and Broad Streets. Pentest buyers here do not want a sanitized PDF; they want a report that genuinely demonstrates offensive capability and survives a NIST or CMMC review.",
-        intro: "QuantLab USA runs full-scope pentests for Augusta-area defense suppliers, contractors, and the regional medical and legal firms that anchor the CSRA. Engagements are mapped to MITRE ATT&CK and structured for NIST SP 800-171 / CMMC alignment — formal deliverables for federal supply-chain and compliance reviews.",
+        intro: "QUANT LAB USA runs full-scope pentests for Augusta-area defense suppliers, contractors, and the regional medical and legal firms that anchor the CSRA. Engagements are mapped to MITRE ATT&CK and structured for NIST SP 800-171 / CMMC alignment — formal deliverables for federal supply-chain and compliance reviews.",
         methodologyNote: "For Augusta contractors with CUI exposure, we scope deliberately around the NIST 800-171 control families — access control, audit, identification, and incident response — so the report maps cleanly to the assessment objective.",
         keywords: [
             "penetration testing augusta ga",
@@ -158,11 +158,11 @@ const CITIES: Record<string, CityData> = {
         displayName: "Columbus",
         state: "GA",
         stateName: "Georgia",
-        metaTitle: "Penetration Testing Services in Columbus, GA | QuantLab",
+        metaTitle: "Penetration Testing Services in Columbus, GA | QUANT LAB USA",
         metaDescription:
             "MITRE ATT&CK-aligned web app, network, and AD pentest for Columbus, GA and Chattahoochee Valley small business. Founder-led. Scoping call available.",
         hook: "Columbus and the Chattahoochee Valley have a defense-adjacent economy around Fort Moore, the legacy Aflac and TSYS payments ecosystem, and a steady pool of family-owned operators on both sides of the river. Cybersecurity buyers here are looking for a Georgia firm who understands defense supply-chain expectations without charging enterprise consulting rates.",
-        intro: "QuantLab USA runs right-sized pentests for Columbus-area defense suppliers, payments-adjacent mid-market firms, and small businesses on both the Georgia and Alabama sides of the river. The methodology is identical to what we run for Atlanta fintech clients — the engagement size is what we scale.",
+        intro: "QUANT LAB USA runs right-sized pentests for Columbus-area defense suppliers, payments-adjacent mid-market firms, and small businesses on both the Georgia and Alabama sides of the river. The methodology is identical to what we run for Atlanta fintech clients — the engagement size is what we scale.",
         methodologyNote: "For Columbus defense-adjacent suppliers, we frequently combine an external perimeter test with a focused internal AD review to validate the segmentation between corporate IT and any contract-specific environments.",
         keywords: [
             "penetration testing columbus ga",
@@ -200,11 +200,11 @@ const CITIES: Record<string, CityData> = {
         displayName: "Savannah",
         state: "GA",
         stateName: "Georgia",
-        metaTitle: "Penetration Testing Services in Savannah, GA | QuantLab",
+        metaTitle: "Penetration Testing Services in Savannah, GA | QUANT LAB USA",
         metaDescription:
             "MITRE ATT&CK-aligned web app, network, and AD pentest for Savannah port logistics, hospitality, and SCAD-founder SaaS. Get a scoping call.",
         hook: "Savannah's pentest demand comes from three different verticals: the Port of Savannah (now the third-busiest container port in the US) and the drayage / logistics layer around it, a deep hospitality sector that handles payment data at volume, and a fast-growing SCAD-founder SaaS scene operating out of the historic district. Each one has a different threat model.",
-        intro: "QuantLab USA scopes engagements for each of those Savannah verticals separately. Logistics and TMS-adjacent clients get an internal network + EDI integration focus. Hospitality operators get a payment-flow and PCI-adjacent web app test. SCAD-founder SaaS gets a credentialed web app and API engagement that fits a pre-launch security review.",
+        intro: "QUANT LAB USA scopes engagements for each of those Savannah verticals separately. Logistics and TMS-adjacent clients get an internal network + EDI integration focus. Hospitality operators get a payment-flow and PCI-adjacent web app test. SCAD-founder SaaS gets a credentialed web app and API engagement that fits a pre-launch security review.",
         methodologyNote: "Port-adjacent and logistics clients in Savannah usually need an internal AD test plus an external perimeter pass focused on the integration points between corporate IT and TMS or EDI systems — those edges are where the real breaches happen.",
         keywords: [
             "penetration testing savannah ga",
@@ -242,11 +242,11 @@ const CITIES: Record<string, CityData> = {
         displayName: "Miami",
         state: "FL",
         stateName: "Florida",
-        metaTitle: "Penetration Testing Services in Miami, FL | QuantLab",
+        metaTitle: "Penetration Testing Services in Miami, FL | QUANT LAB USA",
         metaDescription:
             "MITRE ATT&CK-aligned web app, network, and AD pentest for Miami fintech, LATAM-facing SaaS, and hospitality. Founder-led. Get a scoping call.",
         hook: "Miami has become a serious tech market — fintech founders relocating from New York and the Bay, an inbound capital gateway for Latin America, and a hospitality sector handling payment data at volume from Brickell through South Beach. The defining wrinkle for pentest scope is cross-border: bilingual products, multi-currency billing, LATAM compliance edge cases, and threat actors operating from outside US jurisdiction.",
-        intro: "QuantLab USA runs full-scope pentests for Miami fintech and LATAM-facing SaaS clients with that cross-border profile in mind. Web application engagements specifically cover the i18n, multi-currency, and identity-verification flows that are unique to companies serving both US and LATAM customers. Reports are formatted for institutional investor due diligence — the audience that is usually next after the Series A.",
+        intro: "QUANT LAB USA runs full-scope pentests for Miami fintech and LATAM-facing SaaS clients with that cross-border profile in mind. Web application engagements specifically cover the i18n, multi-currency, and identity-verification flows that are unique to companies serving both US and LATAM customers. Reports are formatted for institutional investor due diligence — the audience that is usually next after the Series A.",
         methodologyNote: "For Miami LATAM-facing fintech, we scope around the payment-processor seams (Stripe + local LATAM processors), KYC/identity-verification flows, and any cross-tenant data isolation — the areas where international threat actors actually probe.",
         keywords: [
             "penetration testing miami fl",
@@ -284,11 +284,11 @@ const CITIES: Record<string, CityData> = {
         displayName: "Austin",
         state: "TX",
         stateName: "Texas",
-        metaTitle: "Penetration Testing Services in Austin, TX | QuantLab",
+        metaTitle: "Penetration Testing Services in Austin, TX | QUANT LAB USA",
         metaDescription:
             "MITRE ATT&CK-aligned web app and AD pentest for Austin startups, SOC 2 prep, and Series A fundraising security gates. Founder-led. Get a scoping call.",
         hook: "Austin is a builder's town with one of the densest founder populations in the country. The Austin pentest buyer is usually a Series Seed or Series A founder preparing for a security gate — SOC 2 Type I or II is on the term sheet from the lead investor, or the first enterprise customer's security questionnaire just landed in their inbox. The wrong vendor here burns a fundraising window.",
-        intro: "QuantLab USA scopes pentests around Austin founder velocity. Engagements are sized to land inside a 4-8 week SOC 2 readiness window. Web application and credentialed API testing is the most common scope, with an internal AD or cloud-perimeter add-on for startups that have already gone past pure SaaS. Every finding is mapped to MITRE ATT&CK and the SOC 2 trust criteria.",
+        intro: "QUANT LAB USA scopes pentests around Austin founder velocity. Engagements are sized to land inside a 4-8 week SOC 2 readiness window. Web application and credentialed API testing is the most common scope, with an internal AD or cloud-perimeter add-on for startups that have already gone past pure SaaS. Every finding is mapped to MITRE ATT&CK and the SOC 2 trust criteria.",
         methodologyNote: "For Austin SaaS pre-Series A, the standard scope is a credentialed web app + API test against the production application plus an external perimeter scan — exactly what an investor security reviewer will probe.",
         keywords: [
             "penetration testing austin tx",
@@ -326,11 +326,11 @@ const CITIES: Record<string, CityData> = {
         displayName: "Dallas",
         state: "TX",
         stateName: "Texas",
-        metaTitle: "Penetration Testing Services in Dallas, TX | QuantLab",
+        metaTitle: "Penetration Testing Services in Dallas, TX | QUANT LAB USA",
         metaDescription:
             "MITRE ATT&CK-aligned internal network, AD, and web app pentest for DFW enterprise IT and corporate buyers. Founder-led. Get a scoping call.",
         hook: "DFW is a corporate IT and supply-chain heavyweight — one of the country's largest concentrations of Fortune 500 headquarters, a massive freight and distribution base, and a deep mid-market layer running on aging custom software. The DFW pentest buyer is usually a corporate IT lead modernizing a creaking internal application or hardening an Active Directory environment that has drifted over a decade.",
-        intro: "QuantLab USA runs internal network and Active Directory pentests for DFW corporate IT leads, plus web application engagements against legacy internal tools mid-modernization. Reports are written for procurement, audit, and the CISO's leadership briefing — three different audiences, one document.",
+        intro: "QUANT LAB USA runs internal network and Active Directory pentests for DFW corporate IT leads, plus web application engagements against legacy internal tools mid-modernization. Reports are written for procurement, audit, and the CISO's leadership briefing — three different audiences, one document.",
         methodologyNote: "For DFW corporate IT clients, the highest-value scope is usually an internal AD assessment from an assumed-breach starting position — standard user on a corporate VLAN — combined with a focused review of any internal web applications mid-modernization.",
         keywords: [
             "penetration testing dallas tx",
@@ -368,11 +368,11 @@ const CITIES: Record<string, CityData> = {
         displayName: "Chicago",
         state: "IL",
         stateName: "Illinois",
-        metaTitle: "Penetration Testing Services in Chicago, IL | QuantLab",
+        metaTitle: "Penetration Testing Services in Chicago, IL | QUANT LAB USA",
         metaDescription:
             "MITRE ATT&CK-aligned web app, network, and AD pentest for Chicago trading firms, logistics, and finance. Founder-led. Get a scoping call.",
         hook: "Chicago's pentest demand profile is unusually rich: the trading and proprietary-finance ecosystem around the CBOT and CME, a massive logistics and rail-hub footprint, and a deep manufacturing base in the collar counties. Trading-firm pentest buyers in particular care about one thing that generalist vendors miss — does the tester understand quant tooling and broker APIs, or are they only going to find the obvious findings?",
-        intro: "QuantLab USA has in-house algorithmic trading bot development and broker-integration capability. That informs how we attack trading-firm infrastructure — credential exposure on broker API endpoints, FIX session abuse, internal lateral movement to position data, and the integration seams between research and execution. For non-trading Chicago clients we run the same web app and AD engagements we run elsewhere.",
+        intro: "QUANT LAB USA has in-house algorithmic trading bot development and broker-integration capability. That informs how we attack trading-firm infrastructure — credential exposure on broker API endpoints, FIX session abuse, internal lateral movement to position data, and the integration seams between research and execution. For non-trading Chicago clients we run the same web app and AD engagements we run elsewhere.",
         methodologyNote: "For Chicago trading firms, scope typically combines an external perimeter and web app test against client-facing surfaces with an internal AD review focused on lateral movement paths to trading systems and PnL data.",
         keywords: [
             "penetration testing chicago il",
@@ -410,11 +410,11 @@ const CITIES: Record<string, CityData> = {
         displayName: "Seattle",
         state: "WA",
         stateName: "Washington",
-        metaTitle: "Penetration Testing Services in Seattle, WA | QuantLab",
+        metaTitle: "Penetration Testing Services in Seattle, WA | QUANT LAB USA",
         metaDescription:
             "MITRE ATT&CK-aligned web app, cloud, and AD pentest for Seattle SaaS, AWS-heavy dev tools, and cloud-native startups. Get a scoping call.",
         hook: "Seattle's software economy is anchored by Amazon and Microsoft, surrounded by a fast-moving SaaS and dev-tools ecosystem and a steady stream of bootstrapped indie SaaS founders. The defining feature of pentest scope here is cloud-native — most Seattle apps live in AWS, ship through CI/CD pipelines, and use IAM-heavy authorization patterns. The interesting findings are in the cloud and CI/CD seams, not the traditional perimeter.",
-        intro: "QuantLab USA runs cloud-pentest-aware engagements for Seattle SaaS and dev-tools clients. Web application coverage is standard, plus AWS IAM and resource-policy review, CI/CD pipeline secrets exposure, and the boundary between developer tooling and production systems. Reports map to MITRE ATT&CK Cloud and Containers matrices — what Seattle-grade engineering reviewers expect to see.",
+        intro: "QUANT LAB USA runs cloud-pentest-aware engagements for Seattle SaaS and dev-tools clients. Web application coverage is standard, plus AWS IAM and resource-policy review, CI/CD pipeline secrets exposure, and the boundary between developer tooling and production systems. Reports map to MITRE ATT&CK Cloud and Containers matrices — what Seattle-grade engineering reviewers expect to see.",
         methodologyNote: "For Seattle cloud-native SaaS, scope typically covers a credentialed web app test, an AWS IAM and resource-policy review for misconfiguration, and a CI/CD pipeline review for secrets handling and pipeline poisoning.",
         keywords: [
             "penetration testing seattle wa",
@@ -452,11 +452,11 @@ const CITIES: Record<string, CityData> = {
         displayName: "New York",
         state: "NY",
         stateName: "New York",
-        metaTitle: "Penetration Testing Services in New York, NY | QuantLab",
+        metaTitle: "Penetration Testing Services in New York, NY | QUANT LAB USA",
         metaDescription:
             "MITRE ATT&CK-aligned web app, network, and AD pentest for NYC fintech, ad-tech, and agency-grade vendor reviews. Founder-led. Get a scoping call.",
         hook: "New York is the toughest pentest buyer's market in the country. Fintech, ad-tech, agency holding companies, hedge funds, and a relentless stream of SaaS founders all share one requirement: the report has to survive the most cynical security reviewer in the building. Agency-grade vendor security reviews and institutional investor diligence are not pro-forma here — they are an actual technical bar.",
-        intro: "QuantLab USA runs senior, founder-led pentests for NYC clients where the report is going to be read line-by-line. Web application, network, AD, and MITRE ATT&CK-aligned engagements with formal deliverables that drop directly into agency-grade vendor security review and institutional investor due diligence templates. No padding, no junk findings.",
+        intro: "QUANT LAB USA runs senior, founder-led pentests for NYC clients where the report is going to be read line-by-line. Web application, network, AD, and MITRE ATT&CK-aligned engagements with formal deliverables that drop directly into agency-grade vendor security review and institutional investor due diligence templates. No padding, no junk findings.",
         methodologyNote: "For NYC fintech and brokerage-adjacent clients, scope usually combines a credentialed web app and API test against the production application with an internal AD review — the two surfaces an institutional investor security reviewer will probe first.",
         keywords: [
             "penetration testing new york",
@@ -494,11 +494,11 @@ const CITIES: Record<string, CityData> = {
         displayName: "Charlotte",
         state: "NC",
         stateName: "North Carolina",
-        metaTitle: "Penetration Testing Services in Charlotte, NC | QuantLab",
+        metaTitle: "Penetration Testing Services in Charlotte, NC | QUANT LAB USA",
         metaDescription:
             "MITRE ATT&CK-aligned web app, network, and AD pentest for Charlotte fintech vendors selling into Truist, BoA, and bank procurement. Get a call.",
         hook: "Charlotte is the southeast's banking capital — second only to New York in US banking assets, anchored by Bank of America and Truist, surrounded by a fast-growing fintech vendor ecosystem in Uptown and South End. The Charlotte pentest buyer is almost always a fintech vendor whose enterprise sales cycle is gated on a bank's vendor risk review. The report has to survive a BoA or Truist procurement assessment, full stop.",
-        intro: "QuantLab USA runs pentests specifically scoped to survive bank-grade vendor risk reviews. Web application engagements with formal MITRE ATT&CK mapping, full evidence chain, executive summary, and the attestation letter format BoA, Truist, and Wells Fargo procurement teams routinely accept. The report is the deliverable — not a stack of CVEs.",
+        intro: "QUANT LAB USA runs pentests specifically scoped to survive bank-grade vendor risk reviews. Web application engagements with formal MITRE ATT&CK mapping, full evidence chain, executive summary, and the attestation letter format BoA, Truist, and Wells Fargo procurement teams routinely accept. The report is the deliverable — not a stack of CVEs.",
         methodologyNote: "For Charlotte fintech vendors, the standard scope is a credentialed web app and API test against the SaaS product plus an external perimeter scan — exactly the surfaces a bank's vendor risk reviewer will look at.",
         keywords: [
             "penetration testing charlotte nc",
@@ -536,11 +536,11 @@ const CITIES: Record<string, CityData> = {
         displayName: "Nashville",
         state: "TN",
         stateName: "Tennessee",
-        metaTitle: "Penetration Testing Services in Nashville, TN | QuantLab",
+        metaTitle: "Penetration Testing Services in Nashville, TN | QUANT LAB USA",
         metaDescription:
             "MITRE ATT&CK-aligned web app, network, and AD pentest for Nashville healthcare, HIPAA-aware vendors, and music-tech SaaS. Get a scoping call.",
         hook: "Nashville's pentest demand is anchored by two unusually large verticals: healthcare administration (HCA Healthcare and a wide ecosystem of provider, payer, and admin-tech companies) and music and entertainment tech (publishing, streaming, royalty management). The healthcare side is HIPAA-bound; the music-tech side runs payment data at volume. Different threat models, both real.",
-        intro: "QuantLab USA scopes engagements deliberately for each vertical. Healthcare-adjacent clients get a HIPAA risk-analysis-aware web app and internal network test with the audit log and access-control evidence the OCR review framework expects. Music-tech and royalty clients get a credentialed web app test plus payment-flow review for PCI-adjacent surfaces. Every finding mapped to MITRE ATT&CK either way.",
+        intro: "QUANT LAB USA scopes engagements deliberately for each vertical. Healthcare-adjacent clients get a HIPAA risk-analysis-aware web app and internal network test with the audit log and access-control evidence the OCR review framework expects. Music-tech and royalty clients get a credentialed web app test plus payment-flow review for PCI-adjacent surfaces. Every finding mapped to MITRE ATT&CK either way.",
         methodologyNote: "For Nashville healthcare-adjacent clients with PHI exposure, scope is structured around HIPAA Security Rule control families — access control, audit, transmission security, integrity. BAA scoping is handled deliberately, not casually.",
         keywords: [
             "penetration testing nashville tn",
@@ -578,11 +578,11 @@ const CITIES: Record<string, CityData> = {
         displayName: "San Francisco",
         state: "CA",
         stateName: "California",
-        metaTitle: "Penetration Testing Services in San Francisco, CA | QuantLab",
+        metaTitle: "Penetration Testing Services in San Francisco, CA | QUANT LAB USA",
         metaDescription:
             "MITRE ATT&CK-aligned web app and AD pentest for SF Series A+ SaaS, quant firms, and security-gated fundraising rounds. Founder-led.",
         hook: "San Francisco is the most technical pentest buyer market in the country. Every founder is one degree of separation from a senior engineer, every CTO has built the thing before, and reports that lean on agency theater get torn apart in review. SF Series A+ SaaS rounds and quant firms run pentest scope as a real engineering exercise, not a compliance checkbox.",
-        intro: "QuantLab USA runs senior, founder-led pentests for SF clients where the engineering reviewer is going to ask hard questions and the report has to answer them. Web application, network, AD, and MITRE ATT&CK-aligned engagements. Code samples and architecture walkthroughs available on request — the kind of technical bake-off SF buyers actually run.",
+        intro: "QUANT LAB USA runs senior, founder-led pentests for SF clients where the engineering reviewer is going to ask hard questions and the report has to answer them. Web application, network, AD, and MITRE ATT&CK-aligned engagements. Code samples and architecture walkthroughs available on request — the kind of technical bake-off SF buyers actually run.",
         methodologyNote: "For SF Series A+ SaaS, scope is typically a credentialed web app and API test against the production application combined with cloud IAM and resource-policy review — the security gate that lead investors actually probe.",
         keywords: [
             "penetration testing san francisco",
@@ -727,7 +727,7 @@ export default async function CityPentestPage({
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-16">
-                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">Why {data.displayName} buyers choose QuantLab USA</h2>
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">Why {data.displayName} buyers choose QUANT LAB USA</h2>
                     <div className="prose prose-invert max-w-none text-gray-400 space-y-4 leading-relaxed">
                         <p>{data.intro}</p>
                     </div>

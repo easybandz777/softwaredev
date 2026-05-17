@@ -5,9 +5,9 @@ import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { ArrowRight, Calendar, User } from "lucide-react";
 
 export const metadata: Metadata = {
-    title: "Blog | Custom Software, CRMs, Pentesting | QUANT LAB USA",
+    title: "Engineering Blog: Custom Software & Pentest | QUANT LAB USA",
     description:
-        "Engineer-written guides on custom software, CRM builds, Stripe, Next.js, and penetration testing — by Bill Beltz, founder of QUANT LAB USA.",
+        "Founder-written guides on custom software, CRM builds, Stripe Connect, Next.js, and penetration testing — practical 2026 essays by Bill Beltz, no fluff. Subscribe.",
     alternates: { canonical: "https://quantlabusa.dev/blog" },
     openGraph: {
         title: "Blog | QUANT LAB USA",
@@ -72,6 +72,240 @@ const posts: BlogPost[] = [
         category: "Software",
         date: "2026-05-12",
         readMinutes: 14,
+    },
+    {
+        slug: "2026-state-of-custom-software-development",
+        title: "2026 State of Custom Software Development",
+        excerpt:
+            "Industry-wide pricing, timeline, and engagement-model benchmarks heading into 2026.",
+        category: "Software",
+        date: "2026-05-12",
+        readMinutes: 13,
+    },
+    {
+        slug: "best-custom-software-development-companies-atlanta-2026",
+        title: "Best Custom Software Development Companies in Atlanta (2026)",
+        excerpt:
+            "Senior-shop shortlist for Atlanta founders — who builds what, pricing tiers, and the vertical specialization each firm leans on.",
+        category: "Local",
+        date: "2026-05-12",
+        readMinutes: 11,
+    },
+    {
+        slug: "best-penetration-testing-companies-georgia-2026",
+        title: "Best Penetration Testing Companies in Georgia (2026)",
+        excerpt:
+            "Georgia-based pentest providers compared by methodology, reporting depth, SOC 2 alignment, and price.",
+        category: "Cybersecurity",
+        date: "2026-05-12",
+        readMinutes: 12,
+    },
+    {
+        slug: "building-multi-tenant-saas-postgres-rls",
+        title: "Building Multi-Tenant SaaS on Postgres RLS",
+        excerpt:
+            "Row-level security patterns for isolating tenant data without spinning up separate databases per customer.",
+        category: "Software",
+        date: "2026-05-12",
+        readMinutes: 13,
+    },
+    {
+        slug: "crm-data-migration-from-spreadsheets",
+        title: "CRM Data Migration from Spreadsheets",
+        excerpt:
+            "How to move messy spreadsheet pipelines into a real CRM without losing notes, history, or trust.",
+        category: "Software",
+        date: "2026-05-12",
+        readMinutes: 11,
+    },
+    {
+        slug: "crm-migration-from-salesforce-checklist",
+        title: "CRM Migration from Salesforce Checklist",
+        excerpt:
+            "Step-by-step plan for moving off Salesforce to a custom system without losing pipeline history.",
+        category: "Software",
+        date: "2026-05-12",
+        readMinutes: 12,
+    },
+    {
+        slug: "custom-crm-development-guide",
+        title: "Custom CRM Development Guide",
+        excerpt:
+            "When custom CRM beats Salesforce, HubSpot, and Zoho — and what the build actually looks like end to end.",
+        category: "Software",
+        date: "2026-05-12",
+        readMinutes: 14,
+    },
+    {
+        slug: "custom-crm-vs-salesforce-vs-hubspot-2026",
+        title: "Custom CRM vs Salesforce vs HubSpot (2026)",
+        excerpt:
+            "Head-to-head TCO and capability comparison for mid-market sales teams choosing a CRM in 2026.",
+        category: "Software",
+        date: "2026-05-12",
+        readMinutes: 13,
+    },
+    {
+        slug: "custom-internal-tools-vs-retool-2026",
+        title: "Custom Internal Tools vs Retool (2026)",
+        excerpt:
+            "Where Retool wins, where it caps your team, and when to write a real Next.js app instead.",
+        category: "Software",
+        date: "2026-05-12",
+        readMinutes: 11,
+    },
+    {
+        slug: "custom-software-rfp-template-2026",
+        title: "Custom Software RFP Template (2026)",
+        excerpt:
+            "A reusable RFP template plus the questions every founder forgets to ask before signing an SOW.",
+        category: "Software",
+        date: "2026-05-12",
+        readMinutes: 12,
+    },
+    {
+        slug: "cybersecurity-services-for-saas-startups-2026",
+        title: "Cybersecurity Services for SaaS Startups (2026)",
+        excerpt:
+            "What security work a SaaS founder actually needs in years 1-3 — and what to skip until you have customers worth attacking.",
+        category: "Cybersecurity",
+        date: "2026-05-12",
+        readMinutes: 12,
+    },
+    {
+        slug: "dedicated-development-team-vs-agency",
+        title: "Dedicated Development Team vs Agency",
+        excerpt:
+            "Engagement-model trade-offs when scaling a software bench past the founder-led phase.",
+        category: "Software",
+        date: "2026-05-12",
+        readMinutes: 10,
+    },
+    {
+        slug: "hipaa-compliant-saas-architecture",
+        title: "HIPAA-Compliant SaaS Architecture",
+        excerpt:
+            "BAA-eligible cloud, encrypted PHI flows, and audit-friendly logging patterns for healthcare SaaS.",
+        category: "Cybersecurity",
+        date: "2026-05-12",
+        readMinutes: 14,
+    },
+    {
+        slug: "hire-fractional-cto-vs-software-firm",
+        title: "Hire a Fractional CTO vs a Software Firm",
+        excerpt:
+            "When each engagement model fits — and the hybrid that often beats both for early-stage teams.",
+        category: "Software",
+        date: "2026-05-12",
+        readMinutes: 10,
+    },
+    {
+        slug: "how-to-choose-a-software-development-company-checklist",
+        title: "How to Choose a Software Development Company (Checklist)",
+        excerpt:
+            "A founder-focused checklist for vetting senior software firms before you write the deposit check.",
+        category: "Software",
+        date: "2026-05-12",
+        readMinutes: 11,
+    },
+    {
+        slug: "internal-tools-platform-engineering-guide",
+        title: "Internal Tools Platform Engineering Guide",
+        excerpt:
+            "Architectural patterns for ops dashboards, admin panels, and back-office UIs that don't rot in year two.",
+        category: "Software",
+        date: "2026-05-12",
+        readMinutes: 11,
+    },
+    {
+        slug: "nextjs-vs-remix-vs-sveltekit-2026",
+        title: "Next.js vs Remix vs SvelteKit (2026)",
+        excerpt:
+            "Framework selection criteria for production web apps — runtime, ecosystem, deployment, and team factors.",
+        category: "Software",
+        date: "2026-05-12",
+        readMinutes: 12,
+    },
+    {
+        slug: "pci-dss-compliance-saas-checklist",
+        title: "PCI-DSS Compliance for SaaS Checklist",
+        excerpt:
+            "What PCI scope reduction looks like when you route payments through Stripe — plus the controls that still apply.",
+        category: "Cybersecurity",
+        date: "2026-05-12",
+        readMinutes: 12,
+    },
+    {
+        slug: "penetration-test-cost-2026",
+        title: "Penetration Test Cost (2026)",
+        excerpt:
+            "Real pricing benchmarks for web app, network, AD, and red team engagements — plus what drives the spread.",
+        category: "Cybersecurity",
+        date: "2026-05-12",
+        readMinutes: 11,
+    },
+    {
+        slug: "red-team-vs-pen-test-vs-audit",
+        title: "Red Team vs Pen Test vs Audit",
+        excerpt:
+            "Three engagement types, three buyer profiles, and when each one is the right call.",
+        category: "Cybersecurity",
+        date: "2026-05-12",
+        readMinutes: 10,
+    },
+    {
+        slug: "soc2-pentest-prep-guide-2026",
+        title: "SOC 2 Pentest Prep Guide (2026)",
+        excerpt:
+            "Pre-audit pentesting that maps cleanly to SOC 2 CC controls — scoped, sequenced, and report-ready.",
+        category: "Cybersecurity",
+        date: "2026-05-12",
+        readMinutes: 11,
+    },
+    {
+        slug: "software-development-contract-redlines",
+        title: "Software Development Contract Redlines",
+        excerpt:
+            "Clauses every founder should push back on in an SOW or MSA — IP, indemnification, source escrow, and acceptance.",
+        category: "Software",
+        date: "2026-05-12",
+        readMinutes: 12,
+    },
+    {
+        slug: "stripe-connect-marketplace-architecture",
+        title: "Stripe Connect Marketplace Architecture",
+        excerpt:
+            "Account types, fund flows, and reconciliation for multi-party payments built on Stripe Connect.",
+        category: "Software",
+        date: "2026-05-12",
+        readMinutes: 12,
+    },
+    {
+        slug: "stripe-webhook-security-best-practices",
+        title: "Stripe Webhook Security Best Practices",
+        excerpt:
+            "Idempotency, signature verification, retries, and dead-letter handling for production Stripe webhook handlers.",
+        category: "Software",
+        date: "2026-05-12",
+        readMinutes: 11,
+    },
+    {
+        slug: "vcs-vcio-vs-software-development-firm",
+        title: "vCISO / vCIO vs a Software Development Firm",
+        excerpt:
+            "Where security leadership stops and software delivery begins — and the hybrid most fast-moving teams actually need.",
+        category: "Cybersecurity",
+        date: "2026-05-12",
+        readMinutes: 10,
+    },
+    {
+        slug: "what-is-a-pen-test-vs-vulnerability-scan",
+        title: "What Is a Pen Test vs a Vulnerability Scan",
+        excerpt:
+            "Two very different security activities that get sold under the same label — and what each actually does for you.",
+        category: "Cybersecurity",
+        date: "2026-05-12",
+        readMinutes: 9,
     },
 ];
 

@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 
 export const metadata: Metadata = {
-    title: "What is Zero Trust Architecture? | QUANT LAB",
+    title: "What is Zero Trust? Plain-English Guide (2026) | QUANT LAB USA",
     description:
-        "Zero trust is the network model that assumes the perimeter is already breached. Never trust, always verify. What it really means, and how QUANT LAB implements it.",
+        "Zero trust assumes no implicit trust based on network location. Plain-English definition, core principles, 2026 maturity model. By QUANT LAB USA.",
     alternates: { canonical: "https://quantlabusa.dev/glossary/what-is-zero-trust" },
 };
 
@@ -156,6 +157,13 @@ export default function Page() {
                         less sensitive resources over time. Trying to do it all at
                         once is how mature programs end up with shelfware.
                     </p>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-10">
+                    <RelatedPosts
+                        topics={["compliance","pentest"]}
+                        heading="Long-form deep-dives that use this term"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-10">

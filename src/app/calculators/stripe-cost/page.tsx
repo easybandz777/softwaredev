@@ -2,13 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { Calculator, ArrowRight, Check, Zap, Shield, Clock } from "lucide-react";
 import { StripeCalculator } from "./StripeCalculator";
 
 export const metadata: Metadata = {
-    title: "Stripe Integration Cost Calculator | QUANT LAB USA",
+    title: "Stripe Integration Cost Calculator (2026) | QUANT LAB USA",
     description:
-        "Estimate your custom Stripe integration cost & timeline in 60 seconds. From simple checkout to Stripe Connect marketplaces.",
+        "Estimate your custom Stripe integration cost and timeline in 60 seconds — from simple Checkout to Stripe Connect marketplaces. Free, in-browser, no signup.",
     alternates: { canonical: "https://quantlabusa.dev/calculators/stripe-cost" },
     openGraph: {
         title: "Stripe Integration Cost Calculator | QUANT LAB USA",
@@ -57,7 +58,7 @@ const faqSchema = {
             name: "How accurate is this Stripe integration cost calculator?",
             acceptedAnswer: {
                 "@type": "Answer",
-                text: "The estimate is grounded in real project data from QuantLab USA builds and assumes a senior engineering rate around $150/hr. It's a defensible mid-range starting point for board or co-founder conversations. The final scope is always nailed down in a 20-minute call.",
+                text: "The estimate is grounded in real project data from QUANT LAB USA builds and assumes a senior engineering rate around $150/hr. It's a defensible mid-range starting point for board or co-founder conversations. The final scope is always nailed down in a 20-minute call.",
             },
         },
         {
@@ -87,6 +88,16 @@ const faqSchema = {
     ],
 };
 
+const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://quantlabusa.dev/" },
+        { "@type": "ListItem", position: 2, name: "Calculators", item: "https://quantlabusa.dev/calculators" },
+        { "@type": "ListItem", position: 3, name: "Stripe Integration Cost Calculator", item: "https://quantlabusa.dev/calculators/stripe-cost" },
+    ],
+};
+
 export default function StripeCostCalculatorPage() {
     return (
         <main className="min-h-screen bg-quant-bg text-quant-text pt-28 pb-24">
@@ -97,6 +108,10 @@ export default function StripeCostCalculatorPage() {
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
             />
 
             <div className="container mx-auto px-6 max-w-5xl">
@@ -211,7 +226,7 @@ export default function StripeCostCalculatorPage() {
                         {[
                             {
                                 q: "How accurate is this Stripe integration cost calculator?",
-                                a: "The estimate is grounded in real project data from QuantLab USA builds and assumes a senior engineering rate around $150/hr. It's a defensible mid-range starting point for board or co-founder conversations. The final scope is always nailed down in a 20-minute call.",
+                                a: "The estimate is grounded in real project data from QUANT LAB USA builds and assumes a senior engineering rate around $150/hr. It's a defensible mid-range starting point for board or co-founder conversations. The final scope is always nailed down in a 20-minute call.",
                             },
                             {
                                 q: "Why is Stripe Connect so much more expensive than basic checkout?",
@@ -241,6 +256,14 @@ export default function StripeCostCalculatorPage() {
                 </AnimatedSection>
 
                 {/* Bottom CTA */}
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["stripe"]}
+                        heading="Companion reading for the Stripe cost calculator"
+                        pinned={["nextjs-stripe-integration-guide","stripe-connect-marketplace-architecture","stripe-webhook-security-best-practices"]}
+                    />
+                </AnimatedSection>
+
                 <AnimatedSection>
                     <div className="rounded-2xl border border-sky-500/20 bg-gradient-to-br from-sky-500/10 to-emerald-500/5 p-8 md:p-12 text-center">
                         <h2 className="text-2xl md:text-4xl font-bold text-white mb-4">

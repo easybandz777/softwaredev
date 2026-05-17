@@ -5,12 +5,12 @@ import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { MapPin, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
-    title: "Custom Software Development in Buckhead Atlanta | QUANT LAB",
+    title: "Software Development in Buckhead Atlanta | QUANT LAB USA",
     description:
-        "Custom software development in Buckhead Atlanta — Stripe billing, fintech CRMs, and SOC 2 penetration tests for Lenox-corridor firms. Founder-led delivery.",
+        "Custom software development & pen testing for Buckhead financial, legal, and SaaS firms. Founder-led, same-state Georgia firm. Call (770) 652-1282 for a quote.",
     alternates: { canonical: "https://quantlabusa.dev/locations/atlanta-buckhead" },
     openGraph: {
-        title: "Custom Software Development in Buckhead Atlanta | QUANT LAB",
+        title: "Custom Software Development in Buckhead Atlanta | QUANT LAB USA",
         description:
             "Buckhead-focused custom software, CRM, and pen testing engagements. Founder-led, fixed-quote delivery.",
         url: "https://quantlabusa.dev/locations/atlanta-buckhead",
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: "summary",
-        title: "Custom Software Development in Buckhead Atlanta | QUANT LAB",
+        title: "Custom Software Development in Buckhead Atlanta | QUANT LAB USA",
         description:
             "Buckhead-focused custom software, CRM, and pen testing engagements.",
     },

@@ -1,13 +1,15 @@
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
+import { RelatedIndustries } from "@/components/RelatedIndustries";
 import { MapPin, Check, ArrowRight } from "lucide-react";
 import { pageMetadata } from "@/lib/seoMeta";
 
 export const metadata = pageMetadata({
-    title: "San Francisco Custom Software, AI/SaaS & Pen Testing | QL USA",
+    title: "San Francisco Software Development & Pen Testing | QUANT LAB USA",
     description:
-        "San Francisco SaaS, AI, fintech, and quant software development plus penetration testing. Senior, founder-led engineering. Call (770) 652-1282.",
+        "San Francisco SaaS, AI, fintech, and quant software development plus pen testing. Senior, founder-led engineering from a USA firm. Call (770) 652-1282.",
     slug: "software-development-san-francisco-ca",
     image: "/og-image.png",
     type: "article",
@@ -112,6 +114,16 @@ const faqs = [
     },
 ];
 
+const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://quantlabusa.dev/" },
+        { "@type": "ListItem", position: 2, name: "Locations", item: "https://quantlabusa.dev/locations" },
+        { "@type": "ListItem", position: 3, name: "Software Development San Francisco, CA", item: "https://quantlabusa.dev/software-development-san-francisco-ca" },
+    ],
+};
+
 export default function SanFranciscoLandingPage() {
     return (
         <main className="min-h-screen bg-quant-bg text-quant-text pt-28 pb-24">
@@ -137,6 +149,12 @@ export default function SanFranciscoLandingPage() {
                     }),
                 }}
             />
+
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+            />
+
 
             <div className="container mx-auto px-6 max-w-4xl">
                 <nav aria-label="Breadcrumb" className="mb-8">
@@ -236,6 +254,21 @@ export default function SanFranciscoLandingPage() {
                             </div>
                         ))}
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedIndustries
+                        industries={["saas","fintech","e-commerce","healthcare"]}
+                        heading="Industries we serve in San Francisco"
+                    />
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["saas","stack","build-vs-buy"]}
+                        pinned={["nextjs-vs-remix-vs-sveltekit-2026","building-multi-tenant-saas-postgres-rls","internal-tools-platform-engineering-guide"]}
+                        heading="Reading for San Francisco founders"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-16">

@@ -5,19 +5,19 @@ import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { MapPin, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
-    title: "Custom Software Development in SoMa San Francisco | QUANT LAB",
+    title: "Software Development in SoMa San Francisco | QUANT LAB USA",
     description:
-        "Custom software development in SoMa San Francisco — venture-backed SaaS, AI infra, and SOC 2 pen testing. Founder-led, fixed-quote delivery.",
+        "Custom software development & pen testing for SoMa SaaS, AI, and fintech firms. Senior, founder-led, Bay-grade engineering. Call (770) 652-1282.",
     alternates: { canonical: "https://quantlabusa.dev/locations/san-francisco-soma" },
     openGraph: {
-        title: "Custom Software Development in SoMa San Francisco | QUANT LAB",
+        title: "Custom Software Development in SoMa San Francisco | QUANT LAB USA",
         description: "SoMa-focused SaaS MVPs, AI infrastructure builds, and pen testing for venture-backed teams.",
         url: "https://quantlabusa.dev/locations/san-francisco-soma",
         type: "article",
     },
     twitter: {
         card: "summary",
-        title: "Custom Software Development in SoMa San Francisco | QUANT LAB",
+        title: "Custom Software Development in SoMa San Francisco | QUANT LAB USA",
         description: "SoMa SaaS, AI infra builds, and pen testing.",
     },
 };

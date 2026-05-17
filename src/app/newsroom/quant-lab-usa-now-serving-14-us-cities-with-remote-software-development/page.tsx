@@ -15,9 +15,9 @@ const SLUG =
 const PUBLISHED = "2026-05-12";
 
 export const metadata: Metadata = articleMetadata({
-    title: "QUANT LAB USA Now Serving 14 US Cities With Remote Custom Software Development",
+    title: "QUANT LAB USA Now Serving 14 US Cities Remotely",
     description:
-        "QUANT LAB USA INC expands its geographic footprint to 14 US metros — Macon, Atlanta, Austin, Dallas, Chicago, NYC, San Francisco, and more — with a remote-first delivery model.",
+        "QUANT LAB USA expands remote custom software and pen testing coverage to 14 US cities — including Atlanta, Macon, Austin, Dallas, NYC, SF, and Seattle.",
     slug: `newsroom/${SLUG}`,
     image: "/og-image.png",
     publishedTime: PUBLISHED,

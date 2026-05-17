@@ -2,16 +2,17 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { Calculator, ArrowRight, Check, Zap, Shield, Clock } from "lucide-react";
 import { BuildVsBuyCalculator } from "./BuildVsBuyCalculator";
 
 export const metadata: Metadata = {
-    title: "Build vs Buy Calculator | Custom Software vs SaaS | QUANT LAB",
+    title: "Build vs Buy Calculator: Custom Software vs SaaS | QUANT LAB USA",
     description:
-        "Should you build custom software or stay on SaaS? 3-year TCO + 0-100 decision score in 60 seconds. CFO-ready answer for ops leaders.",
+        "Should you build custom software or stay on SaaS? Get a 3-year TCO + 0-100 decision score in 60 seconds — CFO-ready answer for ops leaders. Free, in-browser.",
     alternates: { canonical: "https://quantlabusa.dev/calculators/build-vs-buy" },
     openGraph: {
-        title: "Build vs Buy Calculator | Custom Software vs SaaS | QUANT LAB",
+        title: "Build vs Buy Calculator | Custom Software vs SaaS | QUANT LAB USA",
         description:
             "Should you build custom software or stay on SaaS? 3-year TCO + 0-100 decision score in 60 seconds.",
         url: "https://quantlabusa.dev/calculators/build-vs-buy",
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: "summary_large_image",
-        title: "Build vs Buy Calculator | Custom Software vs SaaS | QUANT LAB",
+        title: "Build vs Buy Calculator | Custom Software vs SaaS | QUANT LAB USA",
         description:
             "Should you build custom software or stay on SaaS? 3-year TCO + 0-100 decision score in 60 seconds.",
     },
@@ -250,6 +251,14 @@ export default function BuildVsBuyCalculatorPage() {
                             </details>
                         ))}
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["build-vs-buy","saas"]}
+                        heading="Companion reading for the build-vs-buy calculator"
+                        pinned={["build-vs-buy-software-2026","custom-software-rfp-template-2026","how-to-choose-a-software-development-company-checklist"]}
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection>

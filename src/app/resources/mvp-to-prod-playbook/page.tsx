@@ -10,9 +10,9 @@ const TITLE = "MVP to Production: The Founder's Tech Playbook";
 const PDF_FILENAME = "mvp-to-prod-playbook.pdf";
 
 export const metadata: Metadata = {
-    title: "MVP to Production: The Founder's Tech Playbook (Free PDF)",
+    title: "MVP to Production: The Founder's Tech Playbook | QUANT LAB USA",
     description:
-        "A 35-page playbook on hosting, auth, payments, observability, and analytics decisions for SaaS founders shipping past product-market fit. Free download.",
+        "35-page founder playbook on hosting, auth, payments, observability, and analytics decisions for SaaS teams shipping past PMF. Free PDF. By QUANT LAB USA.",
     alternates: { canonical: `https://quantlabusa.dev/resources/${SLUG}` },
     openGraph: {
         title: "MVP to Production: The Founder's Tech Playbook (Free PDF)",

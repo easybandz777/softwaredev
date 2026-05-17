@@ -1,7 +1,7 @@
 import React from "react";
 import "@/styles/sales-portal.css";
 
-export const metadata = { title: "QuantLab Sales Portal" };
+export const metadata = { title: "Sales Portal | QUANT LAB USA", robots: { index: false, follow: false } };
 
 export default function SalesLayout({ children }: { children: React.ReactNode }) {
     return (

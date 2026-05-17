@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { Calendar, User, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
-    title: "Next.js + Stripe: The Complete 2026 Integration Guide | QUANT LAB",
+    title: "Next.js + Stripe: The Complete 2026 Guide | QUANT LAB USA",
     description:
-        "Server Actions, Embedded Checkout, the Payment Element, webhook idempotency, subscriptions, multi-tenant billing, and a production-grade testing pattern.",
+        "Production-grade Next.js + Stripe integration guide for 2026: Checkout, Subscriptions, Connect, webhook reliability, idempotency, edge cases. By QUANT LAB USA.",
     alternates: {
         canonical: "https://quantlabusa.dev/blog/nextjs-stripe-integration-guide",
     },
@@ -684,6 +685,14 @@ export default function NextJsStripePage() {
                         ))}
                     </div>
                 </AnimatedSection>
+                <AnimatedSection className="mt-16 mb-12">
+                    <RelatedPosts
+                        currentSlug="nextjs-stripe-integration-guide"
+                        topics={["stripe","stack"]}
+                        heading="More Stripe engineering reading"
+                    />
+                </AnimatedSection>
+
             </article>
         </main>
     );

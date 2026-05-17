@@ -5,12 +5,12 @@ import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { DollarSign, Check, ArrowRight, Calculator, FileText, Shield } from "lucide-react";
 
 export const metadata: Metadata = {
-    title: "Pricing — Custom Software Development & Pentesting | QuantLab",
+    title: "Custom Software & Pentest Pricing 2026 | QUANT LAB USA",
     description:
-        "Transparent pricing for custom CRMs, web apps, pentests, and SaaS builds. $4K to $200K+ range. No surprise invoices, no hidden retainers, founder-led.",
+        "Transparent USA pricing for custom CRM, Stripe, web app, SaaS, and pentest engagements. Published $4K-$200K ranges, no surprise invoices, founder-led. See rates.",
     alternates: { canonical: "https://quantlabusa.dev/pricing" },
     openGraph: {
-        title: "Transparent Pricing — Custom Software & Pentest Engagements | QuantLab",
+        title: "Transparent Pricing — Custom Software & Pentest Engagements | QUANT LAB USA",
         description:
             "Published price ranges for custom CRM, Stripe, pentests, trading systems, and SaaS builds. Project, retainer, and audit models. No surprise invoices.",
         url: "https://quantlabusa.dev/pricing",

@@ -15,9 +15,9 @@ const SLUG =
 const PUBLISHED = "2026-05-12";
 
 export const metadata: Metadata = articleMetadata({
-    title: "QUANT LAB USA Publishes 2026 Custom Software Development Cost Guide",
+    title: "QUANT LAB USA Publishes 2026 Software Cost Guide",
     description:
-        "QUANT LAB USA INC releases a free, fully public 2026 cost guide covering MVP, mid-market, and Series-A grade custom software builds — no email gate, no signup wall.",
+        "QUANT LAB USA releases the 2026 Custom Software Development Cost Guide — real pricing ranges by project type and the variables that move the quote.",
     slug: `newsroom/${SLUG}`,
     image: "/og-image.png",
     publishedTime: PUBLISHED,

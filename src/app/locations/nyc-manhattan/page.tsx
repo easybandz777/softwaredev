@@ -5,19 +5,19 @@ import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { MapPin, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
-    title: "Custom Software Development in Manhattan NYC | QUANT LAB",
+    title: "Software Development in Manhattan NYC | QUANT LAB USA",
     description:
-        "Custom software development in Manhattan NYC — Wall Street fintech, Midtown media SaaS, and SOC 2 pen testing. Founder-led, fixed-quote delivery.",
+        "Custom software development & pen testing for Manhattan fintech, ad-tech, agencies, and SaaS. Senior, founder-led US firm. Call (770) 652-1282 for a free quote.",
     alternates: { canonical: "https://quantlabusa.dev/locations/nyc-manhattan" },
     openGraph: {
-        title: "Custom Software Development in Manhattan NYC | QUANT LAB",
+        title: "Custom Software Development in Manhattan NYC | QUANT LAB USA",
         description: "Manhattan-focused fintech, agency SaaS, and SOC 2 pen testing builds. Founder-led delivery.",
         url: "https://quantlabusa.dev/locations/nyc-manhattan",
         type: "article",
     },
     twitter: {
         card: "summary",
-        title: "Custom Software Development in Manhattan NYC | QUANT LAB",
+        title: "Custom Software Development in Manhattan NYC | QUANT LAB USA",
         description: "Manhattan fintech, media SaaS, and pen testing builds.",
     },
 };

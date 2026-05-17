@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { pageMetadata } from "@/lib/seoMeta";
 
 export const metadata: Metadata = pageMetadata({
-    title: "What is Secrets Management? | QUANT LAB",
+    title: "What is Secrets Management? Plain-English | QUANT LAB USA",
     description:
-        "Secrets management is how API keys, database credentials, and signing certificates are stored, rotated, and accessed safely. What good looks like, the common failures, and what QUANT LAB recommends.",
+        "Secrets management is how you store and rotate API keys, DB credentials, and tokens safely. Plain-English definition, Vault vs KMS. By QUANT LAB USA.",
     slug: "/glossary/what-is-secrets-management",
 });
 
@@ -105,6 +106,13 @@ export default function Page() {
                     <p>
                         For <Link href="/services/saas-platform-development" className="text-sky-400 hover:underline">SaaS products</Link> we also rotate the secrets that face external vendors (Stripe, SendGrid, third-party integrations) on a schedule, and on every personnel change. Our <Link href="/services/penetration-testing" className="text-sky-400 hover:underline">pen-testing team</Link> regularly finds environments where one expired credential never got cleaned up; the cleanest fix is automation, not vigilance. Read our piece on <Link href="/blog/stripe-webhook-security-best-practices" className="text-sky-400 hover:underline">Stripe webhook security</Link> for a specific case study, or <Link href="/contact" className="text-sky-400 hover:underline">book a call</Link> if your .env files have been accreting since 2020.
                     </p>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-10">
+                    <RelatedPosts
+                        topics={["compliance","stack"]}
+                        heading="Long-form deep-dives that use this term"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-10">

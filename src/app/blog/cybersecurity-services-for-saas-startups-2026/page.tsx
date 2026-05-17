@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { ArrowRight, Check, Shield } from "lucide-react";
 import { articleMetadata } from "@/lib/seoMeta";
 import { articleSchema, breadcrumbSchema, faqSchema } from "@/lib/schemas";
@@ -271,6 +272,14 @@ export default function CybersecurityForSaasPage() {
                             Or call Bill directly at <a href="tel:+17706521282" className="text-sky-400 hover:underline">(770) 652-1282</a>
                         </div>
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mt-16 mb-12">
+                    <RelatedPosts
+                        currentSlug="cybersecurity-services-for-saas-startups-2026"
+                        topics={["pentest","compliance","saas"]}
+                        heading="More SaaS security reading"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mt-12">

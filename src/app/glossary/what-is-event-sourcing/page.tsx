@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { pageMetadata } from "@/lib/seoMeta";
 
 export const metadata: Metadata = pageMetadata({
-    title: "What is Event Sourcing? Definition, Tradeoffs & Examples | QUANT LAB",
+    title: "What is Event Sourcing? Definition & Examples | QUANT LAB USA",
     description:
-        "Event sourcing stores every change as an immutable event rather than overwriting state. What it solves, where it breaks, and when QUANT LAB recommends it.",
+        "Event sourcing stores every state change as an immutable event. Plain-English definition, audit trail benefits, and where it backfires. By QUANT LAB USA.",
     slug: "/glossary/what-is-event-sourcing",
 });
 
@@ -108,6 +109,13 @@ export default function Page() {
                     <p>
                         For a typical <Link href="/services/saas-platform-development" className="text-sky-400 hover:underline">SaaS platform</Link>, we usually recommend against event sourcing the entire system — but we do recommend event-sourcing the parts that genuinely benefit (billing ledger, audit log, agreement signatures) while keeping the rest as plain Postgres. The mix is usually right. <Link href="/contact" className="text-sky-400 hover:underline">Book a call</Link> if you want a 30-minute review of whether your system actually needs it.
                     </p>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-10">
+                    <RelatedPosts
+                        topics={["stack"]}
+                        heading="Long-form deep-dives that use this term"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-10">

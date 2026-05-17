@@ -17,9 +17,9 @@ import {
 import { pageMetadata } from "@/lib/seoMeta";
 
 export const metadata: Metadata = pageMetadata({
-    title: "Free Tools & Calculators for Developers and Founders | QUANT LAB USA",
+    title: "Free Dev Tools & Cost Calculators (2026) | QUANT LAB USA",
     description:
-        "Five free interactive developer utilities — Stripe webhook tester, JSON-LD schema generator, OWASP checklist, cron builder, UUID generator — plus four engineering cost calculators. All in-browser, no signup.",
+        "5 free developer utilities (Stripe webhook tester, JSON-LD schema, OWASP, cron, UUID) + 4 cost calculators (build vs buy, CRM ROI, pentest, Stripe). In-browser.",
     slug: "/tools",
     keywords: [
         "free developer tools",
@@ -113,7 +113,7 @@ const collectionSchema = {
     "@type": "CollectionPage",
     name: "Free Tools & Calculators",
     description:
-        "Hub for QuantLab USA's free interactive tools: webhook tester, schema generator, OWASP checklist, cron builder, UUID generator, and four engineering cost calculators.",
+        "Hub for QUANT LAB USA's free interactive tools: webhook tester, schema generator, OWASP checklist, cron builder, UUID generator, and four engineering cost calculators.",
     url: "https://quantlabusa.dev/tools",
     isPartOf: { "@type": "WebSite", url: "https://quantlabusa.dev" },
     mainEntity: {

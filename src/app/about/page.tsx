@@ -14,11 +14,11 @@ import {
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 
 export const metadata: Metadata = {
-    title: "About | QuantLab Software Solutions",
+    title: "About QUANT LAB USA — Founder-Led Software & Pentest Firm",
     description:
-        "QuantLab is a founder-led software and security shop based in Georgia. We build custom business software, trading systems, and run offensive security assessments — with direct engagement from the engineer who ships the code.",
+        "Georgia-based custom software, CRM, Stripe and pen testing firm founded by William Beltz. No account managers, no offshore handoffs — just the engineer who ships.",
     openGraph: {
-        title: "About | QuantLab Software Solutions",
+        title: "About | QUANT LAB USA",
         description:
             "Founder-led software and security. No account managers, no handoffs.",
         url: "https://quantlabusa.dev/about",
@@ -32,10 +32,10 @@ export const metadata: Metadata = {
 const aboutStructuredData = {
     "@context": "https://schema.org",
     "@type": "AboutPage",
-    name: "About QuantLab Software Solutions",
+    name: "About QUANT LAB USA",
     url: "https://quantlabusa.dev/about",
     description:
-        "QuantLab is a founder-led software and security shop based in Georgia.",
+        "QUANT LAB USA is a founder-led custom software and cybersecurity firm based in Macon, Georgia.",
     mainEntity: {
         "@id": "https://quantlabusa.dev/#organization",
     },
@@ -85,7 +85,7 @@ export default function AboutPage() {
                         About
                     </span>
                     <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight tracking-tight">
-                        About QuantLab
+                        About QUANT LAB USA
                     </h1>
                     <p className="text-gray-400 text-lg md:text-xl leading-relaxed max-w-3xl">
                         A small, founder-led software and security shop that builds systems
@@ -206,7 +206,7 @@ export default function AboutPage() {
                             <div className="relative w-40 h-40 md:w-48 md:h-48 rounded-2xl overflow-hidden border border-white/10">
                                 <Image
                                     src="/founder.jpg"
-                                    alt="William Beltz — Founder of QuantLab Software Solutions"
+                                    alt="William Beltz — Founder of QUANT LAB USA"
                                     fill
                                     sizes="192px"
                                     className="object-cover"

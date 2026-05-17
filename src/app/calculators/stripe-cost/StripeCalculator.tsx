@@ -609,7 +609,7 @@ export function StripeCalculator() {
                         </h3>
                         <p className="text-sm text-gray-400 leading-relaxed">
                             Your PDF breakdown is on its way (and a short follow-up from William at
-                            QuantLab USA). If your scope is anything past Stripe Checkout, reply to
+                            QUANT LAB USA). If your scope is anything past Stripe Checkout, reply to
                             that first email and we&apos;ll get a 20-min Stripe call on the calendar.
                         </p>
                     </div>

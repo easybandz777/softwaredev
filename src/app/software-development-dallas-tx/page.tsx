@@ -1,13 +1,15 @@
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
+import { RelatedIndustries } from "@/components/RelatedIndustries";
 import { MapPin, Check, ArrowRight } from "lucide-react";
 import { pageMetadata } from "@/lib/seoMeta";
 
 export const metadata = pageMetadata({
-    title: "Dallas Custom Software, Legacy Modernization & Pen Test | QL USA",
+    title: "Dallas Software Development & Pen Testing | QUANT LAB USA",
     description:
-        "Dallas enterprise-grade software development, legacy tool modernization, and penetration testing for corporate IT, logistics, and SaaS. Call (770) 652-1282.",
+        "Dallas TX custom software, legacy tool modernization, and pen testing for corporate IT, logistics, and SaaS. Senior, founder-led. Call (770) 652-1282.",
     slug: "software-development-dallas-tx",
     image: "/og-image.png",
     type: "article",
@@ -112,6 +114,16 @@ const faqs = [
     },
 ];
 
+const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://quantlabusa.dev/" },
+        { "@type": "ListItem", position: 2, name: "Locations", item: "https://quantlabusa.dev/locations" },
+        { "@type": "ListItem", position: 3, name: "Software Development Dallas, TX", item: "https://quantlabusa.dev/software-development-dallas-tx" },
+    ],
+};
+
 export default function DallasLandingPage() {
     return (
         <main className="min-h-screen bg-quant-bg text-quant-text pt-28 pb-24">
@@ -137,6 +149,12 @@ export default function DallasLandingPage() {
                     }),
                 }}
             />
+
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+            />
+
 
             <div className="container mx-auto px-6 max-w-4xl">
                 <nav aria-label="Breadcrumb" className="mb-8">
@@ -236,6 +254,21 @@ export default function DallasLandingPage() {
                             </div>
                         ))}
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedIndustries
+                        industries={["fintech","manufacturing","insurance","real-estate"]}
+                        heading="Industries we serve in Dallas"
+                    />
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["build-vs-buy","saas","stripe"]}
+                        pinned={["build-vs-buy-software-2026","custom-crm-development-guide","nextjs-stripe-integration-guide"]}
+                        heading="Reading for Dallas founders"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-16">

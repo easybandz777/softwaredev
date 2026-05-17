@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { ShieldCheck, ArrowRight, ListChecks, Save, Printer } from "lucide-react";
 import { pageMetadata } from "@/lib/seoMeta";
 import { OwaspChecklistApp } from "./OwaspChecklistApp";
@@ -10,8 +11,8 @@ import { OWASP_ASVS, countItems } from "@/lib/tools/owasp-asvs";
 const totals = countItems();
 
 export const metadata: Metadata = pageMetadata({
-    title: "OWASP ASVS Checklist App | Free Web App Security Tool | QUANT LAB USA",
-    description: `Interactive OWASP ASVS Level 1+2 web application security checklist — ${totals.total} controls across 13 categories. Progress saved locally, printable PDF, free.`,
+    title: "OWASP ASVS Checklist App (Free Web Tool) | QUANT LAB USA",
+    description: `Interactive OWASP ASVS Level 1+2 web app security checklist — ${totals.total} controls across 13 categories. Progress saved locally, printable PDF, 100% free.`,
     slug: "/tools/owasp-checklist-app",
     keywords: [
         "owasp asvs checklist",
@@ -301,6 +302,14 @@ export default function OwaspChecklistAppPage() {
                                 </Link>
                             ))}
                         </div>
+                    </AnimatedSection>
+
+                    <AnimatedSection className="mb-16 print:hidden">
+                        <RelatedPosts
+                            topics={["pentest"]}
+                            heading="Companion reading for the OWASP checklist"
+                            pinned={["what-is-penetration-testing", "soc2-pentest-prep-guide-2026", "red-team-vs-pen-test-vs-audit"]}
+                        />
                     </AnimatedSection>
 
                     <AnimatedSection className="print:hidden">

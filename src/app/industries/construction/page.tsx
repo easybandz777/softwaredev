@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { HardHat, Check, ArrowRight } from "lucide-react";
 import { pageMetadata } from "@/lib/seoMeta";
 
 export const metadata = pageMetadata({
-    title: "Construction Industry Software Development | QuantLab",
+    title: "Construction Software Development (2026) | QUANT LAB USA",
     description:
-        "Custom software for construction & trades — proposal portals, QuickBooks/Xero sync, customer portals, mobile field tools. Built by contractor-vertical specialists.",
+        "Custom software for construction & trades — proposal portals, QuickBooks/Xero sync, customer portals, mobile field tools. Founder-led, USA-based. Get a quote.",
     slug: "industries/construction",
     image: "/og-services.png",
     type: "article",
@@ -23,7 +24,7 @@ const webPageSchema = {
     isPartOf: {
         "@type": "WebSite",
         url: "https://quantlabusa.dev",
-        name: "QuantLab USA",
+        name: "QUANT LAB USA",
     },
 };
 
@@ -404,6 +405,13 @@ export default function ConstructionIndustryPage() {
                             </Link>
                         ))}
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["crm","build-vs-buy","internal-tools"]}
+                        heading="Construction software reading"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection>

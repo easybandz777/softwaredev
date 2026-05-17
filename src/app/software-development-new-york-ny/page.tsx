@@ -1,13 +1,15 @@
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
+import { RelatedIndustries } from "@/components/RelatedIndustries";
 import { MapPin, Check, ArrowRight } from "lucide-react";
 import { pageMetadata } from "@/lib/seoMeta";
 
 export const metadata = pageMetadata({
-    title: "NYC Custom Software Development, Fintech & Pen Test | QUANT LAB",
+    title: "NYC Software Development & Pen Testing | QUANT LAB USA",
     description:
-        "New York custom software and penetration testing for fintech, ad-tech, agencies, and SaaS. Senior, founder-led engineering. Call (770) 652-1282.",
+        "New York custom software and pen testing for fintech, ad-tech, agencies, and SaaS. Senior, founder-led engineering from a US firm. Call (770) 652-1282.",
     slug: "software-development-new-york-ny",
     image: "/og-image.png",
     type: "article",
@@ -108,6 +110,16 @@ const faqs = [
     },
 ];
 
+const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://quantlabusa.dev/" },
+        { "@type": "ListItem", position: 2, name: "Locations", item: "https://quantlabusa.dev/locations" },
+        { "@type": "ListItem", position: 3, name: "Software Development New York, NY", item: "https://quantlabusa.dev/software-development-new-york-ny" },
+    ],
+};
+
 export default function NewYorkLandingPage() {
     return (
         <main className="min-h-screen bg-quant-bg text-quant-text pt-28 pb-24">
@@ -133,6 +145,12 @@ export default function NewYorkLandingPage() {
                     }),
                 }}
             />
+
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+            />
+
 
             <div className="container mx-auto px-6 max-w-4xl">
                 <nav aria-label="Breadcrumb" className="mb-8">
@@ -232,6 +250,21 @@ export default function NewYorkLandingPage() {
                             </div>
                         ))}
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedIndustries
+                        industries={["fintech","saas","insurance","legal-services"]}
+                        heading="Industries we serve in New York"
+                    />
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["compliance","stack","build-vs-buy"]}
+                        pinned={["soc2-pentest-prep-guide-2026","building-multi-tenant-saas-postgres-rls","build-vs-buy-software-2026"]}
+                        heading="Reading for New York founders"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-16">

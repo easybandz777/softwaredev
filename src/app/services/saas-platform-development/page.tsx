@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { Layers, Check, ArrowRight, MapPin } from "lucide-react";
 import { pageMetadata } from "@/lib/seoMeta";
 
@@ -22,7 +23,7 @@ const cities: { slug: string; city: string; state: string }[] = [
 ];
 
 export const metadata = pageMetadata({
-    title: "SaaS Platform Development | Multi-Tenant Builds | QuantLab",
+    title: "SaaS Platform Development | Multi-Tenant Builds | QUANT LAB USA",
     description:
         "Custom SaaS platform development on Next.js, PostgreSQL, and Stripe Billing. Multi-tenant architecture, auth, billing, admin tooling. Founder-led from MVP to scale.",
     slug: "services/saas-platform-development",
@@ -324,6 +325,14 @@ export default function SaaSPlatformDevelopmentPage() {
                             </div>
                         ))}
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["saas","stack","build-vs-buy"]}
+                        heading="SaaS engineering reading"
+                        pinned={["building-multi-tenant-saas-postgres-rls","build-vs-buy-software-2026","hipaa-compliant-saas-architecture"]}
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-16">

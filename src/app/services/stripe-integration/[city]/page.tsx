@@ -630,7 +630,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
     const { city } = await params;
     const cfg = CITIES[city];
-    if (!cfg) return { title: "Stripe Integration | QuantLab" };
+    if (!cfg) return { title: "Stripe Integration | QUANT LAB USA" };
 
     const title = `Stripe Integration in ${cfg.city}, ${cfg.state} | QUANT LAB USA`;
 

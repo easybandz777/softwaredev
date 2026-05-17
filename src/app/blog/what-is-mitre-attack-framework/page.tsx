@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { Calendar, User, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -722,6 +723,14 @@ export default function MitreAttackPage() {
                         ))}
                     </div>
                 </AnimatedSection>
+                <AnimatedSection className="mt-16 mb-12">
+                    <RelatedPosts
+                        currentSlug="what-is-mitre-attack-framework"
+                        topics={["pentest"]}
+                        heading="More red team + ATT&CK reading"
+                    />
+                </AnimatedSection>
+
             </article>
         </main>
     );

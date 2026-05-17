@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { ShieldCheck, Check, ArrowRight } from "lucide-react";
 import { pageMetadata } from "@/lib/seoMeta";
 
 export const metadata = pageMetadata({
-    title: "Insurance Industry Software Development | QuantLab",
+    title: "Insurance Software Development (2026) | QUANT LAB USA",
     description:
-        "Custom software for insurance agencies and advisors — advisor landing pages, agency CRMs, lead-capture funnels, compliance-aware document workflows. Founder-led.",
+        "Custom software for insurance agencies — advisor sites, agency CRMs, lead-capture funnels, compliance-aware document workflows. Founder-led. By QUANT LAB USA.",
     slug: "industries/insurance",
     image: "/og-services.png",
     type: "article",
@@ -23,7 +24,7 @@ const webPageSchema = {
     isPartOf: {
         "@type": "WebSite",
         url: "https://quantlabusa.dev",
-        name: "QuantLab USA",
+        name: "QUANT LAB USA",
     },
 };
 
@@ -401,6 +402,13 @@ export default function InsuranceIndustryPage() {
                             </Link>
                         ))}
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["compliance","saas","build-vs-buy"]}
+                        heading="Insurance software reading"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection>

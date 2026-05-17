@@ -156,7 +156,7 @@ export default function BrochureTowingPage() {
                 }}>
                     <img src="/logo-transparent.png" alt="QuantLab" style={{ width: "160px", height: "160px", objectFit: "contain", marginBottom: "0.15rem" }} className="logo-glow" />
 
-                    <p style={{ fontSize: "0.62rem", fontWeight: 900, color: "#ffffff", marginBottom: "0.04rem" }}>QuantLab Software Solutions</p>
+                    <p style={{ fontSize: "0.62rem", fontWeight: 900, color: "#ffffff", marginBottom: "0.04rem" }}>QUANT LAB USA</p>
                     <p style={{ fontSize: "0.42rem", color: ORANGE, fontWeight: 600, marginBottom: "0.06rem", letterSpacing: "0.06em" }}>Operations Software. Built to Perform.</p>
                     <p style={{ fontSize: "0.35rem", color: "#6B7280", marginBottom: "0.2rem", maxWidth: "2.6in", lineHeight: 1.4 }}>
                         We build the systems that run 24/7 operations — dispatch, fleet, invoicing, client portals, and analytics — in one connected platform you own forever.
@@ -197,7 +197,7 @@ export default function BrochureTowingPage() {
                         ))}
                     </div>
 
-                    <p style={{ fontSize: "0.28rem", color: "#374151", marginTop: "auto" }}>© 2026 QuantLab Software Solutions LLC</p>
+                    <p style={{ fontSize: "0.28rem", color: "#374151", marginTop: "auto" }}>© 2026 QUANT LAB USA LLC</p>
                 </div>
 
                 {/* ─── PANEL 1 (RIGHT): Front Cover ─── */}

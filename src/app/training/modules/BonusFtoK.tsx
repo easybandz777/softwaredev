@@ -201,7 +201,7 @@ export function BonusJ() {
         {
             label: "Cold Email #1 — The Observation",
             subj: "Subject: [Their Company] — quick observation",
-            body: `Hey [First Name],\n\nI was doing research on [industry] businesses in [area] and came across [Company Name].\n\nTried to [do something on their site] and hit a dead end.\n\nWe build custom systems for businesses like yours that automate exactly that process. Have helped [similar company] cut their lead response time from [X hours] to under 60 seconds.\n\nWorth a quick 10-minute call this week?\n\n[Your Name]\nQuantLab Software Solutions`
+            body: `Hey [First Name],\n\nI was doing research on [industry] businesses in [area] and came across [Company Name].\n\nTried to [do something on their site] and hit a dead end.\n\nWe build custom systems for businesses like yours that automate exactly that process. Have helped [similar company] cut their lead response time from [X hours] to under 60 seconds.\n\nWorth a quick 10-minute call this week?\n\n[Your Name]\nQUANT LAB USA`
         },
         {
             label: "Proposal Follow-Up Email (Day 3)",

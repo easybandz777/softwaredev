@@ -5,11 +5,11 @@ import { caseStudies } from "@/lib/case-studies";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 
 export const metadata: Metadata = {
-    title: "Case Studies | QuantLab Software Solutions",
+    title: "Case Studies & Past Work (2026) | QUANT LAB USA",
     description:
-        "Real projects we've shipped — trading systems, operations platforms, estimating tools, and penetration tests across financial services, automotive, construction, and more.",
+        "Real shipped projects from QUANT LAB USA: trading systems, CRMs, ops platforms, estimating tools, and pentests across fintech, automotive, construction, SaaS.",
     openGraph: {
-        title: "Case Studies | QuantLab Software Solutions",
+        title: "Case Studies | QUANT LAB USA",
         description:
             "Real projects we've shipped — trading systems, operations platforms, estimating tools, and penetration tests.",
         url: "https://quantlabusa.dev/work",

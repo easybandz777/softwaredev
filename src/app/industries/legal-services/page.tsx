@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { Scale, Check, ArrowRight } from "lucide-react";
 import { pageMetadata } from "@/lib/seoMeta";
 
 export const metadata = pageMetadata({
-    title: "Custom Legal Services Software Development | QuantLab",
+    title: "Legal Services Software Development | QUANT LAB USA",
     description:
-        "Custom legal software — matter management, intake automation, e-signature, conflict checks, IOLTA-aware billing, document automation. Founder-led, US-based.",
+        "Custom legal software — matter management, intake automation, e-signature, conflict checks, IOLTA-aware billing, document automation. By QUANT LAB USA.",
     slug: "industries/legal-services",
     image: "/og-services.png",
     type: "article",
@@ -23,7 +24,7 @@ const webPageSchema = {
     isPartOf: {
         "@type": "WebSite",
         url: "https://quantlabusa.dev",
-        name: "QuantLab USA",
+        name: "QUANT LAB USA",
     },
 };
 
@@ -341,6 +342,13 @@ export default function LegalServicesIndustryPage() {
                             </Link>
                         ))}
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["compliance","internal-tools","saas"]}
+                        heading="Legal-services software reading"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection>

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { ArrowRight, Check, FileText } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -498,6 +499,14 @@ export default function CustomCrmVsSalesforceVsHubspotPage() {
                             Or call William directly at <a href="tel:+17706521282" className="text-sky-400 hover:underline">(770) 652-1282</a>
                         </div>
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mt-16 mb-12">
+                    <RelatedPosts
+                        currentSlug="custom-crm-vs-salesforce-vs-hubspot-2026"
+                        topics={["crm","build-vs-buy"]}
+                        heading="More custom CRM reading"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mt-12">

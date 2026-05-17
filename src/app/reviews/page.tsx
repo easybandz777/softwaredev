@@ -11,9 +11,9 @@ import {
 } from "@/lib/schemas";
 
 export const metadata: Metadata = {
-  title: "Client Reviews | QUANT LAB USA",
+  title: "Client Reviews & Testimonials 2026 | QUANT LAB USA",
   description:
-    "Read verified Google Business Profile reviews of QUANT LAB USA — custom software, CRM development, Stripe integrations, and offensive security work delivered by William Beltz from Macon, Georgia.",
+    "Verified Google Business Profile reviews of QUANT LAB USA — custom CRM, Stripe, web app, and pentest work shipped by William Beltz from Macon, Georgia.",
   alternates: {
     canonical: `${SITE_URL}/reviews`,
   },

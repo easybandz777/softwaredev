@@ -41,7 +41,7 @@ const CITIES: Record<string, CityConfig> = {
         caseStudyParagraph: "Macon-relevant DevOps reference work spans the production deployments across our portfolio — Northcrest Fence, Bridgepointe Painting, J5 Sales OS, ProtectWithBri — all running on Docker-native pipelines with CI/CD, observability, and cost-aware infrastructure sizing. Same patterns ship into a Middle Georgia operator's existing application stack.",
         pricingNote: "Macon DevOps engagements typically scope between $10,000 and $40,000 — focused CI/CD pipeline builds at the lower end, full infrastructure modernization with monitoring at the upper end. Fixed fee, no retainer.",
         faqs: [
-            { q: "Are you actually based in Macon?", a: "Yes. QuantLab USA is headquartered in Macon. On-site DevOps work across Bibb, Houston, Jones, and Monroe counties is standard." },
+            { q: "Are you actually based in Macon?", a: "Yes. QUANT LAB USA is headquartered in Macon. On-site DevOps work across Bibb, Houston, Jones, and Monroe counties is standard." },
             { q: "Docker or Kubernetes for a Macon operator?", a: "Docker first. Kubernetes only when the workload, the team, and the budget all justify it. We will tell you straight at discovery." },
             { q: "Will you wire CI/CD into our existing GitHub repository?", a: "Yes. GitHub Actions, GitLab CI, or Vercel-native pipelines. We pick the right tool, not the trendiest." },
             { q: "Can you reduce our AWS or DigitalOcean bill?", a: "Often yes — most over-engineered cloud bills can be cut 30-50% by right-sizing and removing dead infrastructure. We will scope a cost-audit at discovery." },

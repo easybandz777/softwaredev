@@ -10,12 +10,12 @@ const TITLE = "The Custom Software Build-vs-Buy Decision Playbook";
 const PDF_FILENAME = "build-vs-buy-playbook.pdf";
 
 export const metadata: Metadata = {
-    title: "Build vs Buy Decision Playbook (Free PDF) | QUANT LAB",
+    title: "Build vs Buy Decision Playbook (Free PDF) | QUANT LAB USA",
     description:
         "A 25-page playbook with 7 decision frameworks, a 5-year TCO worksheet, and a CFO memo template — built for ops leaders making the build-vs-buy call.",
     alternates: { canonical: `https://quantlabusa.dev/resources/${SLUG}` },
     openGraph: {
-        title: "Build vs Buy Decision Playbook (Free PDF) | QUANT LAB",
+        title: "Build vs Buy Decision Playbook (Free PDF) | QUANT LAB USA",
         description:
             "A 25-page playbook with 7 decision frameworks, a 5-year TCO worksheet, and a CFO memo template — for ops leaders making the build-vs-buy call.",
         url: `https://quantlabusa.dev/resources/${SLUG}`,
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: "summary_large_image",
-        title: "Build vs Buy Decision Playbook (Free PDF) | QUANT LAB",
+        title: "Build vs Buy Decision Playbook (Free PDF) | QUANT LAB USA",
         description:
             "A 25-page playbook with 7 frameworks, a 5-year TCO worksheet, and a CFO memo template.",
     },

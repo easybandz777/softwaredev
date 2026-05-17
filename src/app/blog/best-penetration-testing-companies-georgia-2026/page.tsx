@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { ArrowRight, Check, Shield, MapPin } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -401,6 +402,15 @@ export default function BestGeorgiaPentestCompaniesPage() {
                             Or call William directly at <a href="tel:+17706521282" className="text-sky-400 hover:underline">(770) 652-1282</a>
                         </div>
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mt-16 mb-12">
+                    <RelatedPosts
+                        currentSlug="best-penetration-testing-companies-georgia-2026"
+                        topics={["pentest","atlanta"]}
+                        heading="More Georgia security reading"
+                        pinned={["penetration-test-cost-2026","soc2-pentest-prep-guide-2026","what-is-penetration-testing"]}
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mt-12">

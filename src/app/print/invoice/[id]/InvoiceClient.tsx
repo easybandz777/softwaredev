@@ -37,7 +37,7 @@ export default function InvoiceClient({ invoice, lineItems }: { invoice: Invoice
                 <div className="invoice-brand">
                     <img src="/logo.png" alt="QuantLab" />
                     <div className="invoice-brand-text">
-                        <h1>QuantLab Software Solutions</h1>
+                        <h1>QUANT LAB USA</h1>
                         <p>Engineering the Next Level</p>
                     </div>
                 </div>
@@ -58,7 +58,7 @@ export default function InvoiceClient({ invoice, lineItems }: { invoice: Invoice
             <div className="invoice-parties">
                 <div className="party-block">
                     <h3>From</h3>
-                    <p className="party-name">QuantLab Software Solutions</p>
+                    <p className="party-name">QUANT LAB USA</p>
                     <p>contact@quantlabusa.dev</p>
                     <p>quantlabusa.dev</p>
                 </div>
@@ -146,7 +146,7 @@ export default function InvoiceClient({ invoice, lineItems }: { invoice: Invoice
 
             {/* Footer */}
             <div className="invoice-footer">
-                <p className="footer-brand">QuantLab Software Solutions LLC</p>
+                <p className="footer-brand">QUANT LAB USA LLC</p>
                 <p>contact@quantlabusa.dev · quantlabusa.dev</p>
             </div>
         </div>

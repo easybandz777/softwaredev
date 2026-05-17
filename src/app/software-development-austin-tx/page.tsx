@@ -1,13 +1,15 @@
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
+import { RelatedIndustries } from "@/components/RelatedIndustries";
 import { MapPin, Check, ArrowRight } from "lucide-react";
 import { pageMetadata } from "@/lib/seoMeta";
 
 export const metadata = pageMetadata({
-    title: "Austin TX Custom Software Developer for SaaS Startups | QUANT LAB",
+    title: "Austin Software Development & Pen Testing | QUANT LAB USA",
     description:
-        "Austin startup-grade software development — SaaS MVPs, Stripe billing, algorithmic trading, and pen testing. Founder-led, no offshore. Call (770) 652-1282.",
+        "Austin TX startup-grade software development — SaaS MVPs, Stripe billing, algorithmic trading, and pen testing. Founder-led, no offshore. Call (770) 652-1282.",
     slug: "software-development-austin-tx",
     image: "/og-image.png",
     type: "article",
@@ -108,6 +110,16 @@ const faqs = [
     },
 ];
 
+const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://quantlabusa.dev/" },
+        { "@type": "ListItem", position: 2, name: "Locations", item: "https://quantlabusa.dev/locations" },
+        { "@type": "ListItem", position: 3, name: "Software Development Austin, TX", item: "https://quantlabusa.dev/software-development-austin-tx" },
+    ],
+};
+
 export default function AustinLandingPage() {
     return (
         <main className="min-h-screen bg-quant-bg text-quant-text pt-28 pb-24">
@@ -133,6 +145,12 @@ export default function AustinLandingPage() {
                     }),
                 }}
             />
+
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+            />
+
 
             <div className="container mx-auto px-6 max-w-4xl">
                 <nav aria-label="Breadcrumb" className="mb-8">
@@ -232,6 +250,21 @@ export default function AustinLandingPage() {
                             </div>
                         ))}
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedIndustries
+                        industries={["saas","fintech","e-commerce","healthcare"]}
+                        heading="Industries we serve in Austin"
+                    />
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["saas","build-vs-buy","stack"]}
+                        pinned={["build-vs-buy-software-2026","building-multi-tenant-saas-postgres-rls","nextjs-vs-remix-vs-sveltekit-2026"]}
+                        heading="Reading for Austin founders"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-16">

@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { pageMetadata } from "@/lib/seoMeta";
 
 export const metadata: Metadata = pageMetadata({
-    title: "What is FIDO2? Phishing-Resistant Authentication Explained | QUANT LAB",
+    title: "What is FIDO2? Passkey & Phishing-Resistant Auth | QUANT LAB USA",
     description:
-        "FIDO2 is the open standard behind phishing-resistant authentication — security keys, passkeys, and WebAuthn. What it is, how it works, and what QUANT LAB recommends.",
+        "FIDO2 is the open standard for phishing-resistant auth that powers passkeys. Plain-English definition, how it works, 2026 adoption. By QUANT LAB USA.",
     slug: "/glossary/what-is-fido2",
 });
 
@@ -105,6 +106,13 @@ export default function Page() {
                     <p>
                         For clients in <Link href="/industries/fintech" className="text-sky-400 hover:underline">fintech</Link>, <Link href="/industries/healthcare" className="text-sky-400 hover:underline">healthcare</Link>, and any environment where account takeover is a board-level risk, we recommend mandatory hardware keys for administrative accounts and passkey support for everyone else. Our <Link href="/services/penetration-testing" className="text-sky-400 hover:underline">pen testers</Link> see the cost of password-only auth every week — phishing remains the number-one initial-access vector in 2026. <Link href="/contact" className="text-sky-400 hover:underline">Book a call</Link> if you are scoping a passkey rollout.
                     </p>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-10">
+                    <RelatedPosts
+                        topics={["compliance"]}
+                        heading="Long-form deep-dives that use this term"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-10">

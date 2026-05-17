@@ -1,11 +1,13 @@
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
+import { RelatedCities } from "@/components/RelatedCities";
 import { Terminal, Check, ArrowRight } from "lucide-react";
 import { pageMetadata } from "@/lib/seoMeta";
 
 export const metadata = pageMetadata({
-    title: "Custom CRM, ERP & Internal Tools — Built to Fit | QuantLab",
+    title: "Custom CRM, ERP & Internal Tools — Built to Fit | QUANT LAB USA",
     description:
         "Custom CRMs, dashboards, and work order systems built around your workflow — not Salesforce's. Shipped across 4 industries. Free scoping call in 24 hours.",
     slug: "services/custom-business-software",
@@ -77,6 +79,16 @@ const faqSchema = {
     ],
 };
 
+const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://quantlabusa.dev/" },
+        { "@type": "ListItem", position: 2, name: "Services", item: "https://quantlabusa.dev/services" },
+        { "@type": "ListItem", position: 3, name: "Custom Business Software", item: "https://quantlabusa.dev/services/custom-business-software" },
+    ],
+};
+
 export default function CustomBusinessSoftwarePage() {
     return (
         <main className="min-h-screen bg-quant-bg text-quant-text pt-28 pb-24">
@@ -87,6 +99,10 @@ export default function CustomBusinessSoftwarePage() {
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
             />
 
             <div className="container mx-auto px-6 max-w-4xl">
@@ -245,6 +261,14 @@ export default function CustomBusinessSoftwarePage() {
 
                 {/* Related services */}
                 <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["build-vs-buy","internal-tools"]}
+                        heading="Custom software reading"
+                        pinned={["build-vs-buy-software-2026","custom-internal-tools-vs-retool-2026","internal-tools-platform-engineering-guide"]}
+                    />
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
                     <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">Related services</h2>
                     <div className="grid md:grid-cols-3 gap-4">
                         {[
@@ -268,6 +292,10 @@ export default function CustomBusinessSoftwarePage() {
                 </AnimatedSection>
 
                 {/* Bottom CTA */}
+                <AnimatedSection className="mb-16">
+                    <RelatedCities heading="Custom business software clients — where we work" max={8} />
+                </AnimatedSection>
+
                 <AnimatedSection>
                     <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-[#0d1526] to-[#0a1120] p-10 md:p-14 text-center">
                         <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">

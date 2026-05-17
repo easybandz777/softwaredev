@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 
 export const metadata: Metadata = {
-    title: "What is the OWASP Top 10? Definition & Examples | QUANT LAB",
+    title: "What is the OWASP Top 10? 2026 Guide | QUANT LAB USA",
     description:
-        "The OWASP Top 10 is the community-maintained list of the most critical web app security risks. The current categories, why they matter, and how we test for them.",
+        "OWASP Top 10 is the canonical list of web app security risks. Plain-English definition, what changed in 2025, how pentests use it. By QUANT LAB USA.",
     alternates: { canonical: "https://quantlabusa.dev/glossary/what-is-owasp-top-10" },
 };
 
@@ -158,6 +159,13 @@ export default function Page() {
                         the list shifts every cycle — the threat landscape shifts
                         and the data reflects it.
                     </p>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-10">
+                    <RelatedPosts
+                        topics={["pentest"]}
+                        heading="Long-form deep-dives that use this term"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-10">

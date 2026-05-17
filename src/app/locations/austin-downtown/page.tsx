@@ -5,19 +5,19 @@ import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { MapPin, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
-    title: "Custom Software Development in Downtown Austin TX | QUANT LAB",
+    title: "Software Development in Downtown Austin TX | QUANT LAB USA",
     description:
-        "Custom software development in Downtown Austin TX — Second Street District, Rainey corridor, and venture-backed SaaS builds. Founder-led delivery.",
+        "Custom software development for downtown Austin SaaS and startup founders. Founder-led, US-based, Stripe and pen test ready. Call (770) 652-1282.",
     alternates: { canonical: "https://quantlabusa.dev/locations/austin-downtown" },
     openGraph: {
-        title: "Custom Software Development in Downtown Austin TX | QUANT LAB",
+        title: "Custom Software Development in Downtown Austin TX | QUANT LAB USA",
         description: "Downtown Austin SaaS builds, fintech, and pen testing along the Second Street and Rainey corridors.",
         url: "https://quantlabusa.dev/locations/austin-downtown",
         type: "article",
     },
     twitter: {
         card: "summary",
-        title: "Custom Software Development in Downtown Austin TX | QUANT LAB",
+        title: "Custom Software Development in Downtown Austin TX | QUANT LAB USA",
         description: "Downtown Austin SaaS builds and pen testing.",
     },
 };

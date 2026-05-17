@@ -1,13 +1,15 @@
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
+import { RelatedIndustries } from "@/components/RelatedIndustries";
 import { MapPin, Check, ArrowRight } from "lucide-react";
 import { pageMetadata } from "@/lib/seoMeta";
 
 export const metadata = pageMetadata({
-    title: "Savannah GA Custom Software Development & SaaS Build | QUANT LAB",
+    title: "Savannah GA Software Development & Pen Testing | QUANT LAB USA",
     description:
-        "Savannah custom software — port logistics, hospitality, and SaaS development from a same-state Georgia firm. Founder-led. Call (770) 652-1282.",
+        "Savannah GA custom software for port logistics, hospitality, and SaaS — plus pen testing from a same-state Georgia firm. Founder-led. Call (770) 652-1282.",
     slug: "software-development-savannah-ga",
     image: "/og-image.png",
     type: "article",
@@ -108,6 +110,16 @@ const faqs = [
     },
 ];
 
+const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://quantlabusa.dev/" },
+        { "@type": "ListItem", position: 2, name: "Locations", item: "https://quantlabusa.dev/locations" },
+        { "@type": "ListItem", position: 3, name: "Software Development Savannah, GA", item: "https://quantlabusa.dev/software-development-savannah-ga" },
+    ],
+};
+
 export default function SavannahLandingPage() {
     return (
         <main className="min-h-screen bg-quant-bg text-quant-text pt-28 pb-24">
@@ -133,6 +145,12 @@ export default function SavannahLandingPage() {
                     }),
                 }}
             />
+
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+            />
+
 
             <div className="container mx-auto px-6 max-w-4xl">
                 <nav aria-label="Breadcrumb" className="mb-8">
@@ -232,6 +250,21 @@ export default function SavannahLandingPage() {
                             </div>
                         ))}
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedIndustries
+                        industries={["e-commerce","manufacturing","saas","real-estate"]}
+                        heading="Industries we serve in Savannah"
+                    />
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["atlanta","build-vs-buy","stripe"]}
+                        pinned={["atlanta-software-development-guide-2026","nextjs-stripe-integration-guide","build-vs-buy-software-2026"]}
+                        heading="Reading for Savannah founders"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-16">

@@ -20,9 +20,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
     const { slug } = await params;
     const study = getCaseStudyBySlug(slug);
-    if (!study) return { title: "Case Study Not Found | QuantLab" };
+    if (!study) return { title: "Case Study Not Found | QUANT LAB USA" };
 
-    const title = study.metaTitle ?? `${study.title} | QuantLab Case Study`;
+    const title = study.metaTitle ?? `${study.title} | QUANT LAB USA Case Study`;
     const description = study.metaDescription ?? study.summary;
 
     return {

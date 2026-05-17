@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { Scale, Check, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -434,6 +435,13 @@ export default function CustomCrmVsHubSpotPage() {
                             <p className="text-sm text-gray-400 leading-relaxed">The other major CRM comparison — different math, same honest framing.</p>
                         </Link>
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["crm","build-vs-buy"]}
+                        heading="Related CRM comparison reading"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection>

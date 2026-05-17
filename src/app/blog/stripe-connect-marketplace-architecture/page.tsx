@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { ArrowRight, Check, CreditCard } from "lucide-react";
 import { articleMetadata } from "@/lib/seoMeta";
 import { articleSchema, breadcrumbSchema, faqSchema } from "@/lib/schemas";
@@ -10,9 +11,9 @@ const SLUG = "stripe-connect-marketplace-architecture";
 const PUBLISHED = "2026-05-12";
 
 export const metadata: Metadata = articleMetadata({
-    title: "Stripe Connect for Marketplaces: Architecture That Actually Scales",
+    title: "Stripe Connect Marketplace Architecture That Scales (2026)",
     description:
-        "Stripe Connect marketplace architecture patterns that scale: account model choice, payout flows, refund handling, KYC, webhook reliability, and idempotency.",
+        "Stripe Connect marketplace patterns that scale: account model choice, payout flows, refund handling, KYC, webhook reliability, and idempotency for 2026 builds.",
     slug: `blog/${SLUG}`,
     image: "/og-stripe.png",
     publishedTime: PUBLISHED,
@@ -296,6 +297,14 @@ export default function StripeConnectMarketplacePage() {
                             Or call Bill directly at <a href="tel:+17706521282" className="text-sky-400 hover:underline">(770) 652-1282</a>
                         </div>
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mt-16 mb-12">
+                    <RelatedPosts
+                        currentSlug="stripe-connect-marketplace-architecture"
+                        topics={["stripe","stack"]}
+                        heading="More Stripe engineering reading"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mt-12">

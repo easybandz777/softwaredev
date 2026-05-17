@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { Sparkles, Check, ArrowRight, MapPin } from "lucide-react";
 import { pageMetadata } from "@/lib/seoMeta";
 
@@ -22,9 +23,9 @@ const cities: { slug: string; city: string; state: string }[] = [
 ];
 
 export const metadata = pageMetadata({
-    title: "AI Integration Services | Claude, OpenAI, RAG, Agents | QuantLab",
+    title: "AI Integration Services (Claude, OpenAI, RAG) | QUANT LAB USA",
     description:
-        "AI integration services on Claude, OpenAI, and open-source models. RAG pipelines, agentic systems, evals. Founder-led. Call (770) 652-1282 for a scope call.",
+        "Production AI integration — Claude, OpenAI, Anthropic, RAG, agents, evals. 2026-grade rate-limit handling, cost monitoring, fallback chains. Founder-led USA firm.",
     slug: "services/ai-integration-services",
     image: "/og-services.png",
     type: "article",
@@ -325,6 +326,13 @@ export default function AIIntegrationServicesPage() {
                             </div>
                         ))}
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["stack","saas"]}
+                        heading="Engineering reading"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-16">

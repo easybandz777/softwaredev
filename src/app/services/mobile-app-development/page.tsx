@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { Smartphone, Check, ArrowRight, MapPin } from "lucide-react";
 import { pageMetadata } from "@/lib/seoMeta";
 
@@ -22,9 +23,9 @@ const cities: { slug: string; city: string; state: string }[] = [
 ];
 
 export const metadata = pageMetadata({
-    title: "Mobile App Development | iOS, Android, React Native | QuantLab",
+    title: "Mobile App Development (iOS/Android) | QUANT LAB USA",
     description:
-        "Custom mobile app development on React Native, Swift, and Kotlin. Founder-led iOS and Android builds with backend, App Store handling, and no agency overhead.",
+        "Custom mobile app development for iOS, Android, and React Native. App Store and Play Store ready, with TestFlight, OTA updates, and analytics. By QUANT LAB USA.",
     slug: "services/mobile-app-development",
     image: "/og-services.png",
     type: "article",
@@ -323,6 +324,13 @@ export default function MobileAppDevelopmentPage() {
                             </div>
                         ))}
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["stack","saas"]}
+                        heading="Engineering reading"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-16">

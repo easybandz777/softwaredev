@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { Code2, Check, ArrowRight, MapPin } from "lucide-react";
 import { pageMetadata } from "@/lib/seoMeta";
 
@@ -22,7 +23,7 @@ const cities: { slug: string; city: string; state: string }[] = [
 ];
 
 export const metadata = pageMetadata({
-    title: "API Development | REST, GraphQL, Integrations | QuantLab USA",
+    title: "API Development | REST, GraphQL, Integrations | QUANT LAB USA",
     description:
         "Custom API development on Node, TypeScript, and PostgreSQL. REST and GraphQL APIs, third-party integrations, webhooks. Founder-led. Call (770) 652-1282.",
     slug: "services/api-development",
@@ -306,6 +307,13 @@ export default function APIDevelopmentPage() {
                             </div>
                         ))}
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["stack"]}
+                        heading="API & stack reading"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-16">

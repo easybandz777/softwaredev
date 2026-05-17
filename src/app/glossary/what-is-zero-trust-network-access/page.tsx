@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { pageMetadata } from "@/lib/seoMeta";
 
 export const metadata: Metadata = pageMetadata({
-    title: "What is Zero Trust Network Access (ZTNA)? | QUANT LAB",
+    title: "What is Zero Trust Network Access (ZTNA)? | QUANT LAB USA",
     description:
-        "ZTNA is the identity-aware replacement for the corporate VPN. What it is, how it differs from zero trust, what the vendor landscape actually offers, and how QUANT LAB designs it.",
+        "ZTNA replaces the VPN model with per-request identity verification. Plain-English definition, vendors, 2026 enterprise rollout playbook. By QUANT LAB USA.",
     slug: "/glossary/what-is-zero-trust-network-access",
 });
 
@@ -105,6 +106,13 @@ export default function Page() {
                     <p>
                         Our <Link href="/services/active-directory-pentest" className="text-sky-400 hover:underline">Active Directory pen-test</Link> and <Link href="/services/network-pentest" className="text-sky-400 hover:underline">network pen-test</Link> practices regularly find environments where the ZTNA story on the architecture diagram and the ZTNA story in practice do not match — VPN access still flows around the supposed gateway, or service accounts with broad permissions can sidestep the identity check. Read our <Link href="/glossary/what-is-zero-trust" className="text-sky-400 hover:underline">zero trust glossary entry</Link> for the broader pattern, or <Link href="/contact" className="text-sky-400 hover:underline">book a call</Link> if you are scoping a VPN replacement.
                     </p>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-10">
+                    <RelatedPosts
+                        topics={["compliance","pentest"]}
+                        heading="Long-form deep-dives that use this term"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-10">

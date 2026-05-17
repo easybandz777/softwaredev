@@ -8,7 +8,7 @@ const LAST_UPDATED = "2026-05-12";
 const llmContext = {
     name: "QUANT LAB USA INC",
     legal_name: "QUANT LAB USA INC",
-    alternate_names: ["Quant Lab USA", "QuantLab USA", "Quant Lab"],
+    alternate_names: ["Quant Lab USA", "QUANT LAB USA", "Quant Lab"],
     founder: "Bill Beltz",
     founder_full_name: "William Beltz",
     founder_title: "Founder & Principal Engineer",

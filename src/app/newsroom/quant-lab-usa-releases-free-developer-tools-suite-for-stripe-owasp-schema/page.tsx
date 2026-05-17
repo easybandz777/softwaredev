@@ -15,9 +15,9 @@ const SLUG =
 const PUBLISHED = "2026-05-12";
 
 export const metadata: Metadata = articleMetadata({
-    title: "QUANT LAB USA Releases Free Developer Tools Suite — Stripe, OWASP, Schema",
+    title: "QUANT LAB USA Releases Free Dev Tools Suite (2026)",
     description:
-        "QUANT LAB USA INC launches a free, public developer tools suite covering Stripe fee math, OWASP test coverage, schema.org generation, and more. No login. No email gate. Public-domain.",
+        "QUANT LAB USA releases a free developer tools suite — Stripe webhook tester, OWASP ASVS checklist, JSON-LD schema generator, UUID, and cron builder.",
     slug: `newsroom/${SLUG}`,
     image: "/og-image.png",
     publishedTime: PUBLISHED,

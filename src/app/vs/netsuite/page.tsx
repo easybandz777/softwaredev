@@ -2,14 +2,15 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { Scale, Check, ArrowRight } from "lucide-react";
 import { comparisonMetadata } from "@/lib/seoMeta";
 
 export const metadata: Metadata = comparisonMetadata({
     competitor: "NetSuite",
-    title: "QUANT LAB vs NetSuite: Custom ERP vs the All-in-One | QUANT LAB USA",
+    title: "NetSuite Alternative: Custom ERP for SMB 2026 | QUANT LAB USA",
     description:
-        "NetSuite is the right answer for established mid-market and enterprise. For 10-150 employee teams with vertical workflows and a non-standard chart of accounts, a custom ERP build often wins on fit and TCO. Honest comparison.",
+        "NetSuite fits established mid-market. For 10-150 employee teams with vertical workflows, custom ERP wins on TCO and fit. 2026 cost math + migration path.",
     slug: "/vs/netsuite",
 });
 
@@ -450,6 +451,13 @@ export default function CustomErpVsNetSuitePage() {
                             <p className="text-sm text-gray-400 leading-relaxed">The full methodology, timeline, and pricing breakdown for custom builds.</p>
                         </Link>
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["build-vs-buy","internal-tools"]}
+                        heading="Related ERP & internal tools reading"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection>

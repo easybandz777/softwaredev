@@ -103,7 +103,7 @@ const orgSchema = {
     "@id": "https://quantlabusa.dev/#organization",
     legalName: "QUANT LAB USA INC",
     name: "QUANT LAB USA INC",
-    alternateName: ["Quant Lab USA", "QuantLab USA"],
+    alternateName: ["Quant Lab USA", "QUANT LAB USA"],
     url: "https://quantlabusa.dev",
     foundingDate: "2026-04-12",
     founder: { "@id": "https://quantlabusa.dev/#william-beltz" },

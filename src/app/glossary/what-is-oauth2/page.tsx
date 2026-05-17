@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { pageMetadata } from "@/lib/seoMeta";
 
 export const metadata: Metadata = pageMetadata({
-    title: "What is OAuth 2? The Authorization Framework Explained | QUANT LAB",
+    title: "What is OAuth 2.0? Plain-English Guide | QUANT LAB USA",
     description:
-        "OAuth 2 is the authorization framework that lets apps act on behalf of a user without seeing their password. Real grant types, common mistakes, and how QUANT LAB ships it.",
+        "OAuth 2.0 is the standard protocol for delegated authorization. Plain-English definition, flows, and the difference from OIDC. By QUANT LAB USA.",
     slug: "/glossary/what-is-oauth2",
 });
 
@@ -105,6 +106,13 @@ export default function Page() {
                     <p>
                         For higher-assurance contexts — finance, healthcare, admin consoles — we layer <Link href="/glossary/what-is-fido2" className="text-sky-400 hover:underline">FIDO2</Link> and <Link href="/glossary/what-is-passkey-authentication" className="text-sky-400 hover:underline">passkeys</Link> on top of the OAuth flow at the authorization server, so the password is never the limiting factor. Read our piece on <Link href="/blog/stripe-webhook-security-best-practices" className="text-sky-400 hover:underline">Stripe webhook security</Link> for a real-world OAuth-adjacent integration pattern, or <Link href="/contact" className="text-sky-400 hover:underline">book a call</Link> if your OAuth implementation has been quietly accumulating tutorial debt since 2018.
                     </p>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-10">
+                    <RelatedPosts
+                        topics={["compliance","stack"]}
+                        heading="Long-form deep-dives that use this term"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-10">

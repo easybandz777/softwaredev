@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { pageMetadata } from "@/lib/seoMeta";
 
 export const metadata: Metadata = pageMetadata({
-    title: "What is CQRS? Command Query Responsibility Segregation | QUANT LAB",
+    title: "What is CQRS? Definition + 2026 Examples | QUANT LAB USA",
     description:
-        "CQRS separates the model used to change data from the model used to read it. When it pays off, when it adds pain, and how QUANT LAB applies it selectively.",
+        "CQRS (Command Query Responsibility Segregation) splits reads from writes for scale. Plain-English definition, when it pays back, 2026 examples. By QUANT LAB USA.",
     slug: "/glossary/what-is-cqrs",
 });
 
@@ -108,6 +109,13 @@ export default function Page() {
                     <p>
                         The decision is usually made during the discovery phase of a <Link href="/services/custom-business-software" className="text-sky-400 hover:underline">custom build</Link> by looking at the actual access patterns rather than imagined ones. If you want a sober review of whether CQRS would help your system or make it worse, <Link href="/contact" className="text-sky-400 hover:underline">book a 30-minute call</Link>.
                     </p>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-10">
+                    <RelatedPosts
+                        topics={["stack"]}
+                        heading="Long-form deep-dives that use this term"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-10">

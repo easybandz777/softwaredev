@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { ShoppingCart, Check, ArrowRight, MapPin } from "lucide-react";
 import { pageMetadata } from "@/lib/seoMeta";
 
@@ -22,9 +23,9 @@ const cities: { slug: string; city: string; state: string }[] = [
 ];
 
 export const metadata = pageMetadata({
-    title: "Ecommerce Development | Custom Storefronts, Headless | QuantLab",
+    title: "Custom E-commerce Development 2026 | QUANT LAB USA",
     description:
-        "Custom ecommerce development — headless commerce on Next.js, Shopify Hydrogen, Medusa. Storefronts, checkout, OMS. Founder-led. Call (770) 652-1282.",
+        "Custom e-commerce development beyond Shopify — B2B wholesale, custom quoting, ERP/inventory sync, custom checkout, admin dashboards. Founder-led, USA-based.",
     slug: "services/ecommerce-development",
     image: "/og-services.png",
     type: "article",
@@ -325,6 +326,13 @@ export default function EcommerceDevelopmentPage() {
                             </div>
                         ))}
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["stripe","stack"]}
+                        heading="E-commerce engineering reading"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-16">

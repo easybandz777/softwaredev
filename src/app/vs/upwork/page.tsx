@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { Briefcase, Check, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -412,6 +413,13 @@ export default function CustomDevVsUpworkPage() {
                             <p className="text-sm text-gray-400 leading-relaxed">The premium-end freelance comparison — different vetting, same trade-off.</p>
                         </Link>
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["build-vs-buy"]}
+                        heading="Related dev-firm comparison reading"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection>

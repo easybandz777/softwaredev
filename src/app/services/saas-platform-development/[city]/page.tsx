@@ -41,7 +41,7 @@ const CITIES: Record<string, CityConfig> = {
         caseStudyParagraph: "Macon-relevant SaaS reference builds in our portfolio include J5 Sales OS (a multi-tenant sales operations platform), UEhub (an education platform with role-scoped workflows), and operations tooling we have shipped to Middle Georgia clients. Same architecture pattern: Next.js front, PostgreSQL source of truth, Stripe-driven entitlement, role-scoped access — production-grade from day one.",
         pricingNote: "Macon SaaS engagements typically scope between $45,000 and $120,000 for a production-grade MVP with multi-tenancy, Stripe Billing, and admin tooling. Fixed-fee per phase, milestone-based.",
         faqs: [
-            { q: "Do you meet with Macon SaaS founders in person?", a: "Yes. QuantLab USA is headquartered in Macon. Discovery sessions across Bibb, Houston, Jones, and Monroe counties are standard — no travel premium." },
+            { q: "Do you meet with Macon SaaS founders in person?", a: "Yes. QUANT LAB USA is headquartered in Macon. Discovery sessions across Bibb, Houston, Jones, and Monroe counties are standard — no travel premium." },
             { q: "Multi-tenant or single-tenant for a Macon SaaS MVP?", a: "Multi-tenant by default. Single-tenant only when a buyer's compliance posture demands it. We model the tenancy correctly before the first customer." },
             { q: "Will the SaaS handle a Series A code review?", a: "Yes. TypeScript everywhere, audit trails, signed-token auth, clean module boundaries. Your future CTO can grep it without wincing." },
             { q: "Stripe Billing or Paddle?", a: "Stripe Billing by default. Paddle when the buyer needs merchant-of-record handling for international VAT. Both are in scope." },

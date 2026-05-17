@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { CreditCard, Check, ArrowRight } from "lucide-react";
 import { pageMetadata } from "@/lib/seoMeta";
 
 export const metadata = pageMetadata({
-    title: "Stripe Integration, ACH Billing & License Servers | QuantLab",
+    title: "Stripe Integration, ACH Billing & License Servers | QUANT LAB USA",
     description:
         "Custom Stripe integration consulting, ACH billing, auto-invoicing, subscription billing, and JWT-validated license servers with seat management. Free scoping call.",
     slug: "services/payments-invoicing-licensing",
@@ -77,6 +78,16 @@ const faqSchema = {
     ],
 };
 
+const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://quantlabusa.dev/" },
+        { "@type": "ListItem", position: 2, name: "Services", item: "https://quantlabusa.dev/services" },
+        { "@type": "ListItem", position: 3, name: "Payments, Invoicing & Licensing", item: "https://quantlabusa.dev/services/payments-invoicing-licensing" },
+    ],
+};
+
 export default function PaymentsLicensingPage() {
     return (
         <main className="min-h-screen bg-quant-bg text-quant-text pt-28 pb-24">
@@ -87,6 +98,10 @@ export default function PaymentsLicensingPage() {
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
             />
 
             <div className="container mx-auto px-6 max-w-4xl">
@@ -261,6 +276,14 @@ export default function PaymentsLicensingPage() {
                             </div>
                         ))}
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["stripe"]}
+                        heading="Stripe + payments reading"
+                        pinned={["nextjs-stripe-integration-guide","stripe-webhook-security-best-practices","stripe-connect-marketplace-architecture"]}
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-16">

@@ -10,12 +10,12 @@ const TITLE = "MITRE ATT&CK Maturity Worksheet";
 const PDF_FILENAME = "mitre-attack-worksheet.pdf";
 
 export const metadata: Metadata = {
-    title: "MITRE ATT&CK Maturity Worksheet for SMBs (Free PDF) | QUANT LAB",
+    title: "MITRE ATT&CK Maturity Worksheet for SMBs | QUANT LAB USA",
     description:
-        "A self-assessment worksheet aligning your organization to the 14 ATT&CK Enterprise tactics — with scoring, quick wins, and a board-ready maturity summary.",
+        "Self-assessment worksheet aligning your org to the 14 MITRE ATT&CK Enterprise tactics — with scoring, quick wins, and a board-ready maturity summary. Free.",
     alternates: { canonical: `https://quantlabusa.dev/resources/${SLUG}` },
     openGraph: {
-        title: "MITRE ATT&CK Maturity Worksheet for SMBs (Free PDF) | QUANT LAB",
+        title: "MITRE ATT&CK Maturity Worksheet for SMBs (Free PDF) | QUANT LAB USA",
         description:
             "Self-assessment worksheet aligning your org to the 14 ATT&CK tactics with scoring, quick wins, and a board-ready summary.",
         url: `https://quantlabusa.dev/resources/${SLUG}`,
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: "summary_large_image",
-        title: "MITRE ATT&CK Maturity Worksheet for SMBs (Free PDF) | QUANT LAB",
+        title: "MITRE ATT&CK Maturity Worksheet for SMBs (Free PDF) | QUANT LAB USA",
         description:
             "Self-assessment across the 14 ATT&CK tactics. Scoring, quick wins, board-ready summary.",
     },

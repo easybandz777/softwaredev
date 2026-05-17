@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 
 export const metadata: Metadata = {
-    title: "What is Penetration Testing? Definition & Examples | QUANT LAB",
+    title: "What is Penetration Testing? Plain-English (2026) | QUANT LAB USA",
     description:
-        "A penetration test is a time-boxed, authorized, human-driven attack simulation. Definition, types, what a real report looks like, and how QUANT LAB conducts pentests.",
+        "Penetration testing is human-driven exploit attempts against your systems. Plain-English definition, scope tiers, 2026 cost ranges. By QUANT LAB USA.",
     alternates: { canonical: "https://quantlabusa.dev/glossary/what-is-penetration-testing" },
 };
 
@@ -169,6 +170,13 @@ export default function Page() {
                         found, but the development practices that allowed them to
                         ship.
                     </p>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-10">
+                    <RelatedPosts
+                        topics={["pentest"]}
+                        heading="Long-form deep-dives that use this term"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-10">

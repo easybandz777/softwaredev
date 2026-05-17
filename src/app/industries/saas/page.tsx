@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { Cloud, Check, ArrowRight } from "lucide-react";
 import { pageMetadata } from "@/lib/seoMeta";
 
 export const metadata = pageMetadata({
-    title: "Custom SaaS Development | Stripe Billing & SOC 2 | QuantLab",
+    title: "Custom SaaS Development (Stripe & SOC 2) | QUANT LAB USA",
     description:
-        "Custom SaaS development — Stripe Billing, subscription management, SOC 2 readiness, multi-tenant architecture, customer-facing dashboards. Founder-led, US-based.",
+        "Custom SaaS development — Stripe Billing, subscription management, SOC 2 readiness, multi-tenant architecture, customer dashboards. By QUANT LAB USA.",
     slug: "industries/saas",
     image: "/og-services.png",
     type: "article",
@@ -23,7 +24,7 @@ const webPageSchema = {
     isPartOf: {
         "@type": "WebSite",
         url: "https://quantlabusa.dev",
-        name: "QuantLab USA",
+        name: "QUANT LAB USA",
     },
 };
 
@@ -346,6 +347,14 @@ export default function SaasIndustryPage() {
                             </Link>
                         ))}
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["saas","stack","build-vs-buy"]}
+                        heading="SaaS engineering reading"
+                        pinned={["building-multi-tenant-saas-postgres-rls","build-vs-buy-software-2026","internal-tools-platform-engineering-guide"]}
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection>

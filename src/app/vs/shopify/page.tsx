@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { ShoppingBag, Check, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
-    title: "Custom E-commerce Development vs Shopify | QUANT LAB USA",
+    title: "Shopify Alternative: Custom E-commerce 2026 | QUANT LAB USA",
     description:
-        "Shopify is the right answer for a lot of stores. For B2B wholesale, complex catalogs, custom workflows, and ERP-tied operations, a custom e-commerce build often wins on cost and fit.",
+        "Shopify fits most stores. For B2B wholesale, complex catalogs, custom workflows, or ERP-tied operations, custom e-commerce wins on cost and fit. 2026 comparison.",
     alternates: { canonical: "https://quantlabusa.dev/vs/shopify" },
     openGraph: {
         title: "Custom E-commerce Development vs Shopify | QUANT LAB USA",
@@ -361,6 +362,13 @@ export default function CustomEcommerceVsShopifyPage() {
                             <p className="text-sm text-gray-400 leading-relaxed">Subscriptions, marketplaces, custom checkout, and QuickBooks sync wired to the storefront.</p>
                         </Link>
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["stripe","saas","build-vs-buy"]}
+                        heading="Related e-commerce reading"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection>

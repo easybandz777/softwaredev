@@ -1,13 +1,15 @@
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
+import { RelatedIndustries } from "@/components/RelatedIndustries";
 import { MapPin, Check, ArrowRight } from "lucide-react";
 import { pageMetadata } from "@/lib/seoMeta";
 
 export const metadata = pageMetadata({
-    title: "Custom Software Development in Macon, GA | QUANT LAB USA",
+    title: "Macon GA Software Development & Pen Testing | QUANT LAB USA",
     description:
-        "Macon-based, founder-led software developer building CRMs, web apps, Stripe billing, and trading systems for Middle Georgia businesses. Call (770) 652-1282.",
+        "Macon, Georgia founder-led software developer — custom CRMs, web apps, Stripe billing, trading systems, and pen testing for Middle GA. Call (770) 652-1282.",
     slug: "software-development-macon-ga",
     image: "/og-image.png",
     type: "article",
@@ -123,6 +125,16 @@ const faqs = [
     },
 ];
 
+const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://quantlabusa.dev/" },
+        { "@type": "ListItem", position: 2, name: "Locations", item: "https://quantlabusa.dev/locations" },
+        { "@type": "ListItem", position: 3, name: "Software Development Macon, GA", item: "https://quantlabusa.dev/software-development-macon-ga" },
+    ],
+};
+
 export default function MaconLandingPage() {
     return (
         <main className="min-h-screen bg-quant-bg text-quant-text pt-28 pb-24">
@@ -148,6 +160,12 @@ export default function MaconLandingPage() {
                     }),
                 }}
             />
+
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+            />
+
 
             <div className="container mx-auto px-6 max-w-4xl">
                 <nav aria-label="Breadcrumb" className="mb-8">
@@ -241,6 +259,21 @@ export default function MaconLandingPage() {
                             </div>
                         ))}
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedIndustries
+                        industries={["construction","healthcare","e-commerce","manufacturing"]}
+                        heading="Industries we serve in Macon"
+                    />
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["atlanta","build-vs-buy","crm"]}
+                        pinned={["atlanta-software-development-guide-2026","custom-crm-development-guide","build-vs-buy-software-2026"]}
+                        heading="Reading for Macon founders"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-16">

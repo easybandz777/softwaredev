@@ -5,19 +5,19 @@ import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { MapPin, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
-    title: "Custom Software Development in Downtown Macon GA | QUANT LAB",
+    title: "Software Development in Downtown Macon GA | QUANT LAB USA",
     description:
-        "Custom software development in Downtown Macon GA — Mercer corridor builds, custom CRMs, and pen testing. Founder-led, local Middle Georgia delivery.",
+        "Custom software development & pen testing for downtown Macon, Mercer, and Bibb County firms. Same-state Georgia, founder-led. Call (770) 652-1282.",
     alternates: { canonical: "https://quantlabusa.dev/locations/macon-downtown" },
     openGraph: {
-        title: "Custom Software Development in Downtown Macon GA | QUANT LAB",
+        title: "Custom Software Development in Downtown Macon GA | QUANT LAB USA",
         description: "Downtown Macon software builds, Mercer-corridor SaaS, and SOC 2 pen testing. Local Middle Georgia delivery.",
         url: "https://quantlabusa.dev/locations/macon-downtown",
         type: "article",
     },
     twitter: {
         card: "summary",
-        title: "Custom Software Development in Downtown Macon GA | QUANT LAB",
+        title: "Custom Software Development in Downtown Macon GA | QUANT LAB USA",
         description: "Downtown Macon software builds and SOC 2 pen testing.",
     },
 };

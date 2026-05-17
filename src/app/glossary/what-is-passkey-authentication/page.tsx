@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { pageMetadata } from "@/lib/seoMeta";
 
 export const metadata: Metadata = pageMetadata({
-    title: "What is Passkey Authentication? | QUANT LAB",
+    title: "What is Passkey Authentication? Plain-English | QUANT LAB USA",
     description:
-        "Passkeys replace passwords with phishing-resistant, synced FIDO2 credentials. What they are, how they work in practice, and how QUANT LAB ships them.",
+        "Passkeys replace passwords with phishing-resistant device-bound credentials. Plain-English definition, how they work, 2026 adoption. By QUANT LAB USA.",
     slug: "/glossary/what-is-passkey-authentication",
 });
 
@@ -105,6 +106,13 @@ export default function Page() {
                     <p>
                         For <Link href="/industries/healthcare" className="text-sky-400 hover:underline">healthcare</Link> and <Link href="/industries/fintech" className="text-sky-400 hover:underline">fintech</Link> products we usually layer device-bound passkeys for administrative accounts on top of synced passkeys for end users. Our <Link href="/services/penetration-testing" className="text-sky-400 hover:underline">pen-testing team</Link> tests the implementation end-to-end, because a misconfigured WebAuthn flow that falls back to password silently is worse than no passkey at all. <Link href="/contact" className="text-sky-400 hover:underline">Book a call</Link> if you are planning a rollout.
                     </p>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-10">
+                    <RelatedPosts
+                        topics={["compliance"]}
+                        heading="Long-form deep-dives that use this term"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-10">

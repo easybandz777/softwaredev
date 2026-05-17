@@ -10,12 +10,12 @@ const TITLE = "The 6-Week Custom CRM Rollout Playbook";
 const PDF_FILENAME = "crm-rollout-playbook.pdf";
 
 export const metadata: Metadata = {
-    title: "6-Week Custom CRM Rollout Playbook (Free PDF) | QUANT LAB",
+    title: "6-Week Custom CRM Rollout Playbook (Free PDF) | QUANT LAB USA",
     description:
-        "A 30-page rollout playbook with week-by-week tasks, data migration templates, and a stakeholder comms kit for operations leaders launching a new CRM.",
+        "A 30-page rollout playbook with week-by-week tasks, data migration templates, and a stakeholder comms kit for ops leaders launching a new CRM. Free.",
     alternates: { canonical: `https://quantlabusa.dev/resources/${SLUG}` },
     openGraph: {
-        title: "6-Week Custom CRM Rollout Playbook (Free PDF) | QUANT LAB",
+        title: "6-Week Custom CRM Rollout Playbook (Free PDF) | QUANT LAB USA",
         description:
             "A 30-page rollout playbook with week-by-week tasks, data migration templates, and a stakeholder comms kit for ops leaders launching a new CRM.",
         url: `https://quantlabusa.dev/resources/${SLUG}`,
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: "summary_large_image",
-        title: "6-Week Custom CRM Rollout Playbook (Free PDF) | QUANT LAB",
+        title: "6-Week Custom CRM Rollout Playbook (Free PDF) | QUANT LAB USA",
         description:
             "30-page playbook with week-by-week tasks, migration templates, and stakeholder comms.",
     },

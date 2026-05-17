@@ -1,13 +1,15 @@
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
+import { RelatedIndustries } from "@/components/RelatedIndustries";
 import { MapPin, Check, ArrowRight } from "lucide-react";
 import { pageMetadata } from "@/lib/seoMeta";
 
 export const metadata = pageMetadata({
-    title: "Nashville Custom Software, Healthcare & Music-Tech Dev | QL USA",
+    title: "Nashville Software Development & Pen Testing | QUANT LAB USA",
     description:
-        "Nashville custom software for healthcare admin, music-tech, and SaaS founders. CRMs, Stripe, royalty tooling, pen testing. Call (770) 652-1282.",
+        "Nashville TN custom software for healthcare admin, music-tech, and SaaS founders. CRMs, Stripe, royalty tooling, and pen testing. Call (770) 652-1282.",
     slug: "software-development-nashville-tn",
     image: "/og-image.png",
     type: "article",
@@ -109,6 +111,16 @@ const faqs = [
     },
 ];
 
+const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://quantlabusa.dev/" },
+        { "@type": "ListItem", position: 2, name: "Locations", item: "https://quantlabusa.dev/locations" },
+        { "@type": "ListItem", position: 3, name: "Software Development Nashville, TN", item: "https://quantlabusa.dev/software-development-nashville-tn" },
+    ],
+};
+
 export default function NashvilleLandingPage() {
     return (
         <main className="min-h-screen bg-quant-bg text-quant-text pt-28 pb-24">
@@ -134,6 +146,12 @@ export default function NashvilleLandingPage() {
                     }),
                 }}
             />
+
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+            />
+
 
             <div className="container mx-auto px-6 max-w-4xl">
                 <nav aria-label="Breadcrumb" className="mb-8">
@@ -233,6 +251,21 @@ export default function NashvilleLandingPage() {
                             </div>
                         ))}
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedIndustries
+                        industries={["healthcare","saas","e-commerce","fintech"]}
+                        heading="Industries we serve in Nashville"
+                    />
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["compliance","saas","build-vs-buy"]}
+                        pinned={["hipaa-compliant-saas-architecture","build-vs-buy-software-2026","custom-crm-development-guide"]}
+                        heading="Reading for Nashville founders"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-16">

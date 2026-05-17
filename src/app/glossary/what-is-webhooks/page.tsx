@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 
 export const metadata: Metadata = {
-    title: "What are Webhooks? Definition & Examples | QUANT LAB",
+    title: "What are Webhooks? Plain-English Definition | QUANT LAB USA",
     description:
-        "Webhooks are HTTP callbacks one system fires at another when something happens. How they work, why they matter, common pitfalls, and how QUANT LAB ships them safely.",
+        "Webhooks are HTTP callbacks that fire when an event happens. Plain-English definition, Stripe & GitHub examples, retry patterns. By QUANT LAB USA.",
     alternates: { canonical: "https://quantlabusa.dev/glossary/what-is-webhooks" },
 };
 
@@ -158,6 +159,13 @@ export default function Page() {
                         than asking customers to recreate the conditions that
                         produced the event.
                     </p>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-10">
+                    <RelatedPosts
+                        topics={["stripe","stack"]}
+                        heading="Long-form deep-dives that use this term"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-10">

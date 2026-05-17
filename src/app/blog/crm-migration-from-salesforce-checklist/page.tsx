@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { ArrowRight, Check, Database } from "lucide-react";
 import { articleMetadata } from "@/lib/seoMeta";
 import { articleSchema, breadcrumbSchema, faqSchema } from "@/lib/schemas";
@@ -10,7 +11,7 @@ const SLUG = "crm-migration-from-salesforce-checklist";
 const PUBLISHED = "2026-05-12";
 
 export const metadata: Metadata = articleMetadata({
-    title: "Custom CRM Migration from Salesforce: The 30-Point Checklist (2026)",
+    title: "Salesforce to Custom CRM Migration: 30-Point Checklist 2026",
     description:
         "A 30-point engineering checklist for migrating off Salesforce to a custom CRM in 2026. Data extraction, mapping, automation parity, integrations, and cutover order.",
     slug: `blog/${SLUG}`,
@@ -302,6 +303,15 @@ export default function CrmMigrationFromSalesforcePage() {
                             Or call Bill directly at <a href="tel:+17706521282" className="text-sky-400 hover:underline">(770) 652-1282</a>
                         </div>
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mt-16 mb-12">
+                    <RelatedPosts
+                        currentSlug="crm-migration-from-salesforce-checklist"
+                        topics={["crm","build-vs-buy"]}
+                        heading="More custom CRM reading"
+                        pinned={["custom-crm-development-guide","custom-crm-vs-salesforce-vs-hubspot-2026","crm-data-migration-from-spreadsheets"]}
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mt-12">

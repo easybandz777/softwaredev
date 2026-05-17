@@ -1,17 +1,28 @@
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { TopicClusters } from "@/components/TopicClusters";
+import { JsonLd } from "@/components/JsonLd";
 import { Terminal, Bot, Globe, CreditCard, Shield, Lock, ArrowRight, MapPin, Building2, GitCompare } from "lucide-react";
 import { pageMetadata } from "@/lib/seoMeta";
+import { breadcrumbSchema, ORGANIZATION_ID, SITE_URL, WEBSITE_ID } from "@/lib/schemas";
 
 export const metadata = pageMetadata({
     title: "Software Development & Cybersecurity Services | QUANT LAB USA",
     description:
-        "Custom CRMs, Stripe integrations, Next.js apps, penetration testing — built for businesses in Atlanta, Macon, and 12 more US cities.",
+        "Custom CRMs, Stripe integrations, Next.js apps, and pen testing for US businesses in Atlanta, Macon, Austin, Dallas, NYC, SF, and 8 more cities. 2026 services.",
     slug: "services",
     image: "/og-services.png",
     type: "website",
 });
+
+const servicesBreadcrumb = breadcrumbSchema(
+    [
+        { name: "Home", url: `${SITE_URL}/` },
+        { name: "Services", url: `${SITE_URL}/services` },
+    ],
+    "/services",
+);
 
 type ServiceCard = {
     icon: typeof Terminal;
@@ -238,9 +249,37 @@ function ServiceGrid({ items }: { items: ServiceCard[] }) {
     );
 }
 
+const ALL_SERVICE_CARDS = [...buildAndShip, ...paymentsAndLicensing, ...cyberAndPentest];
+
+const servicesCollectionSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": `${SITE_URL}/services#collection`,
+    url: `${SITE_URL}/services`,
+    name: "Software Development & Cybersecurity Services — QUANT LAB USA",
+    description:
+        "Custom CRMs, Stripe integrations, Next.js apps, penetration testing — built for businesses in Atlanta, Macon, and 12 more US cities.",
+    isPartOf: { "@id": WEBSITE_ID },
+    about: { "@id": ORGANIZATION_ID },
+    inLanguage: "en-US",
+    mainEntity: {
+        "@type": "ItemList",
+        name: "QUANT LAB USA Services Catalog",
+        numberOfItems: ALL_SERVICE_CARDS.length,
+        itemListElement: ALL_SERVICE_CARDS.map((s, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            url: `${SITE_URL}/services/${s.slug}`,
+            name: s.title,
+        })),
+    },
+};
+
 export default function ServicesIndexPage() {
     return (
         <main className="min-h-screen bg-quant-bg text-quant-text pt-28 pb-24">
+            <JsonLd data={servicesCollectionSchema} />
+            <JsonLd data={servicesBreadcrumb} />
             <section className="container mx-auto px-6 relative z-10">
                 <AnimatedSection className="text-center mb-16 max-w-3xl mx-auto">
                     <nav aria-label="Breadcrumb" className="mb-6">
@@ -299,6 +338,16 @@ export default function ServicesIndexPage() {
                 <div className="mb-24">
                     <ServiceGrid items={cyberAndPentest} />
                 </div>
+
+                {/* Topic clusters — hub-and-spoke navigation by buyer intent */}
+                <AnimatedSection className="mb-24">
+                    <div className="border-t border-white/5 pt-16">
+                        <TopicClusters
+                            heading="Pick a cluster, not a single service"
+                            intro="Most QUANT LAB engagements span three or four pages of this site — a service, a comparison, a blog deep-dive, and a calculator. These five clusters bundle the pages that go together, so you can read the whole topic in a sitting."
+                        />
+                    </div>
+                </AnimatedSection>
 
                 {/* Where We Serve */}
                 <AnimatedSection className="mb-24">

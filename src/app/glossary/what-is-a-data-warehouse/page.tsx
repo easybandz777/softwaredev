@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { pageMetadata } from "@/lib/seoMeta";
 
 export const metadata: Metadata = pageMetadata({
-    title: "What is a Data Warehouse? Definition & Examples | QUANT LAB",
+    title: "What is a Data Warehouse? Definition & Examples | QUANT LAB USA",
     description:
-        "A data warehouse is the analytics database where the business asks hard questions across years of data. How it differs from your app database, when you actually need one, and how QUANT LAB builds them.",
+        "A data warehouse is the analytics DB where teams ask hard questions across years of data. How it differs from your app DB, when you need one. By QUANT LAB USA.",
     slug: "/glossary/what-is-a-data-warehouse",
 });
 
@@ -108,6 +109,13 @@ export default function Page() {
                     <p>
                         For early-stage SaaS companies we usually recommend starting with a single dbt project pointed at a managed warehouse rather than over-engineering a Kafka-based pipeline. Read our piece on <Link href="/blog/building-multi-tenant-saas-postgres-rls" className="text-sky-400 hover:underline">multi-tenant SaaS with Postgres</Link> for how the application database is structured before the warehouse stage, and <Link href="/contact" className="text-sky-400 hover:underline">book a call</Link> if you want a one-hour review of your current analytics setup.
                     </p>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-10">
+                    <RelatedPosts
+                        topics={["stack","saas"]}
+                        heading="Long-form deep-dives that use this term"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-10">

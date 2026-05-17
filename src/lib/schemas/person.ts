@@ -1,3 +1,4 @@
+import { SAME_AS_PERSON } from "../constants/business";
 import { ORGANIZATION_ID, PERSON_ID, SITE_URL } from "./organization";
 
 export function personSchema() {
@@ -24,11 +25,13 @@ export function personSchema() {
       "MITRE ATT&CK Framework",
       "Active Directory Security",
     ],
-    sameAs: [
-      "https://linkedin.com/in/williambeltz",
-      "https://x.com/quantlabusa",
-      "https://github.com/williambeltz",
-    ],
+    // Person-scope sameAs sourced from `SAME_AS_PERSON` in constants/business.ts.
+    // Keep founder-personal profiles (HN, SO, IndieHackers, etc.) in that array
+    // and they will surface here automatically. Organization-scope URLs
+    // (linkedin.com/company/quantlabusa, x.com/quantlabusa) live in the
+    // separate `SAME_AS` array and are emitted by Organization JSON-LD,
+    // not here. See seo-deliverables/brand-entity/ENTITY-BUILDING.md.
+    sameAs: [...SAME_AS_PERSON],
     address: {
       "@type": "PostalAddress",
       addressLocality: "Macon",

@@ -111,7 +111,7 @@ export default function AdminLoginPage() {
                     </form>
                 </div>
 
-                <p className="text-center text-gray-700 text-xs mt-4">QuantLab Software Solutions · Admin Portal</p>
+                <p className="text-center text-gray-700 text-xs mt-4">QUANT LAB USA · Admin Portal</p>
             </div>
         </div>
     );

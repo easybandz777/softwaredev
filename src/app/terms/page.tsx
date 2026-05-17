@@ -1,6 +1,6 @@
 export const metadata = {
-    title: "Terms of Service | QuantLab Software Solutions",
-    description: "Terms of service for QuantLab Software Solutions.",
+    title: "Terms of Service 2026 | QUANT LAB USA",
+    description: "QUANT LAB USA terms of service: how consultation requests, project engagements, IP ownership, liability, and warranty disclaimers work. Read before you sign.",
 };
 
 export default function TermsPage() {
@@ -16,7 +16,7 @@ export default function TermsPage() {
 
                     <h2 className="text-xl font-semibold text-white mt-8">Services</h2>
                     <p>
-                        QuantLab Software Solutions provides custom software development,
+                        QUANT LAB USA provides custom software development,
                         cybersecurity consulting, and related technology services. All project
                         work is governed by individual agreements between QuantLab and the client.
                     </p>
@@ -31,7 +31,7 @@ export default function TermsPage() {
                     <h2 className="text-xl font-semibold text-white mt-8">Intellectual Property</h2>
                     <p>
                         All content on this website, including text, graphics, logos, and code,
-                        is the property of QuantLab Software Solutions and is protected by
+                        is the property of QUANT LAB USA and is protected by
                         applicable intellectual property laws.
                     </p>
 

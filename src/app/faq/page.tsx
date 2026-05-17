@@ -4,9 +4,9 @@ import { faqCategories } from "./faq-data";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 
 export const metadata: Metadata = {
-    title: "Custom Software & Pentest FAQs | QUANT LAB USA",
+    title: "Custom Software & Pentest FAQs (30 Answers) | QUANT LAB USA",
     description:
-        "Real answers to 30 pre-sales questions about custom software, pentest pricing, timelines, code ownership, MITRE ATT&CK, and how QUANT LAB USA works.",
+        "30 plain-English answers on custom software pricing, pentest scope, timelines, code ownership, MITRE ATT&CK, and how a USA founder-led firm runs engagements.",
     openGraph: {
         title: "Custom Software & Pentest FAQs | QUANT LAB USA",
         description:

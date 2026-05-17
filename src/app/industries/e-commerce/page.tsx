@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { ShoppingCart, Check, ArrowRight } from "lucide-react";
 import { pageMetadata } from "@/lib/seoMeta";
 
 export const metadata = pageMetadata({
-    title: "Custom E-commerce Development | QuantLab USA",
+    title: "Custom E-commerce Development (2026) | QUANT LAB USA",
     description:
-        "Custom e-commerce development beyond Shopify — B2B wholesale, custom quoting, ERP/inventory sync, S&S Activewear API, custom checkout, admin dashboards.",
+        "Custom e-commerce beyond Shopify — B2B wholesale, custom quoting, ERP/inventory sync, S&S Activewear API, custom checkout, admin dashboards. By QUANT LAB USA.",
     slug: "industries/e-commerce",
     image: "/og-services.png",
     type: "article",
@@ -23,7 +24,7 @@ const webPageSchema = {
     isPartOf: {
         "@type": "WebSite",
         url: "https://quantlabusa.dev",
-        name: "QuantLab USA",
+        name: "QUANT LAB USA",
     },
 };
 
@@ -406,6 +407,14 @@ export default function EcommerceIndustryPage() {
                             </Link>
                         ))}
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["stripe","saas","stack"]}
+                        heading="E-commerce engineering reading"
+                        pinned={["nextjs-stripe-integration-guide","stripe-connect-marketplace-architecture","building-multi-tenant-saas-postgres-rls"]}
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection>

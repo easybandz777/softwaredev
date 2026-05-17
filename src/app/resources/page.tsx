@@ -5,12 +5,12 @@ import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { BookOpen, FileText, ShieldCheck, Building2, Rocket, CreditCard, Target, ArrowRight, Download, Clock, Users } from "lucide-react";
 
 export const metadata: Metadata = {
-    title: "Resource Library — Playbooks, Checklists & Worksheets | QUANT LAB",
+    title: "Free Resources: Playbooks, Checklists & Templates | QUANT LAB USA",
     description:
-        "Free downloadable playbooks, OWASP-aligned checklists, and worksheets for founders, CTOs, and ops leaders building custom software or hardening security.",
+        "Free playbooks, checklists, RFP templates, and worksheets for custom software, CRM rollout, Stripe, pen testing, and MITRE ATT&CK. By QUANT LAB USA.",
     alternates: { canonical: "https://quantlabusa.dev/resources" },
     openGraph: {
-        title: "Resource Library — Playbooks, Checklists & Worksheets | QUANT LAB",
+        title: "Resource Library — Playbooks, Checklists & Worksheets | QUANT LAB USA",
         description:
             "Free downloadable playbooks, OWASP-aligned checklists, and worksheets for founders, CTOs, and ops leaders building custom software or hardening security.",
         url: "https://quantlabusa.dev/resources",
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: "summary_large_image",
-        title: "Resource Library — Playbooks, Checklists & Worksheets | QUANT LAB",
+        title: "Resource Library — Playbooks, Checklists & Worksheets | QUANT LAB USA",
         description:
             "Free downloadable playbooks, OWASP-aligned checklists, and worksheets for founders, CTOs, and ops leaders.",
     },

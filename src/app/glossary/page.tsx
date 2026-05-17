@@ -5,9 +5,9 @@ import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
-    title: "Software & Security Glossary | QUANT LAB USA",
+    title: "Software & Cybersecurity Glossary 2026 | QUANT LAB USA",
     description:
-        "Plain-English definitions of the 20 software engineering and cybersecurity terms our clients ask about most — CRM, SaaS, MVP, API, SOC 2, OWASP, pentest, and more.",
+        "Plain-English definitions for 30+ software engineering and cybersecurity terms — CRM, SaaS, MVP, API, SOC 2, OWASP, pentest, and more. Curated by QUANT LAB USA.",
     alternates: { canonical: "https://quantlabusa.dev/glossary" },
     openGraph: {
         title: "The QUANT LAB Glossary",

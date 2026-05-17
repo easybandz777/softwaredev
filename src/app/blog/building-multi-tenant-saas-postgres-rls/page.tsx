@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { ArrowRight, Check, Layers } from "lucide-react";
 import { articleMetadata } from "@/lib/seoMeta";
 import { articleSchema, breadcrumbSchema, faqSchema } from "@/lib/schemas";
@@ -10,9 +11,9 @@ const SLUG = "building-multi-tenant-saas-postgres-rls";
 const PUBLISHED = "2026-05-12";
 
 export const metadata: Metadata = articleMetadata({
-    title: "Building Multi-Tenant SaaS with PostgreSQL Row-Level Security (2026)",
+    title: "Multi-Tenant SaaS with Postgres Row-Level Security (2026)",
     description:
-        "How to ship multi-tenant SaaS using Postgres Row-Level Security: schema choices, RLS policies, performance, debugging, and the eight failure modes to avoid.",
+        "How to ship multi-tenant SaaS using Postgres Row-Level Security: schema choices, RLS policies, performance, debugging, and the 8 failure modes to avoid.",
     slug: `blog/${SLUG}`,
     image: "/og-image.png",
     publishedTime: PUBLISHED,
@@ -289,6 +290,14 @@ export default function MultiTenantSaasPostgresRlsPage() {
                             Or call Bill directly at <a href="tel:+17706521282" className="text-sky-400 hover:underline">(770) 652-1282</a>
                         </div>
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mt-16 mb-12">
+                    <RelatedPosts
+                        currentSlug="building-multi-tenant-saas-postgres-rls"
+                        topics={["saas","stack"]}
+                        heading="More SaaS engineering reading"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mt-12">

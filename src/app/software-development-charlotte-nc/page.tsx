@@ -1,13 +1,15 @@
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
+import { RelatedIndustries } from "@/components/RelatedIndustries";
 import { MapPin, Check, ArrowRight } from "lucide-react";
 import { pageMetadata } from "@/lib/seoMeta";
 
 export const metadata = pageMetadata({
-    title: "Charlotte NC Software Development, Banking & Pen Test | QUANT LAB",
+    title: "Charlotte Software Development & Pen Testing | QUANT LAB USA",
     description:
-        "Charlotte custom software development and penetration testing for banking, fintech, and SaaS firms. Founder-led, Georgia-based. Call (770) 652-1282.",
+        "Charlotte NC custom software and pen testing for banking, fintech, and SaaS firms. Senior, founder-led, Georgia-based US firm. Call (770) 652-1282.",
     slug: "software-development-charlotte-nc",
     image: "/og-image.png",
     type: "article",
@@ -109,6 +111,16 @@ const faqs = [
     },
 ];
 
+const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://quantlabusa.dev/" },
+        { "@type": "ListItem", position: 2, name: "Locations", item: "https://quantlabusa.dev/locations" },
+        { "@type": "ListItem", position: 3, name: "Software Development Charlotte, NC", item: "https://quantlabusa.dev/software-development-charlotte-nc" },
+    ],
+};
+
 export default function CharlotteLandingPage() {
     return (
         <main className="min-h-screen bg-quant-bg text-quant-text pt-28 pb-24">
@@ -134,6 +146,12 @@ export default function CharlotteLandingPage() {
                     }),
                 }}
             />
+
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+            />
+
 
             <div className="container mx-auto px-6 max-w-4xl">
                 <nav aria-label="Breadcrumb" className="mb-8">
@@ -233,6 +251,21 @@ export default function CharlotteLandingPage() {
                             </div>
                         ))}
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedIndustries
+                        industries={["fintech","insurance","saas","real-estate"]}
+                        heading="Industries we serve in Charlotte"
+                    />
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-16">
+                    <RelatedPosts
+                        topics={["build-vs-buy","saas","stripe"]}
+                        pinned={["nextjs-stripe-integration-guide","custom-crm-development-guide","build-vs-buy-software-2026"]}
+                        heading="Reading for Charlotte founders"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-16">

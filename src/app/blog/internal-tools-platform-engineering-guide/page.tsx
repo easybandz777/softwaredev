@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { ArrowRight, Check, Wrench } from "lucide-react";
 import { articleMetadata } from "@/lib/seoMeta";
 import { articleSchema, breadcrumbSchema, faqSchema } from "@/lib/schemas";
@@ -10,9 +11,9 @@ const SLUG = "internal-tools-platform-engineering-guide";
 const PUBLISHED = "2026-05-12";
 
 export const metadata: Metadata = articleMetadata({
-    title: "Internal Tools as Platform Engineering: When to Build Your Own (2026)",
+    title: "Internal Tools & Platform Engineering: When to Build (2026)",
     description:
-        "When custom internal tools beat Retool, Tooljet, and Forest Admin. The cost, the architecture, and the 11 signals it is time to build.",
+        "When custom internal tools beat Retool, Tooljet, and Forest Admin in 2026. Cost ranges, reference architecture, and the 11 signals it is time to build.",
     slug: `blog/${SLUG}`,
     image: "/og-image.png",
     publishedTime: PUBLISHED,
@@ -278,6 +279,14 @@ export default function InternalToolsGuidePage() {
                             Or call Bill directly at <a href="tel:+17706521282" className="text-sky-400 hover:underline">(770) 652-1282</a>
                         </div>
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mt-16 mb-12">
+                    <RelatedPosts
+                        currentSlug="internal-tools-platform-engineering-guide"
+                        topics={["internal-tools","stack"]}
+                        heading="More internal tools reading"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mt-12">

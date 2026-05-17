@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { pageMetadata } from "@/lib/seoMeta";
 
 export const metadata: Metadata = pageMetadata({
-    title: "What is a JWT? JSON Web Tokens Explained | QUANT LAB",
+    title: "What is a JWT (JSON Web Token)? Guide | QUANT LAB USA",
     description:
-        "JWTs are signed JSON tokens used for authentication and session state. What they are, the security pitfalls, when to avoid them, and how QUANT LAB ships them.",
+        "A JWT is a signed token used to prove identity in stateless APIs. Plain-English definition, security gotchas, when to use sessions instead. By QUANT LAB USA.",
     slug: "/glossary/what-is-an-jwt",
 });
 
@@ -105,6 +106,13 @@ export default function Page() {
                     <p>
                         Our <Link href="/services/web-app-pentest" className="text-sky-400 hover:underline">pen-test team</Link> regularly finds JWT-related vulnerabilities in production systems — accepting the "none" algorithm, weak HMAC secrets reused for years, missing audience checks, signatures verified with the wrong key, and tokens used past their useful lifetime. Read our <Link href="/blog/stripe-webhook-security-best-practices" className="text-sky-400 hover:underline">Stripe webhook security guide</Link> for a related signature-verification pattern, or <Link href="/contact" className="text-sky-400 hover:underline">book a call</Link> for a code review of your token-handling layer.
                     </p>
+                </AnimatedSection>
+
+                <AnimatedSection className="mb-10">
+                    <RelatedPosts
+                        topics={["stack"]}
+                        heading="Long-form deep-dives that use this term"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-10">

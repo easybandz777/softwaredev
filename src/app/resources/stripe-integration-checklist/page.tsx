@@ -10,12 +10,12 @@ const TITLE = "The Stripe Integration Checklist";
 const PDF_FILENAME = "stripe-integration-checklist.pdf";
 
 export const metadata: Metadata = {
-    title: "The Stripe Integration Checklist (Free PDF) | QUANT LAB",
+    title: "The Stripe Integration Pre-Launch Checklist | QUANT LAB USA",
     description:
         "A pre-launch checklist covering dunning, SCA, webhook resilience, idempotency, and reconciliation for SaaS teams shipping a custom Stripe integration.",
     alternates: { canonical: `https://quantlabusa.dev/resources/${SLUG}` },
     openGraph: {
-        title: "The Stripe Integration Checklist (Free PDF) | QUANT LAB",
+        title: "The Stripe Integration Checklist (Free PDF) | QUANT LAB USA",
         description:
             "A pre-launch checklist covering dunning, SCA, webhook resilience, idempotency, and reconciliation for SaaS teams shipping custom Stripe.",
         url: `https://quantlabusa.dev/resources/${SLUG}`,
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: "summary_large_image",
-        title: "The Stripe Integration Checklist (Free PDF) | QUANT LAB",
+        title: "The Stripe Integration Checklist (Free PDF) | QUANT LAB USA",
         description:
             "Pre-launch checklist for SaaS teams shipping custom Stripe. Dunning, SCA, webhooks, idempotency, reconciliation.",
     },

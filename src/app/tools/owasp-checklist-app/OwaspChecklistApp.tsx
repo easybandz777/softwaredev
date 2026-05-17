@@ -152,7 +152,7 @@ export function OwaspChecklistApp() {
             <div className="hidden print:block print:mb-6">
                 <h1 className="text-2xl font-bold text-black mb-2">OWASP ASVS L1/L2 Checklist</h1>
                 <p className="text-sm text-black">
-                    {completed}/{totals.total} complete ({percent}%) — QuantLab USA INC,
+                    {completed}/{totals.total} complete ({percent}%) — QUANT LAB USA INC,
                     quantlabusa.dev/tools/owasp-checklist-app
                 </p>
             </div>

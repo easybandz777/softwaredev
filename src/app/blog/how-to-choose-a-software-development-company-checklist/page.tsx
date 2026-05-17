@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
+import { RelatedPosts } from "@/components/RelatedPosts";
 import { ArrowRight, Check, ListChecks } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -326,6 +327,14 @@ export default function HowToChooseSoftwareDevCompanyPage() {
                             Or call William directly at <a href="tel:+17706521282" className="text-sky-400 hover:underline">(770) 652-1282</a>
                         </div>
                     </div>
+                </AnimatedSection>
+
+                <AnimatedSection className="mt-16 mb-12">
+                    <RelatedPosts
+                        currentSlug="how-to-choose-a-software-development-company-checklist"
+                        topics={["build-vs-buy"]}
+                        heading="More buyer-side reading"
+                    />
                 </AnimatedSection>
 
                 <AnimatedSection className="mt-12">
