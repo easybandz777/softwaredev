@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { FAQAccordion } from "./FAQAccordion";
 import { faqCategories } from "./faq-data";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
@@ -84,6 +85,50 @@ export default function FAQPage() {
                         ownership, pentest methodology, and how QUANT LAB USA
                         actually works.
                     </p>
+                </div>
+            </section>
+
+            {/* Category nav strip */}
+            <section className="pb-8 relative">
+                <div className="container mx-auto px-6 max-w-4xl">
+                    <nav aria-label="FAQ categories" className="flex flex-wrap justify-center gap-2 md:gap-3">
+                        <Link
+                            href="/faq/cost"
+                            className="px-4 py-2 rounded-full border border-white/10 bg-[#0d1526]/60 text-sm text-gray-300 hover:border-sky-400/40 hover:text-sky-300 transition-colors"
+                        >
+                            Cost
+                        </Link>
+                        <Link
+                            href="/faq/process"
+                            className="px-4 py-2 rounded-full border border-white/10 bg-[#0d1526]/60 text-sm text-gray-300 hover:border-sky-400/40 hover:text-sky-300 transition-colors"
+                        >
+                            Process
+                        </Link>
+                        <Link
+                            href="/faq/technology"
+                            className="px-4 py-2 rounded-full border border-white/10 bg-[#0d1526]/60 text-sm text-gray-300 hover:border-sky-400/40 hover:text-sky-300 transition-colors"
+                        >
+                            Technology
+                        </Link>
+                        <Link
+                            href="/faq/hiring"
+                            className="px-4 py-2 rounded-full border border-white/10 bg-[#0d1526]/60 text-sm text-gray-300 hover:border-sky-400/40 hover:text-sky-300 transition-colors"
+                        >
+                            Hiring
+                        </Link>
+                        <Link
+                            href="/faq/working-with-us"
+                            className="px-4 py-2 rounded-full border border-white/10 bg-[#0d1526]/60 text-sm text-gray-300 hover:border-sky-400/40 hover:text-sky-300 transition-colors"
+                        >
+                            Working With Us
+                        </Link>
+                        <Link
+                            href="/faq/categories"
+                            className="px-4 py-2 rounded-full border border-sky-400/30 bg-sky-500/5 text-sm text-sky-300 hover:bg-sky-500/10 transition-colors"
+                        >
+                            All categories →
+                        </Link>
+                    </nav>
                 </div>
             </section>
 

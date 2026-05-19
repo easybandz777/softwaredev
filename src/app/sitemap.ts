@@ -23,6 +23,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/tools`, lastModified, changeFrequency: "monthly", priority: 0.7 },
     { url: `${baseUrl}/faq`, lastModified, changeFrequency: "monthly", priority: 0.6 },
     { url: `${baseUrl}/contact`, lastModified, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${baseUrl}/discovery-call`, lastModified, changeFrequency: "monthly", priority: 0.95 },
     { url: `${baseUrl}/privacy`, lastModified, changeFrequency: "yearly", priority: 0.3 },
     { url: `${baseUrl}/terms`, lastModified, changeFrequency: "yearly", priority: 0.3 },
   ];
