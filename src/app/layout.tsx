@@ -245,11 +245,6 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark sm:scroll-smooth">
       <head>
-        {/* TODO: William — replace with the real verification meta token from https://search.google.com/search-console (Property → Verify ownership → HTML tag). */}
-        <meta
-          name="google-site-verification"
-          content="REPLACE_WITH_VERIFICATION_TOKEN-AWAITING-USER-INPUT"
-        />
         <link rel="manifest" href="/manifest.json" />
         <link
           rel="apple-touch-icon"
