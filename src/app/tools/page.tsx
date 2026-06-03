@@ -13,6 +13,14 @@ import {
     DollarSign,
     Building2,
     SearchCheck,
+    KeyRound,
+    Braces,
+    Regex,
+    Binary,
+    ListTree,
+    LineChart,
+    AlertTriangle,
+    Wrench,
 } from "lucide-react";
 import { pageMetadata } from "@/lib/seoMeta";
 
@@ -75,6 +83,46 @@ const TOOLS = [
         tag: "Developer",
         color: "from-teal-500 to-emerald-400",
     },
+    {
+        href: "/tools/jwt-decoder",
+        title: "JWT Decoder",
+        blurb: "Paste a JSON Web Token to decode its header and payload, inspect every claim, and check expiry — runs in your browser, decode-only, signatures are not verified.",
+        icon: KeyRound,
+        tag: "Security",
+        color: "from-emerald-500 to-cyan-400",
+    },
+    {
+        href: "/tools/json-formatter",
+        title: "JSON Formatter & Validator",
+        blurb: "Pretty-print, minify, or validate JSON with a clear line-and-column error message. Live as you type and entirely in your browser — nothing is uploaded.",
+        icon: Braces,
+        tag: "Developer",
+        color: "from-sky-500 to-indigo-400",
+    },
+    {
+        href: "/tools/regex-tester",
+        title: "Regex Tester",
+        blurb: "Test JavaScript regular expressions live: toggle flags, highlight matches inline, and break out every numbered and named capture group as you type.",
+        icon: Regex,
+        tag: "Developer",
+        color: "from-violet-500 to-fuchsia-400",
+    },
+    {
+        href: "/tools/base64-encoder-decoder",
+        title: "Base64 Encoder & Decoder",
+        blurb: "Encode and decode text to and from Base64 and URL-safe base64url with full UTF-8 support. Runs in your browser — your text is never uploaded.",
+        icon: Binary,
+        tag: "Developer",
+        color: "from-rose-500 to-amber-400",
+    },
+    {
+        href: "/tools/http-status-reference",
+        title: "HTTP Status Code Reference",
+        blurb: "A clean, searchable reference of HTTP status codes 1xx–5xx with plain-English meanings and when to use each. Filter by code or keyword, all in-browser.",
+        icon: ListTree,
+        tag: "Developer",
+        color: "from-teal-500 to-cyan-400",
+    },
 ] as const;
 
 const CALCULATORS = [
@@ -106,6 +154,27 @@ const CALCULATORS = [
         icon: Building2,
         tag: "Strategy",
     },
+    {
+        href: "/calculators/saas-pricing-calculator",
+        title: "SaaS Pricing Calculator",
+        blurb: "Drop in your plan tiers, prices, and customers per tier to get live MRR, ARR, and blended ARPU — plus what your churn rate quietly costs you every year.",
+        icon: LineChart,
+        tag: "Pricing",
+    },
+    {
+        href: "/calculators/downtime-cost-calculator",
+        title: "Downtime Cost Calculator",
+        blurb: "Turn revenue, hours down, and affected percentage into a defensible cost for a single outage — direct lost revenue plus recovery cost and reputation drag.",
+        icon: AlertTriangle,
+        tag: "Reliability",
+    },
+    {
+        href: "/calculators/technical-debt-calculator",
+        title: "Technical Debt Calculator",
+        blurb: "Put a dollar figure on technical debt from team size, salary, and time lost, with compounding interest — and see the payback and three-year refactor payoff.",
+        icon: Wrench,
+        tag: "Engineering",
+    },
 ] as const;
 
 const collectionSchema = {
@@ -113,7 +182,7 @@ const collectionSchema = {
     "@type": "CollectionPage",
     name: "Free Tools & Calculators",
     description:
-        "Hub for QUANT LAB USA's free interactive tools: webhook tester, schema generator, OWASP checklist, cron builder, UUID generator, and four engineering cost calculators.",
+        "Hub for QUANT LAB USA's ten free interactive developer tools and seven engineering cost calculators.",
     url: "https://quantlabusa.dev/tools",
     isPartOf: { "@type": "WebSite", url: "https://quantlabusa.dev" },
     mainEntity: {
@@ -166,9 +235,8 @@ export default function ToolsIndexPage() {
                         Free Tools &amp; Calculators
                     </h1>
                     <p className="text-xl text-gray-400 leading-relaxed mb-4 max-w-3xl">
-                        Nine free utilities we built for ourselves and our clients. Five interactive
-                        developer tools (webhook tester, schema generator, OWASP checklist, cron
-                        builder, UUID generator) plus four engineering cost calculators.
+                        Seventeen free utilities we built for ourselves and our clients. Ten interactive
+                        developer tools plus seven engineering cost calculators.
                     </p>
                     <p className="text-base text-gray-400 leading-relaxed max-w-3xl">
                         Everything runs in your browser. No signup, no email gate on the tool
@@ -214,7 +282,7 @@ export default function ToolsIndexPage() {
                 <AnimatedSection className="mb-16">
                     <div className="flex items-center justify-between mb-6">
                         <h2 className="text-2xl md:text-3xl font-bold text-white">Cost calculators</h2>
-                        <p className="text-xs uppercase tracking-widest text-emerald-400">4 free calculators</p>
+                        <p className="text-xs uppercase tracking-widest text-emerald-400">7 free calculators</p>
                     </div>
                     <div className="grid md:grid-cols-2 gap-5">
                         {CALCULATORS.map((c) => (
@@ -307,9 +375,9 @@ export default function ToolsIndexPage() {
                             or — worse — sent data to a server. None of ours do.
                         </p>
                         <p>
-                            The four cost calculators in the second section are different in
+                            The seven cost calculators in the second section are different in
                             nature. They&apos;re estimation tools that compress our pricing
-                            knowledge — across hundreds of QuantLab engagements — into something a
+                            knowledge — across QUANT LAB USA engagements — into something a
                             founder or CTO can use to set expectations with their board in 60
                             seconds. They&apos;re not contracts, but they are defensible ranges. If
                             you&apos;re scoping a Stripe build, a custom CRM, a security audit, or

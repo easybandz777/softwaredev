@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
-import { BookOpen, FileText, ShieldCheck, Building2, Rocket, CreditCard, Target, ArrowRight, Download, Clock, Users } from "lucide-react";
+import { BookOpen, FileText, ShieldCheck, Building2, Rocket, CreditCard, Target, ArrowRight, Download, Clock, Users, Code2 } from "lucide-react";
 
 export const metadata: Metadata = {
     title: "Free Resources: Playbooks, Checklists & Templates | QUANT LAB USA",
@@ -156,6 +156,56 @@ const resources = [
         format: "Worksheet (PDF)",
         audience: "Security Leads, IT Managers, vCISOs",
     },
+    {
+        slug: "saas-launch-checklist",
+        title: "The SaaS Launch Checklist",
+        blurb:
+            "A 60+ item pre-launch checklist covering technical readiness, security, billing, and legal — for founders and CTOs shipping a SaaS product to production.",
+        icon: Rocket,
+        accent: "from-teal-500 to-emerald-400",
+        format: "60+ item PDF checklist",
+        audience: "Founders, CTOs, Engineering Leads",
+    },
+    {
+        slug: "vendor-security-questionnaire-template",
+        title: "The Vendor Security Questionnaire Template",
+        blurb:
+            "A ready-to-send questionnaire covering governance, data protection, app security, infrastructure, and incident response — for teams vetting a software vendor.",
+        icon: ShieldCheck,
+        accent: "from-rose-500 to-pink-400",
+        format: "PDF template, 30+ questions",
+        audience: "Security Leads, CTOs, Procurement",
+    },
+    {
+        slug: "software-project-estimate-worksheet",
+        title: "The Software Project Estimate Worksheet",
+        blurb:
+            "A scoping worksheet with the inputs to gather, a feature-sizing method, real cost ranges, and the risk factors that move the number — for founders and PMs pricing a build.",
+        icon: FileText,
+        accent: "from-sky-500 to-indigo-400",
+        format: "Worksheet (PDF)",
+        audience: "Founders, Product Managers, Ops Leaders",
+    },
+    {
+        slug: "incident-response-plan-template",
+        title: "The Incident Response Plan Template",
+        blurb:
+            "A starter plan with roles, severity levels, a six-step response process, and a communications plan — for CTOs and security leads who need one before they need it.",
+        icon: ShieldCheck,
+        accent: "from-red-500 to-orange-400",
+        format: "PDF starter template",
+        audience: "CTOs, Security Leads, Engineering Managers",
+    },
+    {
+        slug: "api-design-guidelines-checklist",
+        title: "The API Design Guidelines Checklist",
+        blurb:
+            "A REST checklist covering resource naming, versioning, authentication, consistent errors, and pagination — for engineers and tech leads shipping an API consumers will not curse.",
+        icon: Code2,
+        accent: "from-violet-500 to-blue-400",
+        format: "REST design PDF checklist",
+        audience: "Engineers, Tech Leads, API Designers",
+    },
 ];
 
 export default function ResourcesPage() {
@@ -206,14 +256,14 @@ export default function ResourcesPage() {
                     <div className="rounded-2xl border border-sky-400/30 bg-sky-500/5 p-6 md:p-8">
                         <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">What free resources does QUANT LAB USA publish?</h2>
                         <p className="text-gray-200 leading-relaxed">
-                            <strong>QUANT LAB USA publishes six free downloadable resources: the Build-vs-Buy Decision Playbook (25 pages), the OWASP-aligned Web App Pentest Checklist (80 items), the 6-Week Custom CRM Rollout Playbook (30 pages plus templates), MVP to Production Tech Playbook (35 pages), the Stripe Integration Checklist, and the MITRE ATT&amp;CK Maturity Worksheet. Each targets a specific decision-maker (CTO, COO, Security Lead, Founder) and a specific decision. One-click PDF download, no paywall, just an email.</strong>
+                            <strong>QUANT LAB USA publishes eleven free downloadable resources: the Build-vs-Buy Decision Playbook (25 pages), the OWASP-aligned Web App Pentest Checklist (80 items), the 6-Week Custom CRM Rollout Playbook (30 pages plus templates), MVP to Production Tech Playbook (35 pages), the Stripe Integration Checklist, the MITRE ATT&amp;CK Maturity Worksheet, the SaaS Launch Checklist, the Vendor Security Questionnaire Template, the Software Project Estimate Worksheet, the Incident Response Plan Template, and the API Design Guidelines Checklist. Each targets a specific decision-maker (CTO, COO, Security Lead, Founder) and a specific decision. One-click PDF download, no paywall, just an email.</strong>
                         </p>
                     </div>
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-20">
                     <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
-                        Six resources, six decisions.
+                        Eleven resources, eleven decisions.
                     </h2>
                     <p className="text-gray-400 leading-relaxed mb-10 max-w-3xl">
                         Each guide targets a specific situation and a specific decision-maker. Pick the one

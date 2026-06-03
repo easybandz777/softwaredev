@@ -63,6 +63,14 @@ const regions: {
             { href: "/software-development-charlotte-nc", name: "Charlotte, NC", note: "Banking and fintech-adjacent SaaS" },
             { href: "/software-development-nashville-tn", name: "Nashville, TN", note: "HealthTech and music industry tooling" },
             { href: "/software-development-miami-fl", name: "Miami, FL", note: "LATAM-facing fintech and crypto" },
+            { href: "/software-development-orlando-fl", name: "Orlando, FL", note: "Theme park tech, simulation, and defense" },
+            { href: "/software-development-tampa-fl", name: "Tampa, FL", note: "Financial services and cyber security" },
+            { href: "/software-development-jacksonville-fl", name: "Jacksonville, FL", note: "Logistics, insurance, and banking ops" },
+            { href: "/software-development-raleigh-nc", name: "Raleigh, NC", note: "Research Triangle biotech and SaaS" },
+            { href: "/software-development-charleston-sc", name: "Charleston, SC", note: "Port logistics and growing tech hub" },
+            { href: "/software-development-birmingham-al", name: "Birmingham, AL", note: "HealthTech, banking, and medical research" },
+            { href: "/software-development-knoxville-tn", name: "Knoxville, TN", note: "Energy research and advanced manufacturing" },
+            { href: "/software-development-memphis-tn", name: "Memphis, TN", note: "Logistics, distribution, and medical devices" },
         ],
         neighborhoods: [
             { href: "/locations/atlanta-buckhead", name: "Buckhead, Atlanta", note: "Financial corridor + Lenox" },
@@ -81,6 +89,10 @@ const regions: {
         cities: [
             { href: "/software-development-austin-tx", name: "Austin, TX", note: "Silicon Hills + venture-backed SaaS" },
             { href: "/software-development-dallas-tx", name: "Dallas, TX", note: "Enterprise + DFW logistics" },
+            { href: "/software-development-houston-tx", name: "Houston, TX", note: "Energy, medical center, and aerospace" },
+            { href: "/software-development-san-antonio-tx", name: "San Antonio, TX", note: "Cyber security, military, and bioscience" },
+            { href: "/software-development-fort-worth-tx", name: "Fort Worth, TX", note: "Aerospace, logistics, and DFW enterprise" },
+            { href: "/software-development-el-paso-tx", name: "El Paso, TX", note: "Cross-border trade and manufacturing" },
             { href: "/software-development-chicago-il", name: "Chicago, IL", note: "Trading, manufacturing, and HealthTech" },
         ],
         neighborhoods: [
@@ -89,12 +101,48 @@ const regions: {
         ],
     },
     {
+        name: "Midwest",
+        blurb:
+            "Industrial heartland markets where advanced manufacturing, automotive, insurance, and health systems drive modernization budgets. Central Time delivery with deep enterprise integration experience.",
+        cities: [
+            { href: "/software-development-columbus-oh", name: "Columbus, OH", note: "Insurance, retail, and logistics tech" },
+            { href: "/software-development-cleveland-oh", name: "Cleveland, OH", note: "Healthcare, manufacturing, and fintech" },
+            { href: "/software-development-cincinnati-oh", name: "Cincinnati, OH", note: "Consumer goods, logistics, and fintech" },
+            { href: "/software-development-indianapolis-in", name: "Indianapolis, IN", note: "Life sciences, logistics, and motorsports" },
+            { href: "/software-development-detroit-mi", name: "Detroit, MI", note: "Automotive and manufacturing tech" },
+            { href: "/software-development-minneapolis-mn", name: "Minneapolis, MN", note: "Medical devices, retail, and finance" },
+            { href: "/software-development-kansas-city-mo", name: "Kansas City, MO", note: "Logistics, agtech, and engineering" },
+            { href: "/software-development-milwaukee-wi", name: "Milwaukee, WI", note: "Industrial automation and finance" },
+        ],
+        neighborhoods: [],
+    },
+    {
+        name: "Mountain West",
+        blurb:
+            "Fast-growing Mountain and Southwest metros where tech relocation, aerospace, semiconductors, and tourism platforms fuel software demand. Mountain Time delivery cadence supported.",
+        cities: [
+            { href: "/software-development-phoenix-az", name: "Phoenix, AZ", note: "Semiconductors, fintech, and aerospace" },
+            { href: "/software-development-tucson-az", name: "Tucson, AZ", note: "Aerospace, optics, and defense research" },
+            { href: "/software-development-albuquerque-nm", name: "Albuquerque, NM", note: "National labs, defense, and optics" },
+            { href: "/software-development-denver-co", name: "Denver, CO", note: "Aerospace, fintech, and venture SaaS" },
+            { href: "/software-development-salt-lake-city-ut", name: "Salt Lake City, UT", note: "Silicon Slopes SaaS and fintech" },
+            { href: "/software-development-las-vegas-nv", name: "Las Vegas, NV", note: "Hospitality, gaming, and logistics tech" },
+            { href: "/software-development-boise-id", name: "Boise, ID", note: "Semiconductors and growing tech scene" },
+        ],
+        neighborhoods: [],
+    },
+    {
         name: "West Coast",
         blurb:
             "Coastal innovation hubs serving venture-backed SaaS, cloud platforms, biotech-adjacent tooling, and AI infrastructure operators. Pacific Time delivery cadence supported.",
         cities: [
             { href: "/software-development-san-francisco-ca", name: "San Francisco, CA", note: "Venture SaaS and AI infra" },
             { href: "/software-development-seattle-wa", name: "Seattle, WA", note: "Cloud + enterprise software" },
+            { href: "/software-development-los-angeles-ca", name: "Los Angeles, CA", note: "Media, entertainment, and aerospace tech" },
+            { href: "/software-development-san-diego-ca", name: "San Diego, CA", note: "Biotech, defense, and telecom" },
+            { href: "/software-development-san-jose-ca", name: "San Jose, CA", note: "Silicon Valley hardware and SaaS" },
+            { href: "/software-development-sacramento-ca", name: "Sacramento, CA", note: "GovTech, health systems, and agtech" },
+            { href: "/software-development-portland-or", name: "Portland, OR", note: "Semiconductors, athletic, and clean tech" },
         ],
         neighborhoods: [
             { href: "/locations/san-francisco-soma", name: "SoMa, San Francisco", note: "Startup density + SoMa corridor" },
@@ -107,6 +155,14 @@ const regions: {
             "Wall Street fintech, media, agencies, and the densest mid-market SaaS buyer pool in the country. Eastern Time delivery with on-site visits available for major engagements.",
         cities: [
             { href: "/software-development-new-york-ny", name: "New York, NY", note: "Wall Street fintech + media SaaS" },
+            { href: "/software-development-boston-ma", name: "Boston, MA", note: "Biotech, fintech, and university R&D" },
+            { href: "/software-development-philadelphia-pa", name: "Philadelphia, PA", note: "Pharma, health systems, and edtech" },
+            { href: "/software-development-pittsburgh-pa", name: "Pittsburgh, PA", note: "Robotics, AI research, and healthcare" },
+            { href: "/software-development-washington-dc", name: "Washington, DC", note: "GovTech, defense, and policy data" },
+            { href: "/software-development-baltimore-md", name: "Baltimore, MD", note: "Cyber security, bioscience, and port logistics" },
+            { href: "/software-development-newark-nj", name: "Newark, NJ", note: "Insurance, logistics, and financial services" },
+            { href: "/software-development-providence-ri", name: "Providence, RI", note: "Healthcare, design, and university research" },
+            { href: "/software-development-buffalo-ny", name: "Buffalo, NY", note: "Advanced manufacturing and health systems" },
         ],
         neighborhoods: [
             { href: "/locations/nyc-manhattan", name: "Manhattan, NYC", note: "Midtown + Financial District" },

@@ -3,7 +3,7 @@ import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ConsultationCTA } from "@/components/ConsultationCTA";
 import { TopicClusters } from "@/components/TopicClusters";
 import { JsonLd } from "@/components/JsonLd";
-import { Terminal, Bot, Globe, CreditCard, Shield, Lock, ArrowRight, MapPin, Building2, GitCompare } from "lucide-react";
+import { Terminal, Bot, Globe, CreditCard, Shield, Lock, ArrowRight, MapPin, Building2, GitCompare, Database, BarChart3, RefreshCw, Rocket, FileSearch, Compass, Cloud, FlaskConical } from "lucide-react";
 import { pageMetadata } from "@/lib/seoMeta";
 import { breadcrumbSchema, ORGANIZATION_ID, SITE_URL, WEBSITE_ID } from "@/lib/schemas";
 
@@ -84,6 +84,86 @@ const buildAndShip: ServiceCard[] = [
         description:
             "MA Supertrend, VWAP, momentum, multi-strategy setups. Real-time market feeds, configurable risk, 24/7 uptime.",
         tag: "5 live systems deployed",
+    },
+    {
+        icon: Database,
+        color: "from-sky-500 to-cyan-400",
+        title: "Data Engineering",
+        slug: "data-engineering",
+        headline: "ETL/ELT pipelines and a warehouse you own",
+        description:
+            "Pipelines from Stripe, QuickBooks, and your app database into a tested Postgres, BigQuery, or Snowflake warehouse — the clean data layer your dashboards can trust.",
+        tag: "ELT with dbt, tested on every run",
+    },
+    {
+        icon: BarChart3,
+        color: "from-violet-500 to-fuchsia-400",
+        title: "Business Intelligence Dashboards",
+        slug: "business-intelligence-dashboards",
+        headline: "KPI reporting everyone actually trusts",
+        description:
+            "Executive dashboards, embedded analytics, and a governed semantic layer where each metric is defined once. One source of truth — no per-viewer license tax.",
+        tag: "One definition per metric",
+    },
+    {
+        icon: RefreshCw,
+        color: "from-amber-500 to-orange-400",
+        title: "Legacy System Modernization",
+        slug: "legacy-system-modernization",
+        headline: "Replatform without the big-bang rewrite",
+        description:
+            "Strangler-fig migrations that move capability by capability behind a routing layer. Every cutover is parity-tested and reversible — the business never stands still.",
+        tag: "Reversible, capability-by-capability",
+    },
+    {
+        icon: Rocket,
+        color: "from-emerald-500 to-teal-400",
+        title: "MVP Development",
+        slug: "mvp-development",
+        headline: "A real first version in 6 to 10 weeks",
+        description:
+            "Scoped down to the one feature that proves your idea, built on a production Next.js stack you own outright — ready for users and investors, not a throwaway prototype.",
+        tag: "6 to 10 weeks to launch",
+    },
+    {
+        icon: FileSearch,
+        color: "from-sky-500 to-indigo-400",
+        title: "Technical Due Diligence",
+        slug: "technical-due-diligence",
+        headline: "Independent code and security review before you invest",
+        description:
+            "Code, architecture, and security review for investors and acquirers, delivered as a plain-English risk report with severity-ranked findings and a remediation estimate.",
+        tag: "Severity-ranked findings report",
+    },
+    {
+        icon: Compass,
+        color: "from-indigo-500 to-violet-400",
+        title: "Fractional CTO Services",
+        slug: "fractional-cto-services",
+        headline: "Senior technical leadership, part-time",
+        description:
+            "Architecture, technology strategy, engineering hiring, and a roadmap your board can trust — on a month-to-month retainer, aimed at making the role unnecessary as your team grows.",
+        tag: "Month-to-month, no lock-in",
+    },
+    {
+        icon: Cloud,
+        color: "from-cyan-500 to-sky-400",
+        title: "Cloud Migration",
+        slug: "cloud-migration",
+        headline: "Move clouds without downtime or a surprise bill",
+        description:
+            "Migrate onto, between, or off the cloud with infrastructure as code, parity testing, and an instant rollback — then right-size the result so the monthly bill drops.",
+        tag: "Parity-tested, infrastructure as code",
+    },
+    {
+        icon: FlaskConical,
+        color: "from-rose-500 to-pink-400",
+        title: "QA & Test Automation",
+        slug: "qa-and-test-automation",
+        headline: "Catch regressions in the PR, not in production",
+        description:
+            "A test strategy matched to your real risk, fast unit, integration, and end-to-end suites, and CI gates that block a broken build before it reaches users. You own the tests.",
+        tag: "CI gates on every merge",
     },
 ];
 

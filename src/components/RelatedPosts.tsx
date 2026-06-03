@@ -33,6 +33,12 @@ export const BLOG_POSTS: PostEntry[] = [
         topics: ["build-vs-buy", "saas"],
     },
     {
+        slug: "api-security-best-practices-2026",
+        title: "API Security Best Practices (2026)",
+        blurb: "Auth, rate limiting, input validation, secrets, and the OWASP API Top 10.",
+        topics: ["pentest", "stack"],
+    },
+    {
         slug: "atlanta-software-development-guide-2026",
         title: "Atlanta Software Development: A Founder's 2026 Guide",
         blurb: "Tech scene, local-shop pricing, vertical strengths, and an interview checklist.",
@@ -63,6 +69,12 @@ export const BLOG_POSTS: PostEntry[] = [
         topics: ["saas", "stack"],
     },
     {
+        slug: "ccpa-vs-gdpr-for-saas-2026",
+        title: "CCPA vs GDPR for SaaS (2026)",
+        blurb: "How the two privacy regimes differ and the controls you build once to satisfy both.",
+        topics: ["compliance"],
+    },
+    {
         slug: "crm-data-migration-from-spreadsheets",
         title: "CRM Data Migration from Spreadsheets",
         blurb: "How to move messy spreadsheet pipelines into a real CRM without losing history.",
@@ -79,6 +91,12 @@ export const BLOG_POSTS: PostEntry[] = [
         title: "Custom CRM Development Guide",
         blurb: "When custom CRM beats Salesforce, HubSpot, and Zoho — and what the build looks like.",
         topics: ["crm", "build-vs-buy"],
+    },
+    {
+        slug: "custom-crm-for-real-estate-teams-2026",
+        title: "Custom CRM for Real Estate Teams (2026)",
+        blurb: "MLS sync, transaction pipelines, commission splits, and lead routing for brokerages.",
+        topics: ["crm"],
     },
     {
         slug: "custom-crm-vs-salesforce-vs-hubspot-2026",
@@ -111,6 +129,24 @@ export const BLOG_POSTS: PostEntry[] = [
         topics: ["build-vs-buy"],
     },
     {
+        slug: "gdpr-for-us-saas-companies-2026",
+        title: "GDPR for US SaaS Companies (2026)",
+        blurb: "When GDPR applies to a US company and the data subject rights you must support.",
+        topics: ["compliance"],
+    },
+    {
+        slug: "handling-failed-payments-in-stripe",
+        title: "Handling Failed Payments in Stripe",
+        blurb: "Smart Retries, dunning, and card-update flows that recover involuntary churn.",
+        topics: ["stripe"],
+    },
+    {
+        slug: "hipaa-compliance-checklist-for-startups-2026",
+        title: "HIPAA Compliance Checklist for Startups (2026)",
+        blurb: "Technical, administrative, and physical safeguards, BAAs, and the program work.",
+        topics: ["compliance"],
+    },
+    {
         slug: "hipaa-compliant-saas-architecture",
         title: "HIPAA-Compliant SaaS Architecture",
         blurb: "BAA-eligible cloud, encrypted PHI flows, and audit-friendly logging patterns.",
@@ -129,10 +165,28 @@ export const BLOG_POSTS: PostEntry[] = [
         topics: ["build-vs-buy"],
     },
     {
+        slug: "how-to-prepare-for-a-soc-2-audit-2026",
+        title: "How to Prepare for a SOC 2 Audit (2026)",
+        blurb: "The five Trust Services Criteria, the evidence auditors want, and where the pentest fits.",
+        topics: ["compliance", "pentest"],
+    },
+    {
         slug: "internal-tools-platform-engineering-guide",
         title: "Internal Tools Platform Engineering Guide",
         blurb: "Architectural patterns for ops dashboards, admin panels, and back-office UIs.",
         topics: ["internal-tools", "stack"],
+    },
+    {
+        slug: "internal-tools-vs-custom-software-2026",
+        title: "Internal Tools vs Custom Software (2026)",
+        blurb: "Low-code versus purpose-built — the real cost, ownership, and scaling trade-offs.",
+        topics: ["internal-tools", "build-vs-buy"],
+    },
+    {
+        slug: "nextjs-16-app-router-guide-2026",
+        title: "Next.js 16 App Router Guide (2026)",
+        blurb: "Server vs client components, layouts, routing, data fetching, and caching.",
+        topics: ["stack"],
     },
     {
         slug: "nextjs-stripe-integration-guide",
@@ -147,6 +201,12 @@ export const BLOG_POSTS: PostEntry[] = [
         topics: ["stack"],
     },
     {
+        slug: "owasp-top-10-explained-2026",
+        title: "The OWASP Top 10 Explained (2026)",
+        blurb: "Every category in plain English, with a real example and the concrete defense.",
+        topics: ["pentest"],
+    },
+    {
         slug: "pci-dss-compliance-saas-checklist",
         title: "PCI-DSS Compliance for SaaS Checklist",
         blurb: "What PCI scope reduction looks like when you route payments through Stripe.",
@@ -159,10 +219,52 @@ export const BLOG_POSTS: PostEntry[] = [
         topics: ["pentest"],
     },
     {
+        slug: "penetration-testing-for-fintech-startups-2026",
+        title: "Penetration Testing for Fintech Startups (2026)",
+        blurb: "The real fintech threat model, PCI DSS and SOC 2 drivers, and honest cost.",
+        topics: ["pentest"],
+    },
+    {
+        slug: "postgres-vs-mysql-for-saas-2026",
+        title: "Postgres vs MySQL for SaaS (2026)",
+        blurb: "JSON, RLS, indexing, replication, and ops — which we ship and the tradeoffs.",
+        topics: ["stack", "saas"],
+    },
+    {
         slug: "red-team-vs-pen-test-vs-audit",
         title: "Red Team vs Pen Test vs Audit",
         blurb: "Three engagement types, three buyer profiles, and when to use each.",
         topics: ["pentest", "compliance"],
+    },
+    {
+        slug: "saas-pricing-models-explained-2026",
+        title: "SaaS Pricing Models Explained (2026)",
+        blurb: "Flat, tiered, usage, per-seat, and hybrid — when each fits and how to bill it.",
+        topics: ["saas", "stripe"],
+    },
+    {
+        slug: "salesforce-alternatives-for-small-business-2026",
+        title: "Salesforce Alternatives for Small Business (2026)",
+        blurb: "HubSpot, Pipedrive, Zoho, Airtable, or custom — when each one actually wins.",
+        topics: ["crm"],
+    },
+    {
+        slug: "scaling-a-saas-database-guide-2026",
+        title: "Scaling a SaaS Database (2026)",
+        blurb: "Indexing, pooling, read replicas, partitioning, caching, and when to shard.",
+        topics: ["stack", "saas"],
+    },
+    {
+        slug: "server-components-vs-client-components-explained",
+        title: "Server Components vs Client Components (2026)",
+        blurb: "Where the boundary goes, the bundle-bloating mistakes, and the tradeoffs.",
+        topics: ["stack"],
+    },
+    {
+        slug: "soc-2-vs-iso-27001-2026",
+        title: "SOC 2 vs ISO 27001 (2026)",
+        blurb: "The real differences, where they overlap, and one program that earns both.",
+        topics: ["compliance"],
     },
     {
         slug: "soc2-pentest-prep-guide-2026",
@@ -177,16 +279,34 @@ export const BLOG_POSTS: PostEntry[] = [
         topics: ["build-vs-buy"],
     },
     {
+        slug: "spreadsheet-to-web-app-migration-guide",
+        title: "Spreadsheet to Web App: Migration Guide",
+        blurb: "Data modeling, validation, access control, and a phased, lossless rollout.",
+        topics: ["internal-tools", "crm"],
+    },
+    {
         slug: "stripe-connect-marketplace-architecture",
         title: "Stripe Connect Marketplace Architecture",
         blurb: "Account types, fund flows, and reconciliation for multi-party payments.",
         topics: ["stripe", "stack"],
     },
     {
+        slug: "stripe-vs-paddle-vs-lemon-squeezy-2026",
+        title: "Stripe vs Paddle vs Lemon Squeezy (2026)",
+        blurb: "Payment gateway vs merchant of record, sales tax and VAT, and real pricing.",
+        topics: ["stripe"],
+    },
+    {
         slug: "stripe-webhook-security-best-practices",
         title: "Stripe Webhook Security Best Practices",
         blurb: "Idempotency, signature verification, retries, and dead-letter handling.",
         topics: ["stripe", "stack"],
+    },
+    {
+        slug: "subscription-billing-system-architecture",
+        title: "Subscription Billing System Architecture",
+        blurb: "Entitlements, proration, webhook-driven state, idempotency, and reconciliation.",
+        topics: ["stripe", "saas"],
     },
     {
         slug: "vcs-vcio-vs-software-development-firm",

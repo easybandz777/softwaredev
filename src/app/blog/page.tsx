@@ -307,6 +307,186 @@ const posts: BlogPost[] = [
         date: "2026-05-12",
         readMinutes: 9,
     },
+    {
+        slug: "custom-crm-for-real-estate-teams-2026",
+        title: "Custom CRM for Real Estate Teams: 2026 Guide",
+        excerpt:
+            "MLS sync, transaction pipelines, commission splits, and lead routing — when a brokerage should build a CRM instead of renting one.",
+        category: "Software",
+        date: "2026-06-03",
+        readMinutes: 12,
+    },
+    {
+        slug: "salesforce-alternatives-for-small-business-2026",
+        title: "Salesforce Alternatives for Small Business (2026)",
+        excerpt:
+            "HubSpot, Pipedrive, Zoho, Airtable, or custom — an engineer's honest take on the exact scenario where each one actually wins.",
+        category: "Software",
+        date: "2026-06-03",
+        readMinutes: 11,
+    },
+    {
+        slug: "spreadsheet-to-web-app-migration-guide",
+        title: "Spreadsheet to Web App: Migration Guide",
+        excerpt:
+            "Data modeling, validation, access control, and a phased rollout for turning a business-critical spreadsheet into a real web app without losing data.",
+        category: "Software",
+        date: "2026-06-03",
+        readMinutes: 11,
+    },
+    {
+        slug: "internal-tools-vs-custom-software-2026",
+        title: "Internal Tools vs Custom Software (2026)",
+        excerpt:
+            "Low-code tools like Retool versus purpose-built software — the real cost, ownership, and scaling trade-offs, plus a framework for choosing.",
+        category: "Software",
+        date: "2026-06-03",
+        readMinutes: 11,
+    },
+    {
+        slug: "stripe-vs-paddle-vs-lemon-squeezy-2026",
+        title: "Stripe vs Paddle vs Lemon Squeezy (2026)",
+        excerpt:
+            "Payment gateway versus merchant of record, sales tax and VAT, real pricing, and which billing platform fits your SaaS stage.",
+        category: "Software",
+        date: "2026-06-03",
+        readMinutes: 9,
+    },
+    {
+        slug: "handling-failed-payments-in-stripe",
+        title: "Handling Failed Payments in Stripe",
+        excerpt:
+            "Smart Retries, dunning emails, the payment_failed webhook, grace periods, and card-update flows that actually recover involuntary churn.",
+        category: "Software",
+        date: "2026-06-03",
+        readMinutes: 9,
+    },
+    {
+        slug: "saas-pricing-models-explained-2026",
+        title: "SaaS Pricing Models Explained (2026)",
+        excerpt:
+            "Flat-rate, tiered, usage-based, per-seat, and hybrid — when each fits, the billing engineering each demands, and how to implement them in Stripe.",
+        category: "Software",
+        date: "2026-06-03",
+        readMinutes: 10,
+    },
+    {
+        slug: "subscription-billing-system-architecture",
+        title: "Subscription Billing System Architecture",
+        excerpt:
+            "Entitlements, proration, invoicing, webhook-driven state, idempotency, and reconciliation — concrete Stripe-backed patterns for a robust billing system.",
+        category: "Software",
+        date: "2026-06-03",
+        readMinutes: 11,
+    },
+    {
+        slug: "penetration-testing-for-fintech-startups-2026",
+        title: "Penetration Testing for Fintech Startups (2026)",
+        excerpt:
+            "The real fintech threat model, what to test, PCI DSS and SOC 2 drivers, MITRE ATT&CK mapping, and honest pricing for a fintech pentest.",
+        category: "Cybersecurity",
+        date: "2026-06-03",
+        readMinutes: 13,
+    },
+    {
+        slug: "owasp-top-10-explained-2026",
+        title: "The OWASP Top 10 Explained (2026)",
+        excerpt:
+            "Every OWASP Top 10 category in plain English with a real-world example and the concrete defense — the 2026 reference for founders and engineers.",
+        category: "Cybersecurity",
+        date: "2026-06-03",
+        readMinutes: 12,
+    },
+    {
+        slug: "how-to-prepare-for-a-soc-2-audit-2026",
+        title: "How to Prepare for a SOC 2 Audit (2026)",
+        excerpt:
+            "The five Trust Services Criteria, the controls and evidence auditors ask for, where the pentest fits, and a realistic readiness timeline.",
+        category: "Cybersecurity",
+        date: "2026-06-03",
+        readMinutes: 13,
+    },
+    {
+        slug: "api-security-best-practices-2026",
+        title: "API Security Best Practices (2026)",
+        excerpt:
+            "Authentication, authorization, rate limiting, input validation, secrets, and the OWASP API Top 10 — with code and MITRE ATT&CK mapping.",
+        category: "Cybersecurity",
+        date: "2026-06-03",
+        readMinutes: 13,
+    },
+    {
+        slug: "nextjs-16-app-router-guide-2026",
+        title: "Next.js 16 App Router Guide: The 2026 Mental Model",
+        excerpt:
+            "Server vs client components, layouts, routing, data fetching, and the caching model — with code and the real tradeoffs.",
+        category: "Software",
+        date: "2026-06-03",
+        readMinutes: 10,
+    },
+    {
+        slug: "server-components-vs-client-components-explained",
+        title: "Server Components vs Client Components Explained (2026)",
+        excerpt:
+            "Where the boundary goes, the common mistakes that bloat bundles, and the performance tradeoffs — with code.",
+        category: "Software",
+        date: "2026-06-03",
+        readMinutes: 9,
+    },
+    {
+        slug: "postgres-vs-mysql-for-saas-2026",
+        title: "Postgres vs MySQL for SaaS (2026): An Honest Comparison",
+        excerpt:
+            "JSON, extensions, row-level security, indexing, replication, and ops — which we ship for SaaS workloads and the honest tradeoffs.",
+        category: "Software",
+        date: "2026-06-03",
+        readMinutes: 9,
+    },
+    {
+        slug: "scaling-a-saas-database-guide-2026",
+        title: "Scaling a SaaS Database: The 2026 Engineering Guide",
+        excerpt:
+            "The right order of operations — indexing, connection pooling, read replicas, partitioning, caching, and when to actually shard.",
+        category: "Software",
+        date: "2026-06-03",
+        readMinutes: 10,
+    },
+    {
+        slug: "soc-2-vs-iso-27001-2026",
+        title: "SOC 2 vs ISO 27001 (2026): Which to Pursue for US SaaS",
+        excerpt:
+            "The real differences, when to pursue each, where they overlap, effort and cost, and how to run one program that earns both.",
+        category: "Cybersecurity",
+        date: "2026-06-03",
+        readMinutes: 9,
+    },
+    {
+        slug: "gdpr-for-us-saas-companies-2026",
+        title: "GDPR for US SaaS Companies (2026): An Engineer's Guide",
+        excerpt:
+            "When GDPR applies to a US company, the data subject rights you must support, DPAs and subprocessors, and the engineering it implies.",
+        category: "Cybersecurity",
+        date: "2026-06-03",
+        readMinutes: 8,
+    },
+    {
+        slug: "hipaa-compliance-checklist-for-startups-2026",
+        title: "HIPAA Compliance Checklist for Startups (2026)",
+        excerpt:
+            "Technical, administrative, and physical safeguards, BAAs, and the program work that turns architecture into a defensible posture.",
+        category: "Cybersecurity",
+        date: "2026-06-03",
+        readMinutes: 8,
+    },
+    {
+        slug: "ccpa-vs-gdpr-for-saas-2026",
+        title: "CCPA vs GDPR for SaaS (2026): Build Once, Satisfy Both",
+        excerpt:
+            "How the two privacy regimes differ, where they overlap, and the single set of controls you can build once to satisfy both.",
+        category: "Cybersecurity",
+        date: "2026-06-03",
+        readMinutes: 8,
+    },
 ];
 
 const blogSchema = {

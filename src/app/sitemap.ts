@@ -49,6 +49,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "devops-engineering",
     "ai-integration-services",
     "ecommerce-development",
+    "data-engineering",
+    "business-intelligence-dashboards",
+    "legacy-system-modernization",
+    "mvp-development",
+    "technical-due-diligence",
+    "fractional-cto-services",
+    "cloud-migration",
+    "qa-and-test-automation",
   ];
 
   const servicePages: MetadataRoute.Sitemap = serviceSlugs.map((slug) => ({
@@ -80,6 +88,59 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified,
     changeFrequency: "monthly",
     priority: 0.8,
+  }));
+
+  // Expanded city coverage — these have a top-level landing page only (no
+  // city-scoped service sub-pages), so they are kept out of citySlugs to avoid
+  // emitting /services/<service>/<city> URLs the [city] route does not generate.
+  const expandedCitySlugs = [
+    "orlando-fl",
+    "tampa-fl",
+    "jacksonville-fl",
+    "raleigh-nc",
+    "charleston-sc",
+    "birmingham-al",
+    "knoxville-tn",
+    "memphis-tn",
+    "houston-tx",
+    "san-antonio-tx",
+    "fort-worth-tx",
+    "el-paso-tx",
+    "phoenix-az",
+    "tucson-az",
+    "albuquerque-nm",
+    "denver-co",
+    "boston-ma",
+    "philadelphia-pa",
+    "pittsburgh-pa",
+    "washington-dc",
+    "baltimore-md",
+    "newark-nj",
+    "providence-ri",
+    "buffalo-ny",
+    "columbus-oh",
+    "cleveland-oh",
+    "cincinnati-oh",
+    "indianapolis-in",
+    "detroit-mi",
+    "minneapolis-mn",
+    "kansas-city-mo",
+    "milwaukee-wi",
+    "los-angeles-ca",
+    "san-diego-ca",
+    "san-jose-ca",
+    "sacramento-ca",
+    "portland-or",
+    "salt-lake-city-ut",
+    "las-vegas-nv",
+    "boise-id",
+  ];
+
+  const expandedCityPages: MetadataRoute.Sitemap = expandedCitySlugs.map((slug) => ({
+    url: `${baseUrl}/software-development-${slug}`,
+    lastModified,
+    changeFrequency: "monthly",
+    priority: 0.75,
   }));
 
   const cityScopedServices = [
@@ -137,6 +198,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "saas",
     "manufacturing",
     "real-estate",
+    "logistics",
+    "education",
+    "hospitality",
+    "nonprofit",
+    "professional-services",
+    "automotive",
+    "energy",
+    "agriculture",
   ];
 
   const industryPages: MetadataRoute.Sitemap = industrySlugs.map((slug) => ({
@@ -160,6 +229,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "netsuite",
     "monday-com",
     "bubble-io",
+    "retool",
+    "airtable",
+    "fiverr",
+    "squarespace",
+    "wix",
+    "freshworks",
+    "dynamics-365",
+    "clickup",
   ];
 
   const versusPages: MetadataRoute.Sitemap = versusSlugs.map((slug) => ({
@@ -194,6 +271,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "crm-roi",
     "pentest-cost",
     "build-vs-buy",
+    "saas-pricing-calculator",
+    "downtime-cost-calculator",
+    "technical-debt-calculator",
   ];
 
   const calculatorPages: MetadataRoute.Sitemap = calculatorSlugs.map((slug) => ({
@@ -216,6 +296,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "custom-crm-rfp-template-2026",
     "internal-tools-build-vs-buy-worksheet",
     "technical-due-diligence-checklist",
+    "saas-launch-checklist",
+    "vendor-security-questionnaire-template",
+    "software-project-estimate-worksheet",
+    "incident-response-plan-template",
+    "api-design-guidelines-checklist",
   ];
 
   const resourcePages: MetadataRoute.Sitemap = [
@@ -260,6 +345,26 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "software-development-contract-redlines",
     "crm-data-migration-from-spreadsheets",
     "vcs-vcio-vs-software-development-firm",
+    "custom-crm-for-real-estate-teams-2026",
+    "salesforce-alternatives-for-small-business-2026",
+    "spreadsheet-to-web-app-migration-guide",
+    "internal-tools-vs-custom-software-2026",
+    "stripe-vs-paddle-vs-lemon-squeezy-2026",
+    "handling-failed-payments-in-stripe",
+    "saas-pricing-models-explained-2026",
+    "subscription-billing-system-architecture",
+    "penetration-testing-for-fintech-startups-2026",
+    "owasp-top-10-explained-2026",
+    "how-to-prepare-for-a-soc-2-audit-2026",
+    "api-security-best-practices-2026",
+    "nextjs-16-app-router-guide-2026",
+    "server-components-vs-client-components-explained",
+    "postgres-vs-mysql-for-saas-2026",
+    "scaling-a-saas-database-guide-2026",
+    "soc-2-vs-iso-27001-2026",
+    "gdpr-for-us-saas-companies-2026",
+    "hipaa-compliance-checklist-for-startups-2026",
+    "ccpa-vs-gdpr-for-saas-2026",
   ];
 
   const aiAnswerSlugs = [
@@ -278,6 +383,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "what-does-a-pentester-actually-do-day-to-day",
     "can-a-solo-engineer-really-ship-production-software",
     "best-software-companies-for-fintech-startups-2026",
+    "what-is-the-best-tech-stack-for-a-saas-startup-2026",
+    "should-i-use-no-code-or-hire-a-developer",
+    "how-do-i-vet-an-offshore-development-team",
+    "what-questions-should-i-ask-a-software-agency",
+    "is-penetration-testing-worth-it-for-a-small-business",
+    "whats-the-difference-between-a-fractional-cto-and-an-agency",
+    "how-do-i-protect-my-saas-from-getting-hacked",
+    "how-much-does-it-cost-to-maintain-custom-software",
   ];
 
   const aiAnswerPages: MetadataRoute.Sitemap = aiAnswerSlugs.map((slug) => ({
@@ -293,6 +406,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "owasp-checklist-app",
     "cron-expression-builder",
     "uuid-and-id-generator",
+    "jwt-decoder",
+    "json-formatter",
+    "regex-tester",
+    "base64-encoder-decoder",
+    "http-status-reference",
   ];
 
   const toolsPages: MetadataRoute.Sitemap = toolSlugs.map((slug) => ({
@@ -368,6 +486,36 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "what-is-an-jwt",
     "what-is-zero-trust-network-access",
     "what-is-secrets-management",
+    "what-is-a-vulnerability",
+    "what-is-a-cve",
+    "what-is-threat-modeling",
+    "what-is-a-security-operations-center",
+    "what-is-siem",
+    "what-is-edr",
+    "what-is-multi-factor-authentication",
+    "what-is-encryption-at-rest",
+    "what-is-tls",
+    "what-is-phishing",
+    "what-is-ci-cd",
+    "what-is-docker",
+    "what-is-kubernetes",
+    "what-is-serverless",
+    "what-is-a-load-balancer",
+    "what-is-a-cdn",
+    "what-is-database-indexing",
+    "what-is-an-orm",
+    "what-is-a-message-queue",
+    "what-is-idempotency",
+    "what-is-mrr",
+    "what-is-arr",
+    "what-is-customer-churn",
+    "what-is-customer-acquisition-cost",
+    "what-is-customer-lifetime-value",
+    "what-is-product-market-fit",
+    "what-is-agile",
+    "what-is-scrum",
+    "what-is-technical-debt",
+    "what-is-a-design-sprint",
   ];
 
   const glossaryPages: MetadataRoute.Sitemap = [
@@ -384,6 +532,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...corePages,
     ...servicePages,
     ...cityPages,
+    ...expandedCityPages,
     ...cityScopedServicePages,
     ...neighborhoodPages,
     ...industryPages,
