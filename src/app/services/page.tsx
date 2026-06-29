@@ -165,6 +165,126 @@ const buildAndShip: ServiceCard[] = [
             "A test strategy matched to your real risk, fast unit, integration, and end-to-end suites, and CI gates that block a broken build before it reaches users. You own the tests.",
         tag: "CI gates on every merge",
     },
+    {
+        icon: Terminal,
+        color: "from-indigo-500 to-blue-400",
+        title: "API Development",
+        slug: "api-development",
+        headline: "REST and GraphQL APIs built to integrate cleanly",
+        description:
+            "Versioned, documented APIs with auth, rate limiting, and validation baked in — designed so your partners and your own front end can build against them with confidence.",
+        tag: "OpenAPI-documented by default",
+    },
+    {
+        icon: Bot,
+        color: "from-violet-500 to-purple-400",
+        title: "AI Integration Services",
+        slug: "ai-integration-services",
+        headline: "Add LLM features to your product, safely",
+        description:
+            "RAG, structured extraction, and assistant features wired into your app with evals, guardrails, and cost controls — not a demo, a feature you can ship and maintain.",
+        tag: "Evals and guardrails included",
+    },
+    {
+        icon: Bot,
+        color: "from-fuchsia-500 to-pink-400",
+        title: "AI Chatbot Development",
+        slug: "ai-chatbot-development",
+        headline: "Grounded chatbots that answer from your data",
+        description:
+            "Retrieval-augmented chat assistants grounded in your docs and systems, with citations, fallbacks, and human handoff — built to cut support load without inventing answers.",
+        tag: "Retrieval-grounded, cited answers",
+    },
+    {
+        icon: Rocket,
+        color: "from-sky-500 to-indigo-400",
+        title: "Mobile App Development",
+        slug: "mobile-app-development",
+        headline: "iOS and Android from one codebase",
+        description:
+            "Cross-platform mobile apps with a shared backend, offline support where it matters, and a clear path to the app stores — built to feel native without doubling the build.",
+        tag: "Shared backend, native feel",
+    },
+    {
+        icon: Globe,
+        color: "from-cyan-500 to-blue-400",
+        title: "SaaS Platform Development",
+        slug: "saas-platform-development",
+        headline: "Multi-tenant SaaS from auth to billing",
+        description:
+            "The full platform spine — tenancy, roles, billing, and admin — engineered so you can onboard customers, charge them, and scale without re-architecting in year two.",
+        tag: "Tenancy, billing, and roles",
+    },
+    {
+        icon: CreditCard,
+        color: "from-emerald-500 to-teal-400",
+        title: "E-Commerce Development",
+        slug: "ecommerce-development",
+        headline: "Custom storefronts and checkout that convert",
+        description:
+            "Headless or full-stack commerce with Stripe checkout, inventory, and the integrations your operation actually needs — built around your catalog, not a rigid template.",
+        tag: "Stripe checkout, headless-ready",
+    },
+    {
+        icon: Cloud,
+        color: "from-blue-500 to-sky-400",
+        title: "DevOps Engineering",
+        slug: "devops-engineering",
+        headline: "CI/CD, infrastructure-as-code, and observability",
+        description:
+            "Reproducible environments, automated pipelines, and monitoring set up so deploys are boring and on-call is quiet — the operational foundation under everything you ship.",
+        tag: "Reproducible, automated deploys",
+    },
+    {
+        icon: Database,
+        color: "from-teal-500 to-emerald-400",
+        title: "Database Design & Optimization",
+        slug: "database-design-and-optimization",
+        headline: "Schemas that scale and queries that stay fast",
+        description:
+            "Data modeling, indexing, and query tuning for Postgres and friends — whether you're designing fresh or rescuing a database that's buckling under growth.",
+        tag: "Modeling, indexing, and tuning",
+    },
+    {
+        icon: Compass,
+        color: "from-amber-500 to-orange-400",
+        title: "Product Design Services",
+        slug: "product-design-services",
+        headline: "UX, UI, and design systems that ship",
+        description:
+            "User research, prototypes, and a component-based design system handed off in a form engineers can build directly — design that survives contact with production.",
+        tag: "Research to design system",
+    },
+    {
+        icon: BarChart3,
+        color: "from-rose-500 to-amber-400",
+        title: "Performance Optimization",
+        slug: "performance-optimization-services",
+        headline: "Profile, fix, and prove the speedup",
+        description:
+            "Back-end profiling, database and query tuning, caching, and front-end Core Web Vitals work — measured before and after so the gain is real, not anecdotal.",
+        tag: "Measured before and after",
+    },
+    {
+        icon: FileSearch,
+        color: "from-slate-500 to-gray-400",
+        title: "Code Audit Services",
+        slug: "code-audit-services",
+        headline: "An honest read on your codebase's health",
+        description:
+            "An independent review of architecture, security, and code quality with a prioritized, plain-English remediation roadmap — useful before a raise, an acquisition, or a rewrite.",
+        tag: "Prioritized remediation roadmap",
+    },
+    {
+        icon: RefreshCw,
+        color: "from-purple-500 to-indigo-400",
+        title: "Third-Party API Integration",
+        slug: "third-party-api-integration",
+        headline: "Connect the tools your business runs on",
+        description:
+            "Reliable integrations with payment, CRM, ERP, and data providers — built with retries, idempotency, and webhook handling so the sync holds up when an upstream hiccups.",
+        tag: "Idempotent, retry-safe syncs",
+    },
 ];
 
 const paymentsAndLicensing: ServiceCard[] = [
@@ -260,6 +380,26 @@ const cyberAndPentest: ServiceCard[] = [
         description:
             "Threat-emulation engagements that exercise documented APT/ransomware TTPs and produce a defended/missed heatmap for your SOC.",
         tag: "ATT&CK-mapped purple team",
+    },
+    {
+        icon: Shield,
+        color: "from-emerald-500 to-cyan-400",
+        title: "SaaS Security Audit",
+        slug: "saas-security-audit",
+        headline: "Find the gaps before an attacker or auditor does",
+        description:
+            "A focused review of your SaaS app and cloud — auth, tenant isolation, secrets, and config — mapped to OWASP and the controls a SOC 2 or customer questionnaire will ask about.",
+        tag: "OWASP and SOC 2 aligned",
+    },
+    {
+        icon: Lock,
+        color: "from-indigo-500 to-blue-400",
+        title: "Managed Security Services",
+        slug: "managed-security-services",
+        headline: "Ongoing security without an in-house team",
+        description:
+            "Continuous vulnerability scanning, patch oversight, and monitoring on a retainer — a right-sized security program for teams that can't yet justify a full-time hire.",
+        tag: "Right-sized retainer program",
     },
 ];
 

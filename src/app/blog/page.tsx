@@ -487,6 +487,276 @@ const posts: BlogPost[] = [
         date: "2026-06-03",
         readMinutes: 8,
     },
+    {
+        slug: "database-migrations-without-downtime-2026",
+        title: "Zero-Downtime Database Migrations: A 2026 Playbook",
+        excerpt:
+            "Expand-contract migrations, backfills, dual writes, and the deploy choreography that ships schema changes without a maintenance window.",
+        category: "Software",
+        date: "2026-02-04",
+        readMinutes: 12,
+    },
+    {
+        slug: "api-rate-limiting-strategies-2026",
+        title: "API Rate Limiting Strategies for 2026",
+        excerpt:
+            "Token bucket vs sliding window, per-key quotas, 429 semantics, and where to enforce limits — gateway, app, or both.",
+        category: "Software",
+        date: "2026-02-18",
+        readMinutes: 10,
+    },
+    {
+        slug: "caching-strategies-for-saas-2026",
+        title: "Caching Strategies for SaaS (2026)",
+        excerpt:
+            "Cache layers from CDN to Redis, invalidation that actually works, stampede protection, and what you should never cache.",
+        category: "Software",
+        date: "2026-03-03",
+        readMinutes: 11,
+    },
+    {
+        slug: "event-driven-architecture-for-saas-2026",
+        title: "Event-Driven Architecture for SaaS (2026)",
+        excerpt:
+            "Queues, the outbox pattern, idempotency, and exactly-once myths — when events beat synchronous calls and when they bite back.",
+        category: "Software",
+        date: "2026-03-17",
+        readMinutes: 12,
+    },
+    {
+        slug: "background-jobs-and-queues-in-production-2026",
+        title: "Background Jobs & Queues in Production (2026)",
+        excerpt:
+            "Retries, dead-letter queues, visibility timeouts, and the observability you need before a job silently fails at 3 a.m.",
+        category: "Software",
+        date: "2026-03-28",
+        readMinutes: 10,
+    },
+    {
+        slug: "observability-for-startups-2026",
+        title: "Observability for Startups: Logs, Metrics, Traces (2026)",
+        excerpt:
+            "A pragmatic stack for small teams — structured logs, the four golden signals, tracing, and alerts that don't cry wolf.",
+        category: "Software",
+        date: "2026-04-08",
+        readMinutes: 11,
+    },
+    {
+        slug: "preventing-sql-injection-2026",
+        title: "Preventing SQL Injection in Modern Web Apps (2026)",
+        excerpt:
+            "Parameterized queries, ORMs, least-privilege database roles, and why string concatenation is still breaching apps in 2026.",
+        category: "Cybersecurity",
+        date: "2026-02-11",
+        readMinutes: 9,
+    },
+    {
+        slug: "xss-prevention-guide-2026",
+        title: "XSS Prevention: A 2026 Developer's Guide",
+        excerpt:
+            "Output encoding, a real Content-Security-Policy, framework escaping, and the sinks that still let script slip through.",
+        category: "Cybersecurity",
+        date: "2026-02-25",
+        readMinutes: 9,
+    },
+    {
+        slug: "securing-rest-apis-2026",
+        title: "Securing REST APIs: A 2026 Checklist",
+        excerpt:
+            "Authentication vs authorization, scopes, input validation, rate limits, and the OWASP API Top 10 mapped to concrete fixes.",
+        category: "Cybersecurity",
+        date: "2026-03-11",
+        readMinutes: 10,
+    },
+    {
+        slug: "secrets-management-best-practices-2026",
+        title: "Secrets Management Best Practices (2026)",
+        excerpt:
+            "Vaults, KMS, short-lived credentials, rotation, and keeping API keys out of your repo, logs, and error messages.",
+        category: "Cybersecurity",
+        date: "2026-03-24",
+        readMinutes: 10,
+    },
+    {
+        slug: "ransomware-protection-for-small-business-2026",
+        title: "Ransomware Protection for Small Business (2026)",
+        excerpt:
+            "Tested backups, segmentation, EDR, patch discipline, and the incident-response plan you write before you ever need it.",
+        category: "Cybersecurity",
+        date: "2026-04-02",
+        readMinutes: 11,
+    },
+    {
+        slug: "vulnerability-management-program-guide-2026",
+        title: "Building a Vulnerability Management Program (2026)",
+        excerpt:
+            "Scan cadence, CVSS triage, remediation SLAs, and reporting that turns a noisy scanner into a defensible program.",
+        category: "Cybersecurity",
+        date: "2026-04-15",
+        readMinutes: 11,
+    },
+    {
+        slug: "saas-churn-reduction-playbook-2026",
+        title: "The SaaS Churn Reduction Playbook (2026)",
+        excerpt:
+            "Instrument the churn you can see, fix onboarding and time-to-value, and the save-flow tactics that move net revenue retention.",
+        category: "Software",
+        date: "2026-04-22",
+        readMinutes: 12,
+    },
+    {
+        slug: "usage-based-billing-implementation-2026",
+        title: "Implementing Usage-Based Billing (2026)",
+        excerpt:
+            "Metering, aggregation, idempotent event ingestion, Stripe metered prices, and invoicing that customers actually trust.",
+        category: "Software",
+        date: "2026-05-01",
+        readMinutes: 12,
+    },
+    {
+        slug: "saas-onboarding-best-practices-2026",
+        title: "SaaS Onboarding Best Practices (2026)",
+        excerpt:
+            "Activation milestones, empty states, checklists, and the instrumentation that tells you exactly where new users stall.",
+        category: "Software",
+        date: "2026-05-08",
+        readMinutes: 10,
+    },
+    {
+        slug: "product-analytics-for-saas-2026",
+        title: "Product Analytics for SaaS: A 2026 Setup Guide",
+        excerpt:
+            "Event taxonomy, identity, funnels, and retention curves — a clean analytics foundation without drowning in dashboards.",
+        category: "Software",
+        date: "2026-05-13",
+        readMinutes: 10,
+    },
+    {
+        slug: "saas-security-questionnaire-guide-2026",
+        title: "Surviving the SaaS Security Questionnaire (2026)",
+        excerpt:
+            "How to answer SIG and CAIQ-style questionnaires fast, what evidence to keep ready, and when a SOC 2 short-circuits the whole thing.",
+        category: "Cybersecurity",
+        date: "2026-05-20",
+        readMinutes: 10,
+    },
+    {
+        slug: "multi-region-saas-deployment-2026",
+        title: "Multi-Region SaaS Deployment (2026)",
+        excerpt:
+            "Active-active vs active-passive, data residency, failover, and the latency and cost trade-offs of going multi-region.",
+        category: "Software",
+        date: "2026-05-27",
+        readMinutes: 12,
+    },
+    {
+        slug: "cost-to-build-saas-mvp-georgia-2026",
+        title: "What It Costs to Build a SaaS MVP in Georgia (2026)",
+        excerpt:
+            "Real ranges for a production MVP built in Georgia — scope tiers, what drives the number, and where founders overspend.",
+        category: "Local",
+        date: "2026-01-21",
+        readMinutes: 11,
+    },
+    {
+        slug: "savannah-software-development-guide-2026",
+        title: "Savannah Software Development: A 2026 Guide",
+        excerpt:
+            "Who builds custom software for Savannah businesses, what it costs, and how to vet a partner from the coast.",
+        category: "Local",
+        date: "2026-01-28",
+        readMinutes: 9,
+    },
+    {
+        slug: "augusta-software-development-guide-2026",
+        title: "Augusta Software Development: A 2026 Guide",
+        excerpt:
+            "Custom software, CRM, and cybersecurity for Augusta companies — local context, budgets, and how to choose a builder.",
+        category: "Local",
+        date: "2026-02-06",
+        readMinutes: 9,
+    },
+    {
+        slug: "hiring-fractional-cto-atlanta-2026",
+        title: "Hiring a Fractional CTO in Atlanta (2026)",
+        excerpt:
+            "What a fractional CTO does, when Atlanta startups need one, typical engagement shapes, and how it compares to an agency.",
+        category: "Local",
+        date: "2026-02-13",
+        readMinutes: 10,
+    },
+    {
+        slug: "columbus-ga-software-development-guide-2026",
+        title: "Columbus, GA Software Development: A 2026 Guide",
+        excerpt:
+            "A practical guide to building custom software in Columbus, Georgia — costs, partner selection, and local considerations.",
+        category: "Local",
+        date: "2026-02-20",
+        readMinutes: 9,
+    },
+    {
+        slug: "software-maintenance-costs-explained-2026",
+        title: "Software Maintenance Costs, Explained (2026)",
+        excerpt:
+            "Why maintenance runs 15–25% of build cost a year, what it actually buys, and how to budget for it without surprises.",
+        category: "Software",
+        date: "2026-03-06",
+        readMinutes: 9,
+    },
+    {
+        slug: "building-a-rag-pipeline-2026",
+        title: "Building a RAG Pipeline for Your Docs (2026)",
+        excerpt:
+            "Chunking, embeddings, a vector store, retrieval, and grounding — the architecture that makes an LLM answer from your data.",
+        category: "Software",
+        date: "2026-05-30",
+        readMinutes: 12,
+    },
+    {
+        slug: "adding-ai-features-to-your-saas-2026",
+        title: "Adding AI Features to Your SaaS (2026)",
+        excerpt:
+            "Where AI actually helps, build-vs-API trade-offs, evals, guardrails, and shipping features without torching your margins.",
+        category: "Software",
+        date: "2026-06-05",
+        readMinutes: 11,
+    },
+    {
+        slug: "llm-cost-optimization-2026",
+        title: "LLM Cost Optimization for Startups (2026)",
+        excerpt:
+            "Model routing, caching, prompt and context trimming, batching, and the levers that cut inference spend without hurting quality.",
+        category: "Software",
+        date: "2026-06-10",
+        readMinutes: 10,
+    },
+    {
+        slug: "preventing-prompt-injection-2026",
+        title: "Preventing Prompt Injection in AI Apps (2026)",
+        excerpt:
+            "Why prompt injection is the new injection class, trust boundaries for tools and retrieval, and layered mitigations that hold.",
+        category: "Cybersecurity",
+        date: "2026-06-15",
+        readMinutes: 10,
+    },
+    {
+        slug: "vector-database-comparison-2026",
+        title: "Vector Database Comparison (2026)",
+        excerpt:
+            "pgvector, Pinecone, Weaviate, Qdrant, and friends — how to choose by scale, latency, ops burden, and cost.",
+        category: "Software",
+        date: "2026-06-19",
+        readMinutes: 11,
+    },
+    {
+        slug: "data-warehouse-vs-data-lake-2026",
+        title: "Data Warehouse vs Data Lake (2026)",
+        excerpt:
+            "Definitions without the hype, when each fits, the lakehouse middle ground, and ETL vs ELT trade-offs for SaaS teams.",
+        category: "Software",
+        date: "2026-06-24",
+        readMinutes: 10,
+    },
 ];
 
 const blogSchema = {

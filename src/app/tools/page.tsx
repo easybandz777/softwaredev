@@ -27,7 +27,7 @@ import { pageMetadata } from "@/lib/seoMeta";
 export const metadata: Metadata = pageMetadata({
     title: "Free Dev Tools & Cost Calculators (2026) | QUANT LAB USA",
     description:
-        "5 free developer utilities (Stripe webhook tester, JSON-LD schema, OWASP, cron, UUID) + 4 cost calculators (build vs buy, CRM ROI, pentest, Stripe). In-browser.",
+        "15 free in-browser developer utilities (JWT, JSON, regex, base64, URL, hashing, and more) plus 10 cost calculators (build vs buy, CRM ROI, pentest, SaaS pricing). No signup.",
     slug: "/tools",
     keywords: [
         "free developer tools",
@@ -123,6 +123,46 @@ const TOOLS = [
         tag: "Developer",
         color: "from-teal-500 to-cyan-400",
     },
+    {
+        href: "/tools/url-encoder-decoder",
+        title: "URL Encoder & Decoder",
+        blurb: "Percent-encode or decode full URLs and query components with full UTF-8 support. Handles reserved characters correctly and runs entirely in your browser.",
+        icon: Binary,
+        tag: "Developer",
+        color: "from-sky-500 to-indigo-400",
+    },
+    {
+        href: "/tools/hash-generator",
+        title: "Hash Generator",
+        blurb: "Generate SHA-1, SHA-256, SHA-384, and SHA-512 digests of any text using the browser's Web Crypto API. Instant, offline — nothing leaves your machine.",
+        icon: Hash,
+        tag: "Security",
+        color: "from-emerald-500 to-cyan-400",
+    },
+    {
+        href: "/tools/color-contrast-checker",
+        title: "Color Contrast Checker",
+        blurb: "Check foreground and background color pairs against WCAG 2.2 AA and AAA contrast ratios for normal and large text, with a live preview as you adjust.",
+        icon: ShieldCheck,
+        tag: "Accessibility",
+        color: "from-rose-500 to-amber-400",
+    },
+    {
+        href: "/tools/unix-timestamp-converter",
+        title: "Unix Timestamp Converter",
+        blurb: "Convert between Unix epoch seconds or milliseconds and human-readable UTC and local dates, both directions, live as you type — all in your browser.",
+        icon: Clock,
+        tag: "Developer",
+        color: "from-violet-500 to-fuchsia-400",
+    },
+    {
+        href: "/tools/text-case-converter",
+        title: "Text Case Converter",
+        blurb: "Transform text between camelCase, snake_case, kebab-case, PascalCase, Title Case, and UPPER or lower — with a live character and word count, in-browser.",
+        icon: ListTree,
+        tag: "Developer",
+        color: "from-teal-500 to-emerald-400",
+    },
 ] as const;
 
 const CALCULATORS = [
@@ -175,6 +215,27 @@ const CALCULATORS = [
         icon: Wrench,
         tag: "Engineering",
     },
+    {
+        href: "/calculators/cloud-hosting-cost-calculator",
+        title: "Cloud Hosting Cost Calculator",
+        blurb: "Estimate monthly cloud hosting spend from compute, database, bandwidth, and storage inputs — with a realistic range and the levers that move it most.",
+        icon: DollarSign,
+        tag: "Infrastructure",
+    },
+    {
+        href: "/calculators/developer-salary-vs-agency-calculator",
+        title: "Developer Salary vs Agency Calculator",
+        blurb: "Compare the fully-loaded annual cost of an in-house developer hire against an agency or fractional engagement — salary, benefits, overhead, and ramp time.",
+        icon: Calculator,
+        tag: "Strategy",
+    },
+    {
+        href: "/calculators/saas-ltv-cac-calculator",
+        title: "SaaS LTV:CAC Calculator",
+        blurb: "Turn ARPU, gross margin, churn, and acquisition spend into LTV, CAC, the LTV:CAC ratio, and CAC payback months — the unit economics investors ask for.",
+        icon: LineChart,
+        tag: "Metrics",
+    },
 ] as const;
 
 const collectionSchema = {
@@ -182,7 +243,7 @@ const collectionSchema = {
     "@type": "CollectionPage",
     name: "Free Tools & Calculators",
     description:
-        "Hub for QUANT LAB USA's ten free interactive developer tools and seven engineering cost calculators.",
+        "Hub for QUANT LAB USA's fifteen free interactive developer tools and ten engineering cost calculators.",
     url: "https://quantlabusa.dev/tools",
     isPartOf: { "@type": "WebSite", url: "https://quantlabusa.dev" },
     mainEntity: {
@@ -235,8 +296,8 @@ export default function ToolsIndexPage() {
                         Free Tools &amp; Calculators
                     </h1>
                     <p className="text-xl text-gray-400 leading-relaxed mb-4 max-w-3xl">
-                        Seventeen free utilities we built for ourselves and our clients. Ten interactive
-                        developer tools plus seven engineering cost calculators.
+                        Twenty-five free utilities we built for ourselves and our clients. Fifteen interactive
+                        developer tools plus ten engineering cost calculators.
                     </p>
                     <p className="text-base text-gray-400 leading-relaxed max-w-3xl">
                         Everything runs in your browser. No signup, no email gate on the tool
@@ -248,7 +309,7 @@ export default function ToolsIndexPage() {
                 <AnimatedSection className="mb-16">
                     <div className="flex items-center justify-between mb-6">
                         <h2 className="text-2xl md:text-3xl font-bold text-white">Interactive tools</h2>
-                        <p className="text-xs uppercase tracking-widest text-emerald-400">5 free utilities</p>
+                        <p className="text-xs uppercase tracking-widest text-emerald-400">15 free utilities</p>
                     </div>
                     <div className="grid md:grid-cols-2 gap-5">
                         {TOOLS.map((t) => (
@@ -282,7 +343,7 @@ export default function ToolsIndexPage() {
                 <AnimatedSection className="mb-16">
                     <div className="flex items-center justify-between mb-6">
                         <h2 className="text-2xl md:text-3xl font-bold text-white">Cost calculators</h2>
-                        <p className="text-xs uppercase tracking-widest text-emerald-400">7 free calculators</p>
+                        <p className="text-xs uppercase tracking-widest text-emerald-400">10 free calculators</p>
                     </div>
                     <div className="grid md:grid-cols-2 gap-5">
                         {CALCULATORS.map((c) => (
@@ -375,7 +436,7 @@ export default function ToolsIndexPage() {
                             or — worse — sent data to a server. None of ours do.
                         </p>
                         <p>
-                            The seven cost calculators in the second section are different in
+                            The ten cost calculators in the second section are different in
                             nature. They&apos;re estimation tools that compress our pricing
                             knowledge — across QUANT LAB USA engagements — into something a
                             founder or CTO can use to set expectations with their board in 60

@@ -206,6 +206,126 @@ const resources = [
         format: "REST design PDF checklist",
         audience: "Engineers, Tech Leads, API Designers",
     },
+    {
+        slug: "saas-security-checklist",
+        title: "The SaaS Security Checklist",
+        blurb:
+            "A practical security checklist for SaaS teams — auth, tenant isolation, secrets, logging, dependencies, and backups — mapped to what SOC 2 and customer questionnaires expect.",
+        icon: ShieldCheck,
+        accent: "from-emerald-500 to-cyan-400",
+        format: "PDF security checklist",
+        audience: "Founders, CTOs, Security Leads",
+    },
+    {
+        slug: "database-backup-and-recovery-plan-template",
+        title: "The Database Backup & Recovery Plan Template",
+        blurb:
+            "A fill-in template for documenting backup cadence, retention, restore steps, and RPO/RTO targets — so a database failure becomes a runbook instead of a panic.",
+        icon: FileText,
+        accent: "from-sky-500 to-blue-400",
+        format: "Editable PDF template",
+        audience: "CTOs, DevOps, Engineering Leads",
+    },
+    {
+        slug: "api-integration-requirements-template",
+        title: "The API Integration Requirements Template",
+        blurb:
+            "A requirements template for scoping a third-party API integration — endpoints, auth, rate limits, error handling, and webhooks — before a line of code is written.",
+        icon: Code2,
+        accent: "from-violet-500 to-indigo-400",
+        format: "PDF requirements template",
+        audience: "Product Managers, Engineers, Tech Leads",
+    },
+    {
+        slug: "penetration-test-rfp-template",
+        title: "The Penetration Test RFP Template",
+        blurb:
+            "A vendor-neutral RFP template for buying a pentest — scope, methodology, reporting, retest, and the questions that separate a real firm from a scan reseller.",
+        icon: ShieldCheck,
+        accent: "from-rose-500 to-orange-400",
+        format: "PDF RFP template",
+        audience: "CTOs, Security Leads, Procurement",
+    },
+    {
+        slug: "cloud-cost-optimization-checklist",
+        title: "The Cloud Cost Optimization Checklist",
+        blurb:
+            "A checklist of the highest-leverage cloud savings — right-sizing, autoscaling, storage tiers, egress, and idle resources — without sacrificing reliability.",
+        icon: Target,
+        accent: "from-amber-500 to-orange-400",
+        format: "PDF checklist",
+        audience: "CTOs, DevOps, Finance & Ops",
+    },
+    {
+        slug: "code-review-checklist",
+        title: "The Code Review Checklist",
+        blurb:
+            "A reviewer's checklist covering correctness, security, readability, tests, performance, and dependencies — so reviews catch what matters instead of bikeshedding style.",
+        icon: Code2,
+        accent: "from-teal-500 to-emerald-400",
+        format: "PDF review checklist",
+        audience: "Engineers, Tech Leads, EMs",
+    },
+    {
+        slug: "custom-crm-rfp-template-2026",
+        title: "The Custom CRM RFP Template (2026)",
+        blurb:
+            "An RFP template for commissioning a custom CRM — process mapping, must-have features, integrations, data migration, and the evaluation criteria that keep vendors honest.",
+        icon: Users,
+        accent: "from-emerald-500 to-teal-400",
+        format: "PDF RFP template",
+        audience: "RevOps, VPs of Sales, Operations Leaders",
+    },
+    {
+        slug: "internal-tools-build-vs-buy-worksheet",
+        title: "Internal Tools: Build-vs-Buy Worksheet",
+        blurb:
+            "A worksheet for deciding whether to build, buy, or assemble an internal tool — scoring fit, switching cost, and total cost across a three-year horizon.",
+        icon: Building2,
+        accent: "from-sky-500 to-cyan-400",
+        format: "PDF worksheet",
+        audience: "Ops Leaders, CTOs, Founders",
+    },
+    {
+        slug: "llc-vs-c-corp-decision-checklist",
+        title: "LLC vs C-Corp Decision Checklist",
+        blurb:
+            "A founder's checklist on entity choice — taxes, fundraising, equity, and admin — so you walk into a conversation with your CPA or attorney already informed. Not legal advice.",
+        icon: FileText,
+        accent: "from-slate-500 to-gray-400",
+        format: "PDF checklist",
+        audience: "Founders, Solo Founders",
+    },
+    {
+        slug: "mitre-attack-maturity-self-assessment-v2",
+        title: "MITRE ATT&CK Maturity Self-Assessment (v2)",
+        blurb:
+            "An updated self-assessment to rate your detection and response coverage against ATT&CK tactics, with a scoring rubric and a prioritized list of the gaps to close first.",
+        icon: Target,
+        accent: "from-orange-500 to-red-400",
+        format: "PDF self-assessment",
+        audience: "Security Leads, SOC Managers, vCISOs",
+    },
+    {
+        slug: "stripe-connect-marketplace-onboarding-template",
+        title: "Stripe Connect Marketplace Onboarding Template",
+        blurb:
+            "A template for designing marketplace seller onboarding on Stripe Connect — account types, KYC, payout schedules, and the edge cases that stall go-live.",
+        icon: CreditCard,
+        accent: "from-indigo-500 to-purple-400",
+        format: "PDF + flow template",
+        audience: "Marketplace Founders, Payments Engineers",
+    },
+    {
+        slug: "technical-due-diligence-checklist",
+        title: "The Technical Due Diligence Checklist",
+        blurb:
+            "A checklist for assessing a target's technology before an acquisition or investment — architecture, security, code quality, team, and the risks that move valuation.",
+        icon: ShieldCheck,
+        accent: "from-blue-500 to-cyan-400",
+        format: "PDF DD checklist",
+        audience: "Investors, Acquirers, Technical Advisors",
+    },
 ];
 
 export default function ResourcesPage() {
@@ -256,14 +376,14 @@ export default function ResourcesPage() {
                     <div className="rounded-2xl border border-sky-400/30 bg-sky-500/5 p-6 md:p-8">
                         <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">What free resources does QUANT LAB USA publish?</h2>
                         <p className="text-gray-200 leading-relaxed">
-                            <strong>QUANT LAB USA publishes eleven free downloadable resources: the Build-vs-Buy Decision Playbook (25 pages), the OWASP-aligned Web App Pentest Checklist (80 items), the 6-Week Custom CRM Rollout Playbook (30 pages plus templates), MVP to Production Tech Playbook (35 pages), the Stripe Integration Checklist, the MITRE ATT&amp;CK Maturity Worksheet, the SaaS Launch Checklist, the Vendor Security Questionnaire Template, the Software Project Estimate Worksheet, the Incident Response Plan Template, and the API Design Guidelines Checklist. Each targets a specific decision-maker (CTO, COO, Security Lead, Founder) and a specific decision. One-click PDF download, no paywall, just an email.</strong>
+                            <strong>QUANT LAB USA publishes twenty-three free downloadable resources: the Build-vs-Buy Decision Playbook (25 pages), the OWASP-aligned Web App Pentest Checklist (80 items), the 6-Week Custom CRM Rollout Playbook (30 pages plus templates), MVP to Production Tech Playbook (35 pages), the Stripe Integration Checklist, the MITRE ATT&amp;CK Maturity Worksheet, the SaaS Launch Checklist, the Vendor Security Questionnaire Template, the Software Project Estimate Worksheet, the Incident Response Plan Template, the API Design Guidelines Checklist, the SaaS Security Checklist, the Database Backup &amp; Recovery Plan Template, the API Integration Requirements Template, the Penetration Test RFP Template, the Cloud Cost Optimization Checklist, the Code Review Checklist, the Custom CRM RFP Template, the Internal Tools Build-vs-Buy Worksheet, the LLC vs C-Corp Decision Checklist, the MITRE ATT&amp;CK Maturity Self-Assessment, the Stripe Connect Marketplace Onboarding Template, and the Technical Due Diligence Checklist. Each targets a specific decision-maker (CTO, COO, Security Lead, Founder) and a specific decision. One-click PDF download, no paywall, just an email.</strong>
                         </p>
                     </div>
                 </AnimatedSection>
 
                 <AnimatedSection className="mb-20">
                     <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
-                        Eleven resources, eleven decisions.
+                        Twenty-three resources, twenty-three decisions.
                     </h2>
                     <p className="text-gray-400 leading-relaxed mb-10 max-w-3xl">
                         Each guide targets a specific situation and a specific decision-maker. Pick the one
