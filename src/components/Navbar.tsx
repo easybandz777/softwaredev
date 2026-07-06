@@ -218,6 +218,7 @@ export function Navbar() {
     const [open, setOpen] = useState(false);
     const [consultOpen, setConsultOpen] = useState(false);
     const [expanded, setExpanded] = useState<Record<string, boolean>>({});
+    const [scrolled, setScrolled] = useState(false);
 
     const drawerRef = useRef<HTMLDivElement | null>(null);
     const triggerRef = useRef<HTMLButtonElement | null>(null);
@@ -232,6 +233,26 @@ export function Navbar() {
     useEffect(() => {
         setOpen(false);
     }, [pathname]);
+
+    // Scroll-aware glass: transparent at the top of the page; past ~40px the
+    // glass layer (inside the header) crossfades in. ONE rAF-throttled
+    // passive listener; the only DOM change is an opacity class swap.
+    useEffect(() => {
+        let raf = 0;
+        const update = () => {
+            raf = 0;
+            setScrolled(window.scrollY > 40);
+        };
+        const onScroll = () => {
+            if (raf === 0) raf = requestAnimationFrame(update);
+        };
+        update();
+        window.addEventListener("scroll", onScroll, { passive: true });
+        return () => {
+            window.removeEventListener("scroll", onScroll);
+            if (raf !== 0) cancelAnimationFrame(raf);
+        };
+    }, []);
 
     useEffect(() => {
         if (!open) return;
@@ -306,8 +327,19 @@ export function Navbar() {
                 initial={prefersReducedMotion ? { opacity: 0 } : { y: -100, opacity: 0 }}
                 animate={prefersReducedMotion ? { opacity: 1 } : { y: 0, opacity: 1 }}
                 transition={{ duration: prefersReducedMotion ? 0.1 : 0.8, ease: "easeOut" }}
-                className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 py-4 flex items-center justify-between border-b border-white/5 bg-quant-bg/60 backdrop-blur-xl"
+                className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 py-4 flex items-center justify-between"
             >
+                {/* Glass layer: absolutely positioned (zero layout impact), so
+                    the header itself stays transparent at the top of the page.
+                    Opacity-only crossfade — the backdrop-blur is static, never
+                    animated; reduced motion swaps instantly. */}
+                <div
+                    aria-hidden="true"
+                    className={`pointer-events-none absolute inset-0 -z-10 border-b border-white/5 bg-quant-bg/70 backdrop-blur-md transition-opacity duration-300 motion-reduce:transition-none ${
+                        scrolled ? "opacity-100" : "opacity-0"
+                    }`}
+                />
+
                 <Link
                     href="/"
                     className={`flex items-center gap-3 sm:gap-4 cursor-pointer ${focusRing}`}

@@ -136,6 +136,14 @@ export function Founder() {
 
     return (
         <section className="py-24 relative" id="founder" ref={sectionRef}>
+            {/* Section seam — hairline + center glyph at the section's top edge */}
+            <div aria-hidden="true" className="absolute inset-x-0 top-0 pointer-events-none">
+                <div className="relative mx-auto max-w-5xl px-6">
+                    <div className="h-px w-full bg-gradient-to-r from-transparent via-sky-400/25 to-transparent" />
+                    <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-1.5 w-1.5 rotate-45 border border-sky-400/40 bg-quant-bg" />
+                </div>
+            </div>
+
             <div className="container mx-auto px-6 relative z-10">
                 <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-12">
                     {/* Photo — two-layer depth: portrait parallaxes against a counter-moving glow frame */}
@@ -152,22 +160,24 @@ export function Founder() {
                                 style={{
                                     y: depthOn ? glowY : 0,
                                     background:
-                                        "linear-gradient(135deg, rgba(59,130,246,0.35), rgba(34,211,238,0.12) 60%, transparent)",
+                                        "linear-gradient(135deg, rgba(56,189,248,0.35), rgba(139,92,246,0.2) 60%, transparent)",
                                     filter: "blur(18px)",
                                 }}
                             />
                             <motion.div
-                                className="absolute inset-0 rounded-2xl overflow-hidden border border-white/10"
+                                className="absolute inset-0 rounded-2xl p-px bg-gradient-to-b from-sky-400/25 via-white/8 to-violet-400/20"
                                 style={{ y: depthOn ? photoY : 0 }}
                             >
-                                {/* TODO: William — replace with real founder photo (1200×1200 sq, focus eyes) */}
-                                <Image
-                                    src="/founder.jpg"
-                                    alt="Bill Beltz, founder and lead engineer of QUANT LAB USA INC custom software and trading systems firm in Macon, Georgia"
-                                    fill
-                                    sizes="192px"
-                                    className="object-cover"
-                                />
+                                <div className="relative h-full w-full rounded-[15px] overflow-hidden">
+                                    {/* TODO: William — replace with real founder photo (1200×1200 sq, focus eyes) */}
+                                    <Image
+                                        src="/founder.jpg"
+                                        alt="Bill Beltz, founder and lead engineer of QUANT LAB USA INC custom software and trading systems firm in Macon, Georgia"
+                                        fill
+                                        sizes="192px"
+                                        className="object-cover"
+                                    />
+                                </div>
                             </motion.div>
                         </div>
                     </motion.div>
@@ -178,17 +188,23 @@ export function Founder() {
                         initial={false}
                         animate={revealed ? "show" : "hidden"}
                     >
-                        <motion.span
+                        <motion.div
                             variants={cascadeLine}
-                            className="inline-block text-quant-blue text-sm font-semibold tracking-[0.2em] uppercase mb-3"
+                            aria-hidden="true"
+                            className="flex items-center gap-3 mb-5"
                         >
-                            Who We Are
-                        </motion.span>
+                            <span className="h-px w-6 bg-gradient-to-r from-transparent to-sky-400/60" />
+                            <span className="font-mono text-[11px] tracking-[0.3em] uppercase text-sky-400/90">SEC · 05 — WHO BUILDS IT</span>
+                            <span className="h-px w-6 bg-gradient-to-l from-transparent to-sky-400/60" />
+                        </motion.div>
                         <motion.h2
                             variants={cascadeLine}
-                            className="text-3xl md:text-4xl font-bold text-white mb-4"
+                            className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-4"
                         >
-                            William Beltz
+                            William{" "}
+                            <span className="bg-gradient-to-r from-sky-300 via-cyan-200 to-violet-300 bg-clip-text text-transparent">
+                                Beltz
+                            </span>
                         </motion.h2>
                         <motion.p
                             variants={cascadeLine}

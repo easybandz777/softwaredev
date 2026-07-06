@@ -433,3 +433,57 @@ body {
         display: none;
     }
 }
+
+/* ------------------------------------------------------------------------
+   PRECISION INSTRUMENT — shared design-system utilities (foundation lane).
+   Strictly additive: no rule above this block is modified. These are the
+   sanctioned shared classes for the sitewide design pass:
+
+   .ql-sheen-host / .ql-sheen-bar — hover sheen for Button primary/glass
+   variants (design-language item 6). The host clips an absolutely
+   positioned, skewed white/10 gradient bar; on hover (or keyboard focus)
+   the bar sweeps across the host in 600ms. Transform-only, so the sweep
+   runs entirely on the compositor. The transition lives INSIDE the
+   hover/focus rule, so hover-out snaps the bar back instantly (no reverse
+   sweep) and a quick re-hover always fires a fresh pass. Gated to
+   hover-capable fine pointers + motion-safe: touch devices and
+   reduced-motion users never see any movement — the resting state is the
+   complete visual (static-complete).
+
+   Usage (inside an overflow-hidden button/CTA):
+       <button className="ql-sheen-host ...">
+           <span aria-hidden className="ql-sheen-bar" />
+           ...
+       </button>
+   ------------------------------------------------------------------------ */
+
+.ql-sheen-host {
+    position: relative;
+    overflow: hidden;
+}
+
+.ql-sheen-bar {
+    position: absolute;
+    top: -25%;
+    bottom: -25%;
+    left: -45%;
+    width: 35%;
+    pointer-events: none;
+    background: linear-gradient(
+        105deg,
+        transparent,
+        rgba(255, 255, 255, 0.10) 50%,
+        transparent
+    );
+    transform: skewX(-18deg) translateX(0);
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .ql-sheen-host:hover .ql-sheen-bar,
+    .ql-sheen-host:focus-visible .ql-sheen-bar {
+        /* 460% of the bar's own 35% width ≈ 161% of the host: the bar
+           starts fully off the left edge and finishes fully off the right. */
+        transform: skewX(-18deg) translateX(460%);
+        transition: transform 600ms cubic-bezier(0.33, 1, 0.68, 1);
+    }
+}

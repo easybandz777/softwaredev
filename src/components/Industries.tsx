@@ -86,6 +86,13 @@ export function Industries() {
 
     return (
         <section id="industries" className="py-16 relative overflow-hidden">
+            {/* Section seam — hairline + center glyph at the section's top edge */}
+            <div aria-hidden="true" className="absolute inset-x-0 top-0 pointer-events-none">
+                <div className="relative mx-auto max-w-5xl px-6">
+                    <div className="h-px w-full bg-gradient-to-r from-transparent via-sky-400/25 to-transparent" />
+                    <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-1.5 w-1.5 rotate-45 border border-sky-400/40 bg-quant-bg" />
+                </div>
+            </div>
             {/* One-shot scan-line sweep: a full-height carrier translates from
                 y:-100% to 0 so the glow band on its bottom edge crosses the
                 section exactly once — transform/opacity only, no layout
@@ -109,10 +116,13 @@ export function Industries() {
             </div>
             <div className="container mx-auto px-6 relative z-10">
                 <FadeUp>
-                    <div className="text-center mb-10">
-                        <p className="text-xs font-semibold tracking-[0.2em] uppercase text-gray-400">
-                            Industries We've Built For
-                        </p>
+                    {/* The eyebrow pattern is decorative (aria-hidden); the sr-only
+                        heading keeps the section's original accessible label. */}
+                    <h2 className="sr-only">Industries We've Built For</h2>
+                    <div className="flex items-center justify-center gap-3 mb-10" aria-hidden="true">
+                        <span className="h-px w-6 bg-gradient-to-r from-transparent to-sky-400/60" />
+                        <span className="font-mono text-[11px] tracking-[0.3em] uppercase text-sky-400/90">SEC · 03 — WHERE WE'VE SHIPPED</span>
+                        <span className="h-px w-6 bg-gradient-to-l from-transparent to-sky-400/60" />
                     </div>
                 </FadeUp>
                 {/* Lighter than the Services cards but no longer flat:
@@ -121,7 +131,7 @@ export function Industries() {
                     card face for a sheen or a rectangular shadow to sit
                     on). Tilt is fine-pointer only and reduced-motion
                     inert; the icon color shift survives every tier. */}
-                <div ref={chipsRef} className="flex flex-wrap justify-center gap-8 md:gap-16">
+                <div ref={chipsRef} className="flex flex-wrap justify-center gap-4 md:gap-8">
                     {industries.map(({ icon: Icon, label }, idx) => (
                         <motion.div
                             key={label}
@@ -147,16 +157,39 @@ export function Industries() {
                                 shadow={false}
                                 floatIndex={idx}
                             >
+                                {/* Gradient hairline surface (small-radius pill
+                                    variant): 1px gradient ring via p-px wrapper.
+                                    The pill background + static backdrop blur live
+                                    on an absolutely-positioned aria-hidden layer —
+                                    backdrop-filter on the content element itself
+                                    would flatten the Tilt3D.Layer depth planes.
+                                    Hover intensifies the ring via an opacity
+                                    crossfade of a duplicate gradient (opacity
+                                    only; decorative, so touch loses nothing). */}
                                 <div
-                                    className="group flex items-center gap-3 text-gray-400"
+                                    className="group relative rounded-full p-px bg-gradient-to-b from-sky-400/25 via-white/8 to-violet-400/20"
                                     style={{ transformStyle: "preserve-3d" }}
                                 >
-                                    <Tilt3D.Layer z={30}>
-                                        <Icon className="w-5 h-5 text-gray-400 transition-colors duration-[250ms] ease-out group-hover:text-sky-400" />
-                                    </Tilt3D.Layer>
-                                    <Tilt3D.Layer z={16}>
-                                        <span className="text-sm font-medium">{label}</span>
-                                    </Tilt3D.Layer>
+                                    <span
+                                        aria-hidden="true"
+                                        className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-b from-sky-400/50 via-white/8 to-violet-400/40 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                                    />
+                                    <span
+                                        aria-hidden="true"
+                                        className="pointer-events-none absolute inset-px rounded-full bg-quant-card/80 backdrop-blur-sm [box-shadow:inset_0_1px_0_rgba(255,255,255,0.06)]"
+                                        style={{ transform: "translateZ(0)" }}
+                                    />
+                                    <div
+                                        className="relative flex items-center gap-3 px-5 py-2.5 text-gray-400"
+                                        style={{ transformStyle: "preserve-3d" }}
+                                    >
+                                        <Tilt3D.Layer z={30}>
+                                            <Icon className="w-5 h-5 text-gray-400 transition-colors duration-[250ms] ease-out group-hover:text-sky-400" />
+                                        </Tilt3D.Layer>
+                                        <Tilt3D.Layer z={16}>
+                                            <span className="text-sm font-medium">{label}</span>
+                                        </Tilt3D.Layer>
+                                    </div>
                                 </div>
                             </Tilt3D>
                         </motion.div>

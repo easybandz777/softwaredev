@@ -15,8 +15,12 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
  * - Specular glare: a pointer-following radial sheen PLUS a linear sweep
  *   band whose angle/position ride the tilt vars, PLUS a rim-light that
  *   ignites on whichever edge is tilted toward the viewer.
- * - Dynamic shadow: a three-layer box-shadow (key, ambient, accent glow)
- *   that shifts opposite the tilt and deepens while hovered.
+ * - Dynamic shadow: constant rest terms float the card off the page, plus a
+ *   three-layer hover trio (key, ambient, accent glow) that shifts opposite
+ *   the tilt and deepens while hovered.
+ * - Precision Instrument surface (v3 pass): a static 1px gradient hairline
+ *   ring (masked, radius-aware) plus a pointer-position rim light along the
+ *   same ring — both live behind the glare prop and never attach to chips.
  * - Idle life: an optional CSS-only staggered float (floatIndex prop) so
  *   the grid breathes before any interaction. Pure compositor work,
  *   disabled under prefers-reduced-motion, damped on coarse pointers.
@@ -51,10 +55,13 @@ interface Tilt3DProps {
      * duration variance (6-8s loop, ~4px amplitude). Omit to disable.
      */
     floatIndex?: number;
-    /** Render the specular overlay (sheen + sweep + rim). Default true. */
+    /** Render the surface overlays (gradient hairline ring, pointer rim
+     *  light, sheen + sweep). Default true — disable for chips without a
+     *  card face, where a rectangular ring would betray the box. */
     glare?: boolean;
-    /** Drive the dynamic depth shadow. Default true — disable for chips
-     *  without a card face, where a rectangular shadow would betray the box. */
+    /** Drive the depth shadow (constant rest lift + dynamic hover deepen).
+     *  Default true — disable for chips without a card face, where a
+     *  rectangular shadow would betray the box. */
     shadow?: boolean;
 }
 
@@ -77,10 +84,14 @@ const RECT_REFRESH_DEBOUNCE_MS = 120;
 const RETURN_TRANSITION =
     "transform 480ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 480ms cubic-bezier(0.22, 1, 0.36, 1)";
 
-/* Three-layer depth shadow: key shadow counters the tilt, a broader ambient
- * layer grounds it, and a faint sky-blue underglow sells the lit-glass read.
- * All terms resolve to invisible at --tilt-shadow: 0. */
+/* Depth shadow: two constant rest terms keep the card sitting OFF the page
+ * before any interaction, then the var-driven trio (key counters the tilt,
+ * broader ambient grounds it, faint sky underglow sells the lit-glass read)
+ * deepens it on hover. The var terms resolve to invisible at
+ * --tilt-shadow: 0, so the rest state is exactly the two constants. */
 const CARD_SHADOW = [
+    "0 16px 40px -18px rgba(2, 6, 23, 0.55)",
+    "0 4px 14px -8px rgba(2, 6, 23, 0.5)",
     "var(--tilt-sx, 0px) var(--tilt-sy, 0px) 30px -6px rgba(2, 6, 23, var(--tilt-shadow, 0))",
     "calc(var(--tilt-sx, 0px) * 1.8) calc(var(--tilt-sy, 0px) * 1.8 + 14px) 48px -10px rgba(2, 6, 23, calc(var(--tilt-shadow, 0) * 0.85))",
     "calc(var(--tilt-sx, 0px) * 1.2) calc(var(--tilt-sy, 0px) * 1.2 + 22px) 44px -18px rgba(56, 189, 248, calc(var(--tilt-shadow, 0) * 0.3))",
@@ -98,9 +109,33 @@ const GLARE_BACKGROUND = [
     "linear-gradient(270deg, rgba(125, 211, 252, var(--tilt-rim-r, 0)), transparent 13%)",
     "linear-gradient(180deg, rgba(165, 243, 252, var(--tilt-rim-t, 0)), transparent 13%)",
     "linear-gradient(0deg, rgba(165, 243, 252, var(--tilt-rim-b, 0)), transparent 13%)",
-    "linear-gradient(calc(115deg + var(--tilt-ry, 0deg) * 6), transparent calc(var(--tilt-sweep, 50%) - 22%), rgba(226, 232, 240, 0.05) calc(var(--tilt-sweep, 50%) - 7%), rgba(226, 232, 240, 0.11) var(--tilt-sweep, 50%), rgba(226, 232, 240, 0.05) calc(var(--tilt-sweep, 50%) + 7%), transparent calc(var(--tilt-sweep, 50%) + 22%))",
+    "linear-gradient(calc(115deg + var(--tilt-ry, 0deg) * 6), transparent calc(var(--tilt-sweep, 50%) - 22%), rgba(186, 230, 253, 0.05) calc(var(--tilt-sweep, 50%) - 7%), rgba(186, 230, 253, 0.11) var(--tilt-sweep, 50%), rgba(186, 230, 253, 0.05) calc(var(--tilt-sweep, 50%) + 7%), transparent calc(var(--tilt-sweep, 50%) + 22%))",
     "radial-gradient(420px circle at var(--tilt-gx, 50%) var(--tilt-gy, 50%), rgba(56, 189, 248, 0.14), rgba(56, 189, 248, 0.05) 42%, transparent 72%)",
 ].join(", ");
+
+/* "Precision Instrument" hairline: a full-bleed gradient masked down to its
+ * 1px padding ring (content-box XOR border-box). mask-clip honors
+ * border-radius, so the ring follows the house rounded-2xl corners. The
+ * -webkit- pair is a fallback; the standard pair (declared last) wins where
+ * supported. */
+const HAIRLINE_MASK: React.CSSProperties = {
+    padding: "1px",
+    WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+    WebkitMaskComposite: "xor",
+    mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+    maskComposite: "exclude",
+};
+
+/* Rest ring: sky-400/25 → white/8 → violet-400/20, the sitewide surface ink. */
+const HAIRLINE_GRADIENT =
+    "linear-gradient(to bottom, rgba(56, 189, 248, 0.25), rgba(255, 255, 255, 0.08) 50%, rgba(167, 139, 250, 0.2))";
+
+/* Pointer rim light: a hot spot that rides --tilt-gx/--tilt-gy along the
+ * same masked 1px ring, so the border ignites where the cursor is. Gated by
+ * --tilt-glare, so it is fully absent at rest, on touch, and under
+ * prefers-reduced-motion. */
+const RIM_LIGHT_GRADIENT =
+    "radial-gradient(240px circle at var(--tilt-gx, 50%) var(--tilt-gy, 50%), rgba(125, 211, 252, 0.7), rgba(56, 189, 248, 0.28) 45%, transparent 75%)";
 
 /* Idle float keyframes, hoisted+deduped by React 19 via href/precedence.
  * CSS-only: compositor transform, no JS ticking, media-query gated. */
@@ -446,20 +481,42 @@ export function Tilt3D({
                 }}
             >
                 {children}
-                {/* Specular overlay: pointer sheen + tilt-driven sweep band +
-                    near-edge rim light. Sits at z=0 (the glass face), so
-                    translateZ-lifted internals render above it. */}
+                {/* Surface + specular overlays, painted bottom-to-top:
+                    1. gradient hairline — the static 1px Precision Instrument
+                       ring, always visible (SSR/rest-state complete);
+                    2. pointer rim light — the same ring, ignited around the
+                       cursor position (--tilt-glare gated);
+                    3. glare — pointer sheen + tilt-driven sweep band +
+                       near-edge rim washes.
+                    All sit at z=0 (the glass face), so translateZ-lifted
+                    internals render above them. */}
                 {glare ? (
-                    <div
-                        aria-hidden="true"
-                        className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl"
-                        style={{
-                            opacity: "var(--tilt-glare, 0)",
-                            transition: "opacity 240ms ease",
-                            background: GLARE_BACKGROUND,
-                            boxShadow: "inset 0 0 0 1px rgba(148, 163, 184, 0.1)",
-                        }}
-                    />
+                    <>
+                        <div
+                            aria-hidden="true"
+                            className="pointer-events-none absolute inset-0 rounded-2xl"
+                            style={{ ...HAIRLINE_MASK, background: HAIRLINE_GRADIENT }}
+                        />
+                        <div
+                            aria-hidden="true"
+                            className="pointer-events-none absolute inset-0 rounded-2xl"
+                            style={{
+                                ...HAIRLINE_MASK,
+                                background: RIM_LIGHT_GRADIENT,
+                                opacity: "var(--tilt-glare, 0)",
+                                transition: "opacity 240ms ease",
+                            }}
+                        />
+                        <div
+                            aria-hidden="true"
+                            className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl"
+                            style={{
+                                opacity: "var(--tilt-glare, 0)",
+                                transition: "opacity 240ms ease",
+                                background: GLARE_BACKGROUND,
+                            }}
+                        />
+                    </>
                 ) : null}
             </div>
         </div>

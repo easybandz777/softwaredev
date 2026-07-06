@@ -255,24 +255,31 @@ function StackChip({
                     ? { y: -3, transition: { type: "spring", stiffness: 120, damping: 12 } }
                     : undefined
             }
-            className="px-3.5 py-1.5 rounded-full text-sm font-medium border border-white/8 bg-white/4 text-gray-300 hover:border-quant-blue/40 hover:text-white hover:bg-quant-blue/8 transition-colors duration-200 cursor-default"
+            className="group relative inline-flex rounded-full p-px bg-gradient-to-b from-sky-400/25 via-white/8 to-violet-400/20 cursor-default"
         >
-            <motion.span
-                className="inline-block"
-                animate={drift ? { y: [0, -2.5, 0] } : { y: 0 }}
-                transition={
-                    drift
-                        ? {
-                            duration: 5.5 + (index % 4) * 0.8,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                            delay: (index % 7) * 0.4,
-                        }
-                        : { duration: 0.2 }
-                }
-            >
-                {tech}
-            </motion.span>
+            {/* Hover: hairline intensifies via opacity-crossfade of a duplicate gradient layer */}
+            <span
+                aria-hidden="true"
+                className="absolute inset-0 rounded-full bg-gradient-to-b from-sky-400/50 via-white/8 to-violet-400/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
+            />
+            <span className="relative rounded-full px-3.5 py-1.5 text-sm font-medium bg-quant-card/80 backdrop-blur-sm text-gray-300 group-hover:text-white transition-colors duration-200">
+                <motion.span
+                    className="inline-block"
+                    animate={drift ? { y: [0, -2.5, 0] } : { y: 0 }}
+                    transition={
+                        drift
+                            ? {
+                                duration: 5.5 + (index % 4) * 0.8,
+                                repeat: Infinity,
+                                ease: "easeInOut",
+                                delay: (index % 7) * 0.4,
+                            }
+                            : { duration: 0.2 }
+                    }
+                >
+                    {tech}
+                </motion.span>
+            </span>
         </motion.span>
     );
 }
@@ -295,7 +302,17 @@ export function About() {
     const stackRevealed = !motionOK || stackInView;
 
     return (
-        <section className="py-28 relative overflow-hidden bg-black/40 border-y border-white/5" id="about">
+        <section className="py-28 relative overflow-hidden bg-black/40" id="about">
+            {/* Section seam — hairline + center glyph at the section's top edge.
+                The glyph square matches this section's composited backdrop
+                (quant-bg under the 40% black wash), not raw quant-bg. */}
+            <div aria-hidden="true" className="absolute inset-x-0 top-0 pointer-events-none">
+                <div className="relative mx-auto max-w-5xl px-6">
+                    <div className="h-px w-full bg-gradient-to-r from-transparent via-sky-400/25 to-transparent" />
+                    <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-1.5 w-1.5 rotate-45 border border-sky-400/40 bg-[color-mix(in_srgb,var(--color-quant-bg)_60%,black)]" />
+                </div>
+            </div>
+
             <div
                 aria-hidden="true"
                 className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-quant-blue/8 rounded-full blur-[140px] pointer-events-none"
@@ -306,12 +323,14 @@ export function About() {
                 <div className="flex flex-col lg:flex-row items-start gap-16 mb-20">
 
                     <Reveal className="w-full lg:w-1/2 flex flex-col justify-center">
-                        <span className="inline-block text-quant-blue text-sm font-semibold tracking-[0.2em] uppercase mb-5">
-                            How We Work
-                        </span>
-                        <h2 className="text-4xl md:text-5xl font-bold mb-7 leading-tight">
+                        <div className="flex items-center gap-3 mb-5" aria-hidden="true">
+                            <span className="h-px w-6 bg-gradient-to-r from-transparent to-sky-400/60" />
+                            <span className="font-mono text-[11px] tracking-[0.3em] uppercase text-sky-400/90">SEC · 04 — THE PROOF</span>
+                            <span className="h-px w-6 bg-gradient-to-l from-transparent to-sky-400/60" />
+                        </div>
+                        <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-7 leading-tight">
                             Full-stack means{" "}
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-quant-blue to-cyan-400">
+                            <span className="bg-gradient-to-r from-sky-300 via-cyan-200 to-violet-300 bg-clip-text text-transparent">
                                 the whole thing.
                             </span>
                         </h2>
@@ -330,7 +349,7 @@ export function About() {
                                     key={stat.label}
                                     className="rounded-xl border border-white/8 bg-[#0d1526]/70 backdrop-blur-sm p-5"
                                 >
-                                    <p className="text-3xl md:text-4xl xl:text-5xl font-black font-mono tracking-tight tabular-nums mb-1 text-transparent bg-clip-text bg-gradient-to-r from-quant-blue to-cyan-400">
+                                    <p className="text-3xl md:text-4xl xl:text-5xl font-black font-mono tracking-tight tabular-nums mb-1 bg-gradient-to-r from-sky-300 via-cyan-200 to-violet-300 bg-clip-text text-transparent">
                                         <StatValue value={stat.value} />
                                     </p>
                                     <p className="text-xs text-gray-400 font-medium">{stat.label}</p>
@@ -342,23 +361,30 @@ export function About() {
                     <Reveal delay={0.2} className="w-full lg:w-1/2">
                         <div
                             ref={diagramRef}
-                            className="relative rounded-2xl border border-white/8 bg-[#080e1c]/80 backdrop-blur-sm p-6 overflow-hidden"
+                            className="relative rounded-2xl p-px bg-gradient-to-b from-sky-400/25 via-white/8 to-violet-400/20"
                         >
-                            <p className="text-xs font-semibold tracking-[0.2em] uppercase text-gray-400 mb-5">
-                                System Architecture
-                            </p>
+                            <div className="relative rounded-[15px] bg-quant-card/80 backdrop-blur-sm p-6 overflow-hidden [box-shadow:inset_0_1px_0_rgba(255,255,255,0.06)]">
+                                <span aria-hidden="true" className="absolute left-2 top-2 h-2.5 w-2.5 border-l border-t border-sky-400/30 pointer-events-none" />
+                                <span aria-hidden="true" className="absolute right-2 top-2 h-2.5 w-2.5 border-r border-t border-sky-400/30 pointer-events-none" />
+                                <span aria-hidden="true" className="absolute bottom-2 left-2 h-2.5 w-2.5 border-b border-l border-sky-400/30 pointer-events-none" />
+                                <span aria-hidden="true" className="absolute bottom-2 right-2 h-2.5 w-2.5 border-b border-r border-sky-400/30 pointer-events-none" />
 
-                            <div className="flex flex-col gap-2">
-                                {layers.map((layer, i) => (
-                                    <ArchLayer
-                                        key={layer.id}
-                                        layer={layer}
-                                        index={i}
-                                        progress={diagramProgress}
-                                        parallax={ambientMotion}
-                                        revealed={archRevealed}
-                                    />
-                                ))}
+                                <p className="text-xs font-semibold tracking-[0.2em] uppercase text-gray-400 mb-5">
+                                    System Architecture
+                                </p>
+
+                                <div className="flex flex-col gap-2">
+                                    {layers.map((layer, i) => (
+                                        <ArchLayer
+                                            key={layer.id}
+                                            layer={layer}
+                                            index={i}
+                                            progress={diagramProgress}
+                                            parallax={ambientMotion}
+                                            revealed={archRevealed}
+                                        />
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     </Reveal>

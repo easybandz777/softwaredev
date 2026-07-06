@@ -75,6 +75,29 @@ export function Hero() {
                 }}
             />
 
+            {/* HUD frame — instrument chrome around the hero viewport: four
+                corner brackets (24px inset, 20px arms) plus two mono readouts.
+                Decorative only (aria-hidden), desktop/tablet only, fades in
+                with the tail of the entrance sequence. */}
+            <motion.div
+                aria-hidden="true"
+                initial={reduceMotion ? false : { opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: reduceMotion ? 0 : 1.2, ease: "easeOut" }}
+                className="absolute inset-0 z-[3] pointer-events-none hidden sm:block"
+            >
+                <span className="absolute left-6 top-6 h-5 w-5 border-l border-t border-sky-400/25" />
+                <span className="absolute right-6 top-6 h-5 w-5 border-r border-t border-sky-400/25" />
+                <span className="absolute left-6 bottom-6 h-5 w-5 border-l border-b border-sky-400/25" />
+                <span className="absolute right-6 bottom-6 h-5 w-5 border-r border-b border-sky-400/25" />
+                <span className="absolute left-14 bottom-7 font-mono text-[10px] tracking-[0.25em] text-gray-500 whitespace-nowrap">
+                    {"32.84° N / 83.63° W — MACON, GA"}
+                </span>
+                <span className="absolute right-14 bottom-7 font-mono text-[10px] tracking-[0.25em] text-gray-500 whitespace-nowrap">
+                    {"SYSTEMS · LIVE"}
+                </span>
+            </motion.div>
+
             {/* Content */}
             <div className="container mx-auto px-6 relative z-10 flex flex-col items-center text-center">
 

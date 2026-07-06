@@ -391,6 +391,21 @@ function StatValue({ value, suffix, run }: { value: number; suffix: string; run:
 }
 
 /* ------------------------------------------------------------------ */
+/* Corner ticks — Precision Instrument L-bracket marks (decorative)    */
+/* ------------------------------------------------------------------ */
+
+function CornerTicks() {
+    return (
+        <>
+            <span aria-hidden="true" className="pointer-events-none absolute left-2 top-2 h-2.5 w-2.5 border-l border-t border-sky-400/30" />
+            <span aria-hidden="true" className="pointer-events-none absolute right-2 top-2 h-2.5 w-2.5 border-r border-t border-sky-400/30" />
+            <span aria-hidden="true" className="pointer-events-none absolute bottom-2 left-2 h-2.5 w-2.5 border-b border-l border-sky-400/30" />
+            <span aria-hidden="true" className="pointer-events-none absolute bottom-2 right-2 h-2.5 w-2.5 border-b border-r border-sky-400/30" />
+        </>
+    );
+}
+
+/* ------------------------------------------------------------------ */
 /* Section                                                             */
 /* ------------------------------------------------------------------ */
 
@@ -436,6 +451,11 @@ export function CapabilityMatrix() {
 
     return (
         <section id="capabilities" className="relative overflow-x-clip">
+            {/* Section seam — Precision Instrument hairline separator */}
+            <div aria-hidden="true" className="relative mx-auto max-w-5xl px-6">
+                <div className="h-px w-full bg-gradient-to-r from-transparent via-sky-400/25 to-transparent" />
+                <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-1.5 w-1.5 rotate-45 border border-sky-400/40 bg-quant-bg" />
+            </div>
             {/* Pin geometry is pure CSS (motion-safe + lg + min-height 800px),
                 so reduced-motion and short-viewport users get the plain static
                 section from first paint — no post-hydration class swap, zero
@@ -452,12 +472,14 @@ export function CapabilityMatrix() {
 
                     <div className="container mx-auto px-6 relative z-10 w-full">
                         <div className="text-center max-w-3xl mx-auto mb-12 lg:mb-8">
-                            <span className="inline-block text-quant-blue text-sm font-semibold tracking-[0.2em] uppercase mb-4">
-                                How We Build
-                            </span>
-                            <h2 className="text-4xl md:text-5xl font-bold mb-5 leading-tight">
+                            <div className="flex items-center justify-center gap-3 mb-5" aria-hidden="true">
+                                <span className="h-px w-6 bg-gradient-to-r from-transparent to-sky-400/60" />
+                                <span className="font-mono text-[11px] tracking-[0.3em] uppercase text-sky-400/90">SEC · 02 — HOW WE BUILD</span>
+                                <span className="h-px w-6 bg-gradient-to-l from-transparent to-sky-400/60" />
+                            </div>
+                            <h2 className="text-4xl md:text-5xl font-bold mb-5 leading-tight tracking-tight">
                                 One stack.{" "}
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-quant-blue to-cyan-400">
+                                <span className="bg-gradient-to-r from-sky-300 via-cyan-200 to-violet-300 bg-clip-text text-transparent">
                                     Assembled end to end.
                                 </span>
                             </h2>
@@ -469,34 +491,46 @@ export function CapabilityMatrix() {
 
                         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,11fr)_minmax(0,9fr)] gap-10 lg:gap-14 items-center">
                             <div className="relative flex justify-center">
-                                <Schematic progress={scrollYProgress} animated={animated} />
+                                {/* Sized wrapper mirrors the svg's width tiers so the
+                                    corner ticks hug the schematic panel exactly. */}
+                                <div className="relative w-full max-w-[440px] lg:w-auto lg:max-w-none">
+                                    <CornerTicks />
+                                    <Schematic progress={scrollYProgress} animated={animated} />
+                                </div>
                             </div>
 
                             <div className="flex flex-col gap-6">
-                                <div className="rounded-xl border border-white/8 bg-[#0a101e]/80 backdrop-blur-sm overflow-hidden">
-                                    <div className="flex items-center gap-2 px-4 py-2.5 border-b border-white/5">
-                                        <span aria-hidden="true" className="w-2.5 h-2.5 rounded-full bg-red-400/30" />
-                                        <span aria-hidden="true" className="w-2.5 h-2.5 rounded-full bg-amber-400/30" />
-                                        <span aria-hidden="true" className="w-2.5 h-2.5 rounded-full bg-emerald-400/30" />
-                                        <span className="ml-2 font-mono text-[11px] tracking-wider text-gray-400">
-                                            quantlab · build.log
-                                        </span>
-                                    </div>
-                                    <div className="p-5 font-mono text-[12.5px] leading-relaxed flex flex-col gap-1.5">
-                                        <div className="flex items-baseline gap-3">
-                                            <span className="text-gray-400"># quantlab — system assembly</span>
+                                {/* Gradient hairline surface: 1px gradient ring via
+                                    p-px wrapper + top inner light; the old solid
+                                    border-white/8 is retired. Static styling only —
+                                    all assembly mechanics are unchanged. */}
+                                <div className="rounded-2xl p-px bg-gradient-to-b from-sky-400/25 via-white/8 to-violet-400/20">
+                                    <div className="relative rounded-[15px] bg-quant-card/80 backdrop-blur-sm overflow-hidden [box-shadow:inset_0_1px_0_rgba(255,255,255,0.06)]">
+                                        <CornerTicks />
+                                        <div className="flex items-center gap-2 px-4 py-2.5 border-b border-white/5">
+                                            <span aria-hidden="true" className="w-2.5 h-2.5 rounded-full bg-red-400/30" />
+                                            <span aria-hidden="true" className="w-2.5 h-2.5 rounded-full bg-amber-400/30" />
+                                            <span aria-hidden="true" className="w-2.5 h-2.5 rounded-full bg-emerald-400/30" />
+                                            <span className="ml-2 font-mono text-[11px] tracking-wider text-gray-400">
+                                                quantlab · build.log
+                                            </span>
                                         </div>
-                                        {LOG_LINES.map((line) => (
-                                            <LogLine key={line.text} line={line} progress={scrollYProgress} animated={animated} />
-                                        ))}
-                                        <div aria-hidden="true">
-                                            <motion.span
-                                                className="inline-block text-gray-500"
-                                                animate={reduced ? { opacity: 1 } : { opacity: [1, 0, 1] }}
-                                                transition={reduced ? undefined : { duration: 1.2, repeat: Infinity, ease: "linear" }}
-                                            >
-                                                ▍
-                                            </motion.span>
+                                        <div className="p-5 font-mono text-[12.5px] leading-relaxed flex flex-col gap-1.5">
+                                            <div className="flex items-baseline gap-3">
+                                                <span className="text-gray-400"># quantlab — system assembly</span>
+                                            </div>
+                                            {LOG_LINES.map((line) => (
+                                                <LogLine key={line.text} line={line} progress={scrollYProgress} animated={animated} />
+                                            ))}
+                                            <div aria-hidden="true">
+                                                <motion.span
+                                                    className="inline-block text-gray-500"
+                                                    animate={reduced ? { opacity: 1 } : { opacity: [1, 0, 1] }}
+                                                    transition={reduced ? undefined : { duration: 1.2, repeat: Infinity, ease: "linear" }}
+                                                >
+                                                    ▍
+                                                </motion.span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

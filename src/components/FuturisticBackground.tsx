@@ -38,8 +38,9 @@ import { usePathname } from "next/navigation";
  * perspective, which is not a transform.
  *
  * Ordering matters: nebula (farthest) -> stars -> horizon glow -> planes ->
- * streak -> vignette. The vignette is kept byte-identical and painted
- * last — it is what guarantees text contrast site-wide.
+ * streak -> vignette -> film grain. The vignette is kept byte-identical —
+ * it is what guarantees text contrast site-wide; the static grain paints
+ * last (topmost) so every gradient below it, vignette included, is dithered.
  */
 export function FuturisticBackground() {
     const pathname = usePathname();
@@ -80,6 +81,20 @@ export function FuturisticBackground() {
 
             {/* Radial vignette to darken edges */}
             <div className="absolute inset-0 bg-quant-bg [mask-image:radial-gradient(circle_at_center,transparent_30%,black_85%)]" />
+
+            {/* Film grain: static fractal-noise tile at 4% via overlay blend —
+                the TOPMOST child, so it dithers every gradient layer below,
+                including the vignette (the most banding-prone surface).
+                Rasterized once (128px SVG tile); NEVER animated. */}
+            <div
+                aria-hidden
+                className="absolute inset-0 opacity-[0.04] mix-blend-overlay"
+                style={{
+                    backgroundImage:
+                        "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='128' height='128' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E\")",
+                    backgroundSize: "128px 128px",
+                }}
+            />
         </div>
     );
 }

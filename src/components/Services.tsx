@@ -80,6 +80,24 @@ const services = [
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
+/* "Precision Instrument" hover ring: a full-bleed gradient masked down to
+ * its 1px padding ring (content-box XOR border-box) — the same technique as
+ * Tilt3D's HAIRLINE_MASK, which paints the card's rest-state ring. This
+ * brighter duplicate crossfades in on hover/focus (opacity only), the house
+ * hover recipe shared with ui/Card, the Industries pills, and the About
+ * chips. */
+const HOVER_RING_MASK: React.CSSProperties = {
+    padding: "1px",
+    WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+    WebkitMaskComposite: "xor",
+    mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+    maskComposite: "exclude",
+};
+
+/* Intensified stops: sky-400/50 → white/10 → violet-400/40. */
+const HOVER_RING_GRADIENT =
+    "linear-gradient(to bottom, rgba(56, 189, 248, 0.5), rgba(255, 255, 255, 0.1) 50%, rgba(167, 139, 250, 0.4))";
+
 /**
  * Post-mount motion gate. Always false on the server AND on the first client
  * render, so SSR HTML and the hydration render are byte-identical (fully
@@ -188,7 +206,7 @@ function ReelCardShell({ index, progress, step, active, children }: ReelCardShel
         <div className="relative h-full">
             <motion.span
                 aria-hidden="true"
-                className="pointer-events-none absolute -left-6 -top-16 hidden select-none font-mono text-[9rem] font-bold leading-none text-white/[0.045] motion-safe:lg:[@media(min-height:800px)]:block"
+                className="pointer-events-none absolute -left-6 -top-16 hidden select-none font-mono text-[9rem] font-bold leading-none text-white/[0.07] [-webkit-text-stroke:1px_rgba(255,255,255,0.10)] supports-[-webkit-text-stroke:1px_white]:text-transparent motion-safe:lg:[@media(min-height:800px)]:block"
                 style={active ? { x: ghostX } : { x: 0 }}
             >
                 {String(index + 1).padStart(2, "0")}
@@ -311,18 +329,27 @@ export function Services() {
             id="services"
             className="relative overflow-hidden py-24 motion-safe:lg:[@media(min-height:800px)]:h-[280vh] motion-safe:lg:[@media(min-height:800px)]:overflow-visible motion-safe:lg:[@media(min-height:800px)]:py-0"
         >
+            {/* Section seam — hairline + center glyph at the section's top edge */}
+            <div aria-hidden="true" className="absolute inset-x-0 top-0 pointer-events-none">
+                <div className="relative mx-auto max-w-5xl px-6">
+                    <div className="h-px w-full bg-gradient-to-r from-transparent via-sky-400/25 to-transparent" />
+                    <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-1.5 w-1.5 rotate-45 border border-sky-400/40 bg-quant-bg" />
+                </div>
+            </div>
             <div
                 ref={stickyRef}
                 className="relative z-10 motion-safe:lg:[@media(min-height:800px)]:sticky motion-safe:lg:[@media(min-height:800px)]:top-0 motion-safe:lg:[@media(min-height:800px)]:flex motion-safe:lg:[@media(min-height:800px)]:h-screen motion-safe:lg:[@media(min-height:800px)]:flex-col motion-safe:lg:[@media(min-height:800px)]:justify-center motion-safe:lg:[@media(min-height:800px)]:overflow-hidden"
             >
                 <div className="container mx-auto px-6">
                     <FadeUp className="mx-auto mb-20 max-w-3xl text-center motion-safe:lg:[@media(min-height:800px)]:mb-10">
-                        <span className="inline-block text-quant-blue text-sm font-semibold tracking-[0.2em] uppercase mb-4">
-                            What We Build
-                        </span>
-                        <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+                        <div className="flex items-center justify-center gap-3 mb-5" aria-hidden="true">
+                            <span className="h-px w-6 bg-gradient-to-r from-transparent to-sky-400/60" />
+                            <span className="font-mono text-[11px] tracking-[0.3em] uppercase text-sky-400/90">SEC · 01 — WHAT WE BUILD</span>
+                            <span className="h-px w-6 bg-gradient-to-l from-transparent to-sky-400/60" />
+                        </div>
+                        <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight tracking-tight">
                             Software that solves{" "}
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-quant-blue to-cyan-400">
+                            <span className="bg-gradient-to-r from-sky-300 via-cyan-200 to-violet-300 bg-clip-text text-transparent">
                                 real problems.
                             </span>
                         </h2>
@@ -338,11 +365,11 @@ export function Services() {
                         >
                             <div className="h-px w-56 overflow-hidden rounded-full bg-white/10">
                                 <motion.div
-                                    className="h-full w-full origin-left bg-gradient-to-r from-quant-blue to-cyan-400"
+                                    className="h-full w-full origin-left bg-gradient-to-r from-sky-300 via-cyan-200 to-violet-300"
                                     style={isReel ? { scaleX: progress } : { scaleX: 0 }}
                                 />
                             </div>
-                            <span className="font-mono text-xs tracking-[0.2em] text-gray-500">
+                            <span className="font-mono text-xs tracking-[0.25em] text-gray-500">
                                 {String(current).padStart(2, "0")} /{" "}
                                 {String(services.length).padStart(2, "0")}
                             </span>
@@ -374,7 +401,7 @@ export function Services() {
                                         <Tilt3D className="h-full" intensity={7} floatIndex={idx}>
                                             <Link
                                                 href={`/services/${service.slug}`}
-                                                className="group relative block h-full rounded-2xl border border-white/5 p-7 transition-colors hover:border-white/15 focus-visible:border-white/15"
+                                                className="group relative block h-full rounded-2xl p-7"
                                                 style={{ transformStyle: "preserve-3d" }}
                                             >
                                                 {/* Background and clipping live on this inner layer:
@@ -388,6 +415,19 @@ export function Services() {
                                                     aria-hidden="true"
                                                     className="pointer-events-none absolute inset-0 rounded-2xl bg-[#0d1526]/80 backdrop-blur-sm overflow-hidden motion-safe:lg:[@media(min-height:800px)]:bg-[#0d1526]/95 motion-safe:lg:[@media(min-height:800px)]:backdrop-blur-none"
                                                     style={{ transform: "translateZ(0)" }}
+                                                />
+                                                {/* Hover/focus edge: Tilt3D paints the rest-state 1px
+                                                    gradient ring; this brighter duplicate crossfades in
+                                                    (opacity only) — the sole edge treatment, so the
+                                                    hairline never doubles with a solid border. */}
+                                                <span
+                                                    aria-hidden="true"
+                                                    className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100"
+                                                    style={{
+                                                        ...HOVER_RING_MASK,
+                                                        background: HOVER_RING_GRADIENT,
+                                                        transform: "translateZ(0)",
+                                                    }}
                                                 />
                                                 {/* Card internals sit on Tilt3D.Layer depth planes so the
                                                     face separates into parallax glass when tilted. */}
