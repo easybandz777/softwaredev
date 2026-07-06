@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 import dynamic from "next/dynamic";
 import {
     motion,
@@ -72,34 +71,22 @@ export function Hero() {
                 className="absolute inset-0 pointer-events-none z-[1]"
                 style={{
                     background:
-                        "radial-gradient(ellipse at 50% 50%, transparent 40%, rgba(17,24,39,0.8) 100%)",
+                        "radial-gradient(ellipse at 50% 50%, transparent 48%, rgba(17,24,39,0.55) 100%)",
                 }}
             />
 
             {/* Content */}
             <div className="container mx-auto px-6 relative z-10 flex flex-col items-center text-center">
 
-                {/* Logo — centered above headline, visible on all sizes */}
+                {/* Stage room for the 3D orbital core — the scene itself is the
+                    brand mark here (the raster logo fought the icosahedron
+                    dead-center; the navbar carries the logo). Parallax rides on
+                    the spacer so the whole content block keeps its depth drift. */}
                 <motion.div
-                    initial={{ opacity: 0, scale: 0.92 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                    className="mb-8"
+                    className="h-40 sm:h-48 md:h-56"
+                    aria-hidden="true"
                     style={{ x: logoX, y: logoY }}
-                >
-                    <Image
-                        src="/logo-optimized.webp"
-                        alt="QUANT LAB USA INC custom software development and cybersecurity company logo"
-                        width={288}
-                        height={288}
-                        priority
-                        fetchPriority="high"
-                        className="w-56 sm:w-64 md:w-72 h-auto object-contain mx-auto"
-                        style={{
-                            filter: "drop-shadow(0 0 20px rgba(56,189,248,0.6))",
-                        }}
-                    />
-                </motion.div>
+                />
 
                 {/* Headline — word-by-word reveal, weight contrast */}
                 <motion.h1
@@ -107,7 +94,10 @@ export function Hero() {
                     style={{ x: headX, y: headY }}
                 >
                     {words.map((word, i) => {
-                        const isAccent = word === "Next" || word === "Level.";
+                        // Weight contrast that actually fires: the old accent
+                        // check matched words not in this sentence, so the
+                        // whole H1 rendered light gray.
+                        const isAccent = word === "software.";
                         return (
                             <motion.span
                                 key={word}
@@ -115,8 +105,8 @@ export function Hero() {
                                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                                 transition={{ duration: 0.65, delay: 0.1 + i * 0.12, ease: "easeOut" }}
                                 className={`inline-block mr-[0.25em] ${isAccent
-                                    ? "font-black text-white"
-                                    : "font-light text-gray-400"
+                                    ? "font-black text-white [text-shadow:0_0_28px_rgba(56,189,248,0.45)]"
+                                    : "font-light text-gray-300"
                                     }`}
                             >
                                 {word}
