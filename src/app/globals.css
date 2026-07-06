@@ -16,3 +16,420 @@ body {
   overflow-x: hidden;
   scroll-behavior: smooth;
 }
+
+/* ------------------------------------------------------------------------
+   ORBITAL CORE sitewide background (FuturisticBackground.tsx) — "qlbg"
+   Static CSS-3D perspective planes + far-Z color blobs. All motion here is
+   compositor-only (transform), desktop-only, and gated behind
+   prefers-reduced-motion: no-preference. Mobile (<640px) runs zero
+   animation: one static plane + vignette. Additive block — do not fold
+   into rules above.
+   ------------------------------------------------------------------------ */
+
+.qlbg-plane {
+    --qlbg-cell: 64px;
+    position: absolute;
+    left: -50%;
+    width: 200%;
+    height: 60vh;
+    overflow: hidden;
+}
+
+.qlbg-floor {
+    bottom: 0;
+    transform-origin: bottom;
+    transform: rotateX(78deg);
+    opacity: 0.05;
+}
+
+.qlbg-ceiling {
+    top: 0;
+    transform-origin: top;
+    transform: rotateX(-78deg);
+    opacity: 0.03;
+}
+
+/* Horizon fade moved OFF the rotated parent and ONTO the animated grid child
+   itself. A mask on the parent forces the animated child to re-composite
+   through a masked render surface every frame (main-thread raster storm —
+   this froze the whole site). With mask and content on the SAME layer, the
+   masked texture rasterizes once and the drift is pure compositor transform.
+   (The 64px drift makes the fade line travel imperceptibly at 5% opacity.) */
+.qlbg-floor .qlbg-grid {
+    -webkit-mask-image: linear-gradient(to top, black 20%, transparent 95%);
+    mask-image: linear-gradient(to top, black 20%, transparent 95%);
+}
+
+.qlbg-ceiling .qlbg-grid {
+    -webkit-mask-image: linear-gradient(to bottom, black 20%, transparent 95%);
+    mask-image: linear-gradient(to bottom, black 20%, transparent 95%);
+}
+
+/* Grid texture lives on an inner child so the drift animation never touches
+   the rotated plane itself. Bleeds one cell vertically so a one-cell
+   translate loops seamlessly. */
+.qlbg-grid {
+    position: absolute;
+    top: calc(var(--qlbg-cell) * -1);
+    bottom: calc(var(--qlbg-cell) * -1);
+    left: 0;
+    right: 0;
+    background-image:
+        linear-gradient(#38bdf8 1px, transparent 1px),
+        linear-gradient(90deg, #38bdf8 1px, transparent 1px);
+    background-size: var(--qlbg-cell) var(--qlbg-cell);
+}
+
+/* Atmospheric depth: two oversized radial blobs behind the planes. */
+.qlbg-blob {
+    position: absolute;
+    width: 100vmax;
+    height: 100vmax;
+}
+
+.qlbg-blob-violet {
+    top: -35vmax;
+    left: -30vmax;
+    background: radial-gradient(circle at center, rgba(129, 140, 248, 0.04), transparent 65%);
+    transform: translateZ(-300px);
+}
+
+.qlbg-blob-cyan {
+    bottom: -35vmax;
+    right: -30vmax;
+    background: radial-gradient(circle at center, rgba(34, 211, 238, 0.03), transparent 65%);
+    transform: translateZ(-300px);
+}
+
+/* Motion — desktop only, motion-safe only. Transform-only (compositor);
+   translating the grid by exactly one cell over 20s reads as a barely
+   perceptible forward glide. Blob drift periods are co-prime (53s / 67s)
+   so the ambient layer never visibly loops. */
+@keyframes qlbg-drift {
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(0, 64px, 0); }
+}
+
+@keyframes qlbg-blob-drift-a {
+    0%, 100% { transform: translateZ(-300px) translate3d(0, 0, 0); }
+    50% { transform: translateZ(-300px) translate3d(2%, 1.5%, 0); }
+}
+
+@keyframes qlbg-blob-drift-b {
+    0%, 100% { transform: translateZ(-300px) translate3d(0, 0, 0); }
+    50% { transform: translateZ(-300px) translate3d(-2%, -1.5%, 0); }
+}
+
+@media (min-width: 640px) and (prefers-reduced-motion: no-preference) {
+    .qlbg-grid-drift {
+        animation: qlbg-drift 20s linear infinite;
+    }
+
+    .qlbg-blob-violet {
+        animation: qlbg-blob-drift-a 53s ease-in-out infinite;
+    }
+
+    .qlbg-blob-cyan {
+        animation: qlbg-blob-drift-b 67s ease-in-out infinite;
+    }
+}
+
+/* Progressive enhancement: pure-CSS scroll-driven parallax on the floor
+   plane (Chromium). No-op on Firefox / older Safari — the static
+   rotateX(78deg) base transform remains. Also inert on pages too short to
+   scroll (inactive timeline falls back to the base transform). */
+/* (Scroll-timeline floor parallax removed: scroll-linked keyframes on a
+   3D-rotated element fall back to main-thread animation ticking in
+   Chromium — contributed to the sitewide freeze. The static rotateX base
+   transform stays; the hero canvas carries the scroll-depth effect.) */
+
+/* Mobile tier (<640px): completely static — ceiling removed, floor dimmed,
+   tighter cells. Battery-safe: literally zero animation running. */
+@media (max-width: 639.98px) {
+    .qlbg-floor {
+        --qlbg-cell: 56px;
+        opacity: 0.04;
+    }
+
+    .qlbg-ceiling {
+        display: none;
+    }
+}
+
+/* Reduced motion: kill every qlbg keyframe (belt-and-suspenders — the
+   animations above are already motion-safe gated). The static perspective
+   planes remain: still visibly 3D, never blank, never spinning. */
+@media (prefers-reduced-motion: reduce) {
+    .qlbg-floor,
+    .qlbg-grid-drift,
+    .qlbg-blob-violet,
+    .qlbg-blob-cyan {
+        animation: none;
+    }
+}
+
+/* ------------------------------------------------------------------------
+   DEPTH FIELD v2 — density/spectacle pass over the ORBITAL CORE layer
+   (FuturisticBackground.tsx). Strictly additive: everything below either
+   introduces new qlbg2-* utilities or overrides v1 values through higher-
+   specificity combo selectors (e.g. .qlbg-floor.qlbg2-floor). No v1 rule
+   above is modified. The v1 .qlbg-blob-violet/.qlbg-blob-cyan utilities
+   are no longer referenced by the markup (superseded by the qlbg2 nebula
+   set below) but are intentionally left in place.
+
+   Budget: zero JS. Every animation is transform/opacity-only (compositor
+   thread), desktop-only (>=640px), motion-safe-only. All textures are
+   gradient fills rasterized once. Main-thread cost per frame: 0ms.
+   ------------------------------------------------------------------------ */
+
+/* 1. NEBULA DEPTH — three oversized soft glow blobs framing the content:
+      violet upper-left, sky upper-right, cyan lower-right. The two-stop
+      falloff reads denser than v1's single stop while peaking at 5–6.5%
+      alpha. Drift periods are co-prime (73s / 89s / 97s) so the trio never
+      visibly syncs or loops. No will-change: the running animations keep
+      these on their own compositor layers already. */
+.qlbg2-blob {
+    position: absolute;
+    /* Own compositor layer up front: the drift animations then never touch
+       the main thread (texture rasterized once, moved on the GPU). */
+    will-change: transform;
+}
+
+.qlbg2-blob-violet {
+    top: -36vmax;
+    left: -30vmax;
+    width: 85vmax;
+    height: 85vmax;
+    background: radial-gradient(
+        circle at center,
+        rgba(129, 140, 248, 0.065),
+        rgba(129, 140, 248, 0.022) 45%,
+        transparent 68%
+    );
+}
+
+.qlbg2-blob-sky {
+    top: -18vmax;
+    right: -24vmax;
+    width: 62vmax;
+    height: 62vmax;
+    background: radial-gradient(
+        circle at center,
+        rgba(56, 189, 248, 0.05),
+        rgba(56, 189, 248, 0.016) 45%,
+        transparent 68%
+    );
+}
+
+.qlbg2-blob-cyan {
+    bottom: -32vmax;
+    right: -26vmax;
+    width: 75vmax;
+    height: 75vmax;
+    background: radial-gradient(
+        circle at center,
+        rgba(34, 211, 238, 0.055),
+        rgba(34, 211, 238, 0.018) 45%,
+        transparent 68%
+    );
+}
+
+/* Translate-only (NO scale): scaling a 60-85vmax gradient layer forces
+   re-rasterization of megapixels per frame — part of the freeze. Pure
+   translate3d moves the cached texture on the compositor for free. */
+@keyframes qlbg2-nebula-a {
+    0%, 100% { transform: translate3d(0, 0, 0); }
+    33% { transform: translate3d(3vmax, 2vmax, 0); }
+    66% { transform: translate3d(-2vmax, 3vmax, 0); }
+}
+
+@keyframes qlbg2-nebula-b {
+    0%, 100% { transform: translate3d(0, 0, 0); }
+    50% { transform: translate3d(-3vmax, 2.5vmax, 0); }
+}
+
+@keyframes qlbg2-nebula-c {
+    0%, 100% { transform: translate3d(0, 0, 0); }
+    40% { transform: translate3d(-2.5vmax, -2vmax, 0); }
+    75% { transform: translate3d(2vmax, -1vmax, 0); }
+}
+
+/* 2. STARFIELD — one element, ~180 stars from five tiling radial-gradient
+      layers. Tile sizes are non-square and mutually co-prime-ish so no
+      lattice pattern emerges. Static by default; gains a pure-CSS
+      scroll-timeline parallax on Chromium (see @supports block below).
+      Vertical bleed hides the parallax travel. */
+.qlbg2-stars {
+    position: absolute;
+    inset: 0 0 -10vh 0;
+    background-image:
+        radial-gradient(1px 1px at 27px 41px, rgba(243, 244, 246, 0.38) 50%, transparent 100%),
+        radial-gradient(1px 1px at 153px 119px, rgba(243, 244, 246, 0.22) 50%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 89px 202px, rgba(56, 189, 248, 0.32) 50%, transparent 100%),
+        radial-gradient(1px 1px at 221px 67px, rgba(34, 211, 238, 0.24) 50%, transparent 100%),
+        radial-gradient(1.2px 1.2px at 61px 139px, rgba(243, 244, 246, 0.30) 50%, transparent 100%);
+    background-size:
+        173px 211px,
+        229px 191px,
+        293px 251px,
+        251px 307px,
+        331px 283px;
+}
+
+@keyframes qlbg2-stars-parallax {
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(0, -6vh, 0); }
+}
+
+/* 3. HORIZON GLOW — static ellipse anchoring the floor plane to the dark,
+      echoing the hero's Tron floor. Painted once, never animated. */
+.qlbg2-horizon {
+    position: absolute;
+    left: 50%;
+    bottom: -6vh;
+    width: 140vw;
+    height: 26vh;
+    transform: translateX(-50%);
+    background: radial-gradient(
+        ellipse 50% 60% at 50% 100%,
+        rgba(59, 130, 246, 0.07),
+        rgba(56, 189, 248, 0.02) 55%,
+        transparent 78%
+    );
+}
+
+/* 4. PLANE UPGRADES — combo-class overrides of the v1 planes. The floor
+      tilts from 78deg to a more visible 62deg and brightens slightly; the
+      grid texture gains a fine quarter-cell sub-grid (still translates by
+      one full major cell = four minor cells, so the drift loop stays
+      seamless). */
+.qlbg-floor.qlbg2-floor {
+    transform: rotateX(62deg);
+    opacity: 0.07;
+}
+
+.qlbg-ceiling.qlbg2-ceiling {
+    opacity: 0.045;
+}
+
+.qlbg-grid.qlbg2-grid {
+    background-image:
+        linear-gradient(rgba(56, 189, 248, 0.9) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56, 189, 248, 0.9) 1px, transparent 1px),
+        linear-gradient(rgba(56, 189, 248, 0.35) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56, 189, 248, 0.35) 1px, transparent 1px);
+    background-size:
+        var(--qlbg-cell) var(--qlbg-cell),
+        var(--qlbg-cell) var(--qlbg-cell),
+        calc(var(--qlbg-cell) / 4) calc(var(--qlbg-cell) / 4),
+        calc(var(--qlbg-cell) / 4) calc(var(--qlbg-cell) / 4);
+}
+
+/* Because the floor's base angle changed, the scroll-timeline parallax
+   needs a matching keyframe pair (the v1 qlbg-floor-parallax bakes in
+   78deg). Only animation-name is overridden inside the @supports block;
+   duration/timeline still come from the v1 shorthand. */
+@keyframes qlbg2-floor-parallax {
+    from { transform: rotateX(62deg) translateZ(-90px); }
+    to { transform: rotateX(62deg) translateZ(-20px); }
+}
+
+/* 5. LIGHT STREAK — a thin diagonal glint that sweeps the upper third of
+      the viewport for ~1.3s out of every 16s cycle. Hidden by default;
+      only exists on desktop + motion-safe (so mobile and reduced-motion
+      never even create the layer). Transform/opacity only. */
+.qlbg2-streak {
+    display: none;
+    position: absolute;
+    top: 10%;
+    left: 0;
+    width: 280px;
+    height: 2px;
+    border-radius: 9999px;
+    opacity: 0;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(56, 189, 248, 0.45) 40%,
+        rgba(243, 244, 246, 0.7) 50%,
+        rgba(56, 189, 248, 0.45) 60%,
+        transparent
+    );
+}
+
+@keyframes qlbg2-streak-fire {
+    0% { transform: translate3d(-18vw, 0, 0) rotate(11deg); opacity: 0; }
+    1% { opacity: 0.65; }
+    7% { opacity: 0.5; }
+    8% { transform: translate3d(115vw, 44vh, 0) rotate(11deg); opacity: 0; }
+    100% { transform: translate3d(115vw, 44vh, 0) rotate(11deg); opacity: 0; }
+}
+
+/* Motion — desktop only, motion-safe only (mirrors the v1 gate: below
+   640px literally zero animation runs). */
+@media (min-width: 640px) and (prefers-reduced-motion: no-preference) {
+    .qlbg2-blob-violet {
+        animation: qlbg2-nebula-a 89s ease-in-out infinite;
+    }
+
+    .qlbg2-blob-sky {
+        animation: qlbg2-nebula-b 73s ease-in-out infinite;
+    }
+
+    .qlbg2-blob-cyan {
+        animation: qlbg2-nebula-c 97s ease-in-out infinite;
+    }
+
+    .qlbg2-streak {
+        display: block;
+        animation: qlbg2-streak-fire 16s linear infinite;
+    }
+}
+
+/* (Scroll-linked floor/stars parallax removed: scroll(root) timelines on
+   3D-rotated and full-viewport gradient layers tick on the main thread in
+   Chromium and contributed to the sitewide freeze. Layers remain static;
+   the hero canvas carries scroll depth.) */
+
+/* Mobile tier (<640px): drop the sky blob and the streak, thin the
+   starfield to two layers, and re-assert the dimmer floor opacity (the
+   v1 mobile rule loses specificity to .qlbg-floor.qlbg2-floor above).
+   All qlbg2 animations are already desktop-gated, so nothing animates. */
+@media (max-width: 639.98px) {
+    .qlbg2-blob-sky,
+    .qlbg2-streak {
+        display: none;
+    }
+
+    .qlbg2-stars {
+        background-image:
+            radial-gradient(1px 1px at 27px 41px, rgba(243, 244, 246, 0.34) 50%, transparent 100%),
+            radial-gradient(1.5px 1.5px at 89px 202px, rgba(56, 189, 248, 0.28) 50%, transparent 100%);
+        background-size:
+            173px 211px,
+            293px 251px;
+    }
+
+    .qlbg-floor.qlbg2-floor {
+        opacity: 0.05;
+    }
+}
+
+/* Reduced motion: freeze the whole v2 layer at its keyframe-0 pose —
+   nebula, stars, horizon, and both planes stay fully visible as one rich
+   static frame. Only the streak (motion-only payoff) is removed; its
+   display:block lives inside the motion-safe gate anyway, so this is
+   belt-and-suspenders. */
+@media (prefers-reduced-motion: reduce) {
+    .qlbg2-blob-violet,
+    .qlbg2-blob-sky,
+    .qlbg2-blob-cyan,
+    .qlbg2-stars,
+    .qlbg-floor.qlbg2-floor {
+        animation: none;
+    }
+
+    .qlbg2-streak {
+        display: none;
+    }
+}

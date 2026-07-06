@@ -1,9 +1,15 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
-import { motion } from "framer-motion";
+import {
+    motion,
+    useMotionValue,
+    useReducedMotion,
+    useSpring,
+    useTransform,
+} from "framer-motion";
 import { Button } from "./ui/Button";
 
 const HeroCanvas = dynamic(
@@ -20,6 +26,37 @@ const words = ["We", "build", "the", "software."];
 
 export function Hero() {
     const [modalOpen, setModalOpen] = useState(false);
+
+    // Subtle pointer parallax on the logo/headline block (transform-only, so
+    // zero CLS; fine pointers only; disabled for prefers-reduced-motion).
+    const reduceMotion = useReducedMotion();
+    const parX = useMotionValue(0);
+    const parY = useMotionValue(0);
+    const logoX = useSpring(parX, { stiffness: 55, damping: 16, mass: 0.5 });
+    const logoY = useSpring(parY, { stiffness: 55, damping: 16, mass: 0.5 });
+    const headX = useTransform(logoX, (v) => v * 0.42);
+    const headY = useTransform(logoY, (v) => v * 0.42);
+
+    useEffect(() => {
+        if (reduceMotion) return;
+        if (!window.matchMedia("(pointer: fine)").matches) return;
+        const onMove = (e: PointerEvent) => {
+            parX.set((e.clientX / window.innerWidth - 0.5) * 2 * 12);
+            parY.set((e.clientY / window.innerHeight - 0.5) * 2 * 8);
+        };
+        const onLeave = (e: MouseEvent) => {
+            if (!e.relatedTarget) {
+                parX.set(0);
+                parY.set(0);
+            }
+        };
+        window.addEventListener("pointermove", onMove, { passive: true });
+        window.addEventListener("mouseout", onLeave, { passive: true });
+        return () => {
+            window.removeEventListener("pointermove", onMove);
+            window.removeEventListener("mouseout", onLeave);
+        };
+    }, [reduceMotion, parX, parY]);
 
     function scrollToServices() {
         document.getElementById("services")?.scrollIntoView({ behavior: "smooth" });
@@ -48,6 +85,7 @@ export function Hero() {
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
                     className="mb-8"
+                    style={{ x: logoX, y: logoY }}
                 >
                     <Image
                         src="/logo-optimized.webp"
@@ -64,7 +102,10 @@ export function Hero() {
                 </motion.div>
 
                 {/* Headline — word-by-word reveal, weight contrast */}
-                <h1 className="text-5xl md:text-7xl lg:text-8xl tracking-tight mb-6 max-w-5xl leading-[1.05]">
+                <motion.h1
+                    className="text-5xl md:text-7xl lg:text-8xl tracking-tight mb-6 max-w-5xl leading-[1.05]"
+                    style={{ x: headX, y: headY }}
+                >
                     {words.map((word, i) => {
                         const isAccent = word === "Next" || word === "Level.";
                         return (
@@ -82,7 +123,7 @@ export function Hero() {
                             </motion.span>
                         );
                     })}
-                </h1>
+                </motion.h1>
 
                 {/* Thin divider */}
                 <motion.div

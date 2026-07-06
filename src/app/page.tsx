@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Hero } from "@/components/Hero";
 import { Services } from "@/components/Services";
+import { CapabilityMatrix } from "@/components/CapabilityMatrix";
 import { Industries } from "@/components/Industries";
+import { ScrollRail } from "@/components/ui/ScrollRail";
 import { About } from "@/components/About";
 import { Founder } from "@/components/Founder";
 import { Contact } from "@/components/Contact";
@@ -76,6 +78,7 @@ export default function Home() {
       <JsonLd data={homeServicesListSchema} />
       <Hero />
       <Services />
+      <CapabilityMatrix />
       <Industries />
       <section className="container mx-auto px-6 py-16">
         <TopicClusters
@@ -86,6 +89,16 @@ export default function Home() {
       <About />
       <Founder />
       <Contact />
+      <ScrollRail
+        sections={[
+          { id: "services", label: "Services" },
+          { id: "capabilities", label: "Capabilities" },
+          { id: "industries", label: "Industries" },
+          { id: "about", label: "About" },
+          { id: "founder", label: "Founder" },
+          { id: "contact", label: "Contact" },
+        ]}
+      />
     </main>
   );
 }
